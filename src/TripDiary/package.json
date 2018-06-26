@@ -1,0 +1,46 @@
+{
+    "name": "trip-diary",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app/main.js",
+    "scripts": {
+        "build": "webpack --config=webpack.config.js"
+    },
+    "author": "University of Toronto",
+    "license": "ISC",
+    "dependencies": {
+        "@angular/animations": "^6.0.3",
+        "@angular/common": "^6.0.3",
+        "@angular/core": "^6.0.3",
+        "@angular/forms": "^6.0.3",
+        "@angular/http": "^6.0.3",
+        "@angular/platform-browser": "^6.0.3",
+        "@angular/platform-browser-dynamic": "^6.0.3",
+        "@angular/router": "^6.0.3",
+        "core-js": "^2.5.3",
+        "mapbox-gl": "^0.45.0",
+        "ngx-mapbox-gl": "^1.2.0",
+        "rxjs": "6.0.0",
+        "rxjs-compat": "6.0.0",
+        "webpack": "^3.10.0"
+    },
+    "devDependencies": {
+        "@angular-devkit/build-angular": "0.6.8",
+        "@angular/cli": "6.0.3",
+        "@angular/compiler": "6.0.3",
+        "@angular/compiler-cli": "6.0.3",
+        "@angular/language-service": "6.0.3",
+        "@types/mapbox-gl": "^0.44.4",
+        "@types/node": "~9.4.6",
+        "awesome-typescript-loader": "^3.4.1",
+        "css-loader": "^0.28.11",
+        "file-loader": "^1.1.11",
+        "node-sass": "^4.9.0",
+        "raw-loader": "^0.5.1",
+        "sass-loader": "^7.0.1",
+        "style-loader": "^0.21.0",
+        "tslint": "~5.9.1",
+        "typescript": "2.7.2",
+        "uglifyjs-webpack-plugin": "^1.2.5"
+    }
+}
