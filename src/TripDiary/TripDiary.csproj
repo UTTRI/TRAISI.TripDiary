@@ -9,4 +9,7 @@
   <ItemGroup>
     <EmbeddedResource Include="dist/*.module.js" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\traisi-v2\src\TRAISI.SDK\TRAISI.SDK.csproj" />
+  </ItemGroup>
 </Project>
