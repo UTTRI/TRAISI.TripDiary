@@ -10,5 +10,6 @@
 		"module": "amd",
 		"outDir": "dist",
 		"lib": ["es2016", "dom"]
+
 	}
 }

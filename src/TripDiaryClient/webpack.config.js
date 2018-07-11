@@ -2,7 +2,7 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
-    entry: path.join(process.cwd(), './src/trip-diary.module.ts'),
+    entry: path.join(process.cwd(), './trip-diary.module.ts'),
     output: {
         path: path.join(process.cwd(), 'dist'),
         filename: 'trip-diary.module.js',
