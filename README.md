@@ -36,6 +36,10 @@ dotnet restore
 dotnet traisi init <project.csproj> [--name|n <module_name>]
 ```
 
+### References
+
+Add a reference to the TRAISI.SDK project or dll in your project.
+
 ### Building
 
 ```console

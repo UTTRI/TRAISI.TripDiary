@@ -10,7 +10,11 @@
     <EmbeddedResource Include="dist/*.module.js" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
+=======
+    <ProjectReference Include="..\..\..\traisi-v2\src\TRAISI.SDK\TRAISI.SDK.csproj" />
+>>>>>>> 8e02f0b1c42bea33ac457fb82098bfc1c6067cb4
   </ItemGroup>
 </Project>
