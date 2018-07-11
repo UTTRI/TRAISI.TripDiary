@@ -7,6 +7,7 @@ using TRAISI.SDK.Interfaces;
 namespace TRAISI.Questions.TripDiary
 {
     [SurveyQuestion(QuestionResponseType.String)]
+	[QuestionPartSlot(SlotName="Initial Slot")]
     public class TripDiaryQuestion : ISurveyQuestion
     {
         public string TypeName {
@@ -15,6 +16,9 @@ namespace TRAISI.Questions.TripDiary
 		public string Icon {
 			get => "map";
 		}
+
+
+
 		public QuestionIconType IconType { get => QuestionIconType.FONT; }
     }
 }
