@@ -1,11 +1,12 @@
-import { NgModule } from "@angular/core";
-import { TimelineComponent } from "./components/timeline/timeline.component";
-import { TimelineWedge } from "./directives/timeline-wedge/timeline-wedge.directive";
+import { NgModule } from '@angular/core';
+import { TimelineComponent } from './components/timeline/timeline.component';
+import { TimelineWedge } from './directives/timeline-wedge/timeline-wedge.directive';
+import { TimelineSegment } from './directives/timeline-segment/timeline-segment.directive';
 
 @NgModule({
-	declarations: [TimelineComponent, TimelineWedge],
-    exports: [],
-    providers: [
+	declarations: [TimelineComponent, TimelineWedge, TimelineSegment],
+	exports: [],
+	providers: [
 		{
 			provide: 'widgets',
 			useValue: [
@@ -13,10 +14,9 @@ import { TimelineWedge } from "./directives/timeline-wedge/timeline-wedge.direct
 					name: 'traisi-timeline-question',
 					id: 'timeline',
 					component: TimelineComponent
-                },
-            ] }
-        ]
+				}
+			]
+		}
+	]
 })
-export default class TimelineModule {
-    
-}
+export default class TimelineModule {}
