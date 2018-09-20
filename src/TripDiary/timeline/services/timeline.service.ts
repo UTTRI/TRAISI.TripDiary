@@ -30,9 +30,18 @@ export class TimelineService
      */
     private initializeConfiguration()
     {
-        this._configuration = new ReplaySubject(1);
+		this._configuration = new ReplaySubject(1);
+		
+		let startTime:Date = new Date();
+		let endTime:Date = new Date();
+		startTime.setHours(4);
+		startTime.setMinutes(0);
+
+		endTime.setDate(endTime.getDate()+1);
+		endTime.setHours(3);
+		endTime.setMinutes(59);
         this._configuration.next( {
-            startTime: new Date(),
+            startTime: startTime,
             endTime: new Date(),
 
         });
