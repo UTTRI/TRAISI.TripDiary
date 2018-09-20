@@ -43,3 +43,5 @@ Obj/
 *.scc
 
 .vscode/
+
+node_modules/
