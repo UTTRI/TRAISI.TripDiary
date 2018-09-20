@@ -44,4 +44,9 @@ Obj/
 
 .vscode/
 
+<<<<<<< HEAD
 node_modules/
+=======
+node_modules/
+dist/
+>>>>>>> 1f723ffb78c875e537fac3c78888a22d95520f5a
