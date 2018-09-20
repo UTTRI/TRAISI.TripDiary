@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { TimelineComponent } from './components/timeline/timeline.component';
-import { TimelineWedge } from './directives/timeline-wedge/timeline-wedge.directive';
-import { TimelineSegment } from './directives/timeline-segment/timeline-segment.directive';
+import { TimelineWedgeComponent } from './components/timeline-wedge/timeline-wedge-wedge.component';
 
 @NgModule({
-	declarations: [TimelineComponent, TimelineWedge, TimelineSegment],
+	declarations: [TimelineComponent, TimelineWedgeComponent],
 	exports: [],
 	providers: [
 		{
@@ -14,6 +13,11 @@ import { TimelineSegment } from './directives/timeline-segment/timeline-segment.
 					name: 'traisi-timeline-question',
 					id: 'timeline',
 					component: TimelineComponent
+				},
+				{
+					name: 'traisi-timeline-wedge',
+					id: 'timeline-wedge',
+					component: TimelineWedgeComponent
 				}
 			]
 		}

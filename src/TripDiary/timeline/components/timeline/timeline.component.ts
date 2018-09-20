@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ElementRef } from "@angular/core";
 import {
 	SurveyViewer, QuestionConfiguration, SurveyResponder, SurveyQuestion,
 	QuestionResponseState, TRAISI
 } from 'traisi-question-sdk';
+import { TimelineService } from "../../services/timeline.service";
 
 @Component({
     selector: 'traisi-timeline-question',
@@ -11,6 +12,18 @@ import {
 })
 export class TimelineComponent  extends TRAISI.SurveyQuestion implements OnInit 
 {
+
+    /**
+     *Creates an instance of TimelineComponent.
+     * @param {ElementRef} _element
+     * @param {TimelineService} timelineService
+     * @memberof TimelineComponent
+     */
+    constructor(private _element: ElementRef,
+        private timelineService: TimelineService)
+    {
+        super();
+    }
 
     /**
      * Angular's ngOnInit
