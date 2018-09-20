@@ -45,3 +45,4 @@ Obj/
 .vscode/
 
 node_modules/
+dist/
