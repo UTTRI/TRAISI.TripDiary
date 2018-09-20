@@ -88,7 +88,7 @@ define(["@angular/core"], function(__WEBPACK_EXTERNAL_MODULE__angular_core__) { 
 
 /***/ "../../../traisi-v2/src/TRAISI.SDK/Module/src/index.ts":
 /*!*********************************************************************************!*\
-  !*** c:/Users/brend/Documents/TMG/traisi-v2/src/TRAISI.SDK/Module/src/index.ts ***!
+  !*** C:/Users/brend/Documents/TMG/traisi-v2/src/TRAISI.SDK/Module/src/index.ts ***!
   \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -106,7 +106,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 /***/ "../../../traisi-v2/src/TRAISI.SDK/Module/src/question-response-state.ts":
 /*!***************************************************************************************************!*\
-  !*** c:/Users/brend/Documents/TMG/traisi-v2/src/TRAISI.SDK/Module/src/question-response-state.ts ***!
+  !*** C:/Users/brend/Documents/TMG/traisi-v2/src/TRAISI.SDK/Module/src/question-response-state.ts ***!
   \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -128,7 +128,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 
 /***/ "../../../traisi-v2/src/TRAISI.SDK/Module/src/traisi-survey-question.ts":
 /*!**************************************************************************************************!*\
-  !*** c:/Users/brend/Documents/TMG/traisi-v2/src/TRAISI.SDK/Module/src/traisi-survey-question.ts ***!
+  !*** C:/Users/brend/Documents/TMG/traisi-v2/src/TRAISI.SDK/Module/src/traisi-survey-question.ts ***!
   \**************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -984,6 +984,25 @@ function _initialStateFactory(initialState) {
 
 
 //# sourceMappingURL=store.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/sass-loader/lib/loader.js!./timeline/components/timeline-wedge/timeline-wedge.component.scss":
+/*!*********************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/sass-loader/lib/loader.js!./timeline/components/timeline-wedge/timeline-wedge.component.scss ***!
+  \*********************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
 
 
 /***/ }),
@@ -19689,10 +19708,51 @@ function __importDefault(mod) {
 
 /***/ }),
 
-/***/ "./timeline/components/timeline-wedge/timeline-wedge-wedge.component.ts":
-/*!******************************************************************************!*\
-  !*** ./timeline/components/timeline-wedge/timeline-wedge-wedge.component.ts ***!
-  \******************************************************************************/
+/***/ "./timeline/components/timeline-wedge/timeline-wedge.component.html":
+/*!**************************************************************************!*\
+  !*** ./timeline/components/timeline-wedge/timeline-wedge.component.html ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!-- bar -->\r\n\r\n<div #timelineSegments>\r\n\r\n\r\n</div>\r\n\r\n<!-- wedge-->\r\n<svg #timelineWedges>\r\n\r\n</svg>"
+
+/***/ }),
+
+/***/ "./timeline/components/timeline-wedge/timeline-wedge.component.scss":
+/*!**************************************************************************!*\
+  !*** ./timeline/components/timeline-wedge/timeline-wedge.component.scss ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader!../../../node_modules/sass-loader/lib/loader.js!./timeline-wedge.component.scss */ "./node_modules/css-loader/index.js!./node_modules/sass-loader/lib/loader.js!./timeline/components/timeline-wedge/timeline-wedge.component.scss");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./timeline/components/timeline-wedge/timeline-wedge.component.ts":
+/*!************************************************************************!*\
+  !*** ./timeline/components/timeline-wedge/timeline-wedge.component.ts ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19742,7 +19802,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             core_1.Component({
                 selector: 'traisi-wedge-question',
                 template: __webpack_require__(/*! ./timeline-wedge.component.html */ "./timeline/components/timeline-wedge/timeline-wedge.component.html").toString(),
-                styles: [__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module './timeline-wedge.component.scss'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())).toString()]
+                styles: [__webpack_require__(/*! ./timeline-wedge.component.scss */ "./timeline/components/timeline-wedge/timeline-wedge.component.scss").toString()]
             }),
             __metadata("design:paramtypes", [core_1.ElementRef, timeline_service_1.TimelineService])
         ], TimelineWedgeComponent);
@@ -19755,17 +19815,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 /***/ }),
 
-/***/ "./timeline/components/timeline-wedge/timeline-wedge.component.html":
-/*!**************************************************************************!*\
-  !*** ./timeline/components/timeline-wedge/timeline-wedge.component.html ***!
-  \**************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<!-- bar -->\r\n\r\n<div #timelineSegments>\r\n\r\n\r\n</div>\r\n\r\n<!-- wedge-->\r\n<svg #timelineWedges>\r\n\r\n</svg>"
-
-/***/ }),
-
 /***/ "./timeline/components/timeline/timeline.component.html":
 /*!**************************************************************!*\
   !*** ./timeline/components/timeline/timeline.component.html ***!
@@ -19773,7 +19822,7 @@ module.exports = "<!-- bar -->\r\n\r\n<div #timelineSegments>\r\n\r\n\r\n</div>\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "\r\n<timeline-wedge *ngFor=\"let location of locations\">\r\n    \r\n</timeline-wedge>"
 
 /***/ }),
 
@@ -19945,7 +19994,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! @angular/core */ "@angular/core"), __webpack_require__(/*! ./components/timeline/timeline.component */ "./timeline/components/timeline/timeline.component.ts"), __webpack_require__(/*! ./components/timeline-wedge/timeline-wedge-wedge.component */ "./timeline/components/timeline-wedge/timeline-wedge-wedge.component.ts")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, core_1, timeline_component_1, timeline_wedge_wedge_component_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! @angular/core */ "@angular/core"), __webpack_require__(/*! ./components/timeline/timeline.component */ "./timeline/components/timeline/timeline.component.ts"), __webpack_require__(/*! ./components/timeline-wedge/timeline-wedge.component */ "./timeline/components/timeline-wedge/timeline-wedge.component.ts")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, core_1, timeline_component_1, timeline_wedge_component_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var TimelineModule = /** @class */ (function () {
@@ -19953,7 +20002,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
         }
         TimelineModule = __decorate([
             core_1.NgModule({
-                declarations: [timeline_component_1.TimelineComponent, timeline_wedge_wedge_component_1.TimelineWedgeComponent],
+                declarations: [timeline_component_1.TimelineComponent, timeline_wedge_component_1.TimelineWedgeComponent],
                 exports: [],
                 providers: [
                     {
@@ -19967,7 +20016,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
                             {
                                 name: 'traisi-timeline-wedge',
                                 id: 'timeline-wedge',
-                                component: timeline_wedge_wedge_component_1.TimelineWedgeComponent
+                                component: timeline_wedge_component_1.TimelineWedgeComponent
                             }
                         ]
                     }
