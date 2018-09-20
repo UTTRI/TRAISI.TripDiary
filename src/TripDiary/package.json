@@ -18,6 +18,8 @@
     "@angular/platform-browser": "^6.1.4",
     "@angular/platform-browser-dynamic": "^6.1.4",
     "@angular/router": "^6.1.4",
+    "@ngrx/core": "^1.2.0",
+    "@ngrx/store": "^6.1.0",
     "@types/jquery": "^3.3.6",
     "core-js": "^2.5.7",
     "environments": "^1.2.2",
