@@ -1,8 +1,10 @@
 import { NgModule } from "@angular/core";
 import { TimelineComponent } from "./components/timeline/timeline.component";
+import { TimelineWedge } from "./directives/timeline-wedge/timeline-wedge.directive";
 
 @NgModule({
-    exports: [TimelineComponent],
+	declarations: [TimelineComponent, TimelineWedge],
+    exports: [],
     providers: [
 		{
 			provide: 'widgets',
