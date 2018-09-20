@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-<<<<<<< HEAD:src/TripDiary/tsconfig.json
 	  "sourceMap": true,
 	  "declaration": false,
 	  "moduleResolution": "node",
@@ -29,18 +28,3 @@
 	  "node_modules/**/*"
 	]
   }
-=======
-		"sourceMap": true,
-		"declaration": false,
-		"moduleResolution": "node",
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"skipLibCheck": true,
-		"target": "es5",
-		"module": "amd",
-		"outDir": "dist",
-		"lib": ["es2016", "dom"]
-
-	}
-}
->>>>>>> 1f723ffb78c875e537fac3c78888a22d95520f5a:src/TripDiaryClient/tsconfig.json
