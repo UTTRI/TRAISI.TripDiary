@@ -20,7 +20,7 @@ export class TimelineComponent  extends TRAISI.SurveyQuestion implements OnInit
      * @memberof TimelineComponent
      */
     constructor(private _element: ElementRef,
-        private timelineService: TimelineService)
+        private _timelineService: TimelineService)
     {
         super();
     }
