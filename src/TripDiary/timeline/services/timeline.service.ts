@@ -21,6 +21,18 @@ export class TimelineService
      */
     constructor(private store: Store<TimelineState>)
     {
+        this.initializeConfiguration();
+    }
 
+    /**
+     * Initialie the base configuration data
+     */
+    private initializeConfiguration()
+    {
+        this._configuration = {
+            startTime: new Date(),
+            endTime: new Date(),
+
+        }
     }
 }
