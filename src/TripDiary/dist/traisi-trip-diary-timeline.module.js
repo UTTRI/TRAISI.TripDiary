@@ -87,9 +87,9 @@ define(["@angular/core"], function(__WEBPACK_EXTERNAL_MODULE__angular_core__) { 
 /******/ ({
 
 /***/ "../../../traisi-v2/src/TRAISI.SDK/Module/src/index.ts":
-/*!*********************************************************************************!*\
-  !*** C:/Users/brend/Documents/TMG/traisi-v2/src/TRAISI.SDK/Module/src/index.ts ***!
-  \*********************************************************************************/
+/*!***********************************************************************!*\
+  !*** /home/brendan/Work/traisi-v2/src/TRAISI.SDK/Module/src/index.ts ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -105,9 +105,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /***/ }),
 
 /***/ "../../../traisi-v2/src/TRAISI.SDK/Module/src/question-response-state.ts":
-/*!***************************************************************************************************!*\
-  !*** C:/Users/brend/Documents/TMG/traisi-v2/src/TRAISI.SDK/Module/src/question-response-state.ts ***!
-  \***************************************************************************************************/
+/*!*****************************************************************************************!*\
+  !*** /home/brendan/Work/traisi-v2/src/TRAISI.SDK/Module/src/question-response-state.ts ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -127,9 +127,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /***/ }),
 
 /***/ "../../../traisi-v2/src/TRAISI.SDK/Module/src/traisi-survey-question.ts":
-/*!**************************************************************************************************!*\
-  !*** C:/Users/brend/Documents/TMG/traisi-v2/src/TRAISI.SDK/Module/src/traisi-survey-question.ts ***!
-  \**************************************************************************************************/
+/*!****************************************************************************************!*\
+  !*** /home/brendan/Work/traisi-v2/src/TRAISI.SDK/Module/src/traisi-survey-question.ts ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -143,6 +143,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 this.state = question_response_state_1.QuestionResponseState.PRISTINE;
                 this.response = new core_1.EventEmitter();
                 this.data = [];
+                this.isValid = false;
             }
             return SurveyQuestion;
         }());
@@ -19715,7 +19716,7 @@ function __importDefault(mod) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- bar -->\r\n\r\n<div #timelineSegments>\r\n\r\n\r\n</div>\r\n\r\n<!-- wedge-->\r\n<svg #timelineWedges>\r\n\r\n</svg>"
+module.exports = "<!-- bar -->\n\n<div #timelineSegments>\n\n\n</div>\n\n<!-- wedge-->\n<svg #timelineWedges>\n\n</svg>"
 
 /***/ }),
 
@@ -19822,7 +19823,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<timeline-wedge *ngFor=\"let location of locations\">\r\n    \r\n</timeline-wedge>"
+module.exports = "\n<timeline-wedge *ngFor=\"let location of locations\">\n    \n</timeline-wedge>"
 
 /***/ }),
 
@@ -19939,7 +19940,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! @angular/core */ "@angular/core"), __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, core_1, store_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(/*! @angular/core */ "@angular/core"), __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js"), __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, core_1, store_1, rxjs_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var TimelineService = /** @class */ (function () {
@@ -19963,10 +19964,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
          * Initialie the base configuration data
          */
         TimelineService.prototype.initializeConfiguration = function () {
-            this._configuration = {
-                startTime: new Date(),
+            this._configuration = new rxjs_1.ReplaySubject(1);
+            var startTime = new Date();
+            var endTime = new Date();
+            startTime.setHours(4);
+            startTime.setMinutes(0);
+            endTime.setDate(endTime.getDate() + 1);
+            endTime.setHours(3);
+            endTime.setMinutes(59);
+            this._configuration.next({
+                startTime: startTime,
                 endTime: new Date(),
-            };
+            });
         };
         TimelineService = __decorate([
             core_1.Injectable(),

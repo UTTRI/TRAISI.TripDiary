@@ -1,8 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <DotNetCliToolReference Include="DotNetTraisi" Version="*" />
-  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
@@ -20,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\traisi-v2\src\traisi.sdk\TRAISI.SDK.csproj" />
+    <ProjectReference Include="..\..\..\traisi-v2\src\TRAISI.SDK\TRAISI.SDK.csproj" />
   </ItemGroup>
 
   <Target Name="PreBuild" AfterTargets="Compile">

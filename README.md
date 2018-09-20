@@ -9,6 +9,12 @@ Trip Diary question extension for TRAISI
 
 ## Build Instructions
 
+### Webpack
+
+Install global webpack
+
+npm install -g webpack
+
 ### Config NuGet Package Sources
 
 Create a NuGet.config file that creates a package source referencing the TRAISI.SDK "cli" output (package).
