@@ -10,11 +10,22 @@
     <EmbeddedResource Include="dist/*.module.js" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
+    <Compile Remove="node_modules\**" />
+    <EmbeddedResource Remove="node_modules\**" />
+    <None Remove="node_modules\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
-=======
-    <ProjectReference Include="..\..\..\traisi-v2\src\TRAISI.SDK\TRAISI.SDK.csproj" />
->>>>>>> 8e02f0b1c42bea33ac457fb82098bfc1c6067cb4
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\traisi-v2\src\traisi.sdk\TRAISI.SDK.csproj" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" AfterTargets="Compile">
+    <!--<Exec WorkingDirectory="Module/" Command="npm install" /> -->
+    <Exec WorkingDirectory="./" Command="npm run build" />
+    <Message Text="Built typescript / webpack" Importance="High" />
+  </Target>
 </Project>
