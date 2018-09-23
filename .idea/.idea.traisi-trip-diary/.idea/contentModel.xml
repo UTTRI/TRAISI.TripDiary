@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\brend\.Rider2018.2\config\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\brend\.Rider2018.2\config\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\brend\.Rider2018.2\config\scratches" t="IncludeRecursive" />
+    <e p="C:\Users\brend\.Rider2018.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\brend\.Rider2018.2\system\resharper-host\Local\Transient\ReSharperHost\v182\SolutionCaches\_traisi-trip-diary.2141130586.00" t="ExcludeRecursive" />
+    <e p="C:\Users\brend\Documents\TMG\traisi-trip-diary" t="IncludeFlat">
+      <e p=".git\info\exclude" t="IncludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="src" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="dist" t="Include">
+          <e p="traisi-trip-diary-timeline.module.js" t="Include" />
+          <e p="traisi-trip-diary-timeline.module.js.map" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="TripDiary.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="package-lock.json" t="Include" />
+        <e p="package.json" t="Include" />
+        <e p="routes" t="Include">
+          <e p="components" t="Include">
+            <e p="routes" t="Include">
+              <e p="routes.component.html" t="Include" />
+              <e p="routes.component.scss" t="Include" />
+              <e p="routes.component.ts" t="Include" />
+            </e>
+          </e>
+          <e p="TripDiaryRoutes.cs" t="Include" />
+        </e>
+        <e p="timeline" t="Include">
+          <e p="components" t="Include">
+            <e p="timeline" t="Include">
+              <e p="timeline.component.html" t="Include" />
+              <e p="timeline.component.scss" t="Include" />
+              <e p="timeline.component.ts" t="Include" />
+            </e>
+            <e p="timeline-wedge" t="Include">
+              <e p="timeline-wedge.component.html" t="Include" />
+              <e p="timeline-wedge.component.scss" t="Include" />
+              <e p="timeline-wedge.component.ts" t="Include" />
+            </e>
+          </e>
+          <e p="models" t="Include">
+            <e p="timeline-configuration.model.ts" t="Include" />
+            <e p="timeline-location.model.ts" t="Include" />
+            <e p="timeline-state.model.ts" t="Include" />
+          </e>
+          <e p="services" t="Include">
+            <e p="timeline.service.ts" t="Include" />
+          </e>
+          <e p="timeline.module.ts" t="Include" />
+          <e p="TripDiaryTimeline.cs" t="Include" />
+        </e>
+        <e p="TripDiary.csproj" t="IncludeRecursive" />
+        <e p="TripDiaryController.cs" t="Include" />
+        <e p="TripDiaryService.cs" t="Include" />
+        <e p="tsconfig.json" t="Include" />
+        <e p="webpack.config.js" t="Include" />
+      </e>
+      <e p="traisi-trip-diary.sln" t="IncludeFlat" />
+    </e>
+    <e p="C:\Users\brend\Documents\TMG\traisi-v2\src\TRAISI.SDK\Module\src" t="IncludeRecursive" />
+  </component>
+</project>

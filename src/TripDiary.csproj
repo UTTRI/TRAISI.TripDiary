@@ -6,6 +6,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="dist/*.module.js" />
   </ItemGroup>
@@ -18,14 +24,23 @@
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\..\traisi-v2\src\traisi.sdk\TRAISI.SDK.csproj" />
+    <Reference Include="TRAISI.SDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\traisi-v2\src\TRAISI.SDK\bin\Debug\netstandard2.0\TRAISI.SDK.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
-  <Target Name="PreBuild" AfterTargets="Compile">
-    <!--<Exec WorkingDirectory="Module/" Command="npm install" /> -->
+
+  <!--<Target Name="PreBuild" AfterTargets="Compile">
+    <Exec WorkingDirectory="Module/" Command="npm install" /> 
     <Exec WorkingDirectory="./" Command="npm run build" />
     <Message Text="Built typescript / webpack" Importance="High" />
+  </Target>-->
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(MSBuildProjectDirectory)" />
+   
   </Target>
+  
+  
 </Project>

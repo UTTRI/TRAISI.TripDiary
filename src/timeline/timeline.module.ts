@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TimelineComponent } from './components/timeline/timeline.component';
+import { TimelineComponent } from './components/timeline/timeline.component'
 import { TimelineWedgeComponent } from './components/timeline-wedge/timeline-wedge.component';
 
 @NgModule({

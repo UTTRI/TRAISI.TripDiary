@@ -12,8 +12,8 @@
 		"lib": ["es2016", "dom"],
 		"baseUrl": ".",
 		"paths": {
-			"traisi-sdk/*": ["../../../traisi-v2/src/TRAISI.SDK/Module/src/*"],
-			"traisi-question-sdk": ["../../../traisi-v2/src/TRAISI.SDK/Module/src"]
+			"traisi-sdk/*": ["../../traisi-v2/src/TRAISI.SDK/Module/src/*"],
+			"traisi-question-sdk": ["../../traisi-v2/src/TRAISI.SDK/Module/src"]
 		}
 	},
 	"exclude": ["dist/**/*", "node_modules/**/*"]
