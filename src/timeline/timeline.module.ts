@@ -4,9 +4,10 @@ import { TimelineWedgeComponent } from './components/timeline-wedge/timeline-wed
 import {TimelineService} from "./services/timeline.service";
 import {StoreModule} from "@ngrx/store";
 import {timelineActions} from "./redux/reducer";
-import {BrowserModule} from "@angular/platform-browser";
 import {CommonModule} from "@angular/common";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+
 @NgModule({
 	entryComponents:[TimelineWedgeComponent, TimelineComponent ],
 	declarations: [TimelineWedgeComponent, TimelineComponent ],
@@ -35,7 +36,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 	imports: [
 		CommonModule,
 		FontAwesomeModule,
-        StoreModule.forRoot({ timelineActions })
+		StoreModule.forRoot({ timelineActions }),
+		PopoverModule.forRoot()
 	]
 })
 export default class TimelineModule {}
