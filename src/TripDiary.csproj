@@ -11,13 +11,17 @@
     </PropertyGroup>
     <ItemGroup>
     <OutputFile Include="$(OutDir)/TripDiary.dll" />
-        <DevOutputFile Include="$(MSBuildProjectDirectory)\dist\*" />
-        <EmbeddedResource Include="dist/**" />
+        <DevOutputFile Include="$(MSBuildProjectDirectory)\dist\*" Watch="false" />
+        <EmbeddedResource Include="dist/**" Watch="false" />
         <EmbeddedResource Include="locales.json">
             <LogicalName>locales</LogicalName>
         </EmbeddedResource>
      </ItemGroup>
 
+    <ItemGroup>
+        <!-- extends watching group to include *.js files -->
+        <Watch Include="**\*.ts" Exclude="node_modules\**\*;**\*.js.map;obj\**\*;bin\**\*;dist\**\*" />
+    </ItemGroup>
 
     <ItemGroup>
         <Compile Remove="node_modules\**" />
@@ -33,6 +37,11 @@
         <HintPath>..\..\traisi-v2\src\TRAISI.SDK\bin\Debug\netstandard2.0\TRAISI.SDK.dll</HintPath>
       </Reference>
     </ItemGroup>
+
+    <Target Name="PreBuild" BeforeTargets="Compile">
+        <Exec Command="npm run build" />
+        <Message Text="Compiled and bundled JS library" Importance="High" />
+    </Target>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <Copy SourceFiles="@(OutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/TRAISI/extensions" />

@@ -46,6 +46,11 @@ dotnet traisi init <project.csproj> [--name|n <module_name>]
 
 Add a reference to the TRAISI.SDK project or dll in your project.
 
+### Debug and Development
+
+A separate webpack config file has been provided to make use of the build it in watch capabilities. Any changes to source *ts will trigger a compile.
+Once rebuilding / compiling - the bundled files will be copied to the development folder of the TRAISI server for faster reloading.
+
 ### Building
 
 ```console

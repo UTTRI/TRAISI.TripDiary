@@ -95,6 +95,9 @@
             <e p="timeline-location.model.ts" t="Include" />
             <e p="timeline-state.model.ts" t="Include" />
           </e>
+          <e p="redux" t="Include">
+            <e p="reducer.ts" t="Include" />
+          </e>
           <e p="services" t="Include">
             <e p="timeline.service.ts" t="Include" />
           </e>
@@ -105,6 +108,7 @@
         <e p="TripDiaryController.cs" t="Include" />
         <e p="TripDiaryService.cs" t="Include" />
         <e p="tsconfig.json" t="Include" />
+        <e p="webpack.config.dev.js" t="Include" />
         <e p="webpack.config.js" t="Include" />
       </e>
       <e p="traisi-trip-diary.sln" t="IncludeFlat" />

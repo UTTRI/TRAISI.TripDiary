@@ -46,3 +46,6 @@ Obj/
 
 node_modules/
 dist/
+.vscode/
+.vs/
+.idea/

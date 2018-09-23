@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 
 @Component({
-	selector: 'traisi-wedge-question',
+	selector: 'timeline-wedge',
 	template: require('./timeline-wedge.component.html').toString(),
 	styles: [require('./timeline-wedge.component.scss').toString()]
 })
@@ -19,11 +19,13 @@ export class TimelineWedgeComponent implements OnInit {
 	constructor(private _element: ElementRef, private timelineService: TimelineService) {
         this.typeName = "Trip Diary Timeline";
         this.icon = "business-time"
+		
+		
 	}
 	/**
 	 * Angular's ngOnInit
 	 */
 	ngOnInit(): void {
-		throw new Error('Method not implemented.');
+		console.log("inside of wedge component - test 2");
 	}
 }

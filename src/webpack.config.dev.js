@@ -1,6 +1,6 @@
 const path = require('path');
 const WebpackSystemRegister = require('webpack-system-register');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 module.exports = {
     entry: {
@@ -86,6 +86,9 @@ module.exports = {
     ],*/
     externals: [/^@angular/, /^ngx-bootstrap/],
     plugins: [
+        new CopyWebpackPlugin([
+            { from: 'dist/', to: '../../../traisi-v2/src/TRAISI/development', toType: 'dir' },
+        ], { debug: 'info' })
         /* new WebpackSystemRegister({
              systemjsDeps: [
                  /^ngx-bootstrap/, // any import that starts with react
