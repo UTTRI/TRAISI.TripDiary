@@ -10,11 +10,54 @@
       <e p=".git\info\exclude" t="IncludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="src" t="IncludeRecursive">
-        <e p="bin" t="ExcludeRecursive" />
+        <e p="bin" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="TripDiary.dll" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="dist" t="Include">
           <e p="traisi-trip-diary-timeline.module.js" t="Include" />
           <e p="traisi-trip-diary-timeline.module.js.map" t="Include" />
         </e>
+        <e p="locales.json" t="Include" />
+        <e p="node_modules\TypeScript\lib\lib.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.dom.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.dom.iterable.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2015.collection.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2015.core.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2015.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2015.generator.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2015.iterable.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2015.promise.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2015.proxy.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2015.reflect.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2015.symbol.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2015.symbol.wellknown.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2016.array.include.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2016.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2016.full.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2017.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2017.full.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2017.intl.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2017.object.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2017.sharedmemory.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2017.string.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2017.typedarrays.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2018.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2018.full.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2018.intl.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2018.promise.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es2018.regexp.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es5.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.es6.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.esnext.array.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.esnext.asynciterable.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.esnext.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.esnext.full.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.scripthost.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\TypeScript\lib\lib.webworker.d.ts" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netstandard2.0" t="Include">
