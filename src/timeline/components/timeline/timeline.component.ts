@@ -8,7 +8,7 @@ import {
 import {TimelineService} from '../../services/timeline.service';
 import {TRAISI} from 'traisi-question-sdk';
 import {TimelineWedgeComponent} from "../timeline-wedge/timeline-wedge.component";
-
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 @Component({
     entryComponents: [TimelineWedgeComponent],
     selector: 'traisi-timeline-question',
@@ -20,6 +20,9 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
     typeName: string;
     icon: string;
 
+    icons: {} = {
+        faHome: faHome
+    }
 
     /**
      *Creates an instance of TimelineComponent.

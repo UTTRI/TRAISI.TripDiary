@@ -1,2 +1,40 @@
+<div class="timeline-container">
 
-<timeline-wedge></timeline-wedge>
+    <div class="timeline-locations-outer-container">
+
+        <div class="timeline-locations-container">
+
+            <div class="timeline-add-visited-location-container">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        ADD VISITED LOCATION
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">(filler location)</a>
+
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">(filler location)</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-bar-container">
+                <button type="button" class="btn btn-primary btn-circle btn-xl timeline-bar-location">
+                    <fa-icon [icon]="icons.faHome"></fa-icon>
+                </button>
+                <div class="timeline-bar">
+
+                </div>
+                <button type="button" class="btn btn-primary btn-circle btn-xl timeline-bar-location">
+                    <fa-icon [icon]="icons.faHome"></fa-icon>
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <div class="timeline-wedge-container">
+        <timeline-wedge></timeline-wedge>
+    </div>
+
+</div>

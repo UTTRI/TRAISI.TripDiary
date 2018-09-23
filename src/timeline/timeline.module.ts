@@ -6,7 +6,7 @@ import {StoreModule} from "@ngrx/store";
 import {timelineActions} from "./redux/reducer";
 import {BrowserModule} from "@angular/platform-browser";
 import {CommonModule} from "@angular/common";
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @NgModule({
 	entryComponents:[TimelineWedgeComponent, TimelineComponent ],
 	declarations: [TimelineWedgeComponent, TimelineComponent ],
@@ -34,6 +34,7 @@ import {CommonModule} from "@angular/common";
 	],
 	imports: [
 		CommonModule,
+		FontAwesomeModule,
         StoreModule.forRoot({ timelineActions })
 	]
 })
