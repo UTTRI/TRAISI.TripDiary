@@ -1,4 +1,14 @@
-import { Component, OnInit, ElementRef, ComponentFactoryResolver, ViewChild, Inject } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	ElementRef,
+	ComponentFactoryResolver,
+	ViewChild,
+	Inject,
+	TemplateRef,
+	ViewContainerRef,
+	Injector
+} from '@angular/core';
 
 import { TimelineService } from '../../services/timeline.service';
 import { TRAISI } from 'traisi-question-sdk';
@@ -22,6 +32,9 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 	@ViewChild(PopoverDirective)
 	popovers;
 
+	@ViewChild('questionTemplate', { read: ViewContainerRef })
+	questionOutlet: ViewContainerRef;
+
 	/**
 	 *Creates an instance of TimelineComponent.
 	 * @param {ElementRef} _element
@@ -29,10 +42,11 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 	 * @memberof TimelineComponent
 	 */
 	constructor(
-		@Inject('QuestionLoaderService')private _questionLoaderService: any,
+		@Inject('QuestionLoaderService') private _questionLoaderService: any,
 		private _element: ElementRef,
 		private _timelineService: TimelineService,
-		private resolver: ComponentFactoryResolver
+		private resolver: ComponentFactoryResolver,
+		private injector: Injector
 	) {
 		super();
 		this.typeName = 'Trip Diary Timeline';
@@ -55,5 +69,15 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		var textFactory = this._questionLoaderService.componentFactories.text;
+
+		let componentRef = this.questionOutlet.createComponent(textFactory, undefined, this.injector);
+
+		let instance: TRAISI.SurveyQuestion<any> = <TRAISI.SurveyQuestion<any>>componentRef.instance;
+
+		instance.response.subscribe(value => {
+			console.log('Getting value from child question: ' + value);
+		});
+	}
 }
