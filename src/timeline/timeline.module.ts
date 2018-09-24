@@ -1,16 +1,37 @@
 import { NgModule } from '@angular/core';
-import { TimelineComponent } from './components/timeline/timeline.component'
+import { TimelineComponent } from './components/timeline/timeline.component';
 import { TimelineWedgeComponent } from './components/timeline-wedge/timeline-wedge.component';
-import {TimelineService} from "./services/timeline.service";
-import {StoreModule} from "@ngrx/store";
-import {timelineActions} from "./redux/reducer";
-import {CommonModule} from "@angular/common";
+import { TimelineService } from './services/timeline.service';
+import { StoreModule } from '@ngrx/store';
+import { timelineActions } from './redux/reducer';
+import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PopoverModule } from 'ngx-bootstrap/popover';
-
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { TimelineShelfComponent } from './components/timeline-shelf/timeline-shelf.component';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { TimelineDockComponent } from './components/timeline-dock/timeline-dock.component';
+import { TimelineSlotComponent } from './components/timeline-slot/timeline-slot.component';
+import { TimelineEntryItemComponent } from './components/timeline-entry-item/timeline-entry-item.component';
+import { ModalModule } from 'ngx-bootstrap/modal'
+import { DndModule } from 'ngx-drag-drop';
 @NgModule({
-	entryComponents:[TimelineWedgeComponent, TimelineComponent ],
-	declarations: [TimelineWedgeComponent, TimelineComponent ],
+	entryComponents: [
+		TimelineWedgeComponent,
+		TimelineComponent,
+		TimelineShelfComponent,
+		TimelineDockComponent,
+		TimelineSlotComponent,
+		TimelineEntryItemComponent
+	],
+	declarations: [
+		TimelineWedgeComponent,
+		TimelineComponent,
+		TimelineShelfComponent,
+		TimelineDockComponent,
+		TimelineSlotComponent,
+		TimelineEntryItemComponent
+	],
 	exports: [],
 	providers: [
 		{
@@ -29,15 +50,18 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 				}
 			],
 			multi: true
-			
 		},
 		TimelineService
 	],
 	imports: [
 		CommonModule,
+		DndModule,
+		AlertModule,
+		ModalModule.forRoot(),
 		FontAwesomeModule,
 		StoreModule.forRoot({ timelineActions }),
-		PopoverModule.forRoot()
+		PopoverModule.forRoot(),
+		ButtonsModule.forRoot()
 	]
 })
 export default class TimelineModule {}

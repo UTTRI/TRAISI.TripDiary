@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
+import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 
 @Component({
 	selector: 'timeline-shelf',
@@ -7,7 +8,7 @@ import { TimelineService } from '../../services/timeline.service';
 	styles: [require('./timeline-shelf.component.scss').toString()]
 })
 export class TimelineShelfComponent implements OnInit {
-
+	public shelfItems: Array<TimelineEntry>;
 
 	/**
 	 *Creates an instance of TimelineWedgeComponent.
@@ -16,14 +17,27 @@ export class TimelineShelfComponent implements OnInit {
 	 * @memberof TimelineWedgeComponent
 	 */
 	constructor(private _element: ElementRef, private _timelineService: TimelineService) {
-    
-		
-		
+		this.shelfItems = [];
 	}
+
+	/**
+	 *
+	 *
+	 * @private
+	 * @memberof TimelineShelfComponent
+	 */
+	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => {
+		console.log('Shelf items changed');
+		this.shelfItems = items;
+
+		console.log(items);
+		console.log(this.shelfItems);
+	};
+
 	/**
 	 * Angular's ngOnInit
 	 */
 	ngOnInit(): void {
-		console.log("in ngOnInit of shelf component.");
+		this._timelineService.availableLocations.subscribe(this.onShelfItemsChanged);
 	}
 }

@@ -1,49 +1,23 @@
 <div class="timeline-container">
 
-    <div class="timeline-locations-outer-container">
+    <div class="timeline-instructions-top">
+        <alert type="info" #instructionsAlert>
+            Where did you go yesterday? Please populate the timeline below by dragging and dropping locations from the
+            shelf to the timeline.
+        </alert>
 
-        <div class="timeline-locations-container">
-
-            <div class="timeline-add-visited-location-container">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        ADD VISITED LOCATION
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">(filler location)</a>
-
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">(filler location)</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="timeline-bar-container">
-
-                <button type="button" class="btn btn-primary btn-circle btn-xl timeline-bar-location"
-                popover="Instruction text content"
-                popoverTitle="Instruction text title" #pop="bs-popover"
-                placement="right">
-                    <fa-icon [icon]="icons.faHome"></fa-icon>
-                </button>
-
-
-
-
-
-                <div class="timeline-bar">
-
-                </div>
-                <button type="button" class="btn btn-primary btn-circle btn-xl timeline-bar-location">
-                    <fa-icon [icon]="icons.faHome"></fa-icon>
-                </button>
-            </div>
-
-        </div>
     </div>
-    <div class="timeline-wedge-container">
-        <timeline-wedge></timeline-wedge>
+
+    <div class="timeline-shelf-container">
+        <timeline-shelf></timeline-shelf>
+        <button type="button" class="btn btn-primary">
+            + Add New Location
+        </button>
+    </div>
+
+    <div class="timleine-dock-container">
+        <timeline-dock></timeline-dock>
     </div>
 
 </div>
+

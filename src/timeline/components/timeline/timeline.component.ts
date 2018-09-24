@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ComponentFactoryResolver, ViewChild, Inject } from '@angular/core';
 
 import { TimelineService } from '../../services/timeline.service';
 import { TRAISI } from 'traisi-question-sdk';
@@ -29,6 +29,7 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 	 * @memberof TimelineComponent
 	 */
 	constructor(
+		@Inject('QuestionLoaderService')private _questionLoaderService: any,
 		private _element: ElementRef,
 		private _timelineService: TimelineService,
 		private resolver: ComponentFactoryResolver
@@ -47,15 +48,12 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 	 */
 	traisiOnInit(): void {
 		console.log('TRAISI: traisiOnInit called');
-		
+
+		console.log(this._questionLoaderService);
 	}
 
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {
-        console.log('just testing  console log2');
-        this.popovers.show();
-
-	}
+	ngOnInit(): void {}
 }

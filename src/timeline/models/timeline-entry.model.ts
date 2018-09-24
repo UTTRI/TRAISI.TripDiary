@@ -1,4 +1,4 @@
-export interface TimelineLocation
+export interface TimelineEntry
 {
     latitude: number;
     longitude: number;
