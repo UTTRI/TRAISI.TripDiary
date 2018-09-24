@@ -1,4 +1,30 @@
-timeline-entry-item{
-    padding-left:5px;
-    padding-right:5px;
+timeline-entry-item {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.timeline-entry-model-name {
+	font-weight: bold;
+	text-align: center;
+}
+
+.timeline-entry-model-address {
+	text-align: center;
+}
+
+.timeline-entry-inner-container {
+	align-items: center;
+	align-content: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.timeline-entry-item-inner-container {
+	text-align: center;
+}
+
+
+.item-drag-active{
+    opacity: 0.3;
+    filter: blur(5);
 }

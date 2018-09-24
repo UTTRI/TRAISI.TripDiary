@@ -1,5 +1,79 @@
 <div class="timeline-entry-item-inner-container">
-    <button  type="button" class="btn btn-primary btn-circle btn-xl" [dndDraggable]="model" [dndEffectAllowed]="'all'">
-            <fa-icon [icon]="homeIcon"></fa-icon>
-    </button>
+
+    <div class="timeline-entry-model-name">{{model.name}}</div>
+    <div class="timeline-entry-model-address">{{model.address}}</div>
+    <div class="btn-group" dropdown>
+        <button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl" [dndDraggable]="model"
+            [dndEffectAllowed]="'all'" [dndDraggingSourceClass]="'item-drag-active'">
+            <fa-icon [icon]="icon"></fa-icon>
+        </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="edit()">Edit</a></li>
+            <li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="delete()">Delete</a></li>
+        </ul>
+    </div>
 </div>
+
+<ng-template #editTimelineEntryTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Edit Timeline Entry</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group form-group-adjust row">
+
+            <div class="row">
+                <div class="col-4">
+                    <label for="edit-timeline-address-input">Address</label>
+                </div>
+                <div class="col-4">
+                    <input type="text" id="edit-timeline-address-input" class="form-control" placeholder="Enter value"
+                        [(ngModel)]="editModel.address" />
+                </div>
+                <div class="col-4">
+
+                    <button type="button" class="btn btn-primary btn-sm" (click)="editLocation()">Edit</button>
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <label for="edit-timeline-name-input">Name</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" id="edit-timeline-name-input" class="form-control" placeholder="Enter value"
+                        [(ngModel)]="editModel.name" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
+                    <label for="edit-timeline-purpose-input">Purpose</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" id="edit-timeline-purpose-input" class="form-control" placeholder="Enter value"
+                        [(ngModel)]="editModel.purpose" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
+    </div>
+
+</ng-template>
+
+
+
+<ng-template #editMapModal>
+    <div class="modal-header">header</div>
+    <ng-template #editMapContainer>
+        <ng-container #container></ng-container>
+    </ng-template>
+</ng-template>

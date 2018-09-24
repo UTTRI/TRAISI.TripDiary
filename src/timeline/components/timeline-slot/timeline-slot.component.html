@@ -1,5 +1,20 @@
-<div class="slot-container" dndDropzone>
-<button type="button" class="btn btn-outline-primary btn-circle btn-xl">
+<div *ngIf="!hasTimelineEntryItem">
+    <div class="slot-container btn-circle btn-xl" dndDropzone [dndDragoverClass]="'slot-drag-over'" (dndDrop)="locationPlaced($event)">
 
-</button>
+    </div>
+
+
+</div>
+<div *ngIf="hasTimelineEntryItem">
+    <div class="btn-group" dropdown>
+        <button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl" [dndDraggable]="model"
+            [dndEffectAllowed]="'all'" [dndDraggingSourceClass]="'item-drag-active'">
+            <fa-icon [icon]="icon"></fa-icon>
+        </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="edit()">Edit</a></li>
+            <li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="delete()">Delete</a></li>
+        </ul>
+    </div>
+
 </div>

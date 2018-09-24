@@ -13,8 +13,10 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { TimelineDockComponent } from './components/timeline-dock/timeline-dock.component';
 import { TimelineSlotComponent } from './components/timeline-slot/timeline-slot.component';
 import { TimelineEntryItemComponent } from './components/timeline-entry-item/timeline-entry-item.component';
-import { ModalModule } from 'ngx-bootstrap/modal'
+import { ModalModule, ModalBackdropComponent } from 'ngx-bootstrap/modal';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { DndModule } from 'ngx-drag-drop';
+import { FormsModule } from '@angular/forms';
 @NgModule({
 	entryComponents: [
 		TimelineWedgeComponent,
@@ -22,7 +24,8 @@ import { DndModule } from 'ngx-drag-drop';
 		TimelineShelfComponent,
 		TimelineDockComponent,
 		TimelineSlotComponent,
-		TimelineEntryItemComponent
+		TimelineEntryItemComponent,
+		ModalBackdropComponent
 	],
 	declarations: [
 		TimelineWedgeComponent,
@@ -30,7 +33,8 @@ import { DndModule } from 'ngx-drag-drop';
 		TimelineShelfComponent,
 		TimelineDockComponent,
 		TimelineSlotComponent,
-		TimelineEntryItemComponent
+		TimelineEntryItemComponent,
+		
 	],
 	exports: [],
 	providers: [
@@ -61,7 +65,9 @@ import { DndModule } from 'ngx-drag-drop';
 		FontAwesomeModule,
 		StoreModule.forRoot({ timelineActions }),
 		PopoverModule.forRoot(),
-		ButtonsModule.forRoot()
+		ButtonsModule.forRoot(),
+		BsDropdownModule.forRoot(),
+		FormsModule
 	]
 })
 export default class TimelineModule {}

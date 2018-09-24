@@ -1,39 +1,56 @@
-@import "../../assets/timeline";
+@import '../../assets/timeline';
 // shared scss goes here - size specific in the other sub files
 .timeline-add-visited-location-container {
-    display: inline-block;
-    align-self: center;
+	display: inline-block;
+	align-self: center;
 }
 
 .timeline-locations-container {
-    text-align: center;
-    width: 80%;
+	text-align: center;
+	width: 80%;
 }
 
 .timeline-bar {
-    height: 5px;
-    flex-grow: 2;
-    background-color: $blue;
+	height: 5px;
+	flex-grow: 2;
+	background-color: $blue;
 }
 
-
+.timeline-dock-container {
+	text-align: center;
+}
 
 .timeline-bar-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .timeline-locations-outer-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.timeline-bar-location {}
+.timeline-shelf-container {
+	text-align: center;
+}
 
-@import "./timeline.component.lg.scss";
-@import "./timeline.component.md.scss";
-@import "./timeline.component.sm.scss";
-@import "./timeline.component.xs.scss";
+.timeline-add-new-location-button {
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+.timeline-bar-location {
+}
+
+.timeline-container
+{
+    margin-bottom:50px;
+}
+
+@import './timeline.component.lg.scss';
+@import './timeline.component.md.scss';
+@import './timeline.component.sm.scss';
+@import './timeline.component.xs.scss';

@@ -5,4 +5,5 @@ export interface TimelineEntry
     address: string;
     time: Date;
     purpose: string;
+    name: string; 
 }

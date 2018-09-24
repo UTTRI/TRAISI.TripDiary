@@ -15,8 +15,10 @@ import { TRAISI } from 'traisi-question-sdk';
 import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
-
-import { QuestionLoaderService } from 'traisi-question-sdk'
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { QuestionLoaderService } from 'traisi-question-sdk';
+import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 @Component({
 	entryComponents: [TimelineWedgeComponent],
 	selector: 'traisi-timeline-question',
@@ -26,7 +28,7 @@ import { QuestionLoaderService } from 'traisi-question-sdk'
 export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseTypes.Timeline> implements OnInit {
 	typeName: string;
 	icon: string;
-
+	modalRef: BsModalRef;
 	icons: {} = {
 		faHome: faHome
 	};
@@ -37,14 +39,25 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 	@ViewChild('questionTemplate', { read: ViewContainerRef })
 	questionOutlet: ViewContainerRef;
 
-	 
-	
+	@ViewChild('newTimelineEntryTemplate')
+	newTimelineEntryTemplateRef: TemplateRef<any>;
+
+	/**
+	 *
+	 * @param _questionLoaderService
+	 * @param _element
+	 * @param _timelineService
+	 * @param resolver
+	 * @param injector
+	 * @param modalService
+	 */
 	constructor(
 		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService,
 		private _element: ElementRef,
 		private _timelineService: TimelineService,
 		private resolver: ComponentFactoryResolver,
-		private injector: Injector
+		private injector: Injector,
+		private modalService: BsModalService
 	) {
 		super();
 		this.typeName = 'Trip Diary Timeline';
@@ -67,21 +80,24 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {
-		let componentRef = null;
+	ngOnInit(): void {}
 
-		let sub = this._questionLoaderService.componentFactories$.subscribe(factory => {
-			console.log('got factory');
-			console.log(factory);
-			if (factory.selector == 'traisi-map-question') {
-				componentRef = this.questionOutlet.createComponent(factory, undefined, this.injector);
-				let instance: TRAISI.SurveyQuestion<any> = <TRAISI.SurveyQuestion<any>>componentRef.instance;
+	editModel: TimelineEntry;
 
-				instance.response.subscribe(value => {
-					console.log('Getting value from child question: ' + value);
-				});
-				sub.unsubscribe();
-			}
-		});
+	saveNewLocation(): void {
+		this._timelineService.availableLocations.next(this._timelineService.availableLocations.getValue().concat(this.editModel));
+		this.modalRef.hide();
+	}
+
+	addNewLocation(): void {
+		this.editModel = {
+			address: '',
+			latitude: 0,
+			purpose: '',
+			longitude: 0,
+			time: new Date(),
+			name: ''
+		};
+		this.modalRef = this._timelineService.openEditTimelineEntryModal(this.newTimelineEntryTemplateRef);
 	}
 }

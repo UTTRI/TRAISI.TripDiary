@@ -1,0 +1,15 @@
+@import "../../assets/timeline";
+
+.slot-container
+{
+    border: 2px solid gray;
+}
+.slot-container.slot-drag-over 
+{
+    border: 3px dashed $blue;
+}
+
+.timeline-slot-model-header
+{
+    position: absolute;
+}
