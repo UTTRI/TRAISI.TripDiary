@@ -15,6 +15,8 @@ import { TRAISI } from 'traisi-question-sdk';
 import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
+
+import { QuestionLoaderService } from 'traisi-question-sdk'
 @Component({
 	entryComponents: [TimelineWedgeComponent],
 	selector: 'traisi-timeline-question',
@@ -35,14 +37,10 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 	@ViewChild('questionTemplate', { read: ViewContainerRef })
 	questionOutlet: ViewContainerRef;
 
-	/**
-	 *Creates an instance of TimelineComponent.
-	 * @param {ElementRef} _element
-	 * @param {TimelineService} timelineService
-	 * @memberof TimelineComponent
-	 */
+	 
+	
 	constructor(
-		@Inject('QuestionLoaderService') private _questionLoaderService: any,
+		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService,
 		private _element: ElementRef,
 		private _timelineService: TimelineService,
 		private resolver: ComponentFactoryResolver,
