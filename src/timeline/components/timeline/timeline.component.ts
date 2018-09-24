@@ -70,14 +70,20 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 	 * Angular's ngOnInit
 	 */
 	ngOnInit(): void {
-		var textFactory = this._questionLoaderService.componentFactories.text;
+		let componentRef = null;
 
-		let componentRef = this.questionOutlet.createComponent(textFactory, undefined, this.injector);
+		let sub = this._questionLoaderService.componentFactories$.subscribe(factory => {
+			console.log('got factory');
+			console.log(factory);
+			if (factory.selector == 'traisi-map-question') {
+				componentRef = this.questionOutlet.createComponent(factory, undefined, this.injector);
+				let instance: TRAISI.SurveyQuestion<any> = <TRAISI.SurveyQuestion<any>>componentRef.instance;
 
-		let instance: TRAISI.SurveyQuestion<any> = <TRAISI.SurveyQuestion<any>>componentRef.instance;
-
-		instance.response.subscribe(value => {
-			console.log('Getting value from child question: ' + value);
+				instance.response.subscribe(value => {
+					console.log('Getting value from child question: ' + value);
+				});
+				sub.unsubscribe();
+			}
 		});
 	}
 }
