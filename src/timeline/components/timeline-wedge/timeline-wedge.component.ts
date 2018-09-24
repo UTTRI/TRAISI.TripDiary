@@ -29,3 +29,4 @@ export class TimelineWedgeComponent implements OnInit {
 		console.log("inside of wedge component - test 2");
 	}
 }
+ 
