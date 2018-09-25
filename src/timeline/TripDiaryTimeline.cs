@@ -27,5 +27,22 @@ namespace TRAISI.SDK.Questions {
 		[QuestionOption(QuestionOptionValueType.String,
 			Name = "Trip Purposes")]
 		public string Purpose;
+
+		[QuestionConfiguration(QuestionConfigurationValueType.Boolean,
+		Name = "Departure Time Collection",
+		Description = "A flag that will turn off the collecting of departure times from users",
+			SurveyBuilderValueType = QuestionBuilderType.Switch,
+			DefaultValue = "false")]
+
+		public bool CollectDepartureTime = true;
+
+
+		[QuestionConfiguration(QuestionConfigurationValueType.Boolean,
+		Name = "Arrival Time Collection",
+		Description = "A flag that will turn off the collecting of arrival times from users",
+			SurveyBuilderValueType = QuestionBuilderType.Switch,
+			DefaultValue = "false")]
+		public bool  CollectArrivalTime = false;
+
 	}
 }
