@@ -24,9 +24,13 @@ namespace TRAISI.SDK.Questions {
 			DefaultValue = "3:00")]
 		public string StartTime = "StartTime";
 
-		[QuestionOption(QuestionOptionValueType.String,
-			Name = "Trip Purposes")]
-		public string Purpose;
+        [QuestionConfiguration(QuestionConfigurationValueType.String,
+            Name = "Purpose",
+            Description = "Purpose of being at location.",
+            SurveyBuilderValueType = QuestionBuilderType.SingleSelect,
+            DefaultValue = "home",
+            SharedResource = "mapquestion-purpose")]
+		public string Purpose = "home";
 
 		[QuestionConfiguration(QuestionConfigurationValueType.Boolean,
 		Name = "Departure Time Collection",
