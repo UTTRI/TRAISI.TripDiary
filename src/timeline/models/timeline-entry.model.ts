@@ -4,6 +4,7 @@ export interface TimelineEntry
     longitude: number;
     address: string;
     time: Date;
+    timeB: Date;
     purpose: string;
     name: string; 
 }
