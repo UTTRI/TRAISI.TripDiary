@@ -13,7 +13,7 @@
 .timeline-bar {
 	height: 5px;
 	flex-grow: 2;
-	background-color: $blue;
+	background-color: blue;
 }
 
 .timeline-dock-container {
@@ -53,4 +53,3 @@
 @import './timeline.component.lg.scss';
 @import './timeline.component.md.scss';
 @import './timeline.component.sm.scss';
-@import './timeline.component.xs.scss';

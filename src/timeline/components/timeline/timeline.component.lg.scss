@@ -1,4 +1,4 @@
-@include media-breakpoint-down(lg) {
+@media #{$lg-down} {
 
     
     traisi-timeline-question{

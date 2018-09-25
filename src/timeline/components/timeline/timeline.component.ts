@@ -76,14 +76,15 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 		const f = this.resolver.resolveComponentFactory(TimelineWedgeComponent);
 
 		console.debug('in constructor of timeline component');
-		console.log('in constructor of timeline component');
+		console.log('in constructor of timeline component'); 
 	}
 
 	/**
 	 * TRAISI life cycle called for when the question is prepared
 	 */
 	traisiOnInit(): void {
-
+		console.log("this timeline configuration");
+		console.log(this.configuration);
 	}
 
 	/**
@@ -110,7 +111,7 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 			name: ''
 		};
 		this.modalRef = this._timelineService.openEditTimelineEntryModal(
-			this.newTimelineEntryTemplateRef
+			this.newTimelineEntryTemplateRef 
 		);
 	}
 
