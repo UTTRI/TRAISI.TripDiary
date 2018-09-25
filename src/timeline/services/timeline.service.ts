@@ -39,6 +39,8 @@ export class TimelineService {
 			purpose: 'work',
 			longitude: 0,
 			time: new Date(),
+			timeB: new Date(),
+
 			name: 'My work place'
 		};
 
@@ -48,6 +50,7 @@ export class TimelineService {
 			purpose: 'home',
 			longitude: 0,
 			time: new Date(),
+			timeB: new Date(),
 			name: 'Home'
 		};
 
@@ -57,6 +60,7 @@ export class TimelineService {
 			purpose: 'school',
 			longitude: 0,
 			time: new Date(),
+			timeB: new Date(),
 			name: 'University'
 		};
 

@@ -108,6 +108,7 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 			purpose: '',
 			longitude: 0,
 			time: new Date(),
+			timeB: new Date(),
 			name: ''
 		};
 		this.modalRef = this._timelineService.openEditTimelineEntryModal(

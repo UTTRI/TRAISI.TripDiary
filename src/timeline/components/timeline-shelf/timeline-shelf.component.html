@@ -1,10 +1,8 @@
-<smooth-dnd-container>
-    <div class="timeline-shelf-inner-container">
+<div class="timeline-shelf-inner-container">
 
-        <smooth-dnd-draggable  *ngFor="let item of shelfItems" >
-            <timeline-entry-item [model]="item">
 
-            </timeline-entry-item>
-        </smooth-dnd-draggable>
-    </div>
-</smooth-dnd-container>
+    <timeline-entry-item [model]="item" *ngFor="let item of shelfItems">
+
+    </timeline-entry-item>
+
+</div>

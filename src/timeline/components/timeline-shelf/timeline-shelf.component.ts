@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
-
+import { ContainerComponent, DraggableComponent, IDropResult } from 'ngx-smooth-dnd';
 @Component({
 	selector: 'timeline-shelf',
 	template: require('./timeline-shelf.component.html').toString(),
@@ -18,6 +18,14 @@ export class TimelineShelfComponent implements OnInit {
 	 */
 	constructor(private _element: ElementRef, private _timelineService: TimelineService) {
 		this.shelfItems = [];
+	}
+
+	/**
+	 * 
+	 * @param dropResult 
+	 */
+	onDrop(dropResult: IDropResult) {
+		console.log(dropResult);
 	}
 
 	/**
