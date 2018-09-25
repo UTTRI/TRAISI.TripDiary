@@ -3,8 +3,7 @@
     <div class="timeline-entry-model-name">{{model.name}}</div>
     <div class="timeline-entry-model-address">{{model.address}}</div>
     <div class="btn-group" dropdown>
-        <button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl" [dndDraggable]="model"
-            [dndEffectAllowed]="'all'" [dndDraggingSourceClass]="'item-drag-active'">
+        <button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl">
             <fa-icon [icon]="icon"></fa-icon>
         </button>
         <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">

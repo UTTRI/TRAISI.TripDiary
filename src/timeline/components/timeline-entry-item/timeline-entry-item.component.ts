@@ -80,8 +80,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 * Angular's ngOnInit
 	 */
 	ngOnInit(): void {
-		console.log(this.mapControlViewContainerRef);
-		console.log(this.mapModal);
+
 	}
 
 
@@ -97,9 +96,9 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 		this.editModel = Object.assign({}, this.model);
 		this.modalRef = this._timelineService.openEditTimelineEntryModal(this.editTimelineEntryTemplateRef);
 
-		console.log(this.modalRef);
+
 		this.viewChildren.changes.subscribe(value => {
-			console.log(value);
+
 			this.viewChildren.forEach( (i:ViewContainerRef) => {
 				this._timelineService.openEditMapLocationModal(i);
 			});
@@ -114,13 +113,6 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 */
 	public editLocation(): void {
 
-
-
-		console.log("in edit location"); 
-		//let mapModelRef = this._timelineService.openEditMapLocationModal(this.editMapModalTemplateRef);
-
-		
-	
 	}
 
 	/**
@@ -135,6 +127,6 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 *
 	 */
 	public delete(): void {
-		console.log('delete');
+
 	}
 }

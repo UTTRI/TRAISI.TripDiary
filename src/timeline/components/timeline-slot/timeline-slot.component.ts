@@ -41,22 +41,18 @@ export class TimelineSlotComponent implements OnInit {
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {
-		console.log('inside of wedge component - test 2');
-	}
+	ngOnInit(): void {}
 
 	/**
 	 *
 	 * @param event
 	 */
 	public locationPlaced(event: DndDropEvent) {
-		console.log(event);
 		this.model = event.data;
 		this.hasTimelineEntryItem = true;
 	}
 
-	public delete(): void
-	{
+	public delete(): void {
 		this.model = undefined;
 		this.hasTimelineEntryItem = false;
 	}

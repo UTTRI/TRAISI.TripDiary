@@ -15,7 +15,6 @@ import { TimelineSlotComponent } from './components/timeline-slot/timeline-slot.
 import { TimelineEntryItemComponent } from './components/timeline-entry-item/timeline-entry-item.component';
 import { ModalModule, ModalBackdropComponent } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { DndModule } from 'ngx-drag-drop';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { FormsModule } from '@angular/forms';
 import { NgxSmoothDnDModule } from 'ngx-smooth-dnd';
@@ -60,7 +59,6 @@ import { NgxSmoothDnDModule } from 'ngx-smooth-dnd';
 	],
 	imports: [
 		CommonModule,
-		DndModule,
 		AlertModule,
 		CarouselModule.forRoot(),
 		ModalModule.forRoot(),
