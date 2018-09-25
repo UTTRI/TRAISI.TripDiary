@@ -117,7 +117,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 
 
 		console.log("in edit location"); 
-		let mapModelRef = this._timelineService.openEditMapLocationModal(this.editMapModalTemplateRef);
+		//let mapModelRef = this._timelineService.openEditMapLocationModal(this.editMapModalTemplateRef);
 
 		
 	

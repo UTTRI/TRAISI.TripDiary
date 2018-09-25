@@ -33,6 +33,7 @@
     "ng2-select2": "^1.0.0-beta.16",
     "ngx-drag-drop": "^1.1.0",
     "ngx-mapbox-gl": "^1.2.0",
+    "ngx-smooth-dnd": "^0.2.6",
     "rxjs": "^6.0.0",
     "rxjs-compat": "6.0.0",
     "select2": "^4.0.6-rc.1"

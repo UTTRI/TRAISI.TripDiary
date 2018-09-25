@@ -30,45 +30,21 @@
         </button>
     </div>
     <div class="modal-body">
-        <div class="form-group form-group-adjust row">
-
-            <div class="row">
-                <div class="col-4">
-                    <label for="edit-timeline-address-input">Address</label>
+        <carousel>
+            <slide>
+                <h3>Where is this new location?</h3>
+                <div #mapTemplate>
+                    <ng-container #container></ng-container>
                 </div>
-                <div class="col-4">
-                    <input type="text" id="edit-timeline-address-input" class="form-control" placeholder="Enter value"
-                        [(ngModel)]="editModel.address" />
-                </div>
-                <div class="col-4">
-
-                    <button type="button" class="btn btn-primary btn-sm" (click)="editLocation()">Edit</button>
-
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-4">
-                    <label for="edit-timeline-name-input">Name</label>
-                </div>
-                <div class="col-8">
-                    <input type="text" id="edit-timeline-name-input" class="form-control" placeholder="Enter value"
-                        [(ngModel)]="editModel.name" />
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-4">
-                    <label for="edit-timeline-purpose-input">Purpose</label>
-                </div>
-                <div class="col-8">
-                    <input type="text" id="edit-timeline-purpose-input" class="form-control" placeholder="Enter value"
-                        [(ngModel)]="editModel.purpose" />
-                </div>
-            </div>
-
-        </div>
+            </slide>
+            <slide>
+                Slide 2
+            </slide>
+            <slide>
+                Slide 3
+            </slide>
+        </carousel>
+        
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="saveNewLocation()">Save changes</button>

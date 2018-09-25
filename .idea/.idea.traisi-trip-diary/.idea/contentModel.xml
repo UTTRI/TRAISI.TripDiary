@@ -22,42 +22,97 @@
           <e p="traisi-trip-diary-timeline.module.js.map" t="Include" />
         </e>
         <e p="locales.json" t="Include" />
-        <e p="node_modules\TypeScript\lib\lib.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.dom.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.dom.iterable.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2015.collection.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2015.core.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2015.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2015.generator.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2015.iterable.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2015.promise.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2015.proxy.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2015.reflect.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2015.symbol.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2015.symbol.wellknown.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2016.array.include.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2016.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2016.full.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2017.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2017.full.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2017.intl.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2017.object.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2017.sharedmemory.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2017.string.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2017.typedarrays.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2018.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2018.full.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2018.intl.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2018.promise.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es2018.regexp.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es5.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.es6.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.esnext.array.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.esnext.asynciterable.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.esnext.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.esnext.full.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.scripthost.d.ts" t="IncludeRecursive" />
-        <e p="node_modules\TypeScript\lib\lib.webworker.d.ts" t="IncludeRecursive" />
+        <e p="node_modules" t="ExcludeRecursive">
+          <e p="@angular\animations" t="IncludeRecursive" />
+          <e p="@angular\common" t="IncludeRecursive" />
+          <e p="@angular\core" t="IncludeRecursive" />
+          <e p="@angular\forms" t="IncludeRecursive" />
+          <e p="@angular\http" t="IncludeRecursive" />
+          <e p="@angular\platform-browser" t="IncludeRecursive" />
+          <e p="@angular\platform-browser-dynamic" t="IncludeRecursive" />
+          <e p="@angular\router" t="IncludeRecursive" />
+          <e p="@angular-devkit\build-angular" t="IncludeRecursive" />
+          <e p="@babel\core" t="IncludeRecursive" />
+          <e p="@babel\preset-env" t="IncludeRecursive" />
+          <e p="@fortawesome\angular-fontawesome" t="IncludeRecursive" />
+          <e p="@fortawesome\fontawesome-svg-core" t="IncludeRecursive" />
+          <e p="@fortawesome\free-solid-svg-icons" t="IncludeRecursive" />
+          <e p="@ngrx\core" t="IncludeRecursive" />
+          <e p="@ngrx\store" t="IncludeRecursive" />
+          <e p="@types" t="IncludeRecursive">
+            <e p="geojson" t="IncludeRecursive" />
+            <e p="jquery" t="IncludeRecursive" />
+            <e p="mapbox-gl" t="IncludeRecursive" />
+            <e p="node" t="IncludeRecursive" />
+          </e>
+          <e p="awesome-typescript-loader" t="IncludeRecursive" />
+          <e p="babel-core" t="IncludeRecursive" />
+          <e p="babel-loader" t="IncludeRecursive" />
+          <e p="babel-preset-env" t="IncludeRecursive" />
+          <e p="copy-webpack-plugin" t="IncludeRecursive" />
+          <e p="core-js" t="IncludeRecursive" />
+          <e p="css-loader" t="IncludeRecursive" />
+          <e p="environments" t="IncludeRecursive" />
+          <e p="file-loader" t="IncludeRecursive" />
+          <e p="image-webpack-loader" t="IncludeRecursive" />
+          <e p="jquery" t="IncludeRecursive" />
+          <e p="mapbox-gl" t="IncludeRecursive" />
+          <e p="ng2-datetime" t="IncludeRecursive" />
+          <e p="ng2-select2" t="IncludeRecursive" />
+          <e p="ngx-bootstrap" t="IncludeRecursive" />
+          <e p="ngx-drag-drop" t="IncludeRecursive" />
+          <e p="ngx-mapbox-gl" t="IncludeRecursive" />
+          <e p="node-sass" t="IncludeRecursive" />
+          <e p="raw-loader" t="IncludeRecursive" />
+          <e p="rxjs" t="IncludeRecursive" />
+          <e p="rxjs-compat" t="IncludeRecursive" />
+          <e p="sass-loader" t="IncludeRecursive" />
+          <e p="select2" t="IncludeRecursive" />
+          <e p="style-loader" t="IncludeRecursive" />
+          <e p="ts-loader" t="IncludeRecursive" />
+          <e p="tsconfig-paths-webpack-plugin" t="IncludeRecursive" />
+          <e p="tslint" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.dom.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.dom.iterable.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2015.collection.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2015.core.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2015.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2015.generator.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2015.iterable.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2015.promise.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2015.proxy.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2015.reflect.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2015.symbol.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2015.symbol.wellknown.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2016.array.include.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2016.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2016.full.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2017.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2017.full.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2017.intl.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2017.object.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2017.sharedmemory.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2017.string.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2017.typedarrays.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2018.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2018.full.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2018.intl.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2018.promise.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es2018.regexp.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es5.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.es6.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.esnext.array.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.esnext.asynciterable.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.esnext.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.esnext.full.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.scripthost.d.ts" t="IncludeRecursive" />
+          <e p="TypeScript\lib\lib.webworker.d.ts" t="IncludeRecursive" />
+          <e p="uglifyjs-webpack-plugin" t="IncludeRecursive" />
+          <e p="webpack" t="IncludeRecursive" />
+          <e p="webpack-cli" t="IncludeRecursive" />
+          <e p="webpack-system-register" t="IncludeRecursive" />
+        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netstandard2.0" t="Include">
@@ -78,11 +133,43 @@
           <e p="TripDiaryRoutes.cs" t="Include" />
         </e>
         <e p="timeline" t="Include">
+          <e p="assets" t="Include">
+            <e p="_timeline.scss" t="Include" />
+          </e>
           <e p="components" t="Include">
             <e p="timeline" t="Include">
               <e p="timeline.component.html" t="Include" />
+              <e p="timeline.component.lg.scss" t="Include" />
+              <e p="timeline.component.md.scss" t="Include" />
               <e p="timeline.component.scss" t="Include" />
+              <e p="timeline.component.sm.scss" t="Include" />
               <e p="timeline.component.ts" t="Include" />
+              <e p="timeline.component.xs.scss" t="Include" />
+            </e>
+            <e p="timeline-dock" t="Include">
+              <e p="timeline-dock.component.html" t="Include" />
+              <e p="timeline-dock.component.scss" t="Include" />
+              <e p="timeline-dock.component.ts" t="Include" />
+              <e p="timeline-dock.lg.scss" t="Include" />
+              <e p="timeline-dock.md.scss" t="Include" />
+              <e p="timeline-dock.scss" t="Include" />
+              <e p="timeline-dock.sm.scss" t="Include" />
+              <e p="timeline-dock.xs.scss" t="Include" />
+            </e>
+            <e p="timeline-entry-item" t="Include">
+              <e p="timeline-entry-item.component.html" t="Include" />
+              <e p="timeline-entry-item.component.scss" t="Include" />
+              <e p="timeline-entry-item.component.ts" t="Include" />
+            </e>
+            <e p="timeline-shelf" t="Include">
+              <e p="timeline-shelf.component.html" t="Include" />
+              <e p="timeline-shelf.component.scss" t="Include" />
+              <e p="timeline-shelf.component.ts" t="Include" />
+            </e>
+            <e p="timeline-slot" t="Include">
+              <e p="timeline-slot.component.html" t="Include" />
+              <e p="timeline-slot.component.scss" t="Include" />
+              <e p="timeline-slot.component.ts" t="Include" />
             </e>
             <e p="timeline-wedge" t="Include">
               <e p="timeline-wedge.component.html" t="Include" />
@@ -92,7 +179,7 @@
           </e>
           <e p="models" t="Include">
             <e p="timeline-configuration.model.ts" t="Include" />
-            <e p="timeline-location.model.ts" t="Include" />
+            <e p="timeline-entry.model.ts" t="Include" />
             <e p="timeline-state.model.ts" t="Include" />
           </e>
           <e p="redux" t="Include">
