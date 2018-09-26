@@ -126,16 +126,15 @@ export class TimelineService {
 
 		let componentRef = null;
 
-		console.log(template);
 		let sub = this._questionLoaderService.componentFactories$.subscribe(factory => {
 			if (factory.selector == 'traisi-map-question') {
 				componentRef = template.createComponent(factory, undefined, this.injector);
 
 				let instance: TRAISI.SurveyQuestion<any> = <TRAISI.SurveyQuestion<any>>componentRef.instance;
 
-	
+				console.log(componentRef);
 				instance.response.subscribe(value => {
-					console.log('Getting value from child question: ' + value);
+
 				});
 				sub.unsubscribe();
 			}

@@ -16,7 +16,7 @@
 
     <div class="timeline-shelf-container">
         <timeline-shelf></timeline-shelf>
-        <button type="button" class="btn btn-primary timeline-add-new-location-button" (click)="addNewLocation()">
+        <button type="button" class="btn btn-primary timeline-add-new-location-button" (click)="newEntryModal.show()">
             + Add New Location
         </button>
     </div>
@@ -28,33 +28,29 @@
 </div>
 
 
-<ng-template #newTimelineEntryTemplate>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">New Timeline Entry</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <carousel>
-            <slide>
-                <h3>Where is this new location?</h3>
-                <div #mapTemplate>
+<div class="modal fade" bsModal #newEntryModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog" (onShow)="handler('onShow', $event)">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">New Timeline Entry</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <ng-template #mapTemplate>
                     <ng-container #container></ng-container>
-                </div>
-            </slide>
-            <slide>
-                Slide 2
-            </slide>
-            <slide>
-                Slide 3
-            </slide>
-        </carousel>
+                </ng-template>
 
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="saveNewLocation()">Save changes</button>
-        <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="saveNewLocation()">Save changes</button>
+                <button type="button" class="btn btn-secondary" (click)="newEntryModal.hide()">Close</button>
+            </div>
+        </div>
     </div>
 
-</ng-template>
+</div>

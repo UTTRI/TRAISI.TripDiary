@@ -21,7 +21,7 @@ import { TRAISI } from 'traisi-question-sdk';
 import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { QuestionLoaderService } from 'traisi-question-sdk';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
@@ -113,6 +113,18 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 		};
 		this.modalRef = this._timelineService.openEditTimelineEntryModal(
 			this.newTimelineEntryTemplateRef 
+		);
+	}
+
+	/**
+	 * 
+	 * @param type 
+	 * @param $event 
+	 */
+	handler(type: string, $event: ModalDirective)
+	{
+		this._timelineService.openEditMapLocationModal(
+			this.mapTemplate 
 		);
 	}
 
