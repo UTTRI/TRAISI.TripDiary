@@ -6,7 +6,7 @@
 
 
 
-        <alert type="info" #instructionsAlert>
+        <alert type="light" #instructionsAlert>
             Where did you go yesterday? Please populate the timeline below by dragging and dropping locations from the
             shelf to the timeline.
         </alert>
@@ -16,7 +16,7 @@
 
     <div class="timeline-shelf-container">
         <timeline-shelf></timeline-shelf>
-        <button type="button" class="btn btn-primary timeline-add-new-location-button" (click)="newEntryModal.show()">
+        <button type="button" class="btn btn-primary timeline-add-new-location-button" (click)="addNewLocation()">
             + Add New Location
         </button>
     </div>
@@ -28,29 +28,4 @@
 </div>
 
 
-<div class="modal fade" bsModal #newEntryModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog" (onShow)="handler('onShow', $event)">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">New Timeline Entry</h4>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <ng-template #mapTemplate>
-                    <ng-container #container></ng-container>
-                </ng-template>
-
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="saveNewLocation()">Save changes</button>
-                <button type="button" class="btn btn-secondary" (click)="newEntryModal.hide()">Close</button>
-            </div>
-        </div>
-    </div>
-
-</div>
+<timeline-new-entry #newEntry></timeline-new-entry>

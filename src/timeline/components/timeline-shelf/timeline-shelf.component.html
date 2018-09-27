@@ -1,8 +1,16 @@
 <div class="timeline-shelf-inner-container">
 
-
-    <timeline-entry-item [model]="item" *ngFor="let item of shelfItems">
-
-    </timeline-entry-item>
+    <smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'copy'" [orientation]="'horizontal'"
+     [groupName]="'timeline'" 
+     [getChildPayload]="getChildPayload"
+      (dragStart)="onDragStart($event)" #shelfContainer
+       [dragClass]="'timeline-entry-drag'"
+       [nonDragAreaSelector]="'timeline-entry-model-info'" >
+        <smooth-dnd-draggable *ngFor="let item of shelfItems">
+            <div class="draggable-item">
+                <timeline-entry-item [model]="item"></timeline-entry-item>
+            </div>
+        </smooth-dnd-draggable>
+    </smooth-dnd-container>
 
 </div>

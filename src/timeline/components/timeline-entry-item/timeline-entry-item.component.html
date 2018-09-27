@@ -1,12 +1,13 @@
 <div class="timeline-entry-item-inner-container">
 
-    <div class="timeline-entry-model-name">{{model.name}}</div>
-    <div class="timeline-entry-model-address">{{model.address}}</div>
+    <div class="timeline-entry-model-info">
+        <div class="timeline-entry-model-name">{{model.name}}</div>
+        <div class="timeline-entry-model-address">{{model.address}}</div>
 
-
-
-        <div class="btn-group" dropdown>
-            <button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl">
+    </div>
+    <div class="btn-group" dropdown [class]="'timeline-draggable'">
+        <div class="timeline-btn-inner">
+            <button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl" >
                 <fa-icon [icon]="icon"></fa-icon>
             </button>
             <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
@@ -14,10 +15,8 @@
                 <li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="delete()">Delete</a></li>
             </ul>
         </div>
-
-
+    </div>
 </div>
-
 <ng-template #editTimelineEntryTemplate>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Edit Timeline Entry</h4>
@@ -27,7 +26,6 @@
     </div>
     <div class="modal-body">
         <div class="form-group form-group-adjust row">
-
             <div class="row">
                 <div class="col-4">
                     <label for="edit-timeline-address-input">Address</label>
@@ -40,10 +38,8 @@
 
                     <button type="button" class="btn btn-primary btn-sm" (click)="editLocation()">Edit</button>
 
-
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-4">
                     <label for="edit-timeline-name-input">Name</label>
@@ -63,17 +59,13 @@
                         [(ngModel)]="editModel.purpose" />
                 </div>
             </div>
-
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-primary">Save changes</button>
         <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
     </div>
-
 </ng-template>
-
-
 
 <ng-template #editMapModal>
     <div class="modal-header">header</div>

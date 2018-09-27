@@ -1,9 +1,18 @@
+<timeline-slot></timeline-slot>
+
 <div class="timeline-dock-inner-container">
-
-
-    <timeline-slot></timeline-slot>
-
     <div class="timeline-bar"></div>
 
-    <timeline-slot></timeline-slot> 
+    <smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'move'" [orientation]="'horizontal'" [groupName]="'timeline'"
+        (dragEnter)="onDragEnter()" (dragLeave)="onDragLeave()" class="timeline-dnd-dock" (dragStart)="onDragStart($event)" #dockContainer>
+
+        <smooth-dnd-draggable *ngFor="let item of dockItems">
+            <div class="draggable-item">
+                <timeline-entry-item [model]="item">
+
+                </timeline-entry-item>
+            </div>
+        </smooth-dnd-draggable>
+    </smooth-dnd-container>
 </div>
+<timeline-slot></timeline-slot>

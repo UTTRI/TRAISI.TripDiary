@@ -3,6 +3,7 @@ import { TimelineService } from '../../services/timeline.service';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { faHome, faSchool, faBriefcase, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
+import { IDropResult } from 'ngx-smooth-dnd';
 @Component({
 	selector: 'timeline-slot',
 	template: require('./timeline-slot.component.html').toString(),
@@ -16,6 +17,10 @@ export class TimelineSlotComponent implements OnInit {
 	homeIcon: IconDefinition = faHome;
 	workIcon: IconDefinition = faBriefcase;
 	schoolIcon: IconDefinition = faSchool;
+
+	public dragOver: boolean = false;
+
+	public dragActive: boolean = false;
 
 	public get icon() {
 		if (this.model.purpose == 'home') {
@@ -55,5 +60,42 @@ export class TimelineSlotComponent implements OnInit {
 	public delete(): void {
 		this.model = undefined;
 		this.hasTimelineEntryItem = false;
+	}
+
+	/**
+	 *
+	 * @param dropResult
+	 */
+	onDrop(dropResult: IDropResult) {
+		if(this.dragOver)
+		{
+			this.hasTimelineEntryItem = true;
+			this.model = dropResult.payload;
+		}
+	}
+
+	/**
+	 * 
+	 * @param $event 
+	 */
+	public onDragStart($event)
+	{
+		console.log("drag active!");
+		this.dragActive = true;
+	}
+
+	/* */
+	public onDragEnd($event)
+	{
+		console.log("drag end");
+		this.dragActive = false;
+	}
+
+	public onDragEnter() {
+		this.dragOver = true;
+	}
+
+	public onDragLeave() {
+		this.dragOver = false;
 	}
 }

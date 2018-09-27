@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { ContainerComponent, DraggableComponent, IDropResult } from 'ngx-smooth-dnd';
@@ -9,6 +9,9 @@ import { ContainerComponent, DraggableComponent, IDropResult } from 'ngx-smooth-
 })
 export class TimelineShelfComponent implements OnInit {
 	public shelfItems: Array<TimelineEntry>;
+
+	@ViewChild('shelfContainer)')
+	shelfContainer: ContainerComponent;
 
 	/**
 	 *Creates an instance of TimelineWedgeComponent.
@@ -21,11 +24,26 @@ export class TimelineShelfComponent implements OnInit {
 	}
 
 	/**
-	 * 
-	 * @param dropResult 
+	 *
+	 * @param dropResult
 	 */
 	onDrop(dropResult: IDropResult) {
 		console.log(dropResult);
+	}
+
+	getChildPayload = (index: number): any => {
+		return this.shelfItems[index];
+	} 
+
+
+
+	/**
+	 *
+	 * @param $event
+	 */
+	onDragStart($event) {
+
+
 	}
 
 	/**

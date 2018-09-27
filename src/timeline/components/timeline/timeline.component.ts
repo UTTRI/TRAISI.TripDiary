@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 
 import { TimelineService } from '../../services/timeline.service';
-import { TRAISI } from 'traisi-question-sdk';
+import { SurveyQuestion, ResponseTypes } from 'traisi-question-sdk';
 import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
@@ -25,6 +25,7 @@ import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { QuestionLoaderService } from 'traisi-question-sdk';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
+import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
 
 @Component({
 	entryComponents: [TimelineWedgeComponent],
@@ -32,11 +33,10 @@ import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 	template: require('./timeline.component.html').toString(),
 	styles: [require('./timeline.component.scss').toString()]
 })
-export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseTypes.Timeline>
-	implements OnInit, AfterViewInit, AfterViewChecked {
+export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> implements OnInit, AfterViewInit, AfterViewChecked {
 	typeName: string;
 	icon: string;
-	modalRef: BsModalRef;
+
 	icons: {} = {
 		faHome: faHome
 	};
@@ -44,14 +44,13 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 	@ViewChild(PopoverDirective)
 	popovers;
 
-	@ViewChild('mapTemplate', { read: ViewContainerRef })
-	mapTemplate: ViewContainerRef;
 
 	@ViewChild(TemplateRef, { read: ViewContainerRef })
 	inputTemplate: ViewContainerRef;
 
-	@ViewChild('newTimelineEntryTemplate')
-	newTimelineEntryTemplateRef: TemplateRef<any>;
+	@ViewChild('newEntry')
+	newEntryDialog: TimelineNewEntryComponent;
+
 
 	/**
 	 *
@@ -74,16 +73,13 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 		this.typeName = 'Trip Diary Timeline';
 		this.icon = 'business-time';
 		const f = this.resolver.resolveComponentFactory(TimelineWedgeComponent);
-
-		console.debug('in constructor of timeline component');
-		console.log('in constructor of timeline component'); 
 	}
 
 	/**
 	 * TRAISI life cycle called for when the question is prepared
 	 */
 	traisiOnInit(): void {
-		console.log("this timeline configuration");
+		console.log('this timeline configuration');
 		console.log(this.configuration);
 	}
 
@@ -95,10 +91,10 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 	editModel: TimelineEntry;
 
 	saveNewLocation(): void {
-		this._timelineService.availableLocations.next(
-			this._timelineService.availableLocations.getValue().concat(this.editModel)
-		);
-		this.modalRef.hide();
+		//this._timelineService.availableLocations.next(this._timelineService.availableLocations.getValue().concat(this.editModel));
+
+
+		//this.modalRef.hide();
 	}
 
 	addNewLocation(): void {
@@ -111,21 +107,17 @@ export class TimelineComponent extends TRAISI.SurveyQuestion<TRAISI.ResponseType
 			timeB: new Date(),
 			name: ''
 		};
-		this.modalRef = this._timelineService.openEditTimelineEntryModal(
-			this.newTimelineEntryTemplateRef 
-		);
+		
+		this.newEntryDialog.show();
 	}
 
 	/**
-	 * 
-	 * @param type 
-	 * @param $event 
+	 *
+	 * @param type
+	 * @param $event
 	 */
-	handler(type: string, $event: ModalDirective)
-	{
-		this._timelineService.openEditMapLocationModal(
-			this.mapTemplate 
-		);
+	handler(type: string, $event: ModalDirective) {
+		//this._timelineService.openEditMapLocationModal(this.mapTemplate);
 	}
 
 	/**

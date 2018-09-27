@@ -1,6 +1,5 @@
 timeline-entry-item {
-	padding-left: 5px;
-	padding-right: 5px;
+
 }
 
 .timeline-entry-model-name {
@@ -27,4 +26,14 @@ timeline-entry-item {
 .item-drag-active{
     opacity: 0.3;
     filter: blur(5);
+}
+
+.timeline-entry-drag .timeline-entry-model-info
+{
+	display: none;
+}
+
+.timeline-btn-inner
+{
+	position: relative;
 }

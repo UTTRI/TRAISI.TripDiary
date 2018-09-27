@@ -6,7 +6,7 @@ import { TimelineConfiguration } from '../models/timeline-configuration.model';
 import { ReplaySubject, BehaviorSubject } from 'rxjs';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { QuestionLoaderService, TRAISI } from 'traisi-question-sdk';
+import { QuestionLoaderService, SurveyQuestion } from 'traisi-question-sdk';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Injectable()
@@ -108,8 +108,8 @@ export class TimelineService {
 	}
 
 	/**
-	 * 
-	 * @param template 
+	 *
+	 * @param template
 	 */
 	openNewTimelineEntryModal(template: TemplateRef<any>): BsModalRef {
 		this.modalRef = this.modalService.show(template);
@@ -121,27 +121,18 @@ export class TimelineService {
 	 * @param mapModalTemplate
 	 * @param mapContainerRef
 	 */
-	openEditMapLocationModal(template: ViewContainerRef): TRAISI.SurveyQuestion<any> {
-
-
+	openEditMapLocationModal(template: ViewContainerRef) {
 		let componentRef = null;
 
 		let sub = this._questionLoaderService.componentFactories$.subscribe(factory => {
 			if (factory.selector == 'traisi-map-question') {
 				componentRef = template.createComponent(factory, undefined, this.injector);
 
-				let instance: TRAISI.SurveyQuestion<any> = <TRAISI.SurveyQuestion<any>>componentRef.instance;
+				let instance: SurveyQuestion<any> = <SurveyQuestion<any>>componentRef.instance;
 
 				console.log(componentRef);
-				instance.response.subscribe(value => {
-
-				});
-				sub.unsubscribe();
+				instance.response.subscribe(value => {});
 			}
 		});
-
- 
-		return undefined;
-
 	}
 }

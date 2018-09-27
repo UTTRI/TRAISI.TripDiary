@@ -13,3 +13,20 @@
 {
     position: absolute;
 }
+
+timeline-slot{
+    display: inline-block;
+    vertical-align:top;
+}
+
+timeline-slot smooth-dnd-container
+{
+    width: 70px;
+    height: 70px;
+    display: inline-block;
+}
+
+.slot-container.btn-circle.btn-xl
+{
+    padding: 0px !important;
+}
