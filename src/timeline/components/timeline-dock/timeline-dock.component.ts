@@ -34,10 +34,20 @@ export class TimelineDockComponent implements OnInit {
 	 * Angular's ngOnInit
 	 */
 	ngOnInit(): void {
-
 		this.timelineService.availableLocations.subscribe(this.onShelfItemsChanged);
-
+		this.timelineService.timelineItemRemoved.subscribe(this.onTimelineEntryRemoved);
 	}
+
+	/**
+	 * Callback for when a timeline item has deleted itself
+	 */
+	private onTimelineEntryRemoved: (entry: TimelineEntry) => void = (entry: TimelineEntry) => {
+		var index = this.dockItems.findIndex( p => {
+			return p.id == entry.id
+		});
+		this.dockItems.splice(index,1);
+
+	};
 
 	/**
 	 *
@@ -52,13 +62,14 @@ export class TimelineDockComponent implements OnInit {
 	 */
 	onDrop(dropResult: IDropResult) {
 		if (this.dragOver) {
-			console.log(dropResult);
+
 			if (!(dropResult.payload in this.dockItems)) {
 				if (dropResult.removedIndex != null) {
 					this.dockItems.splice(dropResult.removedIndex, 1);
 				}
-				this.timelineService.addLocationToDock(dropResult.payload);
 				this.dockItems.splice(dropResult.addedIndex, 0, dropResult.payload);
+
+				this.timelineService.updateTimelineLocations(this.dockItems);
 			}
 		}
 		this.dragOver = false;

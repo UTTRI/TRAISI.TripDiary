@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { TimelineState } from '../models/timeline-state.model';
 import { TimelineConfiguration } from '../models/timeline-configuration.model';
-import { ReplaySubject, BehaviorSubject } from 'rxjs';
+import { ReplaySubject, BehaviorSubject, Subject } from 'rxjs';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { QuestionLoaderService, SurveyQuestion } from 'traisi-question-sdk';
@@ -19,8 +19,11 @@ export class TimelineService {
 	}
 
 	private _availableLocations: Array<TimelineEntry>;
-	private _dockLocations: Array<TimelineEntry>;
 
+	private _timelineStartLocation: TimelineEntry;
+	private _timelineLocations: Array<TimelineEntry>;
+	private _timelineEndLocation: TimelineEntry;
+	public timelineItemRemoved: Subject<TimelineEntry>;
 	/**
 	 *
 	 * @param store
@@ -32,12 +35,11 @@ export class TimelineService {
 		private store: Store<TimelineState>,
 		private modalService: BsModalService,
 		private injector: Injector,
-		private appRef: ApplicationRef,
 		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService
 	) {
 		this.initializeConfiguration();
 		this._availableLocations = [];
-		this._dockLocations = [];
+		this._timelineLocations = [];
 
 		let entry1: TimelineEntry = {
 			address: '1783 Storrington Street',
@@ -50,11 +52,11 @@ export class TimelineService {
 			name: 'My work place'
 		};
 
-
 		this._availableLocations.push(entry1);
 
 		this.availableLocations = new BehaviorSubject(this._availableLocations);
-		this.dockLocations = new BehaviorSubject(this._dockLocations);
+		this.timelineLocations = new BehaviorSubject(this._timelineLocations);
+		this.timelineItemRemoved = new Subject<TimelineEntry>();
 	}
 
 	/**
@@ -73,7 +75,7 @@ export class TimelineService {
 	 * @type {BehaviorSubject<Array<TimelineEntry>>}
 	 * @memberof TimelineService
 	 */
-	public dockLocations: BehaviorSubject<Array<TimelineEntry>>;
+	public timelineLocations: BehaviorSubject<Array<TimelineEntry>>;
 
 	/**
 	 * Initialie the base configuration data
@@ -97,6 +99,19 @@ export class TimelineService {
 
 	/**
 	 *
+	 * @param timelineLocation
+	 */
+	public removeEntryFromTimeline(timelineLocation: TimelineEntry) {
+		this.timelineItemRemoved.next(timelineLocation);
+	}
+
+	/**
+	 *
+	 */
+	public updateTimelineLocations(locations: Array<TimelineEntry>): void {}
+
+	/**
+	 *
 	 * @param location
 	 */
 	public addNewLocation(location: TimelineEntry) {
@@ -104,28 +119,21 @@ export class TimelineService {
 		this.availableLocations.next(this._availableLocations);
 	}
 
-
 	/**
 	 * Adds a new location to the list of dock items
-	 * @param location 
+	 * @param location
 	 */
-	public addLocationToDock(location: TimelineEntry)
-	{
-		this._dockLocations.push(location);
-		this.dockLocations.next(this._availableLocations);
+	public addTimelineLocation(location: TimelineEntry) {
+		this._timelineLocations.push(location);
+		this.timelineLocations.next(this._availableLocations);
 	}
 
 	/**
-	 * 
-	 * @param location 
+	 *
+	 * @param location
 	 */
-	public removeLocationFromDock(location: TimelineEntry)
-	{
-		var index = this._dockLocations.findIndex( s => {
-			return s.id == location.id
-		})
-		console.log("splicing index: " + index);
-		this._dockLocations.splice(index,1);
+	public removeTimelineLocation(location: TimelineEntry) {
+		this.timelineItemRemoved.next(location);
 	}
 
 	modalRef: BsModalRef;

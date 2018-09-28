@@ -4,6 +4,7 @@ import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { faHome, faSchool, faBriefcase, faHandScissors, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { BsModalRef, ModalDirective, ModalBackdropComponent } from 'ngx-bootstrap/modal';
 import { NgTemplateOutlet } from '@angular/common';
+import { Subject } from 'rxjs';
 @Component({
 	selector: 'timeline-entry-item',
 	template: require('./timeline-entry-item.component.html').toString(),
@@ -34,6 +35,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 
 	@ViewChild('mapContainer', { read: ViewContainerRef })
 	mapControlViewContainerRef: ViewContainerRef;
+
 
 
 	@ViewChild('mapModalTemplate') mapModal: ModalDirective;
@@ -130,6 +132,6 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 *
 	 */
 	public delete(): void {
-		this._timelineService.removeLocationFromDock(this.model);
+		this._timelineService.removeTimelineLocation(this.model);
 	}
 }
