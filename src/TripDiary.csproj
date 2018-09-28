@@ -38,10 +38,18 @@
       </Reference>
     </ItemGroup>
 
-    <Target Name="PreBuild" BeforeTargets="Compile">
+    <Target Name="PreBuild" BeforeTargets="Compile" Condition="'$(Configuration)' != 'Release'">
         <Exec Command="npm run build" />
         <Message Text="Compiled and bundled JS library" Importance="High" />
     </Target>
+
+    
+  <Target Name="PreBuild" BeforeTargets="Compile" Condition="'$(Configuration)' == 'Release'">
+    <Exec Command="npm install" />
+    <Exec Command="npm run prod" />
+    <Message Text="Compiled and bundled JS library" Importance="High" />
+  </Target>
+
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <Copy SourceFiles="@(OutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/TRAISI/extensions" />
