@@ -88,11 +88,7 @@ module.exports = {
     ],*/
 	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/],
 	plugins: [
-		new webpack.optimize.UglifyJsPlugin({
-			output: {
-				comments: false
-			}
-		})
+		
 		
 		/* new WebpackSystemRegister({
              systemjsDeps: [
