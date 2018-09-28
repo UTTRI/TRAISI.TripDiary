@@ -18,7 +18,7 @@ import { faHome, faBriefcase, faHandScissors, faSchool, IconDefinition } from '.
 
 import { BsModalRef, ModalDirective, ModalBackdropComponent } from 'ngx-bootstrap/modal';
 import { NgTemplateOutlet } from '@angular/common';
-import { Subject } from 'rxjs';
+
 @Component({
 	selector: 'timeline-summary',
 	template: require('./timeline-summary.component.html').toString(),

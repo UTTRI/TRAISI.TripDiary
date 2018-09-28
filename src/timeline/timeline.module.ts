@@ -66,7 +66,6 @@ import { TimelineNewEntryComponent } from './components/timeline-new-entry/timel
 		CarouselModule.forRoot(),
 		ModalModule.forRoot(),
 		FontAwesomeModule,
-		StoreModule.forRoot({ timelineActions }),
 		PopoverModule.forRoot(),
 		ButtonsModule.forRoot(),
 		BsDropdownModule.forRoot(),

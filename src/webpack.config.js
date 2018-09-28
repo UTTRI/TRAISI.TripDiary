@@ -15,7 +15,7 @@ module.exports = {
 	},
 	mode: 'development',
 	devtool: 'source-map',
-
+	optimization: { usedExports: true, sideEffects: true },
 	resolve: {
 		extensions: ['.ts', '.js'],
 		plugins: [new TsConfigPathsPlugin /* { tsconfig, compiler } */()]

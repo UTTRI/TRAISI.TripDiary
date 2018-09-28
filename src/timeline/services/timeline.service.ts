@@ -1,5 +1,4 @@
 import { Injectable, TemplateRef, Inject, Injector, ViewContainerRef, ApplicationRef, EmbeddedViewRef } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { TimelineState } from '../models/timeline-state.model';
 import { TimelineConfiguration } from '../models/timeline-configuration.model';
@@ -32,7 +31,6 @@ export class TimelineService {
 	 * @param _questionLoaderService
 	 */
 	constructor(
-		private store: Store<TimelineState>,
 		private modalService: BsModalService,
 		private injector: Injector,
 		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService
