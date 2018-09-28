@@ -1,11 +1,8 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { DndDropEvent } from 'ngx-drag-drop';
-import { faHome } from '@fortawesome/free-solid-svg-icons/faHome';
-import { faBriefcase } from '@fortawesome/free-solid-svg-icons/faBriefcase';
-import { faSchool } from '@fortawesome/free-solid-svg-icons/faSchool';
-import { faHandScissors } from '@fortawesome/free-solid-svg-icons/faHandScissors';
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faBriefcase, faSchool, faHandScissors, IconDefinition } from '../../shared/icons';
+
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { IDropResult } from 'ngx-smooth-dnd';
 @Component({
@@ -71,8 +68,7 @@ export class TimelineSlotComponent implements OnInit {
 	 * @param dropResult
 	 */
 	onDrop(dropResult: IDropResult) {
-		if(this.dragOver)
-		{
+		if (this.dragOver) {
 			this.hasTimelineEntryItem = true;
 			this.model = dropResult.payload;
 		}
@@ -80,21 +76,17 @@ export class TimelineSlotComponent implements OnInit {
 	}
 
 	/**
-	 * 
-	 * @param $event 
+	 *
+	 * @param $event
 	 */
-	public onDragStart($event)
-	{
-		console.log("drag active!");
+	public onDragStart($event) {
+		console.log('drag active!');
 		this.dragActive = true;
 	}
 
 	/* */
-	public onDragEnd($event)
-	{
-
+	public onDragEnd($event) {
 		this.dragActive = false;
-		
 	}
 
 	public onDragEnter() {

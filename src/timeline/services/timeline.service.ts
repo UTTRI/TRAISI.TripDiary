@@ -1,13 +1,11 @@
 import { Injectable, TemplateRef, Inject, Injector, ViewContainerRef, ApplicationRef, EmbeddedViewRef } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { TimelineState } from '../models/timeline-state.model';
 import { TimelineConfiguration } from '../models/timeline-configuration.model';
-import { ReplaySubject, BehaviorSubject, Subject } from 'rxjs';
+import { ReplaySubject, BehaviorSubject, Subject,Observable } from '../shared/rxjs';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { QuestionLoaderService, SurveyQuestion } from 'traisi-question-sdk';
 import { NgTemplateOutlet } from '@angular/common';
-import { EventEmitter } from 'events';
 
 @Injectable()
 export class TimelineService {

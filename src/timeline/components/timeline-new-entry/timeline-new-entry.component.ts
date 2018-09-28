@@ -1,8 +1,6 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
-import { IDropResult } from 'ngx-smooth-dnd';
 import { TimelineEntry } from '../../models/timeline-entry.model';
-import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({

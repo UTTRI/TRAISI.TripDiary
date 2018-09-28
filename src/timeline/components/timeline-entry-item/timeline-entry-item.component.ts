@@ -17,8 +17,7 @@ import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { faHome, faBriefcase, faHandScissors, faSchool, IconDefinition } from '../../shared/icons';
 
 import { BsModalRef, ModalDirective, ModalBackdropComponent } from 'ngx-bootstrap/modal';
-import { NgTemplateOutlet } from '@angular/common';
-import { Subject } from 'rxjs';
+
 @Component({
 	selector: 'timeline-entry-item',
 	template: require('./timeline-entry-item.component.html').toString(),

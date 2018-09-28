@@ -33,16 +33,13 @@ export class TimelineShelfComponent implements OnInit {
 
 	getChildPayload = (index: number): any => {
 		return this.shelfItems[index];
-	} 
-
-
+	};
 
 	/**
 	 *
 	 * @param $event
 	 */
-	onDragStart($event) {
-	}
+	onDragStart($event) {}
 
 	/**
 	 *

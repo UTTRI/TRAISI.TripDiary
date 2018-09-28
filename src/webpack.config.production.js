@@ -1,6 +1,8 @@
 const path = require('path');
 const WebpackSystemRegister = require('webpack-system-register');
 
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 module.exports = {
 	entry: {
@@ -13,9 +15,18 @@ module.exports = {
 		filename: 'traisi-trip-diary-[name].module.js',
 		libraryTarget: 'amd'
 	},
-	mode: 'development',
+	mode: 'production',
 	devtool: 'source-map',
-	optimization: { usedExports: true, sideEffects: true },
+	optimization: {
+		minimizer: [
+			new UglifyJsPlugin({
+				parallel: 4,
+				uglifyOptions: {
+					mangle: true
+				}
+			})
+		]
+	},
 	resolve: {
 		extensions: ['.ts', '.js'],
 		plugins: [new TsConfigPathsPlugin /* { tsconfig, compiler } */()]
@@ -88,12 +99,6 @@ module.exports = {
     ],*/
 	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/],
 	plugins: [
-		new webpack.optimize.UglifyJsPlugin({
-			output: {
-				comments: false
-			}
-		})
-		
 		/* new WebpackSystemRegister({
              systemjsDeps: [
                  /^ngx-bootstrap/, // any import that starts with react
