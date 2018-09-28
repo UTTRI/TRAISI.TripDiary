@@ -20,10 +20,8 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	@Input()
 	model: TimelineEntry;
 
+
 	editModel: TimelineEntry;
-
-
-	
 
 	@ViewChild('editTimelineEntryTemplate')
 	editTimelineEntryTemplateRef: TemplateRef<any>;

@@ -17,76 +17,81 @@ export class TimelineNewEntryComponent implements OnInit {
 	newTimelineEntryTemplateRef: ModalDirective;
 
 	@ViewChild('mapTemplate', { read: ViewContainerRef })
-    mapTemplate: ViewContainerRef;
-    
+	mapTemplate: ViewContainerRef;
 
-    stepOne: boolean = true;
-    stepTwo: boolean = false;
-    stepThree: boolean = false;
+	stepOne: boolean = true;
+	stepTwo: boolean = false;
+	stepThree: boolean = false;
 
-    model: TimelineEntry;
+	model: TimelineEntry;
 
-    constructor(private timelineService: TimelineService) {}
-    
-    saveCallback: (value:any)=> void;
+	/**
+	 *
+	 * @param timelineService
+	 */
+	constructor(private timelineService: TimelineService) {}
 
-	show(callback: (value:any)=> void ): void {
+	saveCallback: (value: any) => void;
 
-        console.log(this.mapTemplate);
-        this.timelineService.openEditMapLocationModal(this.mapTemplate,this.callback);
+	/**
+	 *
+	 * @param callback
+	 */
+	show(callback: (value: any) => void): void {
+		console.log(this.mapTemplate);
+		this.timelineService.openEditMapLocationModal(this.mapTemplate, this.callback);
 
-      this.saveCallback = callback;
-    
-        this.newTimelineEntryTemplateRef.show();
+		this.saveCallback = callback;
 
-        this.model  = {
+		this.newTimelineEntryTemplateRef.show();
+
+		this.model = {
 			address: '',
 			latitude: 0,
 			purpose: '',
 			longitude: 0,
 			time: new Date(),
 			timeB: new Date(),
-			name: ''
+			name: '',
+			id: Symbol()
 		};
-        
-    }
+	}
 
-    stepTwoPrevious(): void {
-        this.stepOne = true;
-        this.stepTwo = false;
-    }
-    
-    stepOneNext(): void {
-        this.stepOne = false;
-        this.stepTwo = true;
-    }
+	stepTwoPrevious(): void {
+		this.stepOne = true;
+		this.stepTwo = false;
+	}
 
-    /**
-     * 
-     * @param value 
-     */
-    public callback = (value:any): void => 
-    {
-        this.model.address = value.address;
-        this.model.latitude = value.latitude;
-        this.model.longitude = value.longitude;
-    }
+	stepOneNext(): void {
+		this.stepOne = false;
+		this.stepTwo = true;
+	}
 
-    stepTwoNext(): void {
-        this.stepThree = true;
-        this.stepTwo = false;
-    }
+	/**
+	 *
+	 * @param value
+	 */
+	public callback = (value: any): void => {
+		this.model.address = value.address;
+		this.model.latitude = value.latitude;
+		this.model.longitude = value.longitude;
+	};
 
-    stepThreePrevious(): void {
-        this.stepThree = false;
-        this.stepTwo = true;
-    }
+	stepTwoNext(): void {
+		this.stepThree = true;
+		this.stepTwo = false;
+	}
 
-    stepThreeNext(): void {
-        console.log(this.model); 
-        this.saveCallback(this.model);
-        this.newTimelineEntryTemplateRef.hide();
-    }
+	stepThreePrevious(): void {
+		this.stepThree = false;
+		this.stepTwo = true;
+	}
+
+	stepThreeNext(): void {
+		console.log(this.model);
+		this.saveCallback(this.model);
+		this.newTimelineEntryTemplateRef.hide();
+	}
 
 	ngOnInit(): void {}
 }

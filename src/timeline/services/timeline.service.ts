@@ -19,6 +19,7 @@ export class TimelineService {
 	}
 
 	private _availableLocations: Array<TimelineEntry>;
+	private _dockLocations: Array<TimelineEntry>;
 
 	/**
 	 *
@@ -36,6 +37,7 @@ export class TimelineService {
 	) {
 		this.initializeConfiguration();
 		this._availableLocations = [];
+		this._dockLocations = [];
 
 		let entry1: TimelineEntry = {
 			address: '1783 Storrington Street',
@@ -44,9 +46,11 @@ export class TimelineService {
 			longitude: 0,
 			time: new Date(),
 			timeB: new Date(),
-
+			id: Symbol(),
 			name: 'My work place'
 		};
+
+		console.log(entry1);
 
 		let entry2: TimelineEntry = {
 			address: '1783 Storrington Street',
@@ -55,6 +59,7 @@ export class TimelineService {
 			longitude: 0,
 			time: new Date(),
 			timeB: new Date(),
+			id: Symbol(),
 			name: 'Home'
 		};
 
@@ -65,12 +70,14 @@ export class TimelineService {
 			longitude: 0,
 			time: new Date(),
 			timeB: new Date(),
+			id: Symbol(),
 			name: 'University'
 		};
 
 		this._availableLocations.push(entry1);
 
 		this.availableLocations = new BehaviorSubject(this._availableLocations);
+		this.dockLocations = new BehaviorSubject(this._dockLocations);
 	}
 
 	/**
@@ -81,6 +88,15 @@ export class TimelineService {
 	 * @memberof TimelineService
 	 */
 	public availableLocations: BehaviorSubject<Array<TimelineEntry>>;
+
+	/**
+	 * Behaviour subject that contains the list of available timeline
+	 * entities for use (taken from the shelf)
+	 *
+	 * @type {BehaviorSubject<Array<TimelineEntry>>}
+	 * @memberof TimelineService
+	 */
+	public dockLocations: BehaviorSubject<Array<TimelineEntry>>;
 
 	/**
 	 * Initialie the base configuration data
@@ -103,16 +119,12 @@ export class TimelineService {
 	}
 
 	/**
-	 * 
-	 * @param location 
+	 *
+	 * @param location
 	 */
-	public addNewLocation(location: TimelineEntry)
-	{
+	public addNewLocation(location: TimelineEntry) {
 		this._availableLocations.push(location);
-		this.availableLocations.next(
-			this._availableLocations
-			
-		);
+		this.availableLocations.next(this._availableLocations);
 	}
 
 	modalRef: BsModalRef;
@@ -149,11 +161,9 @@ export class TimelineService {
 
 				let instance: SurveyQuestion<any> = <SurveyQuestion<any>>componentRef.instance;
 
-			
 				instance.response.subscribe(value => {
 					callback(value);
 				});
-			
 			}
 		});
 	}

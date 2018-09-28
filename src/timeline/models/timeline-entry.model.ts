@@ -7,4 +7,5 @@ export interface TimelineEntry
     timeB: Date;
     purpose: string;
     name: string; 
-}
+    id: symbol;
+} 

@@ -34,11 +34,9 @@ export class TimelineDockComponent implements OnInit {
 	 * Angular's ngOnInit
 	 */
 	ngOnInit(): void {
-		console.log('inside of wedge component - test 2');
+
 		this.timelineService.availableLocations.subscribe(this.onShelfItemsChanged);
 
-		console.log(this.startSlotPopover);
-		console.log('after popover');
 	}
 
 	/**
