@@ -42,8 +42,6 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	@ViewChild('mapContainer', { read: ViewContainerRef })
 	mapControlViewContainerRef: ViewContainerRef;
 
-
-
 	@ViewChild('mapModalTemplate') mapModal: ModalDirective;
 
 	@ViewChildren(ViewContainerRef, { read: ViewContainerRef }) viewChildren !: QueryList<ViewContainerRef>;

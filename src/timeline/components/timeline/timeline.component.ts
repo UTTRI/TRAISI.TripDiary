@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 
 import { TimelineService } from '../../services/timeline.service';
-import { SurveyQuestion, ResponseTypes } from 'traisi-question-sdk';
+import { SurveyQuestion, ResponseTypes, SurveyViewer } from 'traisi-question-sdk';
 import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
 import { faHome } from '@fortawesome/free-solid-svg-icons/faHome';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
@@ -63,6 +63,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	 */
 	constructor(
 		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService,
+		@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer,
 		private _element: ElementRef,
 		private _timelineService: TimelineService,
 		private resolver: ComponentFactoryResolver,
@@ -79,8 +80,9 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	 * TRAISI life cycle called for when the question is prepared
 	 */
 	traisiOnInit(): void {
-		console.log('this timeline configuration');
+
 		console.log(this.configuration);
+		this.surveyViewerService.updateNavigationState(false);
 	}
 
 	/**
@@ -91,19 +93,14 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	editModel: TimelineEntry;
 
 	saveNewLocation(): void {
-		//this._timelineService.availableLocations.next(this._timelineService.availableLocations.getValue().concat(this.editModel));
 
-
-		//this.modalRef.hide();
 	}
 
 	/**
 	 * 
 	 */
 	addNewLocation(): void {
-
-		
-		this.newEntryDialog.show(this.newEntryCallback);
+		this.newEntryDialog.show(this.newEntryCallback); 
 	}
 
 	    /**
@@ -114,7 +111,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
     {
         console.log(value);
         this._timelineService.addNewLocation(value);
-
     }
 
 	/**
