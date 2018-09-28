@@ -88,6 +88,7 @@ module.exports = {
     ],*/
 	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/],
 	plugins: [
+		
 		/* new WebpackSystemRegister({
              systemjsDeps: [
                  /^ngx-bootstrap/, // any import that starts with react

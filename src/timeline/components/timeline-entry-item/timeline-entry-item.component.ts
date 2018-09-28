@@ -1,7 +1,13 @@
 import { Component, OnInit, ElementRef, Input, ViewChild, TemplateRef, ViewContainerRef, QueryList, ViewChildren, AfterViewInit, ContentChildren } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
-import { faHome, faSchool, faBriefcase, faHandScissors, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faHome } from '@fortawesome/free-solid-svg-icons/faHome';
+import { faBriefcase } from '@fortawesome/free-solid-svg-icons/faBriefcase';
+import { faSchool } from '@fortawesome/free-solid-svg-icons/faSchool';
+import { faHandScissors } from '@fortawesome/free-solid-svg-icons/faHandScissors';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+
+
 import { BsModalRef, ModalDirective, ModalBackdropComponent } from 'ngx-bootstrap/modal';
 import { NgTemplateOutlet } from '@angular/common';
 import { Subject } from 'rxjs';

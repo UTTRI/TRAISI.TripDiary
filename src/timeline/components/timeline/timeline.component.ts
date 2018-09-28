@@ -19,7 +19,7 @@ import {
 import { TimelineService } from '../../services/timeline.service';
 import { SurveyQuestion, ResponseTypes } from 'traisi-question-sdk';
 import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { faHome } from '@fortawesome/free-solid-svg-icons/faHome';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
