@@ -16,12 +16,14 @@ export class TimelineDockComponent implements OnInit {
 	public dockItems: Array<TimelineEntry>;
 
 	public dragOver: boolean = false;
-	
 
-	@ViewChild('startSlotPopover') startSlotPopover: PopoverDirective;
+	@ViewChild('startSlotPopover')
+	startSlotPopover: PopoverDirective;
 
 	/**
 	 *
+	 * @param _element
+	 * @param timelineService
 	 */
 	constructor(private _element: ElementRef, private timelineService: TimelineService) {
 		this.typeName = 'Trip Diary Timeline';
@@ -36,30 +38,29 @@ export class TimelineDockComponent implements OnInit {
 		this.timelineService.availableLocations.subscribe(this.onShelfItemsChanged);
 
 		console.log(this.startSlotPopover);
-		console.log("after popover");
+		console.log('after popover');
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	getChildPayload = (index: number): any => {
 		return this.dockItems[index];
-	} 
-
+	};
 
 	/**
 	 *
 	 * @param dropResult
 	 */
 	onDrop(dropResult: IDropResult) {
-		// update item list according to the @dropResult
-		//this.items = applyDrag(this.items, dropResult);
-
 		if (this.dragOver) {
 			console.log(dropResult);
-			this.dockItems.push(dropResult.payload);
-
-			console.log(this.startSlotPopover);
+			if (!(dropResult.payload in this.dockItems)) {
+				if (dropResult.removedIndex != null) {
+					this.dockItems.splice(dropResult.removedIndex, 1);
+				}
+				this.dockItems.splice(dropResult.addedIndex, 0, dropResult.payload);
+			}
 		}
 		this.dragOver = false;
 	}
@@ -77,6 +78,7 @@ export class TimelineDockComponent implements OnInit {
 	 * @param $event
 	 */
 	public onDragStart($event) {
+		console.log('drag start');
 		console.log($event);
 	}
 
@@ -86,7 +88,5 @@ export class TimelineDockComponent implements OnInit {
 	 * @private
 	 * @memberof TimelineShelfComponent
 	 */
-	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => {
-
-	};
+	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => {};
 }
