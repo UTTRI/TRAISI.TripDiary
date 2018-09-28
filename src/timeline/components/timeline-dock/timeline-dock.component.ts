@@ -40,6 +40,14 @@ export class TimelineDockComponent implements OnInit {
 	}
 
 	/**
+	 * 
+	 */
+	getChildPayload = (index: number): any => {
+		return this.dockItems[index];
+	} 
+
+
+	/**
 	 *
 	 * @param dropResult
 	 */
@@ -78,5 +86,7 @@ export class TimelineDockComponent implements OnInit {
 	 * @private
 	 * @memberof TimelineShelfComponent
 	 */
-	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => {};
+	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => {
+
+	};
 }

@@ -4,6 +4,7 @@
     <div class="timeline-bar"></div>
 
     <smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'move'" [orientation]="'horizontal'" [groupName]="'timeline'"
+    [getChildPayload]="getChildPayload"
         (dragEnter)="onDragEnter()" (dragLeave)="onDragLeave()" class="timeline-dnd-dock" (dragStart)="onDragStart($event)" #dockContainer>
 
         <smooth-dnd-draggable *ngFor="let item of dockItems">
