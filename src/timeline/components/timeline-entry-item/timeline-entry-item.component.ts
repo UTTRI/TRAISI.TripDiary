@@ -100,12 +100,17 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 		this.viewChildren.changes.subscribe(value => {
 
 			this.viewChildren.forEach( (i:ViewContainerRef) => {
-				this._timelineService.openEditMapLocationModal(i);
+				this._timelineService.openEditMapLocationModal(i,this.callback);
 			});
 			
 		});
 
 		
+	}
+
+	callback(value): void
+	{
+
 	}
 
 	/**

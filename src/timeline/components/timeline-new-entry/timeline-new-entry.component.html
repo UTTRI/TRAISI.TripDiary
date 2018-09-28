@@ -1,24 +1,57 @@
-<div class="modal fade" bsModal #newEntryModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog" (onShow)="handler('onShow', $event)">
+<div class="modal fade" bsModal #newEntryModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title pull-left">New Timeline Entry</h4>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <div *ngIf="stepOne">
+                    <h4 class="modal-title pull-left">Q1: Where is this new location?
+                    </h4>
+                </div>
+                <div *ngIf="stepTwo">
+                    <h4 class="modal-title pull-left">Q2: Give this location a name
+                    </h4>
+                </div>
+                <div *ngIf="stepThree">
+                    <h4 class="modal-title pull-left">Q3: What is the purpose for travelling to this location?
+                    </h4>
+                </div>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="newEntryModal.hide()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-
-                <ng-template #mapTemplate>
-                    <ng-container #container></ng-container>
-                </ng-template>
+                <div [hidden]="!stepOne">
+                    <ng-template #mapTemplate>
+                        <ng-container #container></ng-container>
+                    </ng-template>
+                </div>
+                <div *ngIf="stepTwo">
+                    <input type="text" [(ngModel)]="model.name" class="form-control" placeholder="Enter a name"
+                        #inputElement />
+                </div>
+                <div *ngIf="stepThree">
+                    <select  [(ngModel)]="model.purpose" class="custom-select">
+                        <option selected>work</option>
+                        <option>home</option>
+                        <option>school</option>
+                    </select>
+                </div>
 
 
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="saveNewLocation()">Save changes</button>
-                <button type="button" class="btn btn-secondary" (click)="newEntryModal.hide()">Close</button>
+                <div *ngIf="stepOne">
+                    <button type="button" class="btn btn-primary pull-left" [disabled]="true">Previous</button>
+                    <button type="button" class="btn btn-secondary" (click)="stepOneNext()">Next</button>
+                </div>
+                <div *ngIf="stepTwo">
+                    <button type="button" class="btn btn-primary" (click)="stepTwoPrevious()">Previous</button>
+                    <button type="button" class="btn btn-secondary" (click)="stepTwoNext()">Next</button>
+                </div>
+                <div *ngIf="stepThree">
+                    <button type="button" class="btn btn-primary" (click)="stepThreePrevious()">Previous</button>
+                    <button type="button" class="btn btn-secondary" (click)="stepThreeNext()">Save</button>
+                </div>
             </div>
         </div>
     </div>

@@ -8,6 +8,7 @@ import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { QuestionLoaderService, SurveyQuestion } from 'traisi-question-sdk';
 import { NgTemplateOutlet } from '@angular/common';
+import { EventEmitter } from 'events';
 
 @Injectable()
 export class TimelineService {
@@ -16,6 +17,8 @@ export class TimelineService {
 	public get configuration(): ReplaySubject<TimelineConfiguration> {
 		return this._configuration;
 	}
+
+	private _availableLocations: Array<TimelineEntry>;
 
 	/**
 	 *
@@ -32,6 +35,7 @@ export class TimelineService {
 		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService
 	) {
 		this.initializeConfiguration();
+		this._availableLocations = [];
 
 		let entry1: TimelineEntry = {
 			address: '1783 Storrington Street',
@@ -64,7 +68,9 @@ export class TimelineService {
 			name: 'University'
 		};
 
-		this.availableLocations = new BehaviorSubject([entry1, entry2, entry3]);
+		this._availableLocations.push(entry1);
+
+		this.availableLocations = new BehaviorSubject(this._availableLocations);
 	}
 
 	/**
@@ -96,6 +102,19 @@ export class TimelineService {
 		});
 	}
 
+	/**
+	 * 
+	 * @param location 
+	 */
+	public addNewLocation(location: TimelineEntry)
+	{
+		this._availableLocations.push(location);
+		this.availableLocations.next(
+			this._availableLocations
+			
+		);
+	}
+
 	modalRef: BsModalRef;
 
 	/**
@@ -121,7 +140,7 @@ export class TimelineService {
 	 * @param mapModalTemplate
 	 * @param mapContainerRef
 	 */
-	openEditMapLocationModal(template: ViewContainerRef) {
+	openEditMapLocationModal(template: ViewContainerRef, callback) {
 		let componentRef = null;
 
 		let sub = this._questionLoaderService.componentFactories$.subscribe(factory => {
@@ -130,8 +149,11 @@ export class TimelineService {
 
 				let instance: SurveyQuestion<any> = <SurveyQuestion<any>>componentRef.instance;
 
-				console.log(componentRef);
-				instance.response.subscribe(value => {});
+			
+				instance.response.subscribe(value => {
+					callback(value);
+				});
+			
 			}
 		});
 	}

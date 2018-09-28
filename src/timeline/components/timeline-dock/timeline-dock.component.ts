@@ -53,6 +53,7 @@ export class TimelineDockComponent implements OnInit {
 
 			console.log(this.startSlotPopover);
 		}
+		this.dragOver = false;
 	}
 
 	public onDragEnter() {

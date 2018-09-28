@@ -72,6 +72,7 @@ export class TimelineSlotComponent implements OnInit {
 			this.hasTimelineEntryItem = true;
 			this.model = dropResult.payload;
 		}
+		this.dragOver = false;
 	}
 
 	/**
@@ -87,8 +88,9 @@ export class TimelineSlotComponent implements OnInit {
 	/* */
 	public onDragEnd($event)
 	{
-		console.log("drag end");
+
 		this.dragActive = false;
+		
 	}
 
 	public onDragEnter() {

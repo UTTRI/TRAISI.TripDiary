@@ -42,8 +42,6 @@ export class TimelineShelfComponent implements OnInit {
 	 * @param $event
 	 */
 	onDragStart($event) {
-
-
 	}
 
 	/**

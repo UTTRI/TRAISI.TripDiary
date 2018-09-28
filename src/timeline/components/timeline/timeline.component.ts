@@ -97,19 +97,25 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 		//this.modalRef.hide();
 	}
 
+	/**
+	 * 
+	 */
 	addNewLocation(): void {
-		this.editModel = {
-			address: '',
-			latitude: 0,
-			purpose: '',
-			longitude: 0,
-			time: new Date(),
-			timeB: new Date(),
-			name: ''
-		};
+
 		
-		this.newEntryDialog.show();
+		this.newEntryDialog.show(this.newEntryCallback);
 	}
+
+	    /**
+     * 
+     * @param value 
+     */
+    public newEntryCallback = (value:any): void => 
+    {
+        console.log(value);
+        this._timelineService.addNewLocation(value);
+
+    }
 
 	/**
 	 *

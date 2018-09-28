@@ -7,7 +7,7 @@
     </div>
     <div class="btn-group" dropdown [class]="'timeline-draggable'">
         <div class="timeline-btn-inner">
-            <button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl" >
+            <button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl">
                 <fa-icon [icon]="icon"></fa-icon>
             </button>
             <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
@@ -62,8 +62,12 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
+
+        
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
+        
+
     </div>
 </ng-template>
 

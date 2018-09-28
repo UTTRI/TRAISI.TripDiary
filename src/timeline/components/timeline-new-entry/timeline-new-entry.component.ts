@@ -17,20 +17,76 @@ export class TimelineNewEntryComponent implements OnInit {
 	newTimelineEntryTemplateRef: ModalDirective;
 
 	@ViewChild('mapTemplate', { read: ViewContainerRef })
-	mapTemplate: ViewContainerRef;
+    mapTemplate: ViewContainerRef;
+    
 
-	constructor(private timelineService: TimelineService) {}
+    stepOne: boolean = true;
+    stepTwo: boolean = false;
+    stepThree: boolean = false;
 
-	show(): void {
+    model: TimelineEntry;
+
+    constructor(private timelineService: TimelineService) {}
+    
+    saveCallback: (value:any)=> void;
+
+	show(callback: (value:any)=> void ): void {
 
         console.log(this.mapTemplate);
-        this.timelineService.openEditMapLocationModal(this.mapTemplate);
+        this.timelineService.openEditMapLocationModal(this.mapTemplate,this.callback);
 
-        console.log(this.newTimelineEntryTemplateRef);
+      this.saveCallback = callback;
     
         this.newTimelineEntryTemplateRef.show();
+
+        this.model  = {
+			address: '',
+			latitude: 0,
+			purpose: '',
+			longitude: 0,
+			time: new Date(),
+			timeB: new Date(),
+			name: ''
+		};
         
-	}
+    }
+
+    stepTwoPrevious(): void {
+        this.stepOne = true;
+        this.stepTwo = false;
+    }
+    
+    stepOneNext(): void {
+        this.stepOne = false;
+        this.stepTwo = true;
+    }
+
+    /**
+     * 
+     * @param value 
+     */
+    public callback = (value:any): void => 
+    {
+        this.model.address = value.address;
+        this.model.latitude = value.latitude;
+        this.model.longitude = value.longitude;
+    }
+
+    stepTwoNext(): void {
+        this.stepThree = true;
+        this.stepTwo = false;
+    }
+
+    stepThreePrevious(): void {
+        this.stepThree = false;
+        this.stepTwo = true;
+    }
+
+    stepThreeNext(): void {
+        console.log(this.model); 
+        this.saveCallback(this.model);
+        this.newTimelineEntryTemplateRef.hide();
+    }
 
 	ngOnInit(): void {}
 }

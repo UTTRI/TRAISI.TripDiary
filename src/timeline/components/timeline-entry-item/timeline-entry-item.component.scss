@@ -9,6 +9,10 @@ timeline-entry-item {
 
 .timeline-entry-model-address {
 	text-align: center;
+	word-break: break-word;
+    width: 150px;
+    max-height: 22px;
+    overflow: hidden;
 }
 
 .timeline-entry-inner-container {
