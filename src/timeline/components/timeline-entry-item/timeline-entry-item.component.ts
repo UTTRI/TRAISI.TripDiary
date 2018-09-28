@@ -130,6 +130,6 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 *
 	 */
 	public delete(): void {
-
+		this._timelineService.removeLocationFromDock(this.model);
 	}
 }

@@ -50,29 +50,6 @@ export class TimelineService {
 			name: 'My work place'
 		};
 
-		console.log(entry1);
-
-		let entry2: TimelineEntry = {
-			address: '1783 Storrington Street',
-			latitude: 0,
-			purpose: 'home',
-			longitude: 0,
-			time: new Date(),
-			timeB: new Date(),
-			id: Symbol(),
-			name: 'Home'
-		};
-
-		let entry3: TimelineEntry = {
-			address: '1783 Storrington Street',
-			latitude: 0,
-			purpose: 'school',
-			longitude: 0,
-			time: new Date(),
-			timeB: new Date(),
-			id: Symbol(),
-			name: 'University'
-		};
 
 		this._availableLocations.push(entry1);
 
@@ -125,6 +102,30 @@ export class TimelineService {
 	public addNewLocation(location: TimelineEntry) {
 		this._availableLocations.push(location);
 		this.availableLocations.next(this._availableLocations);
+	}
+
+
+	/**
+	 * Adds a new location to the list of dock items
+	 * @param location 
+	 */
+	public addLocationToDock(location: TimelineEntry)
+	{
+		this._dockLocations.push(location);
+		this.dockLocations.next(this._availableLocations);
+	}
+
+	/**
+	 * 
+	 * @param location 
+	 */
+	public removeLocationFromDock(location: TimelineEntry)
+	{
+		var index = this._dockLocations.findIndex( s => {
+			return s.id == location.id
+		})
+		console.log("splicing index: " + index);
+		this._dockLocations.splice(index,1);
 	}
 
 	modalRef: BsModalRef;
