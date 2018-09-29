@@ -18,6 +18,11 @@
     right: 10px;
 }
 
+.timeline-bar.timeline-drag-over
+{
+    background-color:#3498DB;
+}
+
 .timeline-dock-inner-container
 {
     display:inline-flex;
@@ -35,19 +40,20 @@
 
 timeline-dock .timeline-dock-inner-container .smooth-dnd-container.horizontal
 {
-    height: 75px;
+    height: $timeline-entry-size;
     display: inline-flex;
     align-content: space-between;
     align-items: center;
     justify-content: space-evenly;
     width:90%;
+    vertical-align: top;
 }
 
 timeline-dock timeline-slot .smooth-dnd-container.horizontal
 {
-    height: 75px;
+    height: $timeline-entry-size;
 
-    width:75px;
+    width:$timeline-entry-size;
 }
 
 

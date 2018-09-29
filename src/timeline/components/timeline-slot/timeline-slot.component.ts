@@ -20,7 +20,7 @@ export class TimelineSlotComponent implements OnInit {
 	schoolIcon: IconDefinition = faSchool;
 
 	public dragOver: boolean = false;
-
+	model: TimelineEntry;
 	public dragActive: boolean = false;
 
 	public get icon() {
@@ -43,7 +43,6 @@ export class TimelineSlotComponent implements OnInit {
 		this.typeName = 'Trip Diary Timeline';
 	}
 
-	model: TimelineEntry;
 	/**
 	 * Angular's ngOnInit
 	 */
@@ -80,7 +79,6 @@ export class TimelineSlotComponent implements OnInit {
 	 * @param $event
 	 */
 	public onDragStart($event) {
-		console.log('drag active!');
 		this.dragActive = true;
 	}
 

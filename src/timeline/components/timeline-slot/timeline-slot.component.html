@@ -2,7 +2,7 @@
 
 
     <smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'move'" [orientation]="'horizontal'" [groupName]="'timeline'" [ngClass]="{'slot-drag-over' : dragActive}" 
-        class="slot-container btn-circle btn-xl"  (dragEnter)="onDragEnter()" #dockContainer (dragStart)="onDragStart($event)" (dragEnd)="onDragEnd($event)">
+        class="slot-container btn-circle btn-xl"  (dragEnter)="onDragEnter()" (dragLeave)="onDragLeave()" #dockContainer (dragStart)="onDragStart($event)" (dragEnd)="onDragEnd($event)">
 
         
     </smooth-dnd-container>
