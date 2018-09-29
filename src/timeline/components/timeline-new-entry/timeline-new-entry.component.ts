@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
-import { TimelineEntry } from '../../models/timeline-entry.model';
+import { TimelineEntry, TimelineLocationType } from '../../models/timeline-entry.model';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -51,6 +51,7 @@ export class TimelineNewEntryComponent implements OnInit {
 			time: new Date(),
 			timeB: new Date(),
 			name: '',
+			locationType: TimelineLocationType.Undefined,
 			id: Symbol()
 		};
 	}

@@ -1,4 +1,4 @@
-<timeline-slot></timeline-slot>
+<timeline-slot [start-location]="true"></timeline-slot>
 
 <div class="timeline-dock-inner-container">
     <div class="timeline-bar" [ngClass]="{'timeline-drag-over' : dragActive}"></div>
@@ -16,4 +16,4 @@
         </smooth-dnd-draggable>
     </smooth-dnd-container>
 </div>
-<timeline-slot></timeline-slot>
+<timeline-slot [end-location]="true"></timeline-slot>

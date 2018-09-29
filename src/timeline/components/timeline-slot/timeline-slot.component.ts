@@ -1,9 +1,9 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { faHome, faBriefcase, faSchool, faHandScissors, IconDefinition } from '../../shared/icons';
 
-import { TimelineEntry } from 'timeline/models/timeline-entry.model';
+import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
 import { IDropResult } from 'ngx-smooth-dnd';
 @Component({
 	selector: 'timeline-slot',
@@ -11,6 +11,11 @@ import { IDropResult } from 'ngx-smooth-dnd';
 	styles: [require('./timeline-slot.component.scss').toString()]
 })
 export class TimelineSlotComponent implements OnInit {
+	@Input()
+	startLocation: boolean = false;
+
+	@Input()
+	endLocation: boolean = false;
 
 	hasTimelineEntryItem: boolean = false;
 
@@ -38,9 +43,7 @@ export class TimelineSlotComponent implements OnInit {
 	 * @param {TimelineService} timelineService
 	 * @memberof TimelineSlotComponent
 	 */
-	constructor(private _element: ElementRef, private timelineService: TimelineService) {
-
-	}
+	constructor(private _element: ElementRef, private timelineService: TimelineService) {}
 
 	/**
 	 * Angular's ngOnInit
@@ -69,6 +72,7 @@ export class TimelineSlotComponent implements OnInit {
 		if (this.dragOver) {
 			this.hasTimelineEntryItem = true;
 			this.model = dropResult.payload;
+			this.model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
 		}
 		this.dragOver = false;
 	}

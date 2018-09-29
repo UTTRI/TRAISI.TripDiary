@@ -2,10 +2,9 @@ import { Injectable, TemplateRef, Inject, Injector, ViewContainerRef, Applicatio
 import { TimelineState } from '../models/timeline-state.model';
 import { TimelineConfiguration } from '../models/timeline-configuration.model';
 import { ReplaySubject, BehaviorSubject, Subject, Observable } from '../shared/rxjs';
-import { TimelineEntry } from 'timeline/models/timeline-entry.model';
+import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { QuestionLoaderService, SurveyQuestion, SurveyViewer } from 'traisi-question-sdk';
-import { NgTemplateOutlet } from '@angular/common';
 
 @Injectable()
 export class TimelineService {
@@ -22,6 +21,24 @@ export class TimelineService {
 	private _timelineLocations: Array<TimelineEntry>;
 	private _timelineEndLocation: TimelineEntry;
 	public timelineItemRemoved: Subject<TimelineEntry>;
+
+	/**
+	 * Behaviour subject that contains the list of available timeline
+	 * entities for use (taken from the shelf)
+	 *
+	 * @type {BehaviorSubject<Array<TimelineEntry>>}
+	 * @memberof TimelineService
+	 */
+	public availableLocations: BehaviorSubject<Array<TimelineEntry>>;
+
+	/**
+	 * Behaviour subject that contains the list of available timeline
+	 * entities for use (taken from the shelf)
+	 *
+	 * @type {BehaviorSubject<Array<TimelineEntry>>}
+	 * @memberof TimelineService
+	 */
+	public timelineLocations: BehaviorSubject<Array<TimelineEntry>>;
 
 	/**
 	 *
@@ -48,6 +65,7 @@ export class TimelineService {
 			time: new Date(),
 			timeB: new Date(),
 			id: Symbol(),
+			locationType: TimelineLocationType.Undefined,
 			name: 'My work place'
 		};
 
@@ -56,24 +74,6 @@ export class TimelineService {
 		this.timelineLocations = new BehaviorSubject(this._timelineLocations);
 		this.timelineItemRemoved = new Subject<TimelineEntry>();
 	}
-
-	/**
-	 * Behaviour subject that contains the list of available timeline
-	 * entities for use (taken from the shelf)
-	 *
-	 * @type {BehaviorSubject<Array<TimelineEntry>>}
-	 * @memberof TimelineService
-	 */
-	public availableLocations: BehaviorSubject<Array<TimelineEntry>>;
-
-	/**
-	 * Behaviour subject that contains the list of available timeline
-	 * entities for use (taken from the shelf)
-	 *
-	 * @type {BehaviorSubject<Array<TimelineEntry>>}
-	 * @memberof TimelineService
-	 */
-	public timelineLocations: BehaviorSubject<Array<TimelineEntry>>;
 
 	/**
 	 * Initialie the base configuration data
@@ -98,13 +98,10 @@ export class TimelineService {
 	/**
 	 * Updates the validation of the timeline
 	 */
-	private updateLocationsValidation(){
-		if(this._timelineStartLocation != undefined && this._timelineEndLocation != undefined)
-		{
+	private updateLocationsValidation() {
+		if (this._timelineStartLocation != undefined && this._timelineEndLocation != undefined) {
 			this.surveyViewerService.updateNavigationState(true);
-		}
-		else
-		{
+		} else {
 			this.surveyViewerService.updateNavigationState(false);
 		}
 	}
