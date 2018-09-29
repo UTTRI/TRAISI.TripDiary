@@ -11,6 +11,7 @@ import { IDropResult } from 'ngx-smooth-dnd';
 	styles: [require('./timeline-slot.component.scss').toString()]
 })
 export class TimelineSlotComponent implements OnInit {
+	
 	@Input()
 	startLocation: boolean = false;
 
