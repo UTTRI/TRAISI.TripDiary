@@ -1,10 +1,10 @@
 import { Injectable, TemplateRef, Inject, Injector, ViewContainerRef, ApplicationRef, EmbeddedViewRef } from '@angular/core';
 import { TimelineState } from '../models/timeline-state.model';
 import { TimelineConfiguration } from '../models/timeline-configuration.model';
-import { ReplaySubject, BehaviorSubject, Subject,Observable } from '../shared/rxjs';
+import { ReplaySubject, BehaviorSubject, Subject, Observable } from '../shared/rxjs';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { QuestionLoaderService, SurveyQuestion } from 'traisi-question-sdk';
+import { QuestionLoaderService, SurveyQuestion, SurveyViewer } from 'traisi-question-sdk';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Injectable()
@@ -16,21 +16,24 @@ export class TimelineService {
 	}
 
 	private _availableLocations: Array<TimelineEntry>;
+	public modalRef: BsModalRef;
 
 	private _timelineStartLocation: TimelineEntry;
 	private _timelineLocations: Array<TimelineEntry>;
 	private _timelineEndLocation: TimelineEntry;
 	public timelineItemRemoved: Subject<TimelineEntry>;
+
 	/**
 	 *
-	 * @param store
 	 * @param modalService
 	 * @param injector
+	 * @param surveyViewerService
 	 * @param _questionLoaderService
 	 */
 	constructor(
 		private modalService: BsModalService,
 		private injector: Injector,
+		@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer,
 		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService
 	) {
 		this.initializeConfiguration();
@@ -49,7 +52,6 @@ export class TimelineService {
 		};
 
 		this._availableLocations.push(entry1);
-
 		this.availableLocations = new BehaviorSubject(this._availableLocations);
 		this.timelineLocations = new BehaviorSubject(this._timelineLocations);
 		this.timelineItemRemoved = new Subject<TimelineEntry>();
@@ -94,6 +96,20 @@ export class TimelineService {
 	}
 
 	/**
+	 * Updates the validation of the timeline
+	 */
+	private updateLocationsValidation(){
+		if(this._timelineStartLocation != undefined && this._timelineEndLocation != undefined)
+		{
+			this.surveyViewerService.updateNavigationState(true);
+		}
+		else
+		{
+			this.surveyViewerService.updateNavigationState(false);
+		}
+	}
+
+	/**
 	 *
 	 * @param timelineLocation
 	 */
@@ -116,6 +132,42 @@ export class TimelineService {
 	}
 
 	/**
+	 *
+	 * @param location
+	 */
+	public addStartLocation(location: TimelineEntry) {
+		this._timelineStartLocation = location;
+		this.updateLocationsValidation();
+	}
+
+	/**
+	 *
+	 * @param location
+	 */
+	public removeStartLocation() {
+		this._timelineStartLocation = undefined;
+		this.updateLocationsValidation();
+	}
+
+	/**
+	 *
+	 * @param location
+	 */
+	public addEndLocation(location: TimelineEntry) {
+		this._timelineEndLocation = location;
+		this.updateLocationsValidation();
+	}
+
+	/**
+	 *
+	 * @param location
+	 */
+	public removeEndLocation() {
+		this._timelineEndLocation = undefined;
+		this.updateLocationsValidation();
+	}
+
+	/**
 	 * Adds a new location to the list of dock items
 	 * @param location
 	 */
@@ -131,8 +183,6 @@ export class TimelineService {
 	public removeTimelineLocation(location: TimelineEntry) {
 		this.timelineItemRemoved.next(location);
 	}
-
-	modalRef: BsModalRef;
 
 	/**
 	 *

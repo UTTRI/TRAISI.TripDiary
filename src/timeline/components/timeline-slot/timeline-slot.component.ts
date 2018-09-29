@@ -11,7 +11,6 @@ import { IDropResult } from 'ngx-smooth-dnd';
 	styles: [require('./timeline-slot.component.scss').toString()]
 })
 export class TimelineSlotComponent implements OnInit {
-	typeName: string;
 
 	hasTimelineEntryItem: boolean = false;
 
@@ -40,7 +39,7 @@ export class TimelineSlotComponent implements OnInit {
 	 * @memberof TimelineSlotComponent
 	 */
 	constructor(private _element: ElementRef, private timelineService: TimelineService) {
-		this.typeName = 'Trip Diary Timeline';
+
 	}
 
 	/**
