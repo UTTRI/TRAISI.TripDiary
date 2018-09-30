@@ -36,6 +36,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	typeName: string;
 	icon: string;
 
+	editModel: TimelineEntry;
+
 	icons: {} = {
 		faHome: faHome
 	};
@@ -43,44 +45,30 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	@ViewChild(PopoverDirective)
 	popovers;
 
-
 	@ViewChild(TemplateRef, { read: ViewContainerRef })
 	inputTemplate: ViewContainerRef;
 
 	@ViewChild('newEntry')
 	newEntryDialog: TimelineNewEntryComponent;
 
-
 	/**
-	 *
-	 * @param _questionLoaderService
-	 * @param _element
-	 * @param _timelineService
-	 * @param resolver
-	 * @param injector
-	 * @param modalService
+	 * 
+	 * @param surveyViewerService 
+	 * @param _timelineService 
 	 */
 	constructor(
-		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService,
 		@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer,
-		private _element: ElementRef,
 		private _timelineService: TimelineService,
-		private resolver: ComponentFactoryResolver,
-		private injector: Injector,
-		private modalService: BsModalService
 	) {
 		super();
 		this.typeName = 'Trip Diary Timeline';
 		this.icon = 'business-time';
-		const f = this.resolver.resolveComponentFactory(TimelineWedgeComponent);
 	}
 
 	/**
 	 * TRAISI life cycle called for when the question is prepared
 	 */
 	traisiOnInit(): void {
-
-		console.log(this.configuration);
 		this.surveyViewerService.updateNavigationState(false);
 	}
 
@@ -89,28 +77,23 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	 */
 	ngOnInit(): void {}
 
-	editModel: TimelineEntry;
+	saveNewLocation(): void {}
 
-	saveNewLocation(): void {
-
+	/**
+	 *
+	 */
+	addNewLocation(): void {
+		this.newEntryDialog.show(this.newEntryCallback);
 	}
 
 	/**
-	 * 
+	 * Callback - called when the new "location" entry process has completed.
+	 * @param value
 	 */
-	addNewLocation(): void {
-		this.newEntryDialog.show(this.newEntryCallback); 
-	}
-
-	    /**
-     * 
-     * @param value 
-     */
-    public newEntryCallback = (value:any): void => 
-    {
-        console.log(value);
-        this._timelineService.addNewLocation(value);
-    }
+	public newEntryCallback = (value: any): void => {
+		console.log(value);
+		this._timelineService.addShelfLocation(value);
+	};
 
 	/**
 	 *
@@ -130,4 +113,22 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	 *
 	 */
 	ngAfterViewChecked(): void {}
+
+
+	/**
+	 * Override of base method class
+	 */
+	public navigateInternalNext()
+	{
+		console.log("in navigate internal next");
+	} 
+
+	/**
+	 * Override - signfies an internal navigation possible.
+	 */
+	public canNavigateInternalNext(): boolean {
+		console.log("in can navigate internal next");
+		console.log(this._timelineService.isTimelineStatevalid);
+		return this._timelineService.isTimelineStatevalid;
+	}
 }

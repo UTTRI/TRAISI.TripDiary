@@ -17,9 +17,8 @@ export class TimelineService {
 	private _availableLocations: Array<TimelineEntry>;
 	public modalRef: BsModalRef;
 
-	private _timelineStartLocation: TimelineEntry;
 	private _timelineLocations: Array<TimelineEntry>;
-	private _timelineEndLocation: TimelineEntry;
+
 	public timelineItemRemoved: Subject<TimelineEntry>;
 
 	/**
@@ -39,6 +38,12 @@ export class TimelineService {
 	 * @memberof TimelineService
 	 */
 	public timelineLocations: BehaviorSubject<Array<TimelineEntry>>;
+
+	private _timelineStateValid: boolean = false;
+
+	public get isTimelineStatevalid(): boolean {
+		return this._timelineStateValid;
+	}
 
 	/**
 	 *
@@ -99,11 +104,18 @@ export class TimelineService {
 	 * Updates the validation of the timeline
 	 */
 	private updateLocationsValidation() {
-		if (this._timelineStartLocation != undefined && this._timelineEndLocation != undefined) {
-			this.surveyViewerService.updateNavigationState(true);
-		} else {
-			this.surveyViewerService.updateNavigationState(false);
-		}
+		let hasStartLocation: boolean = false;
+		let hasEndLocation: boolean = false;
+		this._timelineLocations.forEach(location => {
+			if (location.locationType == TimelineLocationType.StartLocation) {
+				hasStartLocation = true;
+			} else if (location.locationType == TimelineLocationType.EndLocation) {
+				hasEndLocation = true;
+			}
+		});
+		this._timelineStateValid = hasStartLocation && hasEndLocation;
+		
+		this.surveyViewerService.updateNavigationState(this._timelineStateValid);
 	}
 
 	/**
@@ -123,45 +135,9 @@ export class TimelineService {
 	 *
 	 * @param location
 	 */
-	public addNewLocation(location: TimelineEntry) {
+	public addShelfLocation(location: TimelineEntry) {
 		this._availableLocations.push(location);
 		this.availableLocations.next(this._availableLocations);
-	}
-
-	/**
-	 *
-	 * @param location
-	 */
-	public addStartLocation(location: TimelineEntry) {
-		this._timelineStartLocation = location;
-		this.updateLocationsValidation();
-	}
-
-	/**
-	 *
-	 * @param location
-	 */
-	public removeStartLocation() {
-		this._timelineStartLocation = undefined;
-		this.updateLocationsValidation();
-	}
-
-	/**
-	 *
-	 * @param location
-	 */
-	public addEndLocation(location: TimelineEntry) {
-		this._timelineEndLocation = location;
-		this.updateLocationsValidation();
-	}
-
-	/**
-	 *
-	 * @param location
-	 */
-	public removeEndLocation() {
-		this._timelineEndLocation = undefined;
-		this.updateLocationsValidation();
 	}
 
 	/**
@@ -169,7 +145,9 @@ export class TimelineService {
 	 * @param location
 	 */
 	public addTimelineLocation(location: TimelineEntry) {
+		console.log(location);
 		this._timelineLocations.push(location);
+		this.updateLocationsValidation();
 		this.timelineLocations.next(this._availableLocations);
 	}
 
@@ -178,7 +156,13 @@ export class TimelineService {
 	 * @param location
 	 */
 	public removeTimelineLocation(location: TimelineEntry) {
+		let index: number = this._timelineLocations.findIndex(loc => {
+			return loc.id == location.id;
+		});
+		this._timelineLocations.splice(index, 1);
 		this.timelineItemRemoved.next(location);
+		this.updateLocationsValidation();
+		this.timelineLocations.next(this._timelineLocations);
 	}
 
 	/**
