@@ -1,4 +1,4 @@
-<div *ngIf="!hasTimelineEntryItem">
+<div *ngIf="!hasTimelineEntryItem"  class="timeline-slot-container">
 
 
     <smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'move'" [orientation]="'horizontal'" [groupName]="'timeline'" [ngClass]="{'slot-drag-over' : dragActive}" 
@@ -11,7 +11,7 @@
 
 </div>
 
-<div *ngIf="hasTimelineEntryItem">
+<div *ngIf="hasTimelineEntryItem" class="timeline-slot-container">
     <div class="btn-group" dropdown>
         <button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl">
             <fa-icon [icon]="icon"></fa-icon>

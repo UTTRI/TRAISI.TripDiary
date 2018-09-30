@@ -28,7 +28,7 @@
     display:inline-flex;
     align-items: center;
     justify-content: end;
-    width:75%;
+    width:80%;
     position: relative;
     vertical-align:top;
 }
@@ -60,6 +60,34 @@ timeline-dock timeline-slot .smooth-dnd-container.horizontal
 timeline-dock .timeline-entry-model-info
 {
     display: none;
+}
+
+
+.timeline-dock-info{
+    display: inline-flex;
+    width: 90%;
+    flex-direction: row;
+    align-items: stretch;
+    align-content: space-between;
+    justify-content: space-between;
+
+    .timeline-dock-info-centre
+    {
+        flex: 1;
+        width: 70%;
+    }
+
+    .timeline-dock-info-start, .timeline-dock-info-end
+    {
+        width: $timeline-entry-size+20px;
+    }
+}
+
+    
+.timeline-dock-info div
+{
+    display: inline-block;
+    
 }
 
 @media #{$sm-down} {
