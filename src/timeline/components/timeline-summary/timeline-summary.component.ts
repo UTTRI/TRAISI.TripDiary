@@ -25,10 +25,31 @@ import { NgTemplateOutlet } from '@angular/common';
 	styles: [require('./timeline-summary.component.scss').toString()]
 })
 export class TimelineSummaryComponent implements OnInit, AfterViewInit {
+
+	/**
+	 * List of timeline locations
+	 */
+	public timelineLocations: Array<TimelineEntry>;
+
+	/**
+	 * 
+	 * @param _timelineService 
+	 */
+	constructor(private _timelineService: TimelineService)
+	{
+		this.timelineLocations = [];
+
+	}
+
 	ngAfterViewInit(): void {
-		throw new Error('Method not implemented.');
+
 	}
 	ngOnInit(): void {
-		throw new Error('Method not implemented.');
+		this._timelineService.timelineLocations.subscribe( (locations: Array<TimelineEntry>) => {
+
+			this.timelineLocations = locations;
+
+		});
+
 	}
 }
