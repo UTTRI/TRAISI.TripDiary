@@ -60,9 +60,10 @@ export class TimelineSlotComponent implements OnInit {
 	}
 
 	public delete(): void {
-		this.model = undefined;
-		this.hasTimelineEntryItem = false;
+
 		this._timelineService.removeTimelineLocation(this.model);
+		this.hasTimelineEntryItem = false;
+		this.model = undefined;
 	}
 
 	/**
@@ -73,7 +74,6 @@ export class TimelineSlotComponent implements OnInit {
 		if (this.dragOver) {
 			this.hasTimelineEntryItem = true;
 			this.model = Object.assign({}, dropResult.payload);
-			this.model.id = Symbol();
 			this.model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
 			this._timelineService.addTimelineLocation(this.model);
 		}

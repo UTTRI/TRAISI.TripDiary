@@ -145,7 +145,6 @@ export class TimelineService {
 	 * @param location
 	 */
 	public addTimelineLocation(location: TimelineEntry) {
-		console.log(location);
 		this._timelineLocations.push(location);
 		this.updateLocationsValidation();
 		this.timelineLocations.next(this._availableLocations);
@@ -156,6 +155,7 @@ export class TimelineService {
 	 * @param location
 	 */
 	public removeTimelineLocation(location: TimelineEntry) {
+
 		let index: number = this._timelineLocations.findIndex(loc => {
 			return loc.id == location.id;
 		});
