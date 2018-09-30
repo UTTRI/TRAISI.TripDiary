@@ -23,6 +23,15 @@
     background-color:#3498DB;
 }
 
+.timeline-dock-top
+{
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+
 .timeline-dock-inner-container
 {
     display:inline-flex;
@@ -36,6 +45,7 @@
 .timeline-dnd-dock
 {
     flex:1;
+    flex-direction: row;
 }
 
 timeline-dock .timeline-dock-inner-container .smooth-dnd-container.horizontal
@@ -64,8 +74,8 @@ timeline-dock .timeline-entry-model-info
 
 
 .timeline-dock-info{
-    display: inline-flex;
-    width: 90%;
+    display: flex;
+    width: 100%;
     flex-direction: row;
     align-items: stretch;
     align-content: space-between;
@@ -79,7 +89,10 @@ timeline-dock .timeline-entry-model-info
 
     .timeline-dock-info-start, .timeline-dock-info-end
     {
-        width: $timeline-entry-size+20px;
+        width: $timeline-entry-size + 30px;
+    font-weight: bold;
+    color: #d6d6d6;
+    font-size: 14px;
     }
 }
 
