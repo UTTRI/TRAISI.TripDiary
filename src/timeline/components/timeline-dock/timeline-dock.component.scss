@@ -3,7 +3,7 @@
 .btn-circle.btn-xl {
     width: $timeline-entry-size;
     height:  $timeline-entry-size;
-    padding: 10px 16px;
+
     font-size: 24px;
     line-height: 1.33;
     border-radius: 35px !important;
@@ -60,4 +60,25 @@ timeline-dock timeline-slot .smooth-dnd-container.horizontal
 timeline-dock .timeline-entry-model-info
 {
     display: none;
+}
+
+@media #{$sm-down} {
+	.btn-circle.btn-xl {
+        width: $timeline-entry-size-sm;
+        height:  $timeline-entry-size-sm;
+        padding: 4px;
+
+    }
+    timeline-dock timeline-slot .smooth-dnd-container.horizontal
+    {
+        height: $timeline-entry-size-sm;
+
+        width:$timeline-entry-size-sm;
+    }
+
+    timeline-dock .timeline-dock-inner-container .smooth-dnd-container.horizontal
+    {
+        height: $timeline-entry-size-sm;
+    }
+    
 }
