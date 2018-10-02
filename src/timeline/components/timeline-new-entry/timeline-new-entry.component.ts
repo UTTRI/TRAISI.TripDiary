@@ -13,6 +13,7 @@ import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry, TimelineLocationType } from '../../models/timeline-entry.model';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { QuestionLoaderService, SurveyQuestion } from 'traisi-question-sdk';
+import { TimelineConfiguration } from '../../models/timeline-configuration.model';
 
 @Component({
 	selector: 'timeline-new-entry',
@@ -28,9 +29,12 @@ export class TimelineNewEntryComponent implements OnInit {
 	@ViewChild('mapTemplate', { read: ViewContainerRef })
 	mapTemplate: ViewContainerRef;
 
+	public configuration: TimelineConfiguration;
+
 	stepOne: boolean = true;
 	stepTwo: boolean = false;
 	stepThree: boolean = false;
+	saveCallback: (value: any) => void;
 
 	model: TimelineEntry;
 
@@ -44,7 +48,6 @@ export class TimelineNewEntryComponent implements OnInit {
 		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService
 	) {}
 
-	saveCallback: (value: any) => void;
 
 
 	/**
@@ -54,7 +57,7 @@ export class TimelineNewEntryComponent implements OnInit {
 		this.model = {
 			address: '',
 			latitude: 0,
-			purpose: '',
+			purpose: 'home',
 			longitude: 0,
 			time: new Date(),
 			timeB: new Date(),
@@ -112,6 +115,7 @@ export class TimelineNewEntryComponent implements OnInit {
 		this.model.address = value.address;
 		this.model.latitude = value.latitude;
 		this.model.longitude = value.longitude;
+
 	};
 
 	stepTwoNext(): void {
@@ -124,8 +128,10 @@ export class TimelineNewEntryComponent implements OnInit {
 		this.stepTwo = true;
 	}
 
+	//save
 	stepThreeNext(): void {
 
+		console.log(this.model);
 		this.saveCallback(this.model);
 		this.newTimelineEntryTemplateRef.hide();
 	}
@@ -144,5 +150,9 @@ export class TimelineNewEntryComponent implements OnInit {
 				});
 			}
 		});
+
+		this.timelineService.configuration.subscribe( config => {
+			this.configuration = config;
+		})
 	}
 }

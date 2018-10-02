@@ -35,3 +35,11 @@ timeline-slot smooth-dnd-container
 {
     
 }
+
+@media #{$sm-down} {
+.timeline-slot-container
+{ 
+    width: $timeline-entry-size-sm;
+    height: $timeline-entry-size-sm;
+}
+}

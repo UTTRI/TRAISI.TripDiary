@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    position: relative;
 }
 
 .timeline-summary-time-input-container
@@ -49,4 +50,44 @@
     left: 100px;
     right: 100px;
     top: calc(50% + 4px);
+}
+
+.summary-times
+{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #3498db;
+}
+
+.summary-times-dates
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    .end-date
+    {
+        width: 20%;
+    }
+    .start-date
+    {
+        width:80%;
+    }
+  
+}  .hour-label
+{
+    text-align:left;
+    color:white;
+    font-weight:bold;
+    border-left: solid 2px #187dc1;
+    flex-grow:1;
+    padding-left:2px;
+}
+
+.summary-times-dates-container
+{
+    border: solid 1px grey;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top:50px;
 }

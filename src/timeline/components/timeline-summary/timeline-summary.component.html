@@ -1,7 +1,7 @@
 <div class="timeline-summary-container">
-        <div class="timeline-summary-bar"></div>
+    <div class="timeline-summary-bar"></div>
     <span *ngFor="let location of timelineLocations">
-        <timeline-entry-item [model]="location"></timeline-entry-item>
+        <timeline-entry-item [model]="location" class="summary-item"></timeline-entry-item>
     </span>
 
 </div>
@@ -21,4 +21,21 @@
         </div>
     </span>
 
+</div>
+
+<div class="summary-wedges">
+
+</div>
+
+
+<div class="summary-times-dates-container">
+    <div class="summary-times-dates" *ngIf="config">
+        <span class="start-date"> {{config.startTime | date:'mediumDate'}}</span>
+        <span class="end-date">
+            {{config.endTime | date:'mediumDate'}}
+        </span>
+    </div>
+    <div class="summary-times">
+        <span class="hour-label" *ngFor="let hour of hours">{{hour}}</span>
+    </div>
 </div>

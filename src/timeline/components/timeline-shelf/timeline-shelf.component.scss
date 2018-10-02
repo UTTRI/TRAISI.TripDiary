@@ -4,3 +4,25 @@
     flex-direction: row;
     justify-content: center;
 }
+
+
+@media #{$sm-down} {
+
+    .shelf-dnd-container .smooth-dnd-container
+    {
+        display: inline-flex;
+    flex-direction: column;
+
+    }
+    
+    timeline-entry-item .timeline-entry-model-info
+    {
+        display: none;
+    }
+
+    timeline-entry-item .timeline-entry-item-inner-container
+    {
+        width: auto;
+    }
+
+}

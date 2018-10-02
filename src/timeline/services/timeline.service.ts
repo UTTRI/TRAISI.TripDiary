@@ -94,9 +94,19 @@ export class TimelineService {
 		endTime.setDate(endTime.getDate() + 1);
 		endTime.setHours(3);
 		endTime.setMinutes(59);
+
+
 		this._configuration.next({
 			startTime: startTime,
-			endTime: endTime
+			endTime: endTime,
+			purposes: [
+				{key:'home',label:'Home'},
+				{key:'work',label:'Work'},
+				{key:'school',label:'Schhool'},
+				{key:'daycare',label:'Daycare'},
+				{key:'facilitate_passenger',label:'Facilitate Passenger'}
+				
+			]
 		});
 	}
 

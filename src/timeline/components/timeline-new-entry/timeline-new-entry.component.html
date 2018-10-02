@@ -30,9 +30,8 @@
                 </div>
                 <div *ngIf="stepThree">
                     <select  [(ngModel)]="model.purpose" class="custom-select">
-                        <option selected>work</option>
-                        <option>home</option>
-                        <option>school</option>
+                        <option selected="selected">Choose a purpose</option>
+                        <option *ngFor="let purpose of configuration.purposes" [value]="purpose.key">{{purpose.label}}</option>
                     </select>
                 </div>
 

@@ -103,23 +103,5 @@ timeline-dock .timeline-entry-model-info
     
 }
 
-@media #{$sm-down} {
-	.btn-circle.btn-xl {
-        width: $timeline-entry-size-sm;
-        height:  $timeline-entry-size-sm;
-        padding: 4px;
+@import "timeline-dock.component.sm.scss"
 
-    }
-    timeline-dock timeline-slot .smooth-dnd-container.horizontal
-    {
-        height: $timeline-entry-size-sm;
-
-        width:$timeline-entry-size-sm;
-    }
-
-    timeline-dock .timeline-dock-inner-container .smooth-dnd-container.horizontal
-    {
-        height: $timeline-entry-size-sm;
-    }
-    
-}
