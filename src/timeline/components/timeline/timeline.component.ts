@@ -25,6 +25,7 @@ import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { QuestionLoaderService } from 'traisi-question-sdk';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
+import { isRegExp } from 'util';
 
 @Component({
 	entryComponents: [TimelineWedgeComponent],
@@ -51,15 +52,16 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	@ViewChild('newEntry')
 	newEntryDialog: TimelineNewEntryComponent;
 
+	public isStep1: boolean = true;
+
+	public isStep2: boolean = false;
+
 	/**
-	 * 
-	 * @param surveyViewerService 
-	 * @param _timelineService 
+	 *
+	 * @param surveyViewerService
+	 * @param _timelineService
 	 */
-	constructor(
-		@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer,
-		private _timelineService: TimelineService,
-	) {
+	constructor(@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer, private _timelineService: TimelineService) {
 		super();
 		this.typeName = 'Trip Diary Timeline';
 		this.icon = 'business-time';
@@ -91,7 +93,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	 * @param value
 	 */
 	public newEntryCallback = (value: any): void => {
-		console.log(value);
 		this._timelineService.addShelfLocation(value);
 	};
 
@@ -107,28 +108,42 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	/**
 	 *
 	 */
-	ngAfterViewInit(): void {}
+	ngAfterViewInit(): void {
+	}
 
 	/**
 	 *
 	 */
-	ngAfterViewChecked(): void {}
-
+	ngAfterViewChecked(): void {
+		
+	}
 
 	/**
 	 * Override of base method class
 	 */
-	public navigateInternalNext()
-	{
-		console.log("in navigate internal next");
-	} 
+	public navigateInternalNext() {
+		if (this.isStep1 && this._timelineService.isTimelineStatevalid) {
+			this.isStep1 = false;
+			this.isStep2 = true;
+		}
+	}
 
 	/**
 	 * Override - signfies an internal navigation possible.
 	 */
 	public canNavigateInternalNext(): boolean {
-		console.log("in can navigate internal next");
-		console.log(this._timelineService.isTimelineStatevalid);
 		return this._timelineService.isTimelineStatevalid;
+	}
+
+	public navigateInternalPrevious() {
+		this.isStep2 = false;
+		this.isStep1 = true;
+	}
+
+	/**
+	 *
+	 */
+	public canNavigateInternalPrevious(): boolean {
+		return this.isStep2;
 	}
 }

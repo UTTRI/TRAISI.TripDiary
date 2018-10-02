@@ -1,0 +1,52 @@
+.timeline-summary-container
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.timeline-summary-time-input-container
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    span
+    {
+        
+        
+        text-align:center;
+    }
+    input.form-control-sm
+        {
+            width: 50px;
+        }
+
+        .time-input-container
+        {
+            text-align: center;
+            display: inline-flex;
+            align-content: center;
+            justify-content: center;
+            width: 150px;
+            
+            .input-group
+            {
+                width: 100px;
+            }
+        }
+}
+
+.timeline-entry-item-inner-container
+{
+    width: 150px;
+}
+
+.timeline-summary-bar
+{
+    height: 4px;
+    background-color: #95a5a6;
+    position: absolute;
+    left: 100px;
+    right: 100px;
+    top: calc(50% + 4px);
+}

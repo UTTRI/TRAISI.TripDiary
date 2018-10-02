@@ -129,7 +129,9 @@ export class TimelineService {
 	/**
 	 *
 	 */
-	public updateTimelineLocations(locations: Array<TimelineEntry>): void {}
+	public updateTimelineLocations(locations: Array<TimelineEntry>): void {
+
+	}
 
 	/**
 	 *
@@ -147,7 +149,7 @@ export class TimelineService {
 	public addTimelineLocation(location: TimelineEntry) {
 		this._timelineLocations.push(location);
 		this.updateLocationsValidation();
-		this.timelineLocations.next(this._availableLocations);
+		this.timelineLocations.next(this._timelineLocations);
 	}
 
 	/**
@@ -189,18 +191,6 @@ export class TimelineService {
 	 * @param mapContainerRef
 	 */
 	openEditMapLocationModal(template: ViewContainerRef, callback) {
-		let componentRef = null;
-
-		let sub = this._questionLoaderService.componentFactories$.subscribe(factory => {
-			if (factory.selector == 'traisi-map-question') {
-				componentRef = template.createComponent(factory, undefined, this.injector);
-
-				let instance: SurveyQuestion<any> = <SurveyQuestion<any>>componentRef.instance;
-
-				instance.response.subscribe(value => {
-					callback(value);
-				});
-			}
-		});
+	
 	}
 }

@@ -48,7 +48,28 @@ export class TimelineSlotComponent implements OnInit {
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this._timelineService.timelineLocations.subscribe(locations => {
+			locations.forEach(loc => {
+				if (loc.locationType == TimelineLocationType.StartLocation && this.startLocation) {
+					this.addLocationToSlot(loc);
+				} else if (loc.locationType == TimelineLocationType.EndLocation && this.endLocation) {
+					this.addLocationToSlot(loc);
+				}
+			});
+		});
+	}
+
+	/**
+	 *
+	 * @param location
+	 */
+	private addLocationToSlot(location: TimelineEntry) {
+
+		this.model = location;
+		this.hasTimelineEntryItem = true;
+		//this.model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
+	}
 
 	/**
 	 *
@@ -60,7 +81,6 @@ export class TimelineSlotComponent implements OnInit {
 	}
 
 	public delete(): void {
-
 		this._timelineService.removeTimelineLocation(this.model);
 		this.hasTimelineEntryItem = false;
 		this.model = undefined;
@@ -72,10 +92,10 @@ export class TimelineSlotComponent implements OnInit {
 	 */
 	onDrop(dropResult: IDropResult) {
 		if (this.dragOver) {
-			this.hasTimelineEntryItem = true;
-			this.model = Object.assign({}, dropResult.payload);
-			this.model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
-			this._timelineService.addTimelineLocation(this.model);
+			
+			let model: TimelineEntry = Object.assign({}, dropResult.payload);
+			model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
+			this._timelineService.addTimelineLocation(model);
 		}
 		this.dragOver = false;
 	}

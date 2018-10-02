@@ -69,9 +69,10 @@ export class TimelineDockComponent implements OnInit {
 				if (dropResult.removedIndex != null) {
 					this.dockItems.splice(dropResult.removedIndex, 1);
 				}
-				this.dockItems.splice(dropResult.addedIndex, 0, dropResult.payload);
+				var model = Object.assign({}, dropResult.payload);
+				this.dockItems.splice(dropResult.addedIndex, 0,model);
 
-				this.timelineService.updateTimelineLocations(this.dockItems);
+				this.timelineService.addTimelineLocation(model);
 			}
 		}
 		this.dragOver = false;

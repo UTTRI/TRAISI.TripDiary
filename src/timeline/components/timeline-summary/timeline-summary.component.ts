@@ -14,7 +14,7 @@ import {
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 
-import { faHome, faBriefcase, faHandScissors, faSchool, IconDefinition } from '../../shared/icons';
+import { faClock, IconDefinition } from '../../shared/icons';
 
 import { BsModalRef, ModalDirective, ModalBackdropComponent } from 'ngx-bootstrap/modal';
 import { NgTemplateOutlet } from '@angular/common';
@@ -30,6 +30,9 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 	 * List of timeline locations
 	 */
 	public timelineLocations: Array<TimelineEntry>;
+
+
+	clockIcon: IconDefinition = faClock;
 
 	/**
 	 * 
@@ -47,6 +50,8 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 	ngOnInit(): void {
 		this._timelineService.timelineLocations.subscribe( (locations: Array<TimelineEntry>) => {
 
+			console.log("inside of summary");
+			console.log(locations);
 			this.timelineLocations = locations;
 
 		});

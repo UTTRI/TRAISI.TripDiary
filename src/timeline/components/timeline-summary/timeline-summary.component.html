@@ -1,7 +1,24 @@
 <div class="timeline-summary-container">
+        <div class="timeline-summary-bar"></div>
+    <span *ngFor="let location of timelineLocations">
+        <timeline-entry-item [model]="location"></timeline-entry-item>
+    </span>
+
+</div>
+
+<div class="timeline-summary-time-input-container">
 
     <span *ngFor="let location of timelineLocations">
-        <timeline-entry-item></timeline-entry>
+        <div class="time-input-container">
+            <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <fa-icon [icon]="clockIcon"></fa-icon>
+                    </span>
+                </div>
+                <input placeholder="9:00" class="form-control form-control-sm">
+            </div>
+        </div>
     </span>
 
 </div>
