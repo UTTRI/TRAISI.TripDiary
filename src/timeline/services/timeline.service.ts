@@ -96,7 +96,7 @@ export class TimelineService {
 		endTime.setMinutes(59);
 		this._configuration.next({
 			startTime: startTime,
-			endTime: new Date()
+			endTime: endTime
 		});
 	}
 

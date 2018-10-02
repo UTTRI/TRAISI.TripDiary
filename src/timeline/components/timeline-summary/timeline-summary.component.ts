@@ -42,19 +42,27 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 	{
 		this.timelineLocations = [];
 
+
 	}
 
 	ngAfterViewInit(): void {
 
 	}
+	
+	/**
+	 * ngOnInit method
+	 */
 	ngOnInit(): void {
 		this._timelineService.timelineLocations.subscribe( (locations: Array<TimelineEntry>) => {
 
-			console.log("inside of summary");
-			console.log(locations);
 			this.timelineLocations = locations;
 
 		});
+
+		this._timelineService.configuration.subscribe( config => {
+			console.log("sub got config");
+			console.log(config);
+		})
 
 	}
 }
