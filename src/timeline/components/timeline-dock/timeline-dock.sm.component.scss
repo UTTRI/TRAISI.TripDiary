@@ -1,0 +1,23 @@
+@include media-breakpoint-down(sm) {
+
+    
+    traisi-timeline-question{
+        height: 400px;
+    }
+
+    .timeline-dock-inner-container {
+        display: inline-flex;
+        align-items: stretch;
+        justify-content: stretch;
+        width: 50%;
+        flex-direction: column;
+        
+    }
+
+    .timeline-bar
+    {
+        height: auto;
+        width: 5px;
+    }
+
+}

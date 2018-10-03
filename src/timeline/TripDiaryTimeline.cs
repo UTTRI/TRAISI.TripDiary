@@ -6,7 +6,8 @@ using TRAISI.SDK.Interfaces;
 namespace TRAISI.SDK.Questions
 {
     [SurveyQuestion(QuestionResponseType.Integer,
-        CodeBundleName = "traisi-trip-diary-timeline.module.js")]
+        CodeBundleName = "traisi-trip-diary-timeline.module.js",
+        InternalNavigationViewCount = 2)]
     public class TripDiaryTimeline : ISurveyQuestion
     {
         public string TypeName => "trip-diary-timeline";
