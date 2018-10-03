@@ -17,6 +17,8 @@ export class TimelineDockComponent implements OnInit {
 
 	public dragOver: boolean = false;
 
+	public dragActive: boolean = false;
+
 	@ViewChild('startSlotPopover')
 	startSlotPopover: PopoverDirective;
 
@@ -67,9 +69,10 @@ export class TimelineDockComponent implements OnInit {
 				if (dropResult.removedIndex != null) {
 					this.dockItems.splice(dropResult.removedIndex, 1);
 				}
-				this.dockItems.splice(dropResult.addedIndex, 0, dropResult.payload);
+				var model = Object.assign({}, dropResult.payload);
+				this.dockItems.splice(dropResult.addedIndex, 0,model);
 
-				this.timelineService.updateTimelineLocations(this.dockItems);
+				this.timelineService.addTimelineLocation(model);
 			}
 		}
 		this.dragOver = false;
@@ -88,8 +91,15 @@ export class TimelineDockComponent implements OnInit {
 	 * @param $event
 	 */
 	public onDragStart($event) {
-		console.log('drag start');
-		console.log($event);
+		this.dragActive = true;
+	}
+
+	/**
+	 * 
+	 * @param $event 
+	 */
+	public onDragEnd($event) {
+		this.dragActive = false;
 	}
 
 	/**

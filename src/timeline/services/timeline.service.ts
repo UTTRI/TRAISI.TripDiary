@@ -1,11 +1,10 @@
 import { Injectable, TemplateRef, Inject, Injector, ViewContainerRef, ApplicationRef, EmbeddedViewRef } from '@angular/core';
 import { TimelineState } from '../models/timeline-state.model';
 import { TimelineConfiguration } from '../models/timeline-configuration.model';
-import { ReplaySubject, BehaviorSubject, Subject,Observable } from '../shared/rxjs';
-import { TimelineEntry } from 'timeline/models/timeline-entry.model';
+import { ReplaySubject, BehaviorSubject, Subject, Observable } from '../shared/rxjs';
+import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { QuestionLoaderService, SurveyQuestion } from 'traisi-question-sdk';
-import { NgTemplateOutlet } from '@angular/common';
+import { QuestionLoaderService, SurveyQuestion, SurveyViewer } from 'traisi-question-sdk';
 
 @Injectable()
 export class TimelineService {
@@ -16,44 +15,11 @@ export class TimelineService {
 	}
 
 	private _availableLocations: Array<TimelineEntry>;
+	public modalRef: BsModalRef;
 
-	private _timelineStartLocation: TimelineEntry;
 	private _timelineLocations: Array<TimelineEntry>;
-	private _timelineEndLocation: TimelineEntry;
+
 	public timelineItemRemoved: Subject<TimelineEntry>;
-	/**
-	 *
-	 * @param store
-	 * @param modalService
-	 * @param injector
-	 * @param _questionLoaderService
-	 */
-	constructor(
-		private modalService: BsModalService,
-		private injector: Injector,
-		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService
-	) {
-		this.initializeConfiguration();
-		this._availableLocations = [];
-		this._timelineLocations = [];
-
-		let entry1: TimelineEntry = {
-			address: '1783 Storrington Street',
-			latitude: 0,
-			purpose: 'work',
-			longitude: 0,
-			time: new Date(),
-			timeB: new Date(),
-			id: Symbol(),
-			name: 'My work place'
-		};
-
-		this._availableLocations.push(entry1);
-
-		this.availableLocations = new BehaviorSubject(this._availableLocations);
-		this.timelineLocations = new BehaviorSubject(this._timelineLocations);
-		this.timelineItemRemoved = new Subject<TimelineEntry>();
-	}
 
 	/**
 	 * Behaviour subject that contains the list of available timeline
@@ -73,6 +39,47 @@ export class TimelineService {
 	 */
 	public timelineLocations: BehaviorSubject<Array<TimelineEntry>>;
 
+	private _timelineStateValid: boolean = false;
+
+	public get isTimelineStatevalid(): boolean {
+		return this._timelineStateValid;
+	}
+
+	/**
+	 *
+	 * @param modalService
+	 * @param injector
+	 * @param surveyViewerService
+	 * @param _questionLoaderService
+	 */
+	constructor(
+		private modalService: BsModalService,
+		private injector: Injector,
+		@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer,
+		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService
+	) {
+		this.initializeConfiguration();
+		this._availableLocations = [];
+		this._timelineLocations = [];
+
+		let entry1: TimelineEntry = {
+			address: '1783 Storrington Street',
+			latitude: 0,
+			purpose: 'work',
+			longitude: 0,
+			time: new Date(),
+			timeB: new Date(),
+			id: Symbol(),
+			locationType: TimelineLocationType.Undefined,
+			name: 'My work place'
+		};
+
+		this._availableLocations.push(entry1);
+		this.availableLocations = new BehaviorSubject(this._availableLocations);
+		this.timelineLocations = new BehaviorSubject(this._timelineLocations);
+		this.timelineItemRemoved = new Subject<TimelineEntry>();
+	}
+
 	/**
 	 * Initialie the base configuration data
 	 */
@@ -87,10 +94,38 @@ export class TimelineService {
 		endTime.setDate(endTime.getDate() + 1);
 		endTime.setHours(3);
 		endTime.setMinutes(59);
+
+
 		this._configuration.next({
 			startTime: startTime,
-			endTime: new Date()
+			endTime: endTime,
+			purposes: [
+				{key:'home',label:'Home'},
+				{key:'work',label:'Work'},
+				{key:'school',label:'Schhool'},
+				{key:'daycare',label:'Daycare'},
+				{key:'facilitate_passenger',label:'Facilitate Passenger'}
+				
+			]
 		});
+	}
+
+	/**
+	 * Updates the validation of the timeline
+	 */
+	private updateLocationsValidation() {
+		let hasStartLocation: boolean = false;
+		let hasEndLocation: boolean = false;
+		this._timelineLocations.forEach(location => {
+			if (location.locationType == TimelineLocationType.StartLocation) {
+				hasStartLocation = true;
+			} else if (location.locationType == TimelineLocationType.EndLocation) {
+				hasEndLocation = true;
+			}
+		});
+		this._timelineStateValid = hasStartLocation && hasEndLocation;
+		
+		this.surveyViewerService.updateNavigationState(this._timelineStateValid);
 	}
 
 	/**
@@ -104,13 +139,15 @@ export class TimelineService {
 	/**
 	 *
 	 */
-	public updateTimelineLocations(locations: Array<TimelineEntry>): void {}
+	public updateTimelineLocations(locations: Array<TimelineEntry>): void {
+
+	}
 
 	/**
 	 *
 	 * @param location
 	 */
-	public addNewLocation(location: TimelineEntry) {
+	public addShelfLocation(location: TimelineEntry) {
 		this._availableLocations.push(location);
 		this.availableLocations.next(this._availableLocations);
 	}
@@ -121,7 +158,8 @@ export class TimelineService {
 	 */
 	public addTimelineLocation(location: TimelineEntry) {
 		this._timelineLocations.push(location);
-		this.timelineLocations.next(this._availableLocations);
+		this.updateLocationsValidation();
+		this.timelineLocations.next(this._timelineLocations);
 	}
 
 	/**
@@ -129,10 +167,15 @@ export class TimelineService {
 	 * @param location
 	 */
 	public removeTimelineLocation(location: TimelineEntry) {
-		this.timelineItemRemoved.next(location);
-	}
 
-	modalRef: BsModalRef;
+		let index: number = this._timelineLocations.findIndex(loc => {
+			return loc.id == location.id;
+		});
+		this._timelineLocations.splice(index, 1);
+		this.timelineItemRemoved.next(location);
+		this.updateLocationsValidation();
+		this.timelineLocations.next(this._timelineLocations);
+	}
 
 	/**
 	 *
@@ -158,18 +201,6 @@ export class TimelineService {
 	 * @param mapContainerRef
 	 */
 	openEditMapLocationModal(template: ViewContainerRef, callback) {
-		let componentRef = null;
-
-		let sub = this._questionLoaderService.componentFactories$.subscribe(factory => {
-			if (factory.selector == 'traisi-map-question') {
-				componentRef = template.createComponent(factory, undefined, this.injector);
-
-				let instance: SurveyQuestion<any> = <SurveyQuestion<any>>componentRef.instance;
-
-				instance.response.subscribe(value => {
-					callback(value);
-				});
-			}
-		});
+	
 	}
 }

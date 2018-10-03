@@ -1,31 +1,37 @@
 <div class="timeline-container">
 
-    <div class="timeline-instructions-top">
+    <div *ngIf="isStep1" class="timeline-container-step-1">
+        <div class="timeline-instructions-top">
 
 
 
 
 
-        <alert type="light" #instructionsAlert>
-            Where did you go yesterday? Please populate the timeline below by dragging and dropping locations from the
-            shelf to the timeline.
-        </alert>
+            <alert type="light" #instructionsAlert>
+                Where did you go yesterday? Please populate the timeline below by dragging and dropping locations from
+                the
+                shelf to the timeline.
+            </alert>
+
+        </div>
+
+
+        <div class="timeline-shelf-container">
+            <timeline-shelf></timeline-shelf>
+            <button type="button" class="btn btn-primary timeline-add-new-location-button" (click)="addNewLocation()">
+                + Add New Location
+            </button>
+        </div>
+
+        <div class="timeline-dock-container">
+            <timeline-dock></timeline-dock>
+        </div>
 
     </div>
-
-
-    <div class="timeline-shelf-container">
-        <timeline-shelf></timeline-shelf>
-        <button type="button" class="btn btn-primary timeline-add-new-location-button" (click)="addNewLocation()">
-            + Add New Location
-        </button>
+    <div *ngIf="isStep2">
+        <timeline-summary></timeline-summary>
     </div>
 
-    <div class="timeline-dock-container">
-        <timeline-dock></timeline-dock>
-    </div>
-
+  
 </div>
-
-
 <timeline-new-entry #newEntry></timeline-new-entry>

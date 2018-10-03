@@ -1,0 +1,63 @@
+@media #{$sm-down} {
+
+    .btn-circle.btn-xl {
+        width: $timeline-entry-size-sm;
+        height:  $timeline-entry-size-sm;
+        padding: 4px;
+
+    }
+    timeline-dock timeline-slot .smooth-dnd-container.horizontal
+    {
+        height: $timeline-entry-size-sm;
+
+        width:$timeline-entry-size-sm;
+    }
+
+    timeline-dock .timeline-dock-inner-container .smooth-dnd-container.horizontal
+    {
+        min-height: $timeline-entry-size-sm;
+        height: auto;
+    }
+    
+    traisi-timeline-question{
+        height: 400px;
+    }
+
+ 
+    
+    .timeline-dock-info
+    {
+        display: none;
+    }
+
+    .timeline-dock-top
+    {
+        flex-direction: column;
+        margin: auto;
+    }
+    
+    .timeline-bar
+    {
+        background-color: #95a5a6;
+        position: absolute;
+        /* top: 0; */
+        height: 100%;
+        bottom: 0px;
+        width: 3px;
+        left: calc(50% - 1px);
+    }
+    
+    .timeline-dnd-dock  .smooth-dnd-container
+    {
+        flex-direction: column;
+    }
+
+    .timeline-dock-top
+    {
+        align-items:center;
+    }
+    .timeline-dock-container
+    {
+        flex-grow:1;
+    }
+}

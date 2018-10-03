@@ -17,6 +17,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { FormsModule } from '@angular/forms';
 import { NgxSmoothDnDModule } from 'ngx-smooth-dnd';
 import { TimelineNewEntryComponent } from './components/timeline-new-entry/timeline-new-entry.component';
+import { TimelineSummaryComponent } from './components/timeline-summary/timeline-summary.component';
 @NgModule({
 	entryComponents: [
 		TimelineWedgeComponent,
@@ -26,6 +27,7 @@ import { TimelineNewEntryComponent } from './components/timeline-new-entry/timel
 		TimelineSlotComponent,
 		TimelineEntryItemComponent,
 		TimelineNewEntryComponent,
+		TimelineSummaryComponent,
 		ModalBackdropComponent
 	],
 	declarations: [
@@ -35,6 +37,7 @@ import { TimelineNewEntryComponent } from './components/timeline-new-entry/timel
 		TimelineDockComponent,
 		TimelineSlotComponent,
 		TimelineNewEntryComponent,
+		TimelineSummaryComponent,
 		TimelineEntryItemComponent
 	],
 	exports: [],

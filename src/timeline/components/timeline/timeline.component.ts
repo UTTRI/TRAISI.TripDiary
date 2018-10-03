@@ -25,6 +25,7 @@ import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { QuestionLoaderService } from 'traisi-question-sdk';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
+import { isRegExp } from 'util';
 
 @Component({
 	entryComponents: [TimelineWedgeComponent],
@@ -36,6 +37,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	typeName: string;
 	icon: string;
 
+	editModel: TimelineEntry;
+
 	icons: {} = {
 		faHome: faHome
 	};
@@ -43,44 +46,31 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	@ViewChild(PopoverDirective)
 	popovers;
 
-
 	@ViewChild(TemplateRef, { read: ViewContainerRef })
 	inputTemplate: ViewContainerRef;
 
 	@ViewChild('newEntry')
 	newEntryDialog: TimelineNewEntryComponent;
 
+	public isStep1: boolean = true;
+
+	public isStep2: boolean = false;
 
 	/**
 	 *
-	 * @param _questionLoaderService
-	 * @param _element
+	 * @param surveyViewerService
 	 * @param _timelineService
-	 * @param resolver
-	 * @param injector
-	 * @param modalService
 	 */
-	constructor(
-		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService,
-		@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer,
-		private _element: ElementRef,
-		private _timelineService: TimelineService,
-		private resolver: ComponentFactoryResolver,
-		private injector: Injector,
-		private modalService: BsModalService
-	) {
+	constructor(@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer, private _timelineService: TimelineService) {
 		super();
 		this.typeName = 'Trip Diary Timeline';
 		this.icon = 'business-time';
-		const f = this.resolver.resolveComponentFactory(TimelineWedgeComponent);
 	}
 
 	/**
 	 * TRAISI life cycle called for when the question is prepared
 	 */
 	traisiOnInit(): void {
-
-		console.log(this.configuration);
 		this.surveyViewerService.updateNavigationState(false);
 	}
 
@@ -89,28 +79,22 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	 */
 	ngOnInit(): void {}
 
-	editModel: TimelineEntry;
+	saveNewLocation(): void {}
 
-	saveNewLocation(): void {
-
+	/**
+	 *
+	 */
+	addNewLocation(): void {
+		this.newEntryDialog.show(this.newEntryCallback);
 	}
 
 	/**
-	 * 
+	 * Callback - called when the new "location" entry process has completed.
+	 * @param value
 	 */
-	addNewLocation(): void {
-		this.newEntryDialog.show(this.newEntryCallback); 
-	}
-
-	    /**
-     * 
-     * @param value 
-     */
-    public newEntryCallback = (value:any): void => 
-    {
-        console.log(value);
-        this._timelineService.addNewLocation(value);
-    }
+	public newEntryCallback = (value: any): void => {
+		this._timelineService.addShelfLocation(value);
+	};
 
 	/**
 	 *
@@ -124,10 +108,42 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	/**
 	 *
 	 */
-	ngAfterViewInit(): void {}
+	ngAfterViewInit(): void {
+	}
 
 	/**
 	 *
 	 */
-	ngAfterViewChecked(): void {}
+	ngAfterViewChecked(): void {
+		
+	}
+
+	/**
+	 * Override of base method class
+	 */
+	public navigateInternalNext() {
+		if (this.isStep1 && this._timelineService.isTimelineStatevalid) {
+			this.isStep1 = false;
+			this.isStep2 = true;
+		}
+	}
+
+	/**
+	 * Override - signfies an internal navigation possible.
+	 */
+	public canNavigateInternalNext(): boolean {
+		return this._timelineService.isTimelineStatevalid;
+	}
+
+	public navigateInternalPrevious() {
+		this.isStep2 = false;
+		this.isStep1 = true;
+	}
+
+	/**
+	 *
+	 */
+	public canNavigateInternalPrevious(): boolean {
+		return this.isStep2;
+	}
 }

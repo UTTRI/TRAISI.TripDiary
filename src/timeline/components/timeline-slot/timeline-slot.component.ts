@@ -1,9 +1,9 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { faHome, faBriefcase, faSchool, faHandScissors, IconDefinition } from '../../shared/icons';
 
-import { TimelineEntry } from 'timeline/models/timeline-entry.model';
+import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
 import { IDropResult } from 'ngx-smooth-dnd';
 @Component({
 	selector: 'timeline-slot',
@@ -11,7 +11,11 @@ import { IDropResult } from 'ngx-smooth-dnd';
 	styles: [require('./timeline-slot.component.scss').toString()]
 })
 export class TimelineSlotComponent implements OnInit {
-	typeName: string;
+	@Input()
+	startLocation: boolean = false;
+
+	@Input()
+	endLocation: boolean = false;
 
 	hasTimelineEntryItem: boolean = false;
 
@@ -20,7 +24,7 @@ export class TimelineSlotComponent implements OnInit {
 	schoolIcon: IconDefinition = faSchool;
 
 	public dragOver: boolean = false;
-
+	model: TimelineEntry;
 	public dragActive: boolean = false;
 
 	public get icon() {
@@ -39,15 +43,33 @@ export class TimelineSlotComponent implements OnInit {
 	 * @param {TimelineService} timelineService
 	 * @memberof TimelineSlotComponent
 	 */
-	constructor(private _element: ElementRef, private timelineService: TimelineService) {
-		this.typeName = 'Trip Diary Timeline';
-	}
+	constructor(private _element: ElementRef, private _timelineService: TimelineService) {}
 
-	model: TimelineEntry;
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this._timelineService.timelineLocations.subscribe(locations => {
+			locations.forEach(loc => {
+				if (loc.locationType == TimelineLocationType.StartLocation && this.startLocation) {
+					this.addLocationToSlot(loc);
+				} else if (loc.locationType == TimelineLocationType.EndLocation && this.endLocation) {
+					this.addLocationToSlot(loc);
+				}
+			});
+		});
+	}
+
+	/**
+	 *
+	 * @param location
+	 */
+	private addLocationToSlot(location: TimelineEntry) {
+
+		this.model = location;
+		this.hasTimelineEntryItem = true;
+		//this.model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
+	}
 
 	/**
 	 *
@@ -59,8 +81,9 @@ export class TimelineSlotComponent implements OnInit {
 	}
 
 	public delete(): void {
-		this.model = undefined;
+		this._timelineService.removeTimelineLocation(this.model);
 		this.hasTimelineEntryItem = false;
+		this.model = undefined;
 	}
 
 	/**
@@ -69,8 +92,10 @@ export class TimelineSlotComponent implements OnInit {
 	 */
 	onDrop(dropResult: IDropResult) {
 		if (this.dragOver) {
-			this.hasTimelineEntryItem = true;
-			this.model = dropResult.payload;
+			
+			let model: TimelineEntry = Object.assign({}, dropResult.payload);
+			model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
+			this._timelineService.addTimelineLocation(model);
 		}
 		this.dragOver = false;
 	}
@@ -80,7 +105,6 @@ export class TimelineSlotComponent implements OnInit {
 	 * @param $event
 	 */
 	public onDragStart($event) {
-		console.log('drag active!');
 		this.dragActive = true;
 	}
 

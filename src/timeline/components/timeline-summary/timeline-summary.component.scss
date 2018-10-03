@@ -1,0 +1,93 @@
+.timeline-summary-container
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+}
+
+.timeline-summary-time-input-container
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    span
+    {
+        
+        
+        text-align:center;
+    }
+    input.form-control-sm
+        {
+            width: 50px;
+        }
+
+        .time-input-container
+        {
+            text-align: center;
+            display: inline-flex;
+            align-content: center;
+            justify-content: center;
+            width: 150px;
+            
+            .input-group
+            {
+                width: 100px;
+            }
+        }
+}
+
+.timeline-entry-item-inner-container
+{
+    width: 150px;
+}
+
+.timeline-summary-bar
+{
+    height: 4px;
+    background-color: #95a5a6;
+    position: absolute;
+    left: 100px;
+    right: 100px;
+    top: calc(50% + 4px);
+}
+
+.summary-times
+{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #3498db;
+}
+
+.summary-times-dates
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    .end-date
+    {
+        width: 20%;
+    }
+    .start-date
+    {
+        width:80%;
+    }
+  
+}  .hour-label
+{
+    text-align:left;
+    color:white;
+    font-weight:bold;
+    border-left: solid 2px #187dc1;
+    flex-grow:1;
+    padding-left:2px;
+}
+
+.summary-times-dates-container
+{
+    border: solid 1px grey;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top:50px;
+}

@@ -1,6 +1,6 @@
 <div class="timeline-shelf-inner-container">
 
-    <smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'copy'" [orientation]="'horizontal'"
+    <smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'copy'" [orientation]="'horizontal'" class="shelf-dnd-container"
      [groupName]="'timeline'" 
      [getChildPayload]="getChildPayload"
       (dragStart)="onDragStart($event)" #shelfContainer

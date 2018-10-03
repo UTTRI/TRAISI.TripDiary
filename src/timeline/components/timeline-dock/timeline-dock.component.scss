@@ -3,7 +3,7 @@
 .btn-circle.btn-xl {
     width: $timeline-entry-size;
     height:  $timeline-entry-size;
-    padding: 10px 16px;
+
     font-size: 24px;
     line-height: 1.33;
     border-radius: 35px !important;
@@ -18,12 +18,26 @@
     right: 10px;
 }
 
+.timeline-bar.timeline-drag-over
+{
+    background-color:#3498DB;
+}
+
+.timeline-dock-top
+{
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+    margin-right: 20px;
+
+}
+
 .timeline-dock-inner-container
 {
     display:inline-flex;
     align-items: center;
     justify-content: end;
-    width:75%;
+    width:80%;
     position: relative;
     vertical-align:top;
 }
@@ -31,23 +45,25 @@
 .timeline-dnd-dock
 {
     flex:1;
+    flex-direction: row;
 }
 
 timeline-dock .timeline-dock-inner-container .smooth-dnd-container.horizontal
 {
-    height: 75px;
+    height: $timeline-entry-size;
     display: inline-flex;
     align-content: space-between;
     align-items: center;
     justify-content: space-evenly;
     width:90%;
+    vertical-align: top;
 }
 
 timeline-dock timeline-slot .smooth-dnd-container.horizontal
 {
-    height: 75px;
+    height: $timeline-entry-size;
 
-    width:75px;
+    width:$timeline-entry-size;
 }
 
 
@@ -55,3 +71,37 @@ timeline-dock .timeline-entry-model-info
 {
     display: none;
 }
+
+
+.timeline-dock-info{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: stretch;
+    align-content: space-between;
+    justify-content: space-between;
+
+    .timeline-dock-info-centre
+    {
+        flex: 1;
+        width: 70%;
+    }
+
+    .timeline-dock-info-start, .timeline-dock-info-end
+    {
+        width: $timeline-entry-size + 30px;
+    font-weight: bold;
+    color: #d6d6d6;
+    font-size: 14px;
+    }
+}
+
+    
+.timeline-dock-info div
+{
+    display: inline-block;
+    
+}
+
+@import "timeline-dock.component.sm.scss"
+
