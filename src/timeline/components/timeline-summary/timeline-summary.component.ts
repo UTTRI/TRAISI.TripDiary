@@ -63,7 +63,7 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 
 			for (let i = 0; i < locations.length; i++) {
 				this.timeEntries.push({
-					hours: locations[i].time.getHours() > 12 ? locations[i].time.getHours() - 12 : locations[i].time.getHours(),
+					hours: locations[i].time.getHours() >= 12 ? locations[i].time.getHours() - 12 : locations[i].time.getHours(),
 					minutes: locations[i].time.getMinutes(),
 					am: locations[i].time.getHours() < 12 ? true : false
 				});

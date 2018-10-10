@@ -34,8 +34,8 @@ import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component'
 	template: require('./timeline.component.html').toString(),
 	styles: [require('./timeline.component.scss').toString()]
 })
-export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> implements OnInit, AfterViewInit, AfterViewChecked,OnVisibilityChanged {
-
+export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
+	implements OnInit, AfterViewInit, AfterViewChecked, OnVisibilityChanged {
 	typeName: string;
 	icon: string;
 
@@ -57,7 +57,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	@ViewChild('timelineDock')
 	timelineDock: TimelineDockComponent;
 
-	public isStep1: boolean = true;
+	public isStep1: boolean = false;
 
 	public isStep2: boolean = false;
 
@@ -76,6 +76,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	 * TRAISI life cycle called for when the question is prepared
 	 */
 	traisiOnInit(): void {
+		this.isStep1 = true;
 		this.surveyViewerService.updateNavigationState(false);
 	}
 
@@ -158,10 +159,11 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	}
 
 	onQuestionShown(): void {
-		console.log('question shown');
 		this._timelineService.updateLocationsValidation();
+		if (this.isStep1 && this._timelineService.isTimelineStatevalid) {
+			this.isStep1 = false;
+			this.isStep2 = true;
+		}
 	}
-	onQuestionHidden(): void {
-		
-	}
+	onQuestionHidden(): void {}
 }
