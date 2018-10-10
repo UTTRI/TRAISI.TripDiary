@@ -97,6 +97,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 					locationType: TimelineLocationType.Undefined,
 					name: 'Prior Location'
 				};
+				location.time.setHours(0);
+				location.time.setMinutes(0);
 				this._timelineService.addShelfLocation(location);
 			});
 			
