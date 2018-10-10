@@ -117,6 +117,7 @@ export class TimelineService {
 		});
 		this._timelineStateValid = hasStartLocation && hasEndLocation;
 
+		
 		this.surveyViewerService.updateNavigationState(this._timelineStateValid);
 	}
 

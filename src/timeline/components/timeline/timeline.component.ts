@@ -83,7 +83,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 		this.isStep1 = true;
 		this.surveyViewerService.updateNavigationState(false);
 		this._timelineService.clearAvailableLocations();
-		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId,ResponseTypes.Location).subscribe(result => {
+		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
 
 			result.forEach(element => {
 				let location: TimelineEntry = {
@@ -101,16 +101,18 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 				location.time.setMinutes(0);
 				this._timelineService.addShelfLocation(location);
 			});
-			
+
 		});
+
+		console.log(' in on init');
 	}
 
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {}
+	ngOnInit(): void { }
 
-	saveNewLocation(): void {}
+	saveNewLocation(): void { }
 
 	/**
 	 *
@@ -146,7 +148,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 	/**
 	 *
 	 */
-	ngAfterViewChecked(): void {}
+	ngAfterViewChecked(): void { }
 
 	/**
 	 * Override of base method class
@@ -167,8 +169,15 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 	 * Override - signfies an internal navigation possible.
 	 */
 	public canNavigateInternalNext(): boolean {
-		console.log(this._timelineService.isTimelineStatevalid);
-		return this._timelineService.isTimelineStatevalid;
+
+		if (this.isStep2) {
+			console.log('cannot navigate next');
+			return false;
+		}
+		else {
+			return this._timelineService.isTimelineStatevalid;
+		}
+
 	}
 
 	public navigateInternalPrevious() {
@@ -190,5 +199,5 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 			this.isStep2 = true;
 		}
 	}
-	onQuestionHidden(): void {}
+	onQuestionHidden(): void { }
 }
