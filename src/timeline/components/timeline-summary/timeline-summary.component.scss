@@ -32,7 +32,7 @@
             
             .input-group
             {
-                width: 100px;
+                width: 125px;
             }
         }
 }
@@ -90,4 +90,19 @@
     border-radius: 10px;
     overflow: hidden;
     margin-top:50px;
+}
+
+.time-input select
+{
+    display: inline-block;
+    padding: 0px;
+    width: 40px;
+}
+
+.time-input select.hours
+{
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 }

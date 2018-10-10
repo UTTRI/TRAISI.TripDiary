@@ -63,6 +63,8 @@ export class TimelineNewEntryComponent implements OnInit {
 			locationType: TimelineLocationType.Undefined,
 			id: Symbol()
 		};
+		this.model.time.setHours(0);
+		this.model.time.setMinutes(0);
 		this.stepOne = true;
 		this.stepTwo = false;
 		this.stepThree = false;
@@ -73,7 +75,7 @@ export class TimelineNewEntryComponent implements OnInit {
 	 * @param callback
 	 */
 	show(callback: (value: any) => void, entry?: TimelineEntry): void {
-		this.timelineService.openEditMapLocationModal(this.mapTemplate, this.callback);
+		//this.timelineService.openEditMapLocationModal(this.mapTemplate, this.callback);
 
 		this.saveCallback = callback;
 
@@ -93,6 +95,9 @@ export class TimelineNewEntryComponent implements OnInit {
 				locationType: TimelineLocationType.Undefined,
 				id: Symbol()
 			};
+
+			this.model.time.setHours(0);
+			this.model.time.setMinutes(0);
 		} else {
 			this.model = entry;
 		}

@@ -73,6 +73,8 @@ export class TimelineService {
 			locationType: TimelineLocationType.Undefined,
 			name: 'My work place'
 		};
+		entry1.time.setHours(0);
+		entry1.time.setMinutes(0);
 
 		this._availableLocations.push(entry1);
 		this.availableLocations = new BehaviorSubject(this._availableLocations);
@@ -95,17 +97,15 @@ export class TimelineService {
 		endTime.setHours(3);
 		endTime.setMinutes(59);
 
-
 		this._configuration.next({
 			startTime: startTime,
 			endTime: endTime,
 			purposes: [
-				{key:'home',label:'Home'},
-				{key:'work',label:'Work'},
-				{key:'school',label:'Schhool'},
-				{key:'daycare',label:'Daycare'},
-				{key:'facilitate_passenger',label:'Facilitate Passenger'}
-				
+				{ key: 'home', label: 'Home' },
+				{ key: 'work', label: 'Work' },
+				{ key: 'school', label: 'Schhool' },
+				{ key: 'daycare', label: 'Daycare' },
+				{ key: 'facilitate_passenger', label: 'Facilitate Passenger' }
 			]
 		});
 	}
@@ -124,7 +124,7 @@ export class TimelineService {
 			}
 		});
 		this._timelineStateValid = hasStartLocation && hasEndLocation;
-		
+
 		this.surveyViewerService.updateNavigationState(this._timelineStateValid);
 	}
 
@@ -139,9 +139,7 @@ export class TimelineService {
 	/**
 	 *
 	 */
-	public updateTimelineLocations(locations: Array<TimelineEntry>): void {
-
-	}
+	public updateTimelineLocations(locations: Array<TimelineEntry>): void {}
 
 	/**
 	 *
@@ -167,7 +165,6 @@ export class TimelineService {
 	 * @param location
 	 */
 	public removeTimelineLocation(location: TimelineEntry) {
-
 		let index: number = this._timelineLocations.findIndex(loc => {
 			return loc.id == location.id;
 		});
@@ -200,7 +197,5 @@ export class TimelineService {
 	 * @param mapModalTemplate
 	 * @param mapContainerRef
 	 */
-	openEditMapLocationModal(template: ViewContainerRef, callback) {
-	
-	}
+	openEditMapLocationModal(template: ViewContainerRef, callback) {}
 }
