@@ -45,6 +45,12 @@ export class TimelineService {
 		return this._timelineStateValid;
 	}
 
+	public clearAvailableLocations()
+	{
+		this._availableLocations = [];
+		this.availableLocations.next(this._availableLocations);
+	}
+
 	/**
 	 *
 	 * @param modalService
@@ -62,21 +68,7 @@ export class TimelineService {
 		this._availableLocations = [];
 		this._timelineLocations = [];
 
-		let entry1: TimelineEntry = {
-			address: '1783 Storrington Street',
-			latitude: 0,
-			purpose: 'work',
-			longitude: 0,
-			time: new Date(),
-			timeB: new Date(),
-			id: Symbol(),
-			locationType: TimelineLocationType.Undefined,
-			name: 'My work place'
-		};
-		entry1.time.setHours(0);
-		entry1.time.setMinutes(0);
 
-		this._availableLocations.push(entry1);
 		this.availableLocations = new BehaviorSubject(this._availableLocations);
 		this.timelineLocations = new BehaviorSubject(this._timelineLocations);
 		this.timelineItemRemoved = new Subject<TimelineEntry>();

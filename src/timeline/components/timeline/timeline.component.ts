@@ -17,13 +17,13 @@ import {
 } from '@angular/core';
 
 import { TimelineService } from '../../services/timeline.service';
-import { SurveyQuestion, ResponseTypes, SurveyViewer, OnVisibilityChanged } from 'traisi-question-sdk';
+import { SurveyQuestion, ResponseTypes, SurveyViewer, OnVisibilityChanged, SurveyResponder } from 'traisi-question-sdk';
 import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
 import { faHome } from '../../shared/icons';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { QuestionLoaderService } from 'traisi-question-sdk';
-import { TimelineEntry } from 'timeline/models/timeline-entry.model';
+import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
 import { isRegExp } from 'util';
 import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component';
@@ -66,7 +66,11 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 	 * @param surveyViewerService
 	 * @param _timelineService
 	 */
-	constructor(@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer, private _timelineService: TimelineService) {
+	constructor(
+		@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer,
+		@Inject('SurveyResponderService') private surveyResponderService: SurveyResponder,
+		private _timelineService: TimelineService
+	) {
 		super();
 		this.typeName = 'Trip Diary Timeline';
 		this.icon = 'business-time';
@@ -78,6 +82,25 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 	traisiOnInit(): void {
 		this.isStep1 = true;
 		this.surveyViewerService.updateNavigationState(false);
+		this._timelineService.clearAvailableLocations();
+		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId,ResponseTypes.Location).subscribe(result => {
+
+			result.forEach(element => {
+				let location: TimelineEntry = {
+					address: element.responseValue.address,
+					latitude: element.responseValue.latitude,
+					purpose: 'work',
+					longitude: element.responseValue.longitude,
+					time: new Date(),
+					timeB: new Date(),
+					id: Symbol(),
+					locationType: TimelineLocationType.Undefined,
+					name: 'Initial'
+				};
+				this._timelineService.addShelfLocation(location);
+			});
+			
+		});
 	}
 
 	/**
