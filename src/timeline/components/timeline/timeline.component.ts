@@ -81,9 +81,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {
-
-	}
+	ngOnInit(): void {}
 
 	saveNewLocation(): void {}
 
@@ -121,17 +119,20 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	/**
 	 *
 	 */
-	ngAfterViewChecked(): void {
-		
-	}
+	ngAfterViewChecked(): void {}
 
 	/**
 	 * Override of base method class
 	 */
-	public navigateInternalNext() {
+	public navigateInternalNext(): boolean {
 		if (this.isStep1 && this._timelineService.isTimelineStatevalid) {
 			this.isStep1 = false;
 			this.isStep2 = true;
+			return false;
+		}
+
+		if (this.isStep2) {
+			return true;
 		}
 	}
 
@@ -139,6 +140,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	 * Override - signfies an internal navigation possible.
 	 */
 	public canNavigateInternalNext(): boolean {
+		console.log(this._timelineService.isTimelineStatevalid);
 		return this._timelineService.isTimelineStatevalid;
 	}
 
