@@ -26,6 +26,7 @@ import { QuestionLoaderService } from 'traisi-question-sdk';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
 import { isRegExp } from 'util';
+import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component';
 
 @Component({
 	entryComponents: [TimelineWedgeComponent],
@@ -52,6 +53,9 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	@ViewChild('newEntry')
 	newEntryDialog: TimelineNewEntryComponent;
 
+	@ViewChild('timelineDock')
+	timelineDock: TimelineDockComponent;
+
 	public isStep1: boolean = true;
 
 	public isStep2: boolean = false;
@@ -77,7 +81,9 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {}
+	ngOnInit(): void {
+
+	}
 
 	saveNewLocation(): void {}
 
@@ -109,6 +115,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	 *
 	 */
 	ngAfterViewInit(): void {
+		this.timelineDock.timelineNewEntry = this.newEntryDialog;
 	}
 
 	/**

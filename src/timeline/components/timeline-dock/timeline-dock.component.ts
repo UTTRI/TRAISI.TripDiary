@@ -1,8 +1,9 @@
-import { Component, OnInit, ElementRef, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewEncapsulation, ViewChild, ViewChildren } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { IDropResult } from 'ngx-smooth-dnd';
 import { TimelineEntry } from '../../models/timeline-entry.model';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
+import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
 
 @Component({
 	selector: 'timeline-dock',
@@ -19,8 +20,11 @@ export class TimelineDockComponent implements OnInit {
 
 	public dragActive: boolean = false;
 
+	public timelineNewEntry: TimelineNewEntryComponent;
+
 	@ViewChild('startSlotPopover')
 	startSlotPopover: PopoverDirective;
+
 
 	/**
 	 *

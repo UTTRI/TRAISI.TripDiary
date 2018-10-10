@@ -11,7 +11,7 @@
 
         <smooth-dnd-draggable *ngFor="let item of dockItems">
             <div class="draggable-item">
-                <timeline-entry-item [model]="item">
+                <timeline-entry-item [model]="item" [timelineNewEntry]="timelineNewEntry">
 
                 </timeline-entry-item>
             </div>

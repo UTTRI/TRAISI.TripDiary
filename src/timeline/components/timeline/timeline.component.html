@@ -17,14 +17,14 @@
 
 
         <div class="timeline-shelf-container">
-            <timeline-shelf></timeline-shelf>
+            <timeline-shelf [timelineNewEntry]="newEntryDialog"></timeline-shelf>
             <button type="button" class="btn btn-primary timeline-add-new-location-button" (click)="addNewLocation()">
                 + Add New Location
             </button>
         </div>
 
         <div class="timeline-dock-container">
-            <timeline-dock></timeline-dock>
+            <timeline-dock #timelineDock></timeline-dock>
         </div>
 
     </div>
