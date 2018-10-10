@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 
 import { TimelineService } from '../../services/timeline.service';
-import { SurveyQuestion, ResponseTypes, SurveyViewer } from 'traisi-question-sdk';
+import { SurveyQuestion, ResponseTypes, SurveyViewer, OnVisibilityChanged } from 'traisi-question-sdk';
 import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
 import { faHome } from '../../shared/icons';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
@@ -34,7 +34,8 @@ import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component'
 	template: require('./timeline.component.html').toString(),
 	styles: [require('./timeline.component.scss').toString()]
 })
-export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> implements OnInit, AfterViewInit, AfterViewChecked {
+export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> implements OnInit, AfterViewInit, AfterViewChecked,OnVisibilityChanged {
+
 	typeName: string;
 	icon: string;
 
@@ -154,5 +155,13 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline> im
 	 */
 	public canNavigateInternalPrevious(): boolean {
 		return this.isStep2;
+	}
+
+	onQuestionShown(): void {
+		console.log('question shown');
+		this._timelineService.updateLocationsValidation();
+	}
+	onQuestionHidden(): void {
+		
 	}
 }

@@ -113,7 +113,7 @@ export class TimelineService {
 	/**
 	 * Updates the validation of the timeline
 	 */
-	private updateLocationsValidation() {
+	public updateLocationsValidation() {
 		let hasStartLocation: boolean = false;
 		let hasEndLocation: boolean = false;
 		this._timelineLocations.forEach(location => {
