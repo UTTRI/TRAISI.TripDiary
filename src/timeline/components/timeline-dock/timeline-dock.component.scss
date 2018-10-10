@@ -76,11 +76,13 @@ timeline-dock .timeline-entry-model-info
 
 .timeline-dock-info{
     display: flex;
-    width: 100%;
+    //width: 100%;
     flex-direction: row;
     align-items: stretch;
     align-content: space-between;
     justify-content: space-between;
+    margin-left:40px;
+    margin-right: 40px;
 
     .timeline-dock-info-centre
     {

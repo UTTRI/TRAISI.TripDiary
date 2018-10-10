@@ -54,8 +54,6 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	@ViewChild('mapModalTemplate')
 	mapModal: ModalDirective;
 
-	
-
 	@ViewChildren(ViewContainerRef, { read: ViewContainerRef })
 	viewChildren!: QueryList<ViewContainerRef>;
 
@@ -104,7 +102,6 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 *
 	 */
 	public edit(): void {
-
 		console.log(this.timelineNewEntry);
 
 		/*
@@ -117,10 +114,10 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 			});
 		}); */
 
-		this.timelineNewEntry.show((value) => {
-
+		this.timelineNewEntry.show(value => {
 			console.log(value);
-		},  Object.assign({}, this.model));
+			this.model = value;
+		}, Object.assign({}, this.model));
 	}
 
 	callback(value): void {}

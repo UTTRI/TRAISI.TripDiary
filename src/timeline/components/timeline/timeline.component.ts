@@ -89,13 +89,13 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 				let location: TimelineEntry = {
 					address: element.responseValue.address,
 					latitude: element.responseValue.latitude,
-					purpose: 'work',
+					purpose: 'home',
 					longitude: element.responseValue.longitude,
 					time: new Date(),
 					timeB: new Date(),
 					id: Symbol(),
 					locationType: TimelineLocationType.Undefined,
-					name: 'Initial'
+					name: 'Prior Location'
 				};
 				this._timelineService.addShelfLocation(location);
 			});

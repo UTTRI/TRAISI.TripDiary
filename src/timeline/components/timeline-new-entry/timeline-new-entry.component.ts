@@ -55,7 +55,7 @@ export class TimelineNewEntryComponent implements OnInit {
 		this.model = {
 			address: '',
 			latitude: 0,
-			purpose: 'home',
+			purpose: null,
 			longitude: 0,
 			time: new Date(),
 			timeB: new Date(),
@@ -87,7 +87,7 @@ export class TimelineNewEntryComponent implements OnInit {
 			this.model = {
 				address: '',
 				latitude: 0,
-				purpose: '',
+				purpose: null,
 				longitude: 0,
 				time: new Date(),
 				timeB: new Date(),
