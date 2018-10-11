@@ -1,0 +1,243 @@
+<div class="timeline-line">
+
+
+    <div class="add-start" id="timeline-add-{$ tc.value.startLocation.id $}">
+
+
+        <div class="timeline-info">
+            <span class="timeline-info-time">{$ tc.value.startLocation._endTime | customDate $}</span>
+
+
+            <span ng-if="tc.value.startLocation._locationName != 'Other'" class="timeline-info-name">{$ tc.value.startLocation._locationName $}</span>
+            <span ng-if="tc.value.startLocation._locationName == 'Other'" class="timeline-info-name">{$ tc.value.startLocation._otherLocationName $}</span>
+
+        </div>
+        <div ng-show="!tc.value.startLocation" scroll-view-watcher scroll-enter-callback="_tllc.startScrollEnter()"
+             scroll-leave-callback="_tllc.startScrollLeave()" class="add-start-initial"
+             trigger-scroll-on-class-removed="tour-step-element-reflex">
+
+
+            <md-menu md-offset="0 -10">
+                <md-button id="add-start-location-{$ $root.questionId $}" ng-click="$mdMenu.open($event)"
+
+                           class="md-fab md-mini md-primary"
+                           aria-label="Add Start Location">
+                    <md-icon class="md-48">add</md-icon>
+
+
+                </md-button>
+                <md-menu-content ng-mouseleave="$mdMenu.close()" prevent-scroll width="2">
+
+                    <md-menu-item>
+                        <md-button ng-click="tc.addTripLocation('START_LOCATION')">
+                            <md-icon class="md-8">place</md-icon>
+                            {$ 'ADD_LOCATION' | translate:tc.translateData $}
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item ng-repeat="location in tc.configService._surveyLocations">
+
+                        <md-button ng-click="tc.addTripLocation('START_LOCATION',location)">
+                           <span class="location-main">
+                        <md-icon ng-if="!location.purpose" class="md-8">{$ location.name | lowercase $}</md-icon>
+                        <md-icon ng-if="location.purpose" class="md-8">{$ $tds.getTimelineIcon(location.purpose) |
+                            lowercase $}
+                        </md-icon>
+                            <span class="location-name-text">
+                               {$ location.name $}
+                                </span>
+                        </span>
+                            <span class="location-address">
+                            {$ location.address $}
+                        </span>
+
+                        </md-button>
+                    </md-menu-item>
+
+
+                </md-menu-content>
+
+            </md-menu>
+
+            <!-- <md-button id="add-start-location-{$ $root.questionId $}" ng-click="tc.addTripLocation('START_LOCATION')"
+                        class="md-fab md-mini md-primary"
+                        aria-label="Add Start Location">
+                 <md-icon class="md-24">add</md-icon>
+
+             </md-button> -->
+
+            <span class="add-start-description" translate="START_LOCATION_DESCRIPTION"
+                  translate-values="tc.translateData">
+
+            </span>
+        </div>
+
+        <div class="line-marker-icon" ng-if="tc.value.startLocation" ng-cloak>
+            <md-menu md-offset="10 0">
+                <md-button
+                        style="border-style: solid; border-width: 2px; border-color: {$ $tds.getLocationColourDark(tc.value.startLocation) $}"
+                        id="add-start-location-{$ $root.questionId $}" ng-click="$mdMenu.open($event)"
+                        class="md-fab md-mini md-primary timeline-button"
+                        aria-label="Add Home Location" ng-class="[tc.value.startLocation._locationPurpose]">
+
+                    <md-icon class="md-24" ng-bind="tc.value.startLocation.timelineIcon"></md-icon>
+                </md-button>
+
+                <md-menu-content ng-mouseleave="$mdMenu.close()" prevent-scroll width="2">
+
+                    <md-menu-item>
+                        <md-button ng-click="tc.editTripLocation(tc.value.startLocation)">
+                            <md-icon class="md-8">edit</md-icon>
+                            {$ 'EDIT' | translate $}
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="tc.removeTripLocation(tc.value.startLocation)">
+                            <md-icon class="md-8">delete</md-icon>
+                            {$ 'DELETE' | translate $}
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+
+            </md-menu>
+
+        </div>
+
+
+    </div>
+
+    <div class="line-marker">
+
+
+    </div>
+
+    <div class="line-marker-icon" ng-repeat="location in tc.value.tripLocations track by $index"
+         id="timeline-add-{$ location.id $}">
+
+
+        <div class="timeline-info-middle">
+
+            <span class="timeline-info-time">{$ location._startTime | customDate $} <br/>{$ location._endTime | customDate $}</span>
+            <span ng-if="location._locationName != 'Other'"
+                  class="timeline-info-name">{$ location._locationName $}</span>
+            <span ng-if="location._locationName == 'Other'"
+                  class="timeline-info-name">{$ location._otherLocationName $}</span>
+
+        </div>
+
+        <md-menu md-offset="10 0">
+            <md-button ng-click="$mdMenu.open($event)" class="md-fab md-mini md-primary timeline-button"
+                       aria-label="Add Intermediate Location"
+                       ng-class="[location._locationPurpose]"
+                       style="border-style: solid; border-width: 2px; border-color: {$ $tds.getLocationColourDark(location) $}">
+                <md-icon class="md-24">{$ location.timelineIcon $}</md-icon>
+
+            </md-button>
+            <md-menu-content ng-mouseleave="$mdMenu.close()" prevent-scroll width="2">
+
+                <md-menu-item>
+                    <md-button ng-click="tc.editTripLocation(location,$index)">
+                        <md-icon class="md-8">edit</md-icon>
+                        {$ 'EDIT' | translate $}
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="tc.removeTripLocation(location,$index)">
+                        <md-icon class="md-8">delete</md-icon>
+                        {$ 'DELETE' | translate $}
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+
+    </div>
+
+    <div class="add-end" id="timeline-add-{$ tc.value.endLocation.id $}">
+
+        <div class="timeline-info">
+            <span class="timeline-info-time">{$ tc.value.endLocation.startTime | customDate $}</span>
+            <span ng-if="tc.value.endLocation._locationName != 'Other'" class="timeline-info-name">{$ tc.value.endLocation._locationName $}</span>
+            <span ng-if="tc.value.endLocation._locationName == 'Other'" class="timeline-info-name">{$ tc.value.endLocation._otherLocationName $}</span>
+
+        </div>
+        <div ng-show="!tc.value.endLocation" scroll-view-watcher scroll-enter-callback="_tllc.endScrollEnter()"
+             scroll-leave-callback="_tllc.endScrollLeave()" trigger-scroll-on-class-removed="tour-step-element-reflex">
+
+
+            <md-menu md-offset="0 -10">
+                <md-button id="add-end-location-{$ $root.questionId $}" ng-click="$mdMenu.open($event)"
+
+                           class="md-fab md-mini md-primary"
+                           aria-label="Add End Location">
+                    <md-icon class="md-48">add</md-icon>
+
+
+                </md-button>
+                <md-menu-content ng-mouseleave="$mdMenu.close()" prevent-scroll width="2">
+
+
+                    <md-menu-item>
+                        <md-button ng-click="_tdtl.addEndLocation()">
+                            <md-icon class="md-8">place</md-icon>
+                            {$ 'ADD_LOCATION' | translate:tc.translateData $}
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item ng-repeat="location in tc.configService._surveyLocations">
+
+                        <md-button ng-click="_tdtl.addEndLocation(location)">
+                           <span class="location-main">
+                        <md-icon ng-if="!location.purpose" class="md-8">{$ location.name | lowercase $}</md-icon>
+                        <md-icon ng-if="location.purpose" class="md-8">{$ $tds.getTimelineIcon(location.purpose) |
+                            lowercase $}
+                        </md-icon>
+                            <span class="location-name-text">
+                               {$ location.name $}
+                                </span>
+                        </span>
+                            <span class="location-address">
+                            {$ location.address $}
+                        </span>
+                        </md-button>
+                    </md-menu-item>
+
+
+                </md-menu-content>
+
+            </md-menu>
+
+            <span class="add-start-description" translate="END_LOCATION_DESCRIPTION"
+                  translate-values="tc.translateData">
+
+            </span>
+
+        </div>
+
+        <div class="line-marker-icon" ng-if="tc.value.endLocation">
+            <md-menu md-offset="10 0">
+                <md-button id="add-end-location-{$ $root.questionId $}" ng-click="$mdMenu.open($event)"
+                           class="md-fab md-mini md-primary timeline-button"
+                           style="border-style: solid; border-width: 2px; border-color: {$ $tds.getLocationColourDark(tc.value.endLocation) $}"
+                           aria-label="Add Final Location" ng-class="[tc.value.endLocation._locationPurpose]">
+
+                    <md-icon class="md-24">{$ tc.value.endLocation.timelineIcon $}</md-icon>
+                </md-button>
+                <md-menu-content ng-mouseleave="$mdMenu.close()" prevent-scroll width="2">
+
+                    <md-menu-item>
+                        <md-button ng-click="tc.editTripLocation(tc.value.endLocation)">
+                            <md-icon class="md-8">edit</md-icon>
+                            {$ 'EDIT' | translate $}
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="tc.removeTripLocation(tc.value.endLocation)">
+                            <md-icon class="md-8">delete</md-icon>
+                            {$ 'DELETE' | translate $}
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+    </div>
+
+</div>

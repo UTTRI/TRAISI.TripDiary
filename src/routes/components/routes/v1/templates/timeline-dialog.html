@@ -1,0 +1,25 @@
+<md-dialog aria-label="{$ headerText $}">
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span class="timeline-dialog-header" ng-bind-html="headerText"></span>
+            <span flex></span>
+
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content trip-diary-dialog" ng-bind-html="descriptionText">
+
+            <!--{$ descriptionText | htmlFilter | sanitize $} -->
+        </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+
+
+        <md-button ng-click="close()">
+            OK
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

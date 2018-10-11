@@ -1,0 +1,99 @@
+<div class="timeline-line">
+
+
+    <div class="add-start">
+
+
+        <div class="timeline-info">
+            {$ tc.value.startLocation._endTime | customDate $}<br/>
+            <span class="timeline-info-name">{$ tc.value.startLocation._locationName $}</span>
+
+        </div>
+        <div ng-if="!tc.value.startLocation">
+
+            <md-button  md-no-ink ng-click="tc.addTripLocation('START_LOCATION')" class="md-fab md-mini md-primary"
+                       aria-label="Add Home Location">
+                <md-icon class="md-16">add</md-icon>
+
+            </md-button>
+        </div>
+
+        <div ng-if="tc.value.startLocation" ng-cloak>
+
+            <md-button  md-no-ink class="md-fab md-mini md-primary"
+                       aria-label="Add Home Location"
+                       ng-class="{'active':tc.value.startLocation._id == tc.value.activeTripLocation._id, 'not-active':tc.value.startLocation._id != tc.value.activeTripLocation._id }">
+
+                <md-icon class="md-16">{$ tc.value.startLocation.timelineIcon $}</md-icon>
+            </md-button>
+
+
+        </div>
+
+
+    </div>
+
+    <div class="line-marker">
+
+
+    </div>
+
+    <div class="line-marker-icon" ng-repeat="location in tc.value.tripLocations track by $index">
+
+
+        <div class="timeline-info-middle">
+
+            {$ location._startTime | customDate $}-{$ location._endTime | customDate $} <br/>
+            <span class="timeline-info-name">{$ location._locationName $}</span>
+
+        </div>
+
+
+        <md-button md-no-ink ng-click="$mdMenu.open($event)" class="md-fab md-mini md-primary"
+                   aria-label="Add Final Location">
+            <md-icon class="md-16"
+                     ng-class="{'active':location._id == tc.value.activeTripLocation._id, 'not-active':location._id != tc.value.activeTripLocation._id }"
+
+            >
+
+                {$ location.timelineIcon $}
+            </md-icon>
+
+        </md-button>
+
+
+    </div>
+
+    <div class="add-end">
+
+        <div class="timeline-info">
+            {$ tc.value.endLocation._startTime | customDate $}<br/>
+            <span class="timeline-info-name">{$ tc.value.endLocation._locationName $}</span>
+
+        </div>
+        <div ng-if="!tc.value.endLocation">
+
+            <md-button md-no-ink ng-click="$mdMenu.open($event)" class="md-fab md-mini md-primary"
+                       aria-label="Add Final Location"
+                       ng-class="{'active':tc.value.endLocation._id == tc.value.activeTripLocation._id, 'not-active':tc.value.endLocation._id != tc.value.activeTripLocation._id }">
+
+                <md-icon class="md-16">add</md-icon>
+
+            </md-button>
+
+        </div>
+
+        <div ng-if="tc.value.endLocation">
+
+            <md-button md-no-ink ng-click="$mdMenu.open($event)" class="md-fab md-mini md-primary"
+                       aria-label="Add Final Location"
+
+                       ng-class="{'active':tc.value.endLocation._id == tc.value.activeTripLocation._id, 'not-active':tc.value.endLocation._id != tc.value.activeTripLocation._id }">
+
+                <md-icon class="md-16">{$ tc.value.endLocation.timelineIcon $}</md-icon>
+            </md-button>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,76 @@
+<md-dialog aria-label="Passenger Count">
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>{$ dialogTitle $}</h2>
+            <span flex></span>
+
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content trip-diary-dialog">
+
+
+            <div class="trip-diary-dialog-inner" ng-repeat="input in dataInputs track by $index">
+
+                <md-input-container style="min-width:300px;">
+
+
+                    <div ng-switch="input.type">
+
+                        <div ng-switch-when="INTEGER">
+                            <label>{$ input.label $}</label>
+                            <input ng-change="onChange($event)" min="{$ input.min $}" ng-keypress="checkKey($event)"
+                                   max="{$ input.max $}"
+                                   ng-model="data[input.key]" width="300" type="number" ng-model-options="{
+    'debounce': 400
+  }"
+                                   placeholder="{$ input.placeholder $}" md-auto-focus>
+                        </div>
+
+                        <div ng-switch-when="TEXT">
+                            <label>{$ input.label $}</label>
+                            <textarea ng-change="onChange($event)" ng-model-options="{
+    'debounce': 400
+  }"
+
+                                      rows="4"
+                                      ng-model="data[input.key]" width="300"
+                                      placeholder="{$ input.placeholder $}" md-auto-focus/>
+                        </div>
+
+                        <div ng-switch-when="OPTIONS">
+                            <span class="options-label">{$ input.placeholder $}</span>
+
+                            <md-radio-group ng-change="onChange($event)" ng-model="data[input.key]" ng-required="true">
+
+                                <md-radio-button ng-value="option.value" ng-repeat="option in input.optionList">
+
+                                    {$ option.label $}
+                                </md-radio-button>
+
+
+                            </md-radio-group>
+
+                        </div>
+                    </div>
+
+
+                </md-input-container>
+
+
+            </div>
+        </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <md-button ng-click="cancel()">
+            Cancel
+        </md-button>
+        <span flex></span>
+        <md-button ng-disabled="!valid" ng-click="close()">
+            Ok
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

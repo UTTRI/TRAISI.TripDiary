@@ -5,7 +5,7 @@ using TRAISI.SDK.Interfaces;
 
 namespace TRAISI.SDK.Questions
 {
-    //[SurveyQuestion(QuestionResponseType.Integer)]
+    [SurveyQuestion(QuestionResponseType.OptionList)]
     public class TripDiaryRoutes 
     {
         public string TypeName => "trip-diary-routes";

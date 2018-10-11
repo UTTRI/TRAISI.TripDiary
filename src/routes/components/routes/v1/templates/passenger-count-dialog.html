@@ -1,0 +1,29 @@
+<md-dialog aria-label="Passenger Count">
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Passenger Count</h2>
+            <span flex></span>
+
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+
+
+            <md-input-container style="width:300px;">
+                <label>Passenger Count</label>
+                <input min="0" ng-keypress="checkKey($event)"
+                       ng-model="numPassengers" width="300" type="number"
+                       placeholder="How many passengers are in the vehicle?" md-auto-focus>
+            </md-input-container>
+        </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <md-button ng-click="close()">
+            Ok
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>
