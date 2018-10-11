@@ -1,8 +1,8 @@
 import {TripDiaryController} from "../controllers/trip-diary-controller";
-import {ITimelineScope} from "../timeline-scope";
+import {ITimelineScope} from "../ts/timeline-scope";
 
 import * as angular from 'angular';
-import {TripTimeline} from "../trip-timeline";
+import {TripTimeline} from "../ts/trip-timeline";
 import {
     TIMELINE_LOCATION_CONTROLLER_READY,
     TripDiaryTimelineLocationController

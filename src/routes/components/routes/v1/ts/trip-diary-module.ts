@@ -15,18 +15,18 @@ import {DateFilterBrackets} from '../shared/filters/date-filter-brackets';
 import {default as ngRedux} from 'ng-redux';
 import {IModule} from 'angular';
 import {SurveyConfigService} from '../shared/services/survey-config-service';
-import {TimelineDirective} from './directives/timeline-directive';
-import {TimelineSegmentDirective} from './directives/timeline-segment-directive';
-import {TripRouteModeDirective} from './directives/trip-route-mode-directive';
-import {TripDiaryController} from './controllers/trip-diary-controller';
+import {TimelineDirective} from '../directives/timeline-directive';
+import {TimelineSegmentDirective} from '../directives/timeline-segment-directive';
+import {TripRouteModeDirective} from '../directives/trip-route-mode-directive';
+import {TripDiaryController} from '../controllers/trip-diary-controller';
 import 'angular-translate-loader-static-files';
 import 'angular-translate-interpolation-messageformat';
 
-import {TimelineLineDirective} from "./directives/timeline-line-directive";
-import {TimelineLineMapDirective} from "./directives/timeline-line-map-directive";
+import {TimelineLineDirective} from "../directives/timeline-line-directive";
+import {TimelineLineMapDirective} from "../directives/timeline-line-map-directive";
 import {HtmlFilter} from "../shared/filters/html-filter";
-import Staisi from "./directives/timeline-connector-directive";
-import {TimelineConnectorDirective} from "./directives/timeline-connector-directive"
+import Staisi from "../directives/timeline-connector-directive";
+import {TimelineConnectorDirective} from "../directives/timeline-connector-directive"
 import {SurveyManager} from "../../survey/survey-manager";
 
 

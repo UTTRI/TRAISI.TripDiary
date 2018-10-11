@@ -1,4 +1,4 @@
-import {ITimelineScope} from "../timeline-scope";
+import {ITimelineScope} from "../ts/timeline-scope";
 import * as _ from 'lodash';
 import {TripDiaryTimelineLineController} from "../controllers/trip-diary-timeline-line-controller";
 

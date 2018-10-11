@@ -1,22 +1,22 @@
 import {SurveyMapMarker} from '../../shared/survey-map-marker';
 import {SurveyMapDirective} from '../../shared/directives/survey-map-directive';
-import {TripRoute} from '../trip-route';
+import {TripRoute} from '../ts/trip-route';
 import {SurveyQuestion} from "../../survey-question";
-import {TripTimeline} from "../trip-timeline";
+import {TripTimeline} from "../ts/trip-timeline";
 
 import {INgRedux} from "ng-redux"
-import {TripsQuestionState} from "../trips-question-state";
+import {TripsQuestionState} from "../ts/trips-question-state";
 import * as angular from 'angular';
 import * as moment from 'moment';
 import * as icons from '../../shared/survey-map-marker-type';
 import * as L from "leaflet";
 
 
-import {TripDiary} from "../trips-diary"
+import {TripDiary} from "../ts/trips-diary"
 
 import {} from "@types/googlemaps"
 
-import * as TripsActions from '../trips-actions';
+import * as TripsActions from '../ts/trips-actions';
 import LatLngBounds = google.maps.LatLngBounds;
 import LatLng = google.maps.LatLng;
 import SearchBox = google.maps.places.SearchBox;
@@ -33,23 +33,23 @@ import {
     SET_TRIP_MODE, SET_UNKNOWN_ROUTE,
     setTripLegActive, UPDATE_STATE, UPDATE_TRIP_ROUTES,
     updateState
-} from '../trips-actions';
+} from '../ts/trips-actions';
 
 
 import PlaceResult = google.maps.places.PlaceResult;
-import {TripLocation, TripLocationType} from "../trip-location";
+import {TripLocation, TripLocationType} from "../ts/trip-location";
 import {MultipageQuestion} from "../../survey-multipage";
-import {INITIAL_STATE} from "../trips-reducers";
+import {INITIAL_STATE} from "../ts/trips-reducers";
 import {TimelineSegmentDirective} from "../directives/timeline-segment-directive";
-import {ITripsScope} from "../trips-scope";
+import {ITripsScope} from "../ts/trips-scope";
 
 import 'angular-cookies/index';
 import {SurveyConfigService} from "../../shared/services/survey-config-service";
 import {SurveyManager} from "../../../survey/survey-manager";
 import {SurveyManagerEvents} from "../../../survey/survey-manager-events";
 import * as _ from "lodash";
-import {TripDiaryTourService} from "../trip-diary-tour-service";
-import {TripDiaryService} from "../trip-diary-service";
+import {TripDiaryTourService} from "../ts/trip-diary-tour-service";
+import {TripDiaryService} from "../ts/trip-diary-service";
 import {isNullOrUndefined} from "util";
 import {SurveyMapLocation} from "../../shared/survey-map-location";
 

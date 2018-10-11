@@ -1,5 +1,5 @@
 export * from "./config"
-export * from "./directives/timeline-directive"
+export * from "../directives/timeline-directive"
 export * from "./trip-diary-tour"
 export * from "./trips-actions"
 export * from "./trips-reducers"

@@ -6,8 +6,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 module.exports = {
 	entry: {
-		timeline: path.join(process.cwd(), './timeline/timeline.module.ts')
-		// routes: path.join(process.cwd(), './routes/routes.module.ts'),
+		timeline: path.join(process.cwd(), './timeline/timeline.module.ts'),
+		routes: path.join(process.cwd(), './routes/routes.module.ts')
 	},
 
 	output: {

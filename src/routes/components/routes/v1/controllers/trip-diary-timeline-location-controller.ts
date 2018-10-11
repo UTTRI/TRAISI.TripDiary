@@ -1,16 +1,16 @@
-import {TripDiaryService} from "../trip-diary-service";
+import {TripDiaryService} from "../ts/trip-diary-service";
 import {INgRedux} from "ng-redux";
-import {TripsQuestionState} from "../trips-question-state";
+import {TripsQuestionState} from "../ts/trips-question-state";
 import {
     ADD_TRIP_LOCATION_VIEW, CANCEL_ADD_TRIP_LOCATION, OPTION_NO_TRIPS_TAKEN, OPTION_TRIPS_TAKEN,
     UPDATE_STATE, ADD_TRIP_LOCATION_DATA, EDIT_TRIP_LOCATION_DATA, REMOVE_TRIP_LOCATION, EDIT_TRIP_LOCATION_VIEW
-} from "../trips-actions";
+} from "../ts/trips-actions";
 import * as _ from "lodash";
 import {isNullOrUndefined} from "util";
 import SurveyManagerController from "../../../survey/survey-manager-controller";
 import * as angular from "angular";
 import {TripDiaryTimelineDialogController} from "./trip-diary-timeline-dialog-controller";
-import {TripLocationType} from "../trip-location";
+import {TripLocationType} from "../ts/trip-location";
 import {IPromise} from "angular";
 import {TripDiaryTimelineHomeConfirmDialogController} from "./trip-diary-timeline-home-confirm-dialog-controller";
 import {SurveyConfigService} from "../../shared/services/survey-config-service";

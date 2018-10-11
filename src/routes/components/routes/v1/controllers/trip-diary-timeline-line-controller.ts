@@ -1,12 +1,12 @@
-import {TripDiaryService} from "../trip-diary-service";
+import {TripDiaryService} from "../ts/trip-diary-service";
 import {INgRedux} from "ng-redux";
-import {TripsQuestionState} from "../trips-question-state";
-import {ADD_TRIP_LOCATION_DATA, REMOVE_TRIP_LOCATION} from "../trips-actions";
+import {TripsQuestionState} from "../ts/trips-question-state";
+import {ADD_TRIP_LOCATION_DATA, REMOVE_TRIP_LOCATION} from "../ts/trips-actions";
 import {
     ADD_INTERMEDIATE_LOCATION_BUTTON, ADD_START_LOCATION_BUTTON,
     END_LOCATION_BUTTON
-} from "../trip-diary-tour-service";
-import {TripLocationType} from "../trip-location";
+} from "../ts/trip-diary-tour-service";
+import {TripLocationType} from "../ts/trip-location";
 
 export class TripDiaryTimelineLineController {
 

@@ -4,17 +4,17 @@
 
 import * as ng from "angular";
 import {RouteDescriptionDialogController} from "./route-description-dialog-controller";
-import {TripDiaryService} from "../trip-diary-service";
+import {TripDiaryService} from "../ts/trip-diary-service";
 import {IModeConfig} from "../../shared/survey-map-config";
-import {TripLeg} from "../trip-leg";
+import {TripLeg} from "../ts/trip-leg";
 import {INgRedux} from "ng-redux";
-import {TripsQuestionState} from "../trips-question-state";
+import {TripsQuestionState} from "../ts/trips-question-state";
 import {PassengerCountDialogController} from "./passenger-count-dialog-controller";
 import {DynamicDialogController} from "./dynamic-dialog-controller";
 import {
     SET_MODE_SWITCH_DATA, SET_SWITCH_ROUTE_MODE_STATE, SET_TRIP_LEG_DATA, SET_TRIP_LEG_EDIT_COMPLETE, SET_TRIP_MODE,
     TRIP_ROUTE_MODE_VIEW
-} from "../trips-actions";
+} from "../ts/trips-actions";
 import {isNullOrUndefined} from "util";
 import {TripDiaryController} from "./trip-diary-controller";
 import * as _ from "lodash";

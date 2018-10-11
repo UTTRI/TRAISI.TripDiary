@@ -6,7 +6,7 @@ import {TripDiaryController} from "../controllers/trip-diary-controller";
 import * as  moment from 'moment';
 
 
-import {ITimelineScope} from "../timeline-scope";
+import {ITimelineScope} from "../ts/timeline-scope";
 
 import * as _ from 'lodash';
 

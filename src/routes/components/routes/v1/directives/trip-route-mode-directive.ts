@@ -1,18 +1,18 @@
-import {TripsQuestionState} from '../trips-question-state';
+import {TripsQuestionState} from '../ts/trips-question-state';
 import {INgRedux, ngRedux} from 'ng-redux';
-import * as TripsActions from '../trips-actions';
-import * as config from '../config';
-import {TripRoute} from "../trip-route";
-import {TripLeg} from "../trip-leg";
+import * as TripsActions from '../ts/trips-actions';
+import * as config from '../ts/config';
+import {TripRoute} from "../ts/trip-route";
+import {TripLeg} from "../ts/trip-leg";
 import {TripDiaryController} from "../controllers/trip-diary-controller";
 
-import {TripDiary} from "../trips-diary"
+import {TripDiary} from "../ts/trips-diary"
 import "jquery"
 import * as angular from "angular";
 import * as Color from "color";
-import {TripDiaryService} from "../trip-diary-service";
+import {TripDiaryService} from "../ts/trip-diary-service";
 import * as _ from "lodash";
-import {SET_SWITCH_ROUTE_MODE_STATE} from "../trips-actions";
+import {SET_SWITCH_ROUTE_MODE_STATE} from "../ts/trips-actions";
 import SearchBox = google.maps.places.SearchBox;
 import PlaceResult = google.maps.places.PlaceResult;
 import {TripDiaryRouteModeController} from "../controllers/trip-diary-route-mode-controller";
