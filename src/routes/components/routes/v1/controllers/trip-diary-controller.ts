@@ -10,11 +10,11 @@ import * as angular from 'angular';
 import * as moment from 'moment';
 import * as icons from '../../shared/survey-map-marker-type';
 import * as L from "leaflet";
-
+import ng from 'angular';
 
 import {TripDiary} from "../ts/trips-diary"
 
-import {} from "@types/googlemaps"
+
 
 import * as TripsActions from '../ts/trips-actions';
 import LatLngBounds = google.maps.LatLngBounds;
@@ -47,7 +47,7 @@ import 'angular-cookies/index';
 import {SurveyConfigService} from "../../shared/services/survey-config-service";
 import {SurveyManager} from "../../../survey/survey-manager";
 import {SurveyManagerEvents} from "../../../survey/survey-manager-events";
-import * as _ from "lodash";
+
 import {TripDiaryTourService} from "../ts/trip-diary-tour-service";
 import {TripDiaryService} from "../ts/trip-diary-service";
 import {isNullOrUndefined} from "util";
@@ -230,7 +230,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
      * @param {TripDiaryService} _tripDiaryService
      * @param {angular.ITimeoutService} _$timeout
      */
-    constructor($scope: ITripsScope,
+    constructor(public $scope: ITripsScope,
                 $rootScope: ng.IScope,
                 $http: ng.IHttpService,
                 $ngRedux: INgRedux,
