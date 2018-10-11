@@ -48,8 +48,6 @@ export class TimelineNewEntryComponent implements OnInit {
 		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService
 	) {}
 
-
-
 	/**
 	 * Callback for when the new entry dialog is hidden
 	 */
@@ -57,7 +55,7 @@ export class TimelineNewEntryComponent implements OnInit {
 		this.model = {
 			address: '',
 			latitude: 0,
-			purpose: 'home',
+			purpose: null,
 			longitude: 0,
 			time: new Date(),
 			timeB: new Date(),
@@ -65,18 +63,19 @@ export class TimelineNewEntryComponent implements OnInit {
 			locationType: TimelineLocationType.Undefined,
 			id: Symbol()
 		};
+		this.model.time.setHours(0);
+		this.model.time.setMinutes(0);
 		this.stepOne = true;
 		this.stepTwo = false;
 		this.stepThree = false;
-
-	}
+	};
 
 	/**
 	 *
 	 * @param callback
 	 */
-	show(callback: (value: any) => void): void {
-		this.timelineService.openEditMapLocationModal(this.mapTemplate, this.callback);
+	show(callback: (value: any) => void, entry?: TimelineEntry): void {
+		//this.timelineService.openEditMapLocationModal(this.mapTemplate, this.callback);
 
 		this.saveCallback = callback;
 
@@ -84,17 +83,24 @@ export class TimelineNewEntryComponent implements OnInit {
 
 		this.newTimelineEntryTemplateRef.show();
 
-		this.model = {
-			address: '',
-			latitude: 0,
-			purpose: '',
-			longitude: 0,
-			time: new Date(),
-			timeB: new Date(),
-			name: '',
-			locationType: TimelineLocationType.Undefined,
-			id: Symbol()
-		};
+		if (entry == null) {
+			this.model = {
+				address: '',
+				latitude: 0,
+				purpose: null,
+				longitude: 0,
+				time: new Date(),
+				timeB: new Date(),
+				name: '',
+				locationType: TimelineLocationType.Undefined,
+				id: Symbol()
+			};
+
+			this.model.time.setHours(0);
+			this.model.time.setMinutes(0);
+		} else {
+			this.model = entry;
+		}
 	}
 
 	stepTwoPrevious(): void {
@@ -115,7 +121,6 @@ export class TimelineNewEntryComponent implements OnInit {
 		this.model.address = value.address;
 		this.model.latitude = value.latitude;
 		this.model.longitude = value.longitude;
-
 	};
 
 	stepTwoNext(): void {
@@ -130,7 +135,6 @@ export class TimelineNewEntryComponent implements OnInit {
 
 	//save
 	stepThreeNext(): void {
-
 		console.log(this.model);
 		this.saveCallback(this.model);
 		this.newTimelineEntryTemplateRef.hide();
@@ -151,8 +155,8 @@ export class TimelineNewEntryComponent implements OnInit {
 			}
 		});
 
-		this.timelineService.configuration.subscribe( config => {
+		this.timelineService.configuration.subscribe(config => {
 			this.configuration = config;
-		})
+		});
 	}
 }

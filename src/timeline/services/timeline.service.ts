@@ -45,6 +45,12 @@ export class TimelineService {
 		return this._timelineStateValid;
 	}
 
+	public clearAvailableLocations()
+	{
+		this._availableLocations = [];
+		this.availableLocations.next(this._availableLocations);
+	}
+
 	/**
 	 *
 	 * @param modalService
@@ -62,19 +68,7 @@ export class TimelineService {
 		this._availableLocations = [];
 		this._timelineLocations = [];
 
-		let entry1: TimelineEntry = {
-			address: '1783 Storrington Street',
-			latitude: 0,
-			purpose: 'work',
-			longitude: 0,
-			time: new Date(),
-			timeB: new Date(),
-			id: Symbol(),
-			locationType: TimelineLocationType.Undefined,
-			name: 'My work place'
-		};
 
-		this._availableLocations.push(entry1);
 		this.availableLocations = new BehaviorSubject(this._availableLocations);
 		this.timelineLocations = new BehaviorSubject(this._timelineLocations);
 		this.timelineItemRemoved = new Subject<TimelineEntry>();
@@ -95,17 +89,15 @@ export class TimelineService {
 		endTime.setHours(3);
 		endTime.setMinutes(59);
 
-
 		this._configuration.next({
 			startTime: startTime,
 			endTime: endTime,
 			purposes: [
-				{key:'home',label:'Home'},
-				{key:'work',label:'Work'},
-				{key:'school',label:'Schhool'},
-				{key:'daycare',label:'Daycare'},
-				{key:'facilitate_passenger',label:'Facilitate Passenger'}
-				
+				{ key: 'home', label: 'Home' },
+				{ key: 'work', label: 'Work' },
+				{ key: 'school', label: 'Schhool' },
+				{ key: 'daycare', label: 'Daycare' },
+				{ key: 'facilitate_passenger', label: 'Facilitate Passenger' }
 			]
 		});
 	}
@@ -113,7 +105,7 @@ export class TimelineService {
 	/**
 	 * Updates the validation of the timeline
 	 */
-	private updateLocationsValidation() {
+	public updateLocationsValidation() {
 		let hasStartLocation: boolean = false;
 		let hasEndLocation: boolean = false;
 		this._timelineLocations.forEach(location => {
@@ -124,6 +116,7 @@ export class TimelineService {
 			}
 		});
 		this._timelineStateValid = hasStartLocation && hasEndLocation;
+
 		
 		this.surveyViewerService.updateNavigationState(this._timelineStateValid);
 	}
@@ -139,9 +132,7 @@ export class TimelineService {
 	/**
 	 *
 	 */
-	public updateTimelineLocations(locations: Array<TimelineEntry>): void {
-
-	}
+	public updateTimelineLocations(locations: Array<TimelineEntry>): void {}
 
 	/**
 	 *
@@ -167,7 +158,6 @@ export class TimelineService {
 	 * @param location
 	 */
 	public removeTimelineLocation(location: TimelineEntry) {
-
 		let index: number = this._timelineLocations.findIndex(loc => {
 			return loc.id == location.id;
 		});
@@ -200,7 +190,5 @@ export class TimelineService {
 	 * @param mapModalTemplate
 	 * @param mapContainerRef
 	 */
-	openEditMapLocationModal(template: ViewContainerRef, callback) {
-	
-	}
+	openEditMapLocationModal(template: ViewContainerRef, callback) {}
 }

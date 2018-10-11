@@ -37,12 +37,17 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 
 	clockIcon: IconDefinition = faClock;
 
+	public timeEntries: Array<{ hours: number; minutes: number; am: boolean }>;
+
+	private _timelineConfiguration: TimelineConfiguration;
+
 	/**
 	 *
 	 * @param _timelineService
 	 */
 	constructor(private _timelineService: TimelineService) {
 		this.timelineLocations = [];
+		this.timeEntries = [];
 		this.hours = [];
 	}
 
@@ -54,10 +59,19 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 	ngOnInit(): void {
 		this._timelineService.timelineLocations.subscribe((locations: Array<TimelineEntry>) => {
 			this.timelineLocations = locations;
+			this.timeEntries = [];
+
+			for (let i = 0; i < locations.length; i++) {
+				this.timeEntries.push({
+					hours: locations[i].time.getHours() >= 12 ? locations[i].time.getHours() - 12 : locations[i].time.getHours(),
+					minutes: locations[i].time.getMinutes(),
+					am: locations[i].time.getHours() < 12 ? true : false
+				});
+			}
 		});
 
 		this._timelineService.configuration.subscribe(config => {
-			
+			this._timelineConfiguration = config;
 
 			let tempTime = new Date(config.startTime);
 			while (tempTime < config.endTime) {
@@ -66,5 +80,24 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 			}
 			this.config = config;
 		});
+	}
+
+	/**
+	 *
+	 */
+	public updateTime(index: number) {
+		let timeString = `${this.timeEntries[index].hours}:${this.timeEntries[index].minutes} ${this.timeEntries[index].am ? 'AM' : 'PM'}`;
+		let time = new Date(0, 0, 0, this.timeEntries[index].hours, this.timeEntries[index].minutes, 0);
+
+		time.setFullYear(this._timelineConfiguration.startTime.getFullYear());
+		time.setMonth(this._timelineConfiguration.startTime.getMonth());
+		time.setDate(this._timelineConfiguration.startTime.getDate());
+		if (!this.timeEntries[index].am) {
+			time.setHours(time.getHours() + 12);
+		}
+		console.log(timeString);
+		console.log(time);
+
+		this.timelineLocations[index].time = time;
 	}
 }

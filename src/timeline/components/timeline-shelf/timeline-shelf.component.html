@@ -8,7 +8,7 @@
        [nonDragAreaSelector]="'timeline-entry-model-info'" >
         <smooth-dnd-draggable *ngFor="let item of shelfItems">
             <div class="draggable-item">
-                <timeline-entry-item [model]="item"></timeline-entry-item>
+                <timeline-entry-item [model]="item" [timelineNewEntry]="timelineNewEntry"></timeline-entry-item>
             </div>
         </smooth-dnd-draggable>
     </smooth-dnd-container>

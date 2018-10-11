@@ -1,31 +1,34 @@
 <div class="timeline-dock-top">
 
-<timeline-slot [startLocation]="true"></timeline-slot>
+    <timeline-slot [startLocation]="true"></timeline-slot>
 
-<div class="timeline-dock-inner-container">
-    <div class="timeline-bar" [ngClass]="{'timeline-drag-over' : dragActive}"></div>
+    <div class="timeline-dock-inner-container">
+        <div class="timeline-bar" [ngClass]="{'timeline-drag-over' : dragActive}"></div>
 
-    <smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'move'" [orientation]="'horizontal'" [groupName]="'timeline'"
-        [getChildPayload]="getChildPayload" (dragEnter)="onDragEnter()" (dragLeave)="onDragLeave()" class="timeline-dnd-dock"
-        (dragStart)="onDragStart($event)" (dragEnd)="onDragEnd($event)" #dockContainer>
+        <smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'move'" [orientation]="'horizontal'" [groupName]="'timeline'"
+            [getChildPayload]="getChildPayload" (dragEnter)="onDragEnter()" (dragLeave)="onDragLeave()" class="timeline-dnd-dock"
+            (dragStart)="onDragStart($event)" (dragEnd)="onDragEnd($event)" #dockContainer>
 
-        <smooth-dnd-draggable *ngFor="let item of dockItems">
-            <div class="draggable-item">
-                <timeline-entry-item [model]="item">
+            <smooth-dnd-draggable *ngFor="let item of dockItems">
+                <div class="draggable-item">
+                    <timeline-entry-item [model]="item" [timelineNewEntry]="timelineNewEntry">
 
-                </timeline-entry-item>
-            </div>
-        </smooth-dnd-draggable>
-    </smooth-dnd-container>
-</div>
-<timeline-slot [endLocation]="true"></timeline-slot>
+                    </timeline-entry-item>
+                </div>
+            </smooth-dnd-draggable>
+        </smooth-dnd-container>
+    </div>
+    <timeline-slot [endLocation]="true"></timeline-slot>
 </div>
 <div class="timeline-dock-info">
+
     <div class="timeline-dock-info-start">
         START OF THE DAY
     </div>
     <div class="timeline-dock-info-centre">
-        <span></span>
+        <span *ngFor="let item of dockItems" class="dock-info-item">
+            {{item.name}}
+        </span>
     </div>
     <div class="timeline-dock-info-end">
         END OF THE DAY

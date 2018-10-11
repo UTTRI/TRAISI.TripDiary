@@ -17,6 +17,7 @@ import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { faHome, faBriefcase, faHandScissors, faSchool, IconDefinition, faCarSide, faChild } from '../../shared/icons';
 
 import { BsModalRef, ModalDirective, ModalBackdropComponent } from 'ngx-bootstrap/modal';
+import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
 
 @Component({
 	selector: 'timeline-entry-item',
@@ -34,6 +35,9 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	model: TimelineEntry;
 
 	editModel: TimelineEntry;
+
+	@Input()
+	public timelineNewEntry: TimelineNewEntryComponent;
 
 	@ViewChild('editTimelineEntryTemplate')
 	editTimelineEntryTemplateRef: TemplateRef<any>;
@@ -98,6 +102,9 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 *
 	 */
 	public edit(): void {
+		console.log(this.timelineNewEntry);
+
+		/*
 		this.editModel = Object.assign({}, this.model);
 		this.modalRef = this._timelineService.openEditTimelineEntryModal(this.editTimelineEntryTemplateRef);
 
@@ -105,7 +112,12 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 			this.viewChildren.forEach((i: ViewContainerRef) => {
 				this._timelineService.openEditMapLocationModal(i, this.callback);
 			});
-		});
+		}); */
+
+		this.timelineNewEntry.show(value => {
+			console.log(value);
+			this.model = value;
+		}, Object.assign({}, this.model));
 	}
 
 	callback(value): void {}

@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { DndDropEvent } from 'ngx-drag-drop';
-import { faHome, faBriefcase, faSchool, faHandScissors, IconDefinition } from '../../shared/icons';
+import { faHome, faBriefcase, faSchool, faHandScissors, IconDefinition, faCarSide, faChild } from '../../shared/icons';
 
 import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
 import { IDropResult } from 'ngx-smooth-dnd';
@@ -22,6 +22,10 @@ export class TimelineSlotComponent implements OnInit {
 	homeIcon: IconDefinition = faHome;
 	workIcon: IconDefinition = faBriefcase;
 	schoolIcon: IconDefinition = faSchool;
+	passenger: IconDefinition = faCarSide;
+	daycare: IconDefinition = faChild;
+
+	default: IconDefinition = faHandScissors;
 
 	public dragOver: boolean = false;
 	model: TimelineEntry;
@@ -34,6 +38,12 @@ export class TimelineSlotComponent implements OnInit {
 			return this.workIcon;
 		} else if (this.model.purpose == 'school') {
 			return this.schoolIcon;
+		} else if (this.model.purpose == 'daycare') {
+			return this.daycare;
+		} else if (this.model.purpose == 'facilitate_passenger') {
+			return this.passenger;
+		} else {
+			return this.default;
 		}
 	}
 

@@ -1,107 +1,107 @@
-@import "../../assets/timeline";
+@import '../../assets/timeline';
 
 .btn-circle.btn-xl {
-    width: $timeline-entry-size;
-    height:  $timeline-entry-size;
+	width: $timeline-entry-size;
+	height: $timeline-entry-size;
 
-    font-size: 24px;
-    line-height: 1.33;
-    border-radius: 35px !important;
+	font-size: 24px;
+	line-height: 1.33;
+	border-radius: 35px !important;
 }
 
-.timeline-bar
-{
-    height: 4px;
-    background-color: #95a5a6;
-    position: absolute;
-    left: 10px;
-    right: 10px;
+.timeline-bar {
+	height: 4px;
+	background-color: #95a5a6;
+	position: absolute;
+	left: 10px;
+	right: 10px;
 }
 
-.timeline-bar.timeline-drag-over
-{
-    background-color:#3498DB;
+.timeline-bar.timeline-drag-over {
+	background-color: #3498db;
 }
 
-.timeline-dock-top
-{
-    display: flex;
-    flex-direction: row;
-    margin-left: 20px;
-    margin-right: 20px;
-
+.timeline-dock-top {
+	display: flex;
+	flex-direction: row;
+	margin-left: 20px;
+	margin-right: 20px;
+	justify-content: center;
 }
 
-.timeline-dock-inner-container
-{
-    display:inline-flex;
-    align-items: center;
-    justify-content: end;
-    width:80%;
-    position: relative;
-    vertical-align:top;
+.timeline-dock-inner-container {
+	display: inline-flex;
+	align-items: center;
+	justify-content: end;
+	width: 80%;
+	position: relative;
+	vertical-align: top;
 }
 
-.timeline-dnd-dock
-{
-    flex:1;
-    flex-direction: row;
+.timeline-dnd-dock {
+	flex: 1;
+	flex-direction: row;
 }
 
-timeline-dock .timeline-dock-inner-container .smooth-dnd-container.horizontal
-{
-    height: $timeline-entry-size;
-    display: inline-flex;
-    align-content: space-between;
-    align-items: center;
-    justify-content: space-evenly;
-    width:90%;
-    vertical-align: top;
+timeline-dock .timeline-dock-inner-container .smooth-dnd-container.horizontal {
+	height: $timeline-entry-size;
+	display: inline-flex;
+	align-content: space-between;
+	align-items: center;
+	justify-content: space-evenly;
+	width: 90%;
+	vertical-align: top;
 }
 
-timeline-dock timeline-slot .smooth-dnd-container.horizontal
-{
-    height: $timeline-entry-size;
+timeline-dock timeline-slot .smooth-dnd-container.horizontal {
+	height: $timeline-entry-size;
 
-    width:$timeline-entry-size;
+	width: $timeline-entry-size;
 }
 
-
-timeline-dock .timeline-entry-model-info
-{
-    display: none;
+timeline-dock .timeline-entry-model-info {
+	display: none;
 }
 
+.timeline-dock-info {
+	display: flex;
+	//width: 100%;
+	flex-direction: row;
+	align-items: stretch;
+	align-content: space-between;
+	justify-content: space-between;
+	margin-left: 40px;
+	margin-right: 40px;
 
-.timeline-dock-info{
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    align-items: stretch;
-    align-content: space-between;
-    justify-content: space-between;
+	.dock-info-item
+	{
+		width: $timeline-entry-size + 40px;
+		display: inline-block;
+		font-weight: bold;
+	}
 
-    .timeline-dock-info-centre
-    {
-        flex: 1;
-        width: 70%;
-    }
+	.timeline-dock-info-centre {
+		flex: 1;
+		/* width: 70%; */
+		display: inline-flex;
+		align-content: space-between;
+		align-items: center;
+		justify-content: space-evenly;
+		width: 90%;
+		vertical-align: top;
+	}
 
-    .timeline-dock-info-start, .timeline-dock-info-end
-    {
-        width: $timeline-entry-size + 30px;
-    font-weight: bold;
-    color: #d6d6d6;
-    font-size: 14px;
-    }
+	.timeline-dock-info-start,
+	.timeline-dock-info-end {
+		width: $timeline-entry-size + 30px;
+		font-weight: bold;
+		color: #d6d6d6;
+		font-size: 14px;
+	}
 }
 
-    
-.timeline-dock-info div
-{
-    display: inline-block;
-    
+.timeline-dock-info div {
+	display: inline-block;
 }
 
-@import "timeline-dock.component.sm.scss"
-
+@import 'timeline-dock.component.sm.scss';

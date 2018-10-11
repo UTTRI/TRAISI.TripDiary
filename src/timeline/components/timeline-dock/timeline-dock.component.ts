@@ -1,8 +1,10 @@
-import { Component, OnInit, ElementRef, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewEncapsulation, ViewChild, ViewChildren } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { IDropResult } from 'ngx-smooth-dnd';
-import { TimelineEntry } from '../../models/timeline-entry.model';
+import { TimelineEntry, TimelineLocationType } from '../../models/timeline-entry.model';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
+import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'timeline-dock',
@@ -19,8 +21,13 @@ export class TimelineDockComponent implements OnInit {
 
 	public dragActive: boolean = false;
 
+	public timelineNewEntry: TimelineNewEntryComponent;
+
+	public sub: Subscription;
+
 	@ViewChild('startSlotPopover')
 	startSlotPopover: PopoverDirective;
+
 
 	/**
 	 *
@@ -38,16 +45,34 @@ export class TimelineDockComponent implements OnInit {
 	ngOnInit(): void {
 		this.timelineService.availableLocations.subscribe(this.onShelfItemsChanged);
 		this.timelineService.timelineItemRemoved.subscribe(this.onTimelineEntryRemoved);
+
+		this.sub = this.timelineService.timelineLocations.subscribe(value => {
+			value.forEach(entry => {
+				if (entry.locationType == TimelineLocationType.Undefined) {
+
+					let item = this.dockItems.find(s => {
+						return s.id == entry.id
+					});
+
+					if (item === undefined) {
+						this.dockItems.push(entry);
+					}
+				}
+			});
+
+		}
+
+		);
 	}
 
 	/**
 	 * Callback for when a timeline item has deleted itself
 	 */
 	private onTimelineEntryRemoved: (entry: TimelineEntry) => void = (entry: TimelineEntry) => {
-		var index = this.dockItems.findIndex( p => {
+		var index = this.dockItems.findIndex(p => {
 			return p.id == entry.id
 		});
-		this.dockItems.splice(index,1);
+		this.dockItems.splice(index, 1);
 
 	};
 
@@ -70,11 +95,13 @@ export class TimelineDockComponent implements OnInit {
 					this.dockItems.splice(dropResult.removedIndex, 1);
 				}
 				var model = Object.assign({}, dropResult.payload);
-				this.dockItems.splice(dropResult.addedIndex, 0,model);
-
+				
+				this.dockItems.splice(dropResult.addedIndex, 0, model);
+				model.id = Symbol();
 				this.timelineService.addTimelineLocation(model);
 			}
 		}
+
 		this.dragOver = false;
 	}
 
@@ -108,5 +135,5 @@ export class TimelineDockComponent implements OnInit {
 	 * @private
 	 * @memberof TimelineShelfComponent
 	 */
-	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => {};
+	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => { };
 }
