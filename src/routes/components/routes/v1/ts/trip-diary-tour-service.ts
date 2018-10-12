@@ -98,9 +98,9 @@ export class TripDiaryTourService {
      *
      */
     public timelineHiddenByOption() {
-        this._isTimelineHidden = true;
+       // this._isTimelineHidden = true;
 
-        this.timelineHidden();
+       // this.timelineHidden();
     }
 
     /**
@@ -108,23 +108,23 @@ export class TripDiaryTourService {
      */
     public timelineHidden() {
 
-        this._tours[Tours.TIMELINE_TOUR].end();
-        this._tours[Tours.END_LOCATION_TOUR].end();
-        this._tours[Tours.INTERMEDIATE_TOUR].end();
+       // this._tours[Tours.TIMELINE_TOUR].end();
+      //  this._tours[Tours.END_LOCATION_TOUR].end();
+       // this._tours[Tours.INTERMEDIATE_TOUR].end();
 
 
     }
 
     public hideStartLocationTour() {
-        this._tours[Tours.TIMELINE_TOUR].end();
+        //this._tours[Tours.TIMELINE_TOUR].end();
     }
 
     public hideEndLocationTour() {
-        this._tours[Tours.END_LOCATION_TOUR].end();
+        //this._tours[Tours.END_LOCATION_TOUR].end();
     }
 
     public hideIntermediateLocationTour() {
-        this._tours[Tours.INTERMEDIATE_TOUR].end();
+        //this._tours[Tours.INTERMEDIATE_TOUR].end();
     }
 
     /**
@@ -138,7 +138,7 @@ export class TripDiaryTourService {
 
     public tripLegHidden() {
 
-        this._tours[Tours.ROUTE_MAP_TOUR].end();
+        //this._tours[Tours.ROUTE_MAP_TOUR].end();
         //this._tours[Tours.TOGGLED_ROUTE_MAP_TOUR].end();
     }
 
@@ -169,8 +169,8 @@ export class TripDiaryTourService {
     public routesHidden() {
 
 
-        this._tours[Tours.ROUTE_MAP_TOUR].end();
-        this._tours[Tours.TOGGLED_ROUTE_MAP_TOUR].end();
+        //this._tours[Tours.ROUTE_MAP_TOUR].end();
+        //this._tours[Tours.TOGGLED_ROUTE_MAP_TOUR].end();
     }
 
     /**

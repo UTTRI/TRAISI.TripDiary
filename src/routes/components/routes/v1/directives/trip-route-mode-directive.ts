@@ -25,7 +25,9 @@ import {ISurveyMapRoute} from "../shared/survey-map-route";
 export class TripRouteModeDirective {
 
 
-    public templateUrl = '/static/dist/directives/trips/templates/trip-route-mode.html';
+    //public templateUrl = '/static/dist/directives/trips/templates/trip-route-mode.html';
+
+    public template = require('../templates/trip-route-mode.html')
     scope = {};
     private _$scope: ng.IScope;
     private _element: ng.IAugmentedJQuery;
@@ -42,6 +44,7 @@ export class TripRouteModeDirective {
     controller = ($scope, $mdDialog, TripDiaryService, $ngRedux, $element, $timeout, questionId) => {
 
 
+ 
         return new TripDiaryRouteModeController($scope, $mdDialog, TripDiaryService, $ngRedux, $element, $timeout, questionId);
 
 
@@ -436,9 +439,11 @@ export class TripRouteModeDirective {
      */
     public static Factory() {
 
+        
 
         var directive = ($ngRedux: any, $mdPanel: angular.material.IPanelService, tripDiaryService: TripDiaryService, $timeout: ng.ITimeoutService, $mdDialog) => {
 
+            console.log(' in const');
             return new TripRouteModeDirective($ngRedux, $mdPanel, tripDiaryService, $timeout, $mdDialog);
         };
 

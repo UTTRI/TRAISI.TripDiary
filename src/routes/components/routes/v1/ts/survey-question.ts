@@ -449,7 +449,7 @@ export class SurveyQuestion {
      * @param value
      */
     protected updateResponse(value: string) {
-        this._responseInputElement.value = value;
+        //this._responseInputElement.value = value;
     }
 
     /**

@@ -1,4 +1,4 @@
-import {SurveyMapDirective} from '../shared/directives/survey-map-directive';
+import { SurveyMapDirective } from '../shared/directives/survey-map-directive';
 import * as angular from 'angular';
 
 import * as ngAria from 'angular-aria';
@@ -10,23 +10,23 @@ import * as ngTranslate from 'angular-translate';
 import * as ngSanitize from 'angular-sanitize';
 
 import reducers from './trips-reducers';
-import {DateFilter} from '../shared/filters/date-filter';
-import {DateFilterBrackets} from '../shared/filters/date-filter-brackets';
-import {default as ngRedux} from 'ng-redux';
-import {IModule} from 'angular';
-import {SurveyConfigService} from '../shared/services/survey-config-service';
-import {TimelineDirective} from '../directives/timeline-directive';
-import {TimelineSegmentDirective} from '../directives/timeline-segment-directive';
-import {TripRouteModeDirective} from '../directives/trip-route-mode-directive';
-import {TripDiaryController} from '../controllers/trip-diary-controller';
+import { DateFilter } from '../shared/filters/date-filter';
+import { DateFilterBrackets } from '../shared/filters/date-filter-brackets';
+import { default as ngRedux } from 'ng-redux';
+import { IModule } from 'angular';
+import { SurveyConfigService } from '../shared/services/survey-config-service';
+import { TimelineDirective } from '../directives/timeline-directive';
+import { TimelineSegmentDirective } from '../directives/timeline-segment-directive';
+import { TripRouteModeDirective } from '../directives/trip-route-mode-directive';
+import { TripDiaryController } from '../controllers/trip-diary-controller';
 import 'angular-translate-loader-static-files';
 import 'angular-translate-interpolation-messageformat';
+import { downgradeComponent } from '@angular/upgrade/static';
+import { TimelineLineDirective } from "../directives/timeline-line-directive";
+import { TimelineLineMapDirective } from "../directives/timeline-line-map-directive";
+import { HtmlFilter } from "../shared/filters/html-filter";
 
-import {TimelineLineDirective} from "../directives/timeline-line-directive";
-import {TimelineLineMapDirective} from "../directives/timeline-line-map-directive";
-import {HtmlFilter} from "../shared/filters/html-filter";
-
-import {TimelineConnectorDirective} from "../directives/timeline-connector-directive"
+import { TimelineConnectorDirective } from "../directives/timeline-connector-directive"
 
 
 
@@ -34,13 +34,16 @@ let surveyId = window['SURVEY_ID'];
 let userId = window['USER_ID'];
 
 
-import {TripDiaryService} from "./trip-diary-service";
-import {TripDiaryTourService} from "./trip-diary-tour-service";
-import {OrdinalFilter} from "../shared/filters/ordinal-filter";
-import {TimeFilter} from "../shared/filters/time-filter";
-import {ScrollViewWatcher} from "../shared/directives/scroll-view-watcher";
-import {PreventScrollDirective} from "../shared/directives/prevent-scroll-directive";
-import {DragResizeDirective} from "../shared/directives/drag-resize-directive";
+import { TripDiaryService } from "./trip-diary-service";
+import { TripDiaryTourService } from "./trip-diary-tour-service";
+import { OrdinalFilter } from "../shared/filters/ordinal-filter";
+import { TimeFilter } from "../shared/filters/time-filter";
+import { ScrollViewWatcher } from "../shared/directives/scroll-view-watcher";
+import { PreventScrollDirective } from "../shared/directives/prevent-scroll-directive";
+import { DragResizeDirective } from "../shared/directives/drag-resize-directive";
+import { RoutesComponent } from '../../routes.component';
+import { RoutesV1Component } from '../../../routes-v1/routes-v1.component';
+import { tripRouteModeContainer } from '../../../../directives/trip-route-mode.directive';
 
 
 export class TripDiaryModule {
@@ -64,29 +67,29 @@ export class TripDiaryModule {
 
 
 
-        
+
         /* Create app and controller */
         let app: IModule = angular.module("trips", [ngRedux, ngMessages, ngAria, ngMaterial, ngTimePicker, ngTranslate, ngCookies, ngSanitize])
-        
-        .config(['$ngReduxProvider',($ngReduxProvider) => {
-            let reducer = reducers;
-            $ngReduxProvider.createStoreWith(reducer);
-        }])
-            
-            .config(['$httpProvider',function ($httpProvider: ng.IHttpProvider) {
+
+            .config(['$ngReduxProvider', ($ngReduxProvider) => {
+                let reducer = reducers;
+                $ngReduxProvider.createStoreWith(reducer);
+            }])
+
+            .config(['$httpProvider', function ($httpProvider: ng.IHttpProvider) {
                 $httpProvider.useApplyAsync();
             }])
-            .config(['$mdThemingProvider',function ($mdThemingProvider) {
+            .config(['$mdThemingProvider', function ($mdThemingProvider) {
                 $mdThemingProvider.theme('default')
                     .primaryPalette('blue')
                     .accentPalette('red');
             }])
-            .config(['$locationProvider',function ($locationProvider) {
+            .config(['$locationProvider', function ($locationProvider) {
 
                 $locationProvider.html5Mode(false).hashPrefix('');
 
             }])
-            .config(['$translateProvider',function ($translateProvider: angular.translate.ITranslateProvider) {
+            .config(['$translateProvider', function ($translateProvider: angular.translate.ITranslateProvider) {
                 // add translation table
                 $translateProvider.useStaticFilesLoader({
                     prefix: '/static/dist/localization/trips-',
@@ -96,11 +99,11 @@ export class TripDiaryModule {
                 $translateProvider.useSanitizeValueStrategy('sanitize');
                 $translateProvider.preferredLanguage('en');
             }])
-            .config(['$interpolateProvider',function ($interpolateProvider: angular.IInterpolateProvider) {
+            .config(['$interpolateProvider', function ($interpolateProvider: angular.IInterpolateProvider) {
                 $interpolateProvider.startSymbol('{$');
                 $interpolateProvider.endSymbol('$}');
             }])
-            .config(['$compileProvider',($compileProvider) => {
+            .config(['$compileProvider', ($compileProvider) => {
                 console.log($compileProvider);
                 //$compileProvider.preAssignBindingsEnabled(true);
                 $compileProvider.commentDirectivesEnabled(false);
@@ -108,6 +111,7 @@ export class TripDiaryModule {
                 //$compileProvider.debugInfoEnabled(false);
             }])
             .directive("scrollViewWatcher", ['$window', ScrollViewWatcher.Factory()])
+            .directive("tripRouteModeContainer",[tripRouteModeContainer])
             .directive("preventScroll", ['$window', PreventScrollDirective.Factory()])
             .directive("dragResize", ['$window', DragResizeDirective.Factory()])
             .directive("timelineSegment", ['$ngRedux', TimelineSegmentDirective.Factory()])
@@ -122,7 +126,11 @@ export class TripDiaryModule {
             .factory('TripDiaryService', ['$ngRedux', 'TripDiaryTourService', TripDiaryService.Factory()])
             .factory('TripDiaryTourService', ['$ngRedux', '$translate', TripDiaryTourService.Factory()])
             .constant('QUESTION_ID', questionId)
-            .constant('questionId', questionId);
+            .constant('questionId', questionId)
+            .directive(
+                'traisiRoutesV1',
+                downgradeComponent({ component: RoutesV1Component }) as angular.IDirectiveFactory
+            )
 
         app.config(['$compileProvider', ($compileProvider) => {
             // $compileProvider.debugInfoEnabled(false);
@@ -138,11 +146,6 @@ export class TripDiaryModule {
             ['$scope', '$rootScope', '$http', '$ngRedux', '$animate', '$mdpTimePicker', '$window', '$location',
                 '$translate', '$cookies', 'SurveyConfigService', 'TripDiaryTourService', 'TripDiaryService', '$timeout', TripDiaryController]);
 
-
-        
-
-
-        //console.log(SurveyManager.modules);
         return true;
 
 

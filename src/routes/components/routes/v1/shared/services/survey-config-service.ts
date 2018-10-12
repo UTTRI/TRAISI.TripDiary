@@ -42,7 +42,7 @@ export class SurveyConfigService {
         this.getPreviousLocations();
 
         /* get the csrf element */
-        this._csrfToken = (angular.element('input[name="csrfmiddlewaretoken"]')[0] as HTMLInputElement).defaultValue;
+        //this._csrfToken = (angular.element('input[name="csrfmiddlewaretoken"]')[0] as HTMLInputElement).defaultValue;
 
 
     }

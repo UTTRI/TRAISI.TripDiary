@@ -253,6 +253,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
         let unsubscribe = $ngRedux.connect(this.mapStateToThis, TripsActions)(this);
 
+        console.log('in controller');
 
         //console.log(TripDiaryService.Factory());
         this._$rootScope = $rootScope;
