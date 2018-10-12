@@ -1,5 +1,5 @@
 import {SurveyMapDirective} from './survey-map-directive';
-import {TripDiaryController} from "../../trips/controllers/trip-diary-controller";
+import {TripDiaryController} from "../../controllers/trip-diary-controller";
 
 export interface ISurveyMapScope extends ng.IScope {
 

@@ -1,4 +1,4 @@
-import {INgRedux} from "ng-redux";
+//import {INgRedux} from "ng-redux";
 import {TripDiaryService} from "./trip-diary-service";
 import {TripsQuestionState} from "./trips-question-state";
 import * as tours from './trip-diary-tour';
@@ -60,7 +60,7 @@ export class TripDiaryTourService {
      *
      * @param {INgRedux} _$ngRedux
      */
-    constructor(private _$ngRedux: INgRedux, private _$translate: ng.translate.ITranslateService) {
+    constructor(private _$ngRedux: any, private _$translate: ng.translate.ITranslateService) {
 
 
         _$ngRedux.subscribe(this.stateSubscription);
@@ -111,8 +111,6 @@ export class TripDiaryTourService {
         this._tours[Tours.TIMELINE_TOUR].end();
         this._tours[Tours.END_LOCATION_TOUR].end();
         this._tours[Tours.INTERMEDIATE_TOUR].end();
-
-        console.log("in timeline hidden");
 
 
     }

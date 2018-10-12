@@ -1,9 +1,9 @@
-import {Staisi} from "../../survey/survey"
+
 
 /**
  * Trip Diary Question
  */
-class TripDiaryQuestion implements Staisi.ISurveyQuestion {
+class TripDiaryQuestion  {
     questionId: string;
     questionType: string;
 

@@ -9,7 +9,7 @@ import * as ngTimePicker from 'angular-material-time-picker';
 import * as ngTranslate from 'angular-translate';
 import * as ngSanitize from 'angular-sanitize';
 
-import reducers from '../trips/trips-reducers';
+import reducers from './trips-reducers';
 import {DateFilter} from '../shared/filters/date-filter';
 import {DateFilterBrackets} from '../shared/filters/date-filter-brackets';
 import {default as ngRedux} from 'ng-redux';
@@ -25,15 +25,15 @@ import 'angular-translate-interpolation-messageformat';
 import {TimelineLineDirective} from "../directives/timeline-line-directive";
 import {TimelineLineMapDirective} from "../directives/timeline-line-map-directive";
 import {HtmlFilter} from "../shared/filters/html-filter";
-import Staisi from "../directives/timeline-connector-directive";
+
 import {TimelineConnectorDirective} from "../directives/timeline-connector-directive"
-import {SurveyManager} from "../../survey/survey-manager";
+
 
 
 let surveyId = window['SURVEY_ID'];
 let userId = window['USER_ID'];
 
-import {ISurveyQuestion} from "../survey-question-interface";
+
 import {TripDiaryService} from "./trip-diary-service";
 import {TripDiaryTourService} from "./trip-diary-tour-service";
 import {OrdinalFilter} from "../shared/filters/ordinal-filter";
@@ -43,7 +43,7 @@ import {PreventScrollDirective} from "../shared/directives/prevent-scroll-direct
 import {DragResizeDirective} from "../shared/directives/drag-resize-directive";
 
 
-export class TripDiaryModule implements ISurveyQuestion {
+export class TripDiaryModule {
     questionId: string;
     questionType: string;
 
@@ -134,7 +134,7 @@ export class TripDiaryModule implements ISurveyQuestion {
                 '$translate', '$cookies', 'SurveyConfigService', 'TripDiaryTourService', 'TripDiaryService', '$timeout', TripDiaryController]);
 
 
-        SurveyManager.registerModule(app.name);
+        
 
 
         //console.log(SurveyManager.modules);

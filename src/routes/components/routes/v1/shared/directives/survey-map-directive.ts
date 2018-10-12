@@ -6,19 +6,19 @@ import * as angular from 'angular';
 declare var MAPBOX_TILE_URL: any;
 declare var GOOGLE_API_KEY: any;
 import 'leaflet-routing-machine';
-import {TripRoute} from "../../trips/trip-route";
+
 import {IAugmentedJQueryStatic} from "angular";
-import {TripDiaryController} from "../../trips/controllers/trip-diary-controller";
+import {TripDiaryController} from "../../controllers/trip-diary-controller";
 import * as icons from './../survey-map-marker-type';
 
-import {TripLeg} from "../../trips/trip-leg"
+import {TripLeg} from "../../ts/trip-leg"
 
-import {} from "@types/node"
 import * as _ from "lodash";
-import {UPDATE_STATE} from '../../trips/trips-actions';
-import {TripLocation} from "../../trips/trip-location";
+import {UPDATE_STATE} from '../../ts/trips-actions';
+import {TripLocation} from "../../ts/trip-location";
 import {isNullOrUndefined} from "util";
 import {SurveyMapController} from "../controllers/survey-map-controller";
+import { TripRoute } from '../../ts/trip-route';
 
 const _last = require("lodash/last")
 const _first = require("lodash/first")

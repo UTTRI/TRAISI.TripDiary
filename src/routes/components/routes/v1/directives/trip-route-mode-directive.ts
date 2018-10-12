@@ -1,5 +1,5 @@
 import {TripsQuestionState} from '../ts/trips-question-state';
-import {INgRedux, ngRedux} from 'ng-redux';
+
 import * as TripsActions from '../ts/trips-actions';
 import * as config from '../ts/config';
 import {TripRoute} from "../ts/trip-route";
@@ -16,11 +16,11 @@ import {SET_SWITCH_ROUTE_MODE_STATE} from "../ts/trips-actions";
 import SearchBox = google.maps.places.SearchBox;
 import PlaceResult = google.maps.places.PlaceResult;
 import {TripDiaryRouteModeController} from "../controllers/trip-diary-route-mode-controller";
-import {IModeConfig} from "../../shared/survey-map-config";
+import {IModeConfig} from "../shared/survey-map-config";
 import {PassengerCountDialogController} from '../controllers/passenger-count-dialog-controller';
 import * as L from 'leaflet';
 import {ITripDiaryRouteModeScope} from "../interfaces/trip-route-mode-diary-scope";
-import {ISurveyMapRoute} from "../../shared/survey-map-route";
+import {ISurveyMapRoute} from "../shared/survey-map-route";
 
 export class TripRouteModeDirective {
 
@@ -372,7 +372,7 @@ export class TripRouteModeDirective {
      * @param {TripDiaryService} _tripDiaryService
      * @param {angular.ITimeoutService} _$timeout
      */
-    constructor($ngRedux: INgRedux, $mdPanel: angular.material.IPanelService,
+    constructor($ngRedux: any, $mdPanel: angular.material.IPanelService,
                 private _tripDiaryService: TripDiaryService, private _$timeout: ng.ITimeoutService, private _$mdDialog) {
 
 
@@ -437,7 +437,7 @@ export class TripRouteModeDirective {
     public static Factory() {
 
 
-        var directive = ($ngRedux: INgRedux, $mdPanel: angular.material.IPanelService, tripDiaryService: TripDiaryService, $timeout: ng.ITimeoutService, $mdDialog) => {
+        var directive = ($ngRedux: any, $mdPanel: angular.material.IPanelService, tripDiaryService: TripDiaryService, $timeout: ng.ITimeoutService, $mdDialog) => {
 
             return new TripRouteModeDirective($ngRedux, $mdPanel, tripDiaryService, $timeout, $mdDialog);
         };

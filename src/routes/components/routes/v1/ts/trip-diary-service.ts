@@ -1,4 +1,4 @@
-import {INgRedux} from "ng-redux";
+//import {INgRedux} from "ng-redux";
 import * as TripsActions from './trips-actions';
 import {TripsQuestionState} from "./trips-question-state";
 import {TripRoute} from "./trip-route";
@@ -8,7 +8,6 @@ import {TripDiary} from "./trips-diary";
 import {TimelineIcon, TripLocation, TripLocationType} from "./trip-location";
 import {config} from "./config";
 import {TripDiaryTourService} from "./trip-diary-tour-service";
-import {Dictionary} from "lodash";
 import {isNullOrUndefined} from "util";
 import {IModeConfig} from "../shared/survey-map-config";
 import {ISurveyMapRoute} from "../shared/survey-map-route";
@@ -98,7 +97,7 @@ export class TripDiaryService {
      * @param {INgRedux} _$ngRedux
      * @param {TripDiaryTourService} _tripDiaryTourService
      */
-    constructor(private _$ngRedux: INgRedux, private _tripDiaryTourService: TripDiaryTourService) {
+    constructor(private _$ngRedux: any, private _tripDiaryTourService: TripDiaryTourService) {
 
 
         let unsubscribe = _$ngRedux.connect(this.mapStateToThis, TripsActions)(this);
