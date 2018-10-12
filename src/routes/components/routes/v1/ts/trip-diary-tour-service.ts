@@ -63,7 +63,7 @@ export class TripDiaryTourService {
     constructor(private _$ngRedux: any, private _$translate: ng.translate.ITranslateService) {
 
 
-        _$ngRedux.subscribe(this.stateSubscription);
+        //_$ngRedux.subscribe(this.stateSubscription);
 
 
     }
@@ -242,6 +242,7 @@ export class TripDiaryTourService {
      */
     public setQuestionId(questionId: string, translateData: any) {
 
+        return;
 
         this.questionId = questionId;
 

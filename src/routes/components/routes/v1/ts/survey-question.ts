@@ -264,10 +264,16 @@ export class SurveyQuestion {
     protected initializeSurvey(surveyData, $scope: ng.IScope, $http: ng.IHttpService) {
 
 
+        surveyData = {
+            startTime: new Date(),
+            endTime: new Date()
+        }
+
         this._startTime = surveyData.startTime;
 
-        let jsonData = JSON.parse(surveyData);
+        //let jsonData = JSON.parse(surveyData);
 
+        let jsonData = surveyData;
         let startDate = moment(jsonData['startDate']);
 
         console.log("Start Date:" + startDate);
@@ -279,6 +285,7 @@ export class SurveyQuestion {
         this.tomorrowDateDisplay = endDate.format('MMMM Do');
 
 
+        /*
         //let endTime = moment(jsonData['endTime']);
 
         let time = jsonData['endTime'].split(" ")[0];
@@ -308,11 +315,15 @@ export class SurveyQuestion {
         }
 
 
-        let startTime = moment(jsonData["startDate"]).hours(hrs).minutes(mins);
+        //let startTime = moment(jsonData["startDate"]).hours(hrs).minutes(mins);
 
 
         this._startTime = startTime;
-        this._startDate = startDate;
+        this._startDate = startDate; */
+        let startTime = moment()
+        let endTime = moment()
+        let endDate = moment()
+        let startDate = moment()
 
 
         this._translateData = {
@@ -320,7 +331,7 @@ export class SurveyQuestion {
             endTime: endTime.format("LT"),
             startDate: startDate.format('MMMM Do YYYY'),
             endDate: endDate.format('MMMM Do YYYY'),
-            householdName: jsonData["householdName"],
+            householdName: 'household name',
 
         };
 
@@ -330,9 +341,9 @@ export class SurveyQuestion {
 
         var responseElement: HTMLInputElement = angular.element('.answer-container #id_' + this.questionId)[0] as HTMLInputElement;
 
-        var csrfElement = (angular.element('input[name="csrfmiddlewaretoken"]')[0] as HTMLInputElement).defaultValue;
+        //var csrfElement = (angular.element('input[name="csrfmiddlewaretoken"]')[0] as HTMLInputElement).defaultValue;
 
-        this._csrfToken = csrfElement;
+        //this._csrfToken = csrfElement;
 
         this._responseInputElement = responseElement;
 
@@ -348,7 +359,7 @@ export class SurveyQuestion {
         let surveyServiceRef: SurveyConfigService = this._configService;
 
         $scope.$watch(() => {
-            return responseElement.value;
+            //return responseElement.value;
         }, function (value: string) {
 
             /* Send the updated value to the server */
@@ -356,7 +367,7 @@ export class SurveyQuestion {
 
                 console.log(questionIdRef);  
 
-                surveyServiceRef.savePartialResponse(value, questionIdRef);
+               // surveyServiceRef.savePartialResponse(value, questionIdRef);
 
             }
 
@@ -367,7 +378,8 @@ export class SurveyQuestion {
 
         this._$scope['mapToggle'] = false;
 
-        console.log(this._translateData);
+      
+        
 
     }
 
@@ -457,12 +469,43 @@ export class SurveyQuestion {
      * @returns {string}
      */
     protected loadSavedResponseData() {
-        if (this._responseInputElement.value != '') {
+        /*if (this._responseInputElement.value != '') {
             this.basicState = JSON.parse(this._responseInputElement.value);
         }
         else{
-            this.basicState = {}
+
         }
+        state.endLocation.locationName,
+                state.endLocation.latLng, state.endLocation.locationInput,
+                state.endLocation.locationPurpose, state.endLocation.id);
+        
+        */
+
+        this.basicState = {
+            
+            startLocation: {
+                '_locationName': 'Home',
+                'latLng': {
+                    lat: 43.834208,
+                    lng: -79.095633
+                },
+                startTime: Date(),
+                endTime: Date,
+            },
+            
+            endLocation:
+            {
+                '_locationName': 'Work',
+                'latLng': {
+                    lat: 43.660313,
+                    lng: -79.395692
+                },
+                startTime: Date(),
+                endTime: Date,
+            },
+            activeRouteIndex: 0
+
+        };
 
     }
 

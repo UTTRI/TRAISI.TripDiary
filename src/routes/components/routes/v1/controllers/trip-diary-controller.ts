@@ -153,6 +153,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
     setTripLegActive: (index: number) => any;
     removeTripLeg: (index: number) => any;
     addTripLocationData: () => any;
+    addTripLocation: (loc:any) => any;
     setUnknownRoute: () => any;
     setTripLegIncomplete: (index: number) => any;
     removeModeSwitch: (routeIndex: number, legIndex: number) => any;
@@ -467,6 +468,13 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
                 window.dispatchEvent(new Event('visibilityScrollCheck'));
             }, 1000);
         });
+
+
+
+    }
+
+    $onInit = () => {
+        this.initQuestion(this.questionId);
     }
 
     get tripsScope(): ITripsScope {
@@ -629,10 +637,11 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
     public updateTripRouteModes() {
 
 
+        console.log('in update trip route modes')
         /* call action to add routes */
 
         if (this.state.previousAction == UPDATE_STATE) {
-            return;
+            //return;
         }
 
 
@@ -751,6 +760,8 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
         }
 
 
+        console.log('routes: ');
+        console.log(routes);
         this.updateTripRoutes(routes);
 
         if (this.state.activeRouteIndex >= routes.length) {
@@ -854,10 +865,13 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
         let titleElement = $("#div_id_" + this.questionId).closest('.question-item');
         titleElement = titleElement.find('.question-container').first();
 
+        this.updateTripRouteModes();
 
         //console.log(titleElement);
 
         //console.log(titleElement);
+
+        
 
         _.delay(() => {
 
@@ -871,6 +885,14 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
             })
         }, 5);
+
+        //this.addTripLocation({
+        //    '_locationName': 'Home'
+        //})
+
+        console.log(this.state);
+
+
 
 
     }
@@ -1672,7 +1694,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
     private initLocationSearchBox() {
 
 
-        this._locationSearchBoxInput = $('#trip-diary-' + this.questionId)
+       /* this._locationSearchBoxInput = $('#trip-diary-' + this.questionId)
             .find('.location-input-map')[0] as HTMLInputElement;
 
 
@@ -1694,7 +1716,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
             updateActiveLocation(tcRef, places[0]);
 
 
-        });
+        }); */
 
 
     }

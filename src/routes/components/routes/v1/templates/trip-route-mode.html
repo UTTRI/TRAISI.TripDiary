@@ -62,7 +62,7 @@
             <div class="route-terminal">
 
                 <span class="route-terminal-code">1</span>
-                <span>{$ tds.state.tripRoutes[ $parent.$parent.$parent.tc.value.activeRouteIndex].startLocation.locationName $}</span>
+                <span>{$ tds.state.tripRoutes[ tds.state.activeRouteIndex].startLocation.locationName $}</span>
 
                 <span class="route-time">
                     {$ $parent.$parent.$parent.tc.value.tripRoutes[ $parent.$parent.$parent.tc.value.activeRouteIndex].getAdjustedStartTime() | customDate $}
@@ -73,7 +73,7 @@
         </div>
 
 
-        <div ng-if="$parent.$parent.tc.value.activeRouteIndex >= 0" class="route-mode-inner" scroll-view-watcher>
+        <div ng-if="tds.state.activeRouteIndex >= 0" class="route-mode-inner" scroll-view-watcher>
 
             <div ng-class="{'trip-leg-inactive':tripLeg._isComplete}" class="trip-leg-section"
                  ng-repeat="tripLeg in activeTripRoute()._tripLegs track by $index"

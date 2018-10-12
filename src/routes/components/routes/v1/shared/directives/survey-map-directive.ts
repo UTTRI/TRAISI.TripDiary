@@ -3,7 +3,7 @@ import {ISurveyMapScope} from './survey-map-scope';
 import {SurveyMapMarker} from '../survey-map-marker';
 import * as angular from 'angular';
 
-declare var MAPBOX_TILE_URL: any;
+
 declare var GOOGLE_API_KEY: any;
 import 'leaflet-routing-machine';
 
@@ -26,6 +26,8 @@ const _first = require("lodash/first")
 ; 
 
 declare var L: any;
+
+var MAPBOX_TILE_URL = 'https://api.mapbox.com/styles/v1/mapbox/streets-v8/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYnJlbmRhbmJlbnRpbmciLCJhIjoiY2oyOTlwdjNjMDB5cTMzcXFsdmRyM3NnNCJ9.NXgWTnWfvGRnNgkWdd5wKg';
 
 
 
@@ -104,7 +106,7 @@ declare var $: IAugmentedJQueryStatic;
 
 
 export class SurveyMapDirective {
-    public templateUrl = '/static/dist/directives/shared/templates/survey-map.html';
+    public template = require('../templates/survey-map.html');
     deletePopupTemplateUrl = '/static/dist/directives/trips/templates/trip-diary-route-delete-popup.html';
     switchModePopupTemplateUrl = '/static/dist/directives/trips/templates/trip-diary-switch-mode-popup.html';
     deleteModeSwitchTemplateUrl = '/static/dist/directives/trips/templates/trip-diary-delete-mode-switch-popup.html';
@@ -135,9 +137,9 @@ export class SurveyMapDirective {
     };
 
 
-    controller = ($scope, $mdDialog, TripDiaryService, $ngRedux) => {
+    controller = ['$scope','$mdDialog','TripDiaryService','$ngRedux',($scope, $mdDialog, TripDiaryService, $ngRedux) => {
         return new SurveyMapController($scope);
-    };
+    }];
 
     private _map: L.Map;
     private _mapElement: JQuery;

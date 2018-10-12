@@ -41,14 +41,14 @@ export class TripRouteModeDirective {
      * @param $mdDialog
      * @returns {TripDiaryRouteModeController}
      */
-    controller = ($scope, $mdDialog, TripDiaryService, $ngRedux, $element, $timeout, questionId) => {
+    controller = ['$scope','$mdDialog','TripDiaryService','$ngRedux','$element','$timeout','questionId', ($scope, $mdDialog, TripDiaryService, $ngRedux, $element, $timeout, questionId) => {
 
 
  
         return new TripDiaryRouteModeController($scope, $mdDialog, TripDiaryService, $ngRedux, $element, $timeout, questionId);
 
 
-    };
+    }];
 
     controllerAs = "_rmc";
 
@@ -101,8 +101,8 @@ export class TripRouteModeDirective {
     private activeTripRoute = (): TripRoute => {
 
 
-        if (this._$scope.$parent.$parent["tc"]["value"]["activeRouteIndex"] >= 0) {
-            return this._$scope.$parent.$parent["tc"]["value"]["tripRoutes"][this._$scope.$parent.$parent["tc"]["value"]["activeRouteIndex"]];
+        if (this._$scope["tds"]["state"]["activeRouteIndex"] >= 0) {
+            return this._$scope["tds"]["state"]["tripRoutes"][this._$scope["tds"]["state"]["activeRouteIndex"]];
         }
         else {
 
@@ -403,7 +403,7 @@ export class TripRouteModeDirective {
     private initLocationSearchBox() {
 
 
-        let element = $(this._element[0]).find('.route-map-location-input');
+        /*let element = $(this._element[0]).find('.route-map-location-input');
 
 
         //this._element.find('survey-map-router').append(element);
@@ -429,7 +429,7 @@ export class TripRouteModeDirective {
             this._tc.routeCallback(this._tc, places[0].name, new L.LatLng(latlng.lat(), latlng.lng()));
 
 
-        });
+        }); */
 
 
     }
@@ -502,7 +502,9 @@ export class TripRouteModeDirective {
     public link($scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, controllers: Array<ng.IController>): void {
 
 
-        this._tc = $scope.$parent.$parent['tc'] as TripDiaryController;
+        this._tc = $scope.$parent['tc'] as TripDiaryController;
+
+        console.log($scope);
 
         $scope['element'] = element;
         $scope['routeModeController'] = controllers[0];

@@ -29,9 +29,17 @@ import { HtmlFilter } from "../shared/filters/html-filter";
 import { TimelineConnectorDirective } from "../directives/timeline-connector-directive"
 
 
-
+import * as moment from 'moment';
+window['moment'] = moment;
 let surveyId = window['SURVEY_ID'];
 let userId = window['USER_ID'];
+
+
+require ('../js/lrm-google.js')
+
+import 'leaflet-control-geocoder';
+var polyline = require('@mapbox/polyline');
+
 
 
 import { TripDiaryService } from "./trip-diary-service";

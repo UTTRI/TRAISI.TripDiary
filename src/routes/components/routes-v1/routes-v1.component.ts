@@ -16,7 +16,7 @@ export class RoutesV1Component implements OnInit
     public icon: string;
 
     @ViewChild('div')
-    divRef: ElementRef;
+    divRef: ElementRef; 
 
     /**
      * 
@@ -39,7 +39,7 @@ export class RoutesV1Component implements OnInit
         new TripDiaryModule().bootstrap('test');
 
         setTimeout( () =>{
-            this._upgrade.bootstrap(this.divRef.nativeElement, ['trips'], { strictDi: true });
+            this._upgrade.bootstrap(this.divRef.nativeElement, ['trips'], { strictDi: false });
 
             console.log('after bootstrap;)')
         })

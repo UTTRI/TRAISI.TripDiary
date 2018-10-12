@@ -4,6 +4,9 @@ export class DynamicDialogController {
 
     $inject = ['$scope', '$mdDialog'];
 
+
+    
+
     /**
      *
      * @param {angular.IScope} $scope

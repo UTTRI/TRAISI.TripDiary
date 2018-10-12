@@ -552,7 +552,7 @@ export class TripDiaryService {
         if (this._$ngRedux.getState().tripsState.previousAction == SET_ROUTE_EDIT_ACTIVE) {
             this.isAutoFitBounds = true;
             if (!isNullOrUndefined(this.getActiveTripRoute())) {
-                this.notifyActiveRouteChanged(this.getActiveTripRoute());
+           //     this.notifyActiveRouteChanged(this.getActiveTripRoute());
             }
         }
 

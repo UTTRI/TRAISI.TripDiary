@@ -97,6 +97,7 @@ export class TripDiaryRouteModeController {
     private stateSubscription = (state: TripsQuestionState) => {
 
 
+        console.log(this.$scope);
         //this._tripDiaryService.tripLegShown();
 
         if (isNullOrUndefined(state.madeTrips) || state.madeTrips.value == false) {
@@ -122,12 +123,12 @@ export class TripDiaryRouteModeController {
                 this.$scope['showSelectModeTourTripText'] = true;
                 this.$scope['tourPassedInitial'] = true;
                 this.$scope['expandPanelText'] = true;
-                this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+                //this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
             }
             else if (state.previousAction == SET_TRIP_MODE && this.$scope['tourPassedInitial']) {
 
                 this.$scope['showSelectModeTourTripText'] = false;
-                this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+                //this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
                 this.$scope['showSelectRouteTourTripText'] = true;
             }
 
@@ -136,7 +137,7 @@ export class TripDiaryRouteModeController {
                 this.$scope['showSelectModeTourTripText'] = false;
                 this.$scope['showSelectRouteTourTripText'] = false;
                 this.$scope['showMultipleTourTripText'] = false;
-                this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true; 
+                //this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true; 
             }
 
             else if (state.previousAction == SET_TRIP_LEG_DATA) {
@@ -145,7 +146,7 @@ export class TripDiaryRouteModeController {
                     this.$scope['showMultipleTourTripText'] = true;
                     this.$scope['showSelectModeTourTripText'] = false;
                     this.$scope['showSelectRouteTourTripText'] = false;
-                    this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+                    //this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
                 }
                 else {
                     this.$scope['selectOnce'] = true;
@@ -337,7 +338,7 @@ export class TripDiaryRouteModeController {
             },
 
 
-            templateUrl: '/static/dist/directives/trips/templates/dynamic-dialog.html',
+            template: require('../templates/dynamic-dialog.html'),
             parent: ng.element(document.body),
             targetEvent: evt,
             clickOutsideToClose: false,
