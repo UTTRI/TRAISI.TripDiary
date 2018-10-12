@@ -1,19 +1,20 @@
-import {SurveyMapMarker} from '../../shared/survey-map-marker';
-import {SurveyMapDirective} from '../../shared/directives/survey-map-directive';
+import {SurveyMapMarker} from '../shared/survey-map-marker';
+import {SurveyMapDirective} from '../shared/directives/survey-map-directive';
 import {TripRoute} from '../ts/trip-route';
-import {SurveyQuestion} from "../../survey-question";
+
 import {TripTimeline} from "../ts/trip-timeline";
 
-import {INgRedux} from "ng-redux"
+
 import {TripsQuestionState} from "../ts/trips-question-state";
 import * as angular from 'angular';
 import * as moment from 'moment';
-import * as icons from '../../shared/survey-map-marker-type';
+import * as icons from '../shared/survey-map-marker-type';
 import * as L from "leaflet";
-import ng from 'angular';
+
 
 import {TripDiary} from "../ts/trips-diary"
 
+import * as _ from 'lodash';
 
 
 import * as TripsActions from '../ts/trips-actions';
@@ -38,20 +39,22 @@ import {
 
 import PlaceResult = google.maps.places.PlaceResult;
 import {TripLocation, TripLocationType} from "../ts/trip-location";
-import {MultipageQuestion} from "../../survey-multipage";
+
 import {INITIAL_STATE} from "../ts/trips-reducers";
 import {TimelineSegmentDirective} from "../directives/timeline-segment-directive";
 import {ITripsScope} from "../ts/trips-scope";
 
 import 'angular-cookies/index';
-import {SurveyConfigService} from "../../shared/services/survey-config-service";
-import {SurveyManager} from "../../../survey/survey-manager";
-import {SurveyManagerEvents} from "../../../survey/survey-manager-events";
+import {SurveyConfigService} from "../shared/services/survey-config-service";
+import {SurveyManager} from "../ts/survey-manager";
+import {SurveyManagerEvents} from "../ts/survey-manager-events";
 
 import {TripDiaryTourService} from "../ts/trip-diary-tour-service";
 import {TripDiaryService} from "../ts/trip-diary-service";
 import {isNullOrUndefined} from "util";
-import {SurveyMapLocation} from "../../shared/survey-map-location";
+import {SurveyMapLocation} from "../shared/survey-map-location";
+import { SurveyQuestion } from '../ts/survey-question';
+import { MultipageQuestion } from '../ts/survey-multipage';
 
 
 declare var addSuccess: (element) => any;
@@ -233,13 +236,13 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
     constructor(public $scope: ITripsScope,
                 $rootScope: ng.IScope,
                 $http: ng.IHttpService,
-                $ngRedux: INgRedux,
+                $ngRedux: any,
                 $ngAnimation: angular.animate.IAnimateService,
                 $mdpTimePicker: any,
                 $window: ng.IWindowService,
                 $location: ng.ILocationService,
                 $translate: angular.translate.ITranslateService,
-                $cookies: angular.cookies.ICookiesService,
+                $cookies: ng.cookies.ICookiesService,
                 private configService: SurveyConfigService,
                 private tripDiaryTourService: TripDiaryTourService,
                 private _tripDiaryService: TripDiaryService,

@@ -1,5 +1,5 @@
 import {TripDiaryService} from "../ts/trip-diary-service";
-import {INgRedux} from "ng-redux";
+
 import {TripsQuestionState} from "../ts/trips-question-state";
 import {
     ADD_TRIP_LOCATION_VIEW, CANCEL_ADD_TRIP_LOCATION, OPTION_NO_TRIPS_TAKEN, OPTION_TRIPS_TAKEN,
@@ -7,13 +7,13 @@ import {
 } from "../ts/trips-actions";
 import * as _ from "lodash";
 import {isNullOrUndefined} from "util";
-import SurveyManagerController from "../../../survey/survey-manager-controller";
+
 import * as angular from "angular";
 import {TripDiaryTimelineDialogController} from "./trip-diary-timeline-dialog-controller";
 import {TripLocationType} from "../ts/trip-location";
 import {IPromise} from "angular";
 import {TripDiaryTimelineHomeConfirmDialogController} from "./trip-diary-timeline-home-confirm-dialog-controller";
-import {SurveyConfigService} from "../../shared/services/survey-config-service";
+import {SurveyConfigService} from '../shared/services/survey-config-service';
 
 declare var displaySnackBar: (string, any, number) => any;
 export const TIMELINE_LOCATION_CONTROLLER_READY = "TIMELINE_LOCATION_CONTROLLER_READY";
@@ -71,7 +71,7 @@ export class TripDiaryTimelineLocationController {
      * @param _$mdDialog
      * @param _$translate
      */
-    constructor(private _$scope: ng.IScope, private _tripDiaryService: TripDiaryService, private _$ngRedux: INgRedux, private _questionId,
+    constructor(private _$scope: ng.IScope, private _tripDiaryService: TripDiaryService, private _$ngRedux: any, private _questionId,
                 private _$mdDialog: ng.material.IDialogService, private _$translate: angular.translate.ITranslateService,
                 private SurveyConfigService: SurveyConfigService) {
 
@@ -153,9 +153,7 @@ export class TripDiaryTimelineLocationController {
         // resize child
         this._$scope.$emit('timelineLineChanged');
 
-        let smc: SurveyManagerController = window['smc'];
 
-        smc.addOnNext(this.onNext);
 
         this.$translate('TIMELINE_TOUR_DIALOG_1_TITLE', this._$scope['tc']['translateData']).then((value) => {
 

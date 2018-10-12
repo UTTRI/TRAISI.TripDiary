@@ -1,5 +1,6 @@
 import * as ng from "angular";
-import {SurveyConfigService} from "../../shared/services/survey-config-service";
+import { SurveyConfigService } from "../shared/services/survey-config-service";
+
 
 export class TripDiaryTimelineHomeConfirmDialogController {
 

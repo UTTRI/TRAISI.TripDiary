@@ -1,6 +1,7 @@
 
-declare var MARKER_URL: any;
 
+
+var MARKER_URL = "./";
 
 import "leaflet-extra-markers";
 import {SurveyMapSvgIcon} from "./survey-map-svg-icon";
@@ -61,32 +62,32 @@ let daycareIcon = SurveyMapSvgIcon.createIcon('child_friendly', '#D768A5');
 var transitMarker = {};
 
 transitMarker['transit'] = new L.Icon({
-    iconUrl: MARKER_URL.TRANSIT,
-    shadowUrl: MARKER_URL.SHADOW,
+    //iconUrl: MARKER_URL.TRANSIT,
+    //shadowUrl: MARKER_URL.SHADOW,
     iconAnchor: [16, 42]
 });
 
 transitMarker['walking'] = new L.Icon({
-    iconUrl: MARKER_URL.WALKING,
-    shadowUrl: MARKER_URL.SHADOW,
+    //iconUrl: MARKER_URL.WALKING,
+    //shadowUrl: MARKER_URL.SHADOW,
     iconAnchor: [16, 42]
 });
 
 transitMarker['bicycling'] = new L.Icon({
-    iconUrl: MARKER_URL.BICYCLING,
-    shadowUrl: MARKER_URL.SHADOW,
+    //iconUrl: MARKER_URL.BICYCLING,
+    //shadowUrl: MARKER_URL.SHADOW,
     iconAnchor: [16, 42]
 });
 
 transitMarker['driving'] = new L.Icon({
-    iconUrl: MARKER_URL.DRIVING,
-    shadowUrl: MARKER_URL.SHADOW,
+    //iconUrl: MARKER_URL.DRIVING,
+    //shadowUrl: MARKER_URL.SHADOW,
     iconAnchor: [16, 42]
 });
 
 transitMarker['default'] = new L.Icon({
-    iconUrl: MARKER_URL.DEFAULT,
-    shadowUrl: MARKER_URL.SHADOW,
+    //iconUrl: MARKER_URL.DEFAULT,
+    //shadowUrl: MARKER_URL.SHADOW,
     iconAnchor: [16, 42]
 });
 

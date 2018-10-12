@@ -1,5 +1,5 @@
 import {TripDiaryService} from "../ts/trip-diary-service";
-import {INgRedux} from "ng-redux";
+
 import {TripsQuestionState} from "../ts/trips-question-state";
 import {ADD_TRIP_LOCATION_DATA, REMOVE_TRIP_LOCATION} from "../ts/trips-actions";
 import {
@@ -18,7 +18,7 @@ export class TripDiaryTimelineLineController {
      * @param {TripDiaryService} _tripDiaryService
      * @param {INgRedux} _$ngRedux
      */
-    constructor(private _$scope: ng.IScope, private _tripDiaryService: TripDiaryService, private _$ngRedux: INgRedux) {
+    constructor(private _$scope: ng.IScope, private _tripDiaryService: TripDiaryService, private _$ngRedux: any) {
 
 
         _$ngRedux.subscribe(() => {

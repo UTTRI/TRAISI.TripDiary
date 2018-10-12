@@ -16,7 +16,6 @@ module.exports = {
 		libraryTarget: 'amd'
 	},
 	mode: 'production',
-	devtool: 'source-map',
 	optimization: {
 		minimizer: [
 			new UglifyJsPlugin({

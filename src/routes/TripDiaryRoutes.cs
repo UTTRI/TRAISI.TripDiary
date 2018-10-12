@@ -5,14 +5,15 @@ using TRAISI.SDK.Interfaces;
 
 namespace TRAISI.SDK.Questions
 {
-    [SurveyQuestion(QuestionResponseType.OptionList)]
-    public class TripDiaryRoutes 
+    [SurveyQuestion(QuestionResponseType.OptionList,
+    CodeBundleName = "traisi-trip-diary-routes.module.js")]
+    public class TripDiaryRoutes: ISurveyQuestion
     {
         public string TypeName => "trip-diary-routes";
 
         public string Icon
         {
-            get => "fas fa-sort-route";
+            get => "fas fa-route";
         }
         public QuestionIconType IconType { get => QuestionIconType.FONT; }
     }

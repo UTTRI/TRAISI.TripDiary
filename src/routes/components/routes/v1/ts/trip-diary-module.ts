@@ -64,31 +64,29 @@ export class TripDiaryModule {
 
 
 
+        
         /* Create app and controller */
-        let app: IModule = angular.module("trips", [ngRedux, ngMessages, ngAria, ngMaterial, ngTimePicker, ngTranslate, ngCookies, ngSanitize]).config(($ngReduxProvider) => {
+        let app: IModule = angular.module("trips", [ngRedux, ngMessages, ngAria, ngMaterial, ngTimePicker, ngTranslate, ngCookies, ngSanitize])
+        
+        .config(['$ngReduxProvider',($ngReduxProvider) => {
             let reducer = reducers;
             $ngReduxProvider.createStoreWith(reducer);
-        })
-            .config(($compileProvider) => {
-                $compileProvider.preAssignBindingsEnabled(true);
-                $compileProvider.commentDirectivesEnabled(false);
-                $compileProvider.cssClassDirectivesEnabled(false);
-                //$compileProvider.debugInfoEnabled(false);
-            })
-            .config(function ($httpProvider: ng.IHttpProvider) {
+        }])
+            
+            .config(['$httpProvider',function ($httpProvider: ng.IHttpProvider) {
                 $httpProvider.useApplyAsync();
-            })
-            .config(function ($mdThemingProvider) {
+            }])
+            .config(['$mdThemingProvider',function ($mdThemingProvider) {
                 $mdThemingProvider.theme('default')
                     .primaryPalette('blue')
                     .accentPalette('red');
-            })
-            .config(function ($locationProvider) {
+            }])
+            .config(['$locationProvider',function ($locationProvider) {
 
                 $locationProvider.html5Mode(false).hashPrefix('');
 
-            })
-            .config(function ($translateProvider: angular.translate.ITranslateProvider) {
+            }])
+            .config(['$translateProvider',function ($translateProvider: angular.translate.ITranslateProvider) {
                 // add translation table
                 $translateProvider.useStaticFilesLoader({
                     prefix: '/static/dist/localization/trips-',
@@ -97,11 +95,18 @@ export class TripDiaryModule {
                 $translateProvider.useMessageFormatInterpolation();
                 $translateProvider.useSanitizeValueStrategy('sanitize');
                 $translateProvider.preferredLanguage('en');
-            })
-            .config(function ($interpolateProvider: angular.IInterpolateProvider) {
+            }])
+            .config(['$interpolateProvider',function ($interpolateProvider: angular.IInterpolateProvider) {
                 $interpolateProvider.startSymbol('{$');
                 $interpolateProvider.endSymbol('$}');
-            })
+            }])
+            .config(['$compileProvider',($compileProvider) => {
+                console.log($compileProvider);
+                //$compileProvider.preAssignBindingsEnabled(true);
+                $compileProvider.commentDirectivesEnabled(false);
+                $compileProvider.cssClassDirectivesEnabled(false);
+                //$compileProvider.debugInfoEnabled(false);
+            }])
             .directive("scrollViewWatcher", ['$window', ScrollViewWatcher.Factory()])
             .directive("preventScroll", ['$window', PreventScrollDirective.Factory()])
             .directive("dragResize", ['$window', DragResizeDirective.Factory()])

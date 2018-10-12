@@ -5,7 +5,7 @@ const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 module.exports = {
 	entry: {
 		timeline: path.join(process.cwd(), './timeline/timeline.module.ts'),
-		routes: path.join(process.cwd(), './routes/trip-routes.module.ts'),
+		routes: path.join(process.cwd(), './routes/routes.module.ts'),
 	},
 
 	output: {
@@ -14,7 +14,7 @@ module.exports = {
 		libraryTarget: 'amd'
 	},
 	mode: 'development',
-	devtool: 'source-map',
+	devtool: 'inline-source-map',
 
 	resolve: {
 		extensions: ['.ts', '.js'],

@@ -12,7 +12,7 @@
 </script>
 
 <!-- controller defined by trips.ts -->
-<div id="trip-diary-{{ question_id }}" class="app-container trips-app-container" ng-cloak>
+<div id="trip-diary-{{ question_id }}" class="app-container trips-app-container" ng-cloak ng-app="tripDiaryApp">
 
     {% csrf_token %}
 

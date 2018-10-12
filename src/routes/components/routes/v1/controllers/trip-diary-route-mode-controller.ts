@@ -5,9 +5,9 @@
 import * as ng from "angular";
 import {RouteDescriptionDialogController} from "./route-description-dialog-controller";
 import {TripDiaryService} from "../ts/trip-diary-service";
-import {IModeConfig} from "../../shared/survey-map-config";
+import {IModeConfig} from "../shared/survey-map-config";
 import {TripLeg} from "../ts/trip-leg";
-import {INgRedux} from "ng-redux";
+
 import {TripsQuestionState} from "../ts/trips-question-state";
 import {PassengerCountDialogController} from "./passenger-count-dialog-controller";
 import {DynamicDialogController} from "./dynamic-dialog-controller";
@@ -18,7 +18,7 @@ import {
 import {isNullOrUndefined} from "util";
 import {TripDiaryController} from "./trip-diary-controller";
 import * as _ from "lodash";
-import SurveyManagerController from "../../../survey/survey-manager-controller";
+
 
 declare var displaySnackBar: (string, any, number) => any;
 
@@ -53,7 +53,7 @@ export class TripDiaryRouteModeController {
      * @param {string} _questionId
      */
     constructor(private $scope: ng.IScope, private $mdDialog: ng.material.IDialogService,
-                private _tripDiaryService: TripDiaryService, private _$ngRedux: INgRedux,
+                private _tripDiaryService: TripDiaryService, private _$ngRedux: any,
                 private _element: ng.IAugmentedJQuery,
                 private _$timeout: ng.ITimeoutService,
                 private _questionId: string) {
@@ -511,11 +511,7 @@ export class TripDiaryRouteModeController {
     public $onInit() {
         //this._tripDiaryService.tripLegShown();
 
-        let smc: SurveyManagerController = window['smc'];
-
-        smc.addOnNext(this.onNext);
-        smc.addOnPrevious(this.onPrevious);
-
+     
 
         this.$scope['tourPassedInitial'] = false;
         this.$scope['showMultipleTourTripText'] = false;

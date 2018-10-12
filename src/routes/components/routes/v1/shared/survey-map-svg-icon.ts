@@ -60,7 +60,7 @@ export class SurveyMapSvgIcon {
             shape: 'square',
             innerHTML: svgElement[0].outerHTML,
             prefix: 'fa',
-            shadowUrl: MARKER_URL.SHADOW,
+            //shadowUrl: MARKER_URL.SHADOW,
             iconAnchor: [17, 44],
             iconSize: [34, 44],
 

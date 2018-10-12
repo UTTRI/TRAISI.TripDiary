@@ -1,4 +1,4 @@
-import {IDataInput, IModeConfig} from "../../shared/survey-map-config";
+import {IDataInput, IModeConfig} from "../shared/survey-map-config";
 
 export class DynamicDialogController {
 

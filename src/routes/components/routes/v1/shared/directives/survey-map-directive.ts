@@ -23,18 +23,19 @@ import { TripRoute } from '../../ts/trip-route';
 const _last = require("lodash/last")
 const _first = require("lodash/first")
 
+; 
 
 declare var L: any;
 
-declare var google: any;
+
 
 var googleTravelMode = {};
 
-googleTravelMode['driver'] = google.maps.TravelMode.DRIVING;
-googleTravelMode['bicycle'] = google.maps.TravelMode.BICYCLING;
-googleTravelMode['transit'] = google.maps.TravelMode.TRANSIT;
-googleTravelMode['walk'] = google.maps.TravelMode.WALKING;
-googleTravelMode['wheelchair'] = google.maps.TravelMode.WALKING;
+googleTravelMode['driver'] = 'DRIVING';
+googleTravelMode['bicycle'] = 'BICYCLING';
+googleTravelMode['transit'] = 'TRANSIT';
+googleTravelMode['walk'] = 'WALKING';
+googleTravelMode['wheelchair'] = 'WALKING';
 
 
 let lineOptions = {};
