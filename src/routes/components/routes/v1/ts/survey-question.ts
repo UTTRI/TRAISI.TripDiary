@@ -270,17 +270,20 @@ export class SurveyQuestion {
         }
 
         this._startTime = surveyData.startTime;
-
+        let startTime = moment()
+        let endTime = moment()
+        let endDate = moment()
+        let startDate = moment()
         //let jsonData = JSON.parse(surveyData);
 
         let jsonData = surveyData;
-        let startDate = moment(jsonData['startDate']);
+        //let startDate = moment(jsonData['startDate']);
 
         console.log("Start Date:" + startDate);
 
         this.todayDateDisplay = startDate.format('MMMM Do');
 
-        let endDate = moment(jsonData['startDate']).add(1, 'days');
+        //let endDate = moment(jsonData['startDate']).add(1, 'days');
 
         this.tomorrowDateDisplay = endDate.format('MMMM Do');
 
@@ -320,10 +323,7 @@ export class SurveyQuestion {
 
         this._startTime = startTime;
         this._startDate = startDate; */
-        let startTime = moment()
-        let endTime = moment()
-        let endDate = moment()
-        let startDate = moment()
+
 
 
         this._translateData = {
@@ -360,7 +360,7 @@ export class SurveyQuestion {
 
         $scope.$watch(() => {
             //return responseElement.value;
-        }, function (value: string) {
+        }, function (value: void, value2: void, scope: any) {
 
             /* Send the updated value to the server */
             if (value != null) {
