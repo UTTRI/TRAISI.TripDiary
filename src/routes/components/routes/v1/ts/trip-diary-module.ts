@@ -41,6 +41,9 @@ import 'leaflet-control-geocoder';
 var polyline = require('@mapbox/polyline');
 
 
+let translate = require('../assets/trips-en.json')
+
+console.log(translate);
 
 import { TripDiaryService } from "./trip-diary-service";
 import { TripDiaryTourService } from "./trip-diary-tour-service";
@@ -99,12 +102,10 @@ export class TripDiaryModule {
             }])
             .config(['$translateProvider', function ($translateProvider: angular.translate.ITranslateProvider) {
                 // add translation table
-                $translateProvider.useStaticFilesLoader({
-                    prefix: '/static/dist/localization/trips-',
-                    suffix: '.json'
-                });
+
                 $translateProvider.useMessageFormatInterpolation();
                 $translateProvider.useSanitizeValueStrategy('sanitize');
+                $translateProvider.translations('en',translate)
                 $translateProvider.preferredLanguage('en');
             }])
             .config(['$interpolateProvider', function ($interpolateProvider: angular.IInterpolateProvider) {
