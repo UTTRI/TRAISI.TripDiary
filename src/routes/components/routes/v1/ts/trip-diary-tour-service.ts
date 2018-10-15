@@ -401,6 +401,7 @@ export class TripDiaryTourService {
      * Gets called when all visilibty requirements are met to display
      */
     private configureRouteMapTour() {
+        return;
         if (window.matchMedia('(min-width: 480px)').matches) {
             if (this.state().activeRouteIndex == 0) {
                 let activeTripRoute: TripRoute = this.state().tripRoutes[this.state().activeRouteIndex];

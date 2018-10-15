@@ -23,9 +23,9 @@ let _svgMarkerXml = `
      id="path2"
      d="M 17,1 C 8.3021446,1 1.25,8.052142 1.25,16.75 1.25,25.447858 14.375,43 17,43 19.625,43 32.75,25.447858 32.75,16.75 32.75,8.052142 25.697855,1 17,1 Z"  />
      </svg>
-     <img src="/static/dist/images/map-markers/marker-shadow.png" style=" position: relative;
+     <!--<img src="/static/dist/images/map-markers/marker-shadow.png" style=" position: relative;
     top: 3px;
-    left: 6px;"/> 
+    left: 6px;"/> -->
      </div>`;
 
 export class SurveyMapSvgIcon {

@@ -214,19 +214,22 @@
                         </div>
                         <div class="unknown-route" ng-if="foundRoutes.length > 0 && activeTripRoute().activeTripLegIndex == $index && tds.shouldShowCustomRouteInput(tripLeg._mode.modeName)"
                             ng-click="_rmc.showRouteDescriptionDialog(tripLeg,$event,tripLeg._mode.modeName);">
-                            <md-icon style="color:white">info_outline</md-icon>
+                            <!--<md-icon style="color:white">info_outline</md-icon> -->
+                            <i class="fas fa-info-circle"></i>
                             <span>{$ tds.getNoRouteMessage(tripLeg._mode.modeName) $}</span>
                         </div>
 
                         <div id="confirm-route-{$ _tdc.questionId $}" class="confirm-route confirm-route-{$ _tdc.questionId $}"
                             ng-disabled="tds.state.switchRouteModeActive" ng-show="foundRoutes.length > 0 && activeTripRoute().activeTripLegIndex == $index"
                             ng-click="_rmc.setTripLegEditComplete(tds.state.activeRouteIndex,tds.getActiveTripRoute()._activeTripLegIndex);">
-                            <md-icon style="color:white">check</md-icon>
+                            <!--<md-icon style="color:white">check</md-icon> -->
+                            <i class="fas fa-check"></i>
                             {$ 'CONFIRM' | translate $}
                         </div>
                         <div id="switch-mode-{$ _tdc.questionId $}" class="switch-mode switch-mode-{$ _tdc.questionId $}"
                             ng-click="_rmc.setSwitchRouteModeStateClick(true)" ng-if="!routingError && !tripLeg._isComplete && tripLeg._mode != undefined && activeTripRoute().activeTripLegIndex == $index && $last  && !tds.state.switchRouteModeActive">
-                            <md-icon style="color:white">add</md-icon>
+                            <!--<md-icon style="color:white">add</md-icon>> -->
+                            <i class="fas fa-plus"></i>
                             {$ 'SWITCH_TRAVEL_MODE' | translate $}
                         </div>
 

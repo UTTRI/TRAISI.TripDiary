@@ -443,7 +443,7 @@ export class TripRouteModeDirective {
 
         var directive = ($ngRedux: any, $mdPanel: angular.material.IPanelService, tripDiaryService: TripDiaryService, $timeout: ng.ITimeoutService, $mdDialog) => {
 
-            console.log(' in const');
+
             return new TripRouteModeDirective($ngRedux, $mdPanel, tripDiaryService, $timeout, $mdDialog);
         };
 
