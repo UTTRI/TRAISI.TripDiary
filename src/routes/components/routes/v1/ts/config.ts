@@ -100,11 +100,11 @@ export let config: ISurveyMapConfig = {
     "modes": [
         {
             "name": "driver",
-            "icon": "directions_car",
+            "icon": "fas fa-car",
             "category": "driver",
             "subModes": [{
                 "name": "driver",
-                "icon": "directions_car",
+                "icon": "fas fa-car",
                 "category": "driver",
                 "routerMode": "driver",
                 "allowAddWaypoints": true,
@@ -141,7 +141,7 @@ export let config: ISurveyMapConfig = {
 
             }, {
                 "name": "passenger",
-                "icon": "directions_car",
+                "icon": "fas fa-car",
                 "category": "driver"
                 ,
                 "allowAddWaypoints": true,
@@ -189,11 +189,11 @@ export let config: ISurveyMapConfig = {
         },
         {
             "name": "transit",
-            "icon": "directions_transit",
+            "icon": "fas fa-bus-alt",
             "category": "transit",
             "subModes": [{
                 "name": "public_transit",
-                "icon": "directions_transit",
+                "icon": "fas fa-bus-alt",
                 "category": "transit",
                 "allowAddWaypoints": false,
                 "colour": "#F44336"
@@ -207,7 +207,7 @@ export let config: ISurveyMapConfig = {
 
             }, {
                 "name": "Intercity Bus",
-                "icon": "directions_transit",
+                "icon": "fas fa-bus-alt",
                 "category": "transit",
                 "allowAddWaypoints": false,
                 "colour": "#cd3d34"
@@ -223,7 +223,7 @@ export let config: ISurveyMapConfig = {
             },
                 {
                     "name": "intercity_rail",
-                    "icon": "directions_transit",
+                    "icon": "fas fa-bus-alt",
                     "category": "transit",
                     "allowAddWaypoints": false,
                     "colour": "#b23c33"
@@ -238,7 +238,7 @@ export let config: ISurveyMapConfig = {
 
                 }, {
                     "name": "paratransit",
-                    "icon": "directions_transit",
+                    "icon": "fas fa-bus-alt",
                     "category": "transit",
                     "allowAddWaypoints": true,
                     customRoute: routeNotKnown,
@@ -254,7 +254,7 @@ export let config: ISurveyMapConfig = {
                 },
                 {
                     "name": "schoolbus",
-                    "icon": "directions_transit",
+                    "icon": "fas fa-bus-alt",
                     "category": "transit",
                     customRoute: routeNotKnown,
                     "allowAddWaypoints": true,
@@ -271,7 +271,7 @@ export let config: ISurveyMapConfig = {
 
                 {
                     "name": "private_shuttle",
-                    "icon": "directions_transit",
+                    "icon": "fas fa-bus-alt",
                     "category": "transit",
                     customRoute: routeNotKnown,
                     "allowAddWaypoints": true,
@@ -288,12 +288,12 @@ export let config: ISurveyMapConfig = {
             ]
         }, {
             "name": "walk",
-            "icon": "directions_walk",
+            "icon": "fas fa-walking",
             category: "walk",
 
             "subModes": [{
                 "name": "walk",
-                "icon": "directions_walk",
+                "icon": "fas fa-walking",
                 "category": "walk",
                 customRoute: routeNotKnown
                 ,
@@ -308,11 +308,11 @@ export let config: ISurveyMapConfig = {
         },
         {
             "name": "bicycle",
-            "icon": "directions_bike",
+            "icon": "fas fa-bicycle",
             "category": "bicycle",
             "subModes": [{
                 "name": "bicycle",
-                "icon": "directions_bike",
+                "icon": "fas fa-bicycle",
                 "category": "bicycle",
                 customRoute: routeNotKnown,
 
@@ -350,7 +350,7 @@ export let config: ISurveyMapConfig = {
                     "name":
                         "motorcycle",
                     "icon":
-                        "motorcycle",
+                        "fas fa-motorcycle",
                     "category":
                         "bicycle"
                     ,
@@ -378,13 +378,13 @@ export let config: ISurveyMapConfig = {
             "name":
                 "wheelchair",
             icon:
-                "accessible",
+                "fas fa-wheelchair",
             category:
                 "wheelchair",
             "subModes":
                 [{
                     "name": "wheelchair",
-                    "icon": "accessible",
+                    "icon": "fas fa-wheelchair",
                     "category": "wheelchair"
                     ,
                     "allowAddWaypoints": true,
@@ -399,7 +399,7 @@ export let config: ISurveyMapConfig = {
 
                 }, {
                     "name": "paratransit",
-                    "icon": "directions_transit",
+                    "icon": "fas fa-bus-alt",
                     "category": "wheelchair",
                     "allowAddWaypoints": true,
                     "routerMode": "driver",

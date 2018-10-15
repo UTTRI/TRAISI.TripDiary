@@ -16,7 +16,7 @@ export enum TimelineIcon {
     Shopping = "shopping_cart",
     Daycare = "child_friendly",
     Default = "place",
-    Passenger = "directions_car",
+    Passenger = "fas fa-car",
     Other = "map"
 }
 

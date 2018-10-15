@@ -53,7 +53,7 @@ let otherIcon = SurveyMapSvgIcon.createIcon('home', '#607D8B');
 let switchIconSummary = SurveyMapSvgIcon.createIcon('swap_horiz', '#ff9d02', 'summary-switch-marker');
 
 
-let passengerIcon = SurveyMapSvgIcon.createIcon('directions_car', '#276464');
+let passengerIcon = SurveyMapSvgIcon.createIcon('fas fa-car', '#276464');
 let daycareIcon = SurveyMapSvgIcon.createIcon('child_friendly', '#D768A5');
 
 

@@ -2,33 +2,30 @@
 
 <div class="trip-route-mode-header" id="trip-route-mode-header-{$ $parent.tc.questionId $}">
 
-    <div ng-repeat="route in tds.state.tripRoutes track by $index" class="trip-route-mode-header-item"
-         ng-class="{'inactive-route': tds.state.activeRouteIndex != $index}">
+    <div ng-repeat="route in tds.state.tripRoutes track by $index" class="trip-route-mode-header-item" ng-class="{'inactive-route': tds.state.activeRouteIndex != $index}">
 
 
 
 
-        <span class="route-mode-header-inner arrow_box"
-              id="route-select-{$ $index $}-{$ $parent.$parent.tc.questionId $}"
-              ng-class="{'active-route': tds.state.activeRouteIndex == $index}"
-              ng-click="_rmc.setRouteEditActive($index)">
+        <span class="route-mode-header-inner arrow_box" id="route-select-{$ $index $}-{$ $parent.$parent.tc.questionId $}"
+            ng-class="{'active-route': tds.state.activeRouteIndex == $index}" ng-click="_rmc.setRouteEditActive($index)">
             <span ng-if="route.editComplete">
-            <md-icon style="color:greenyellow">check_box</md-icon>
-        </span>
+                <i class="far fa-check-square"></i>
+            </span>
 
-        <span ng-if="!route.editComplete">
-            <md-icon>check_box_outline_blank</md-icon>
-        </span>
+            <span ng-if="!route.editComplete">
+                <i class="far fa-square"></i>
+            </span>
 
 
-              <md-icon class="location-icon" md-colors="white">
+            <md-icon class="location-icon" md-colors="white">
 
-            {$ route.startLocation.timelineIcon | lowercase $}
+                {$ route.startLocation.timelineIcon | lowercase $}
 
-        </md-icon>
+            </md-icon>
 
             {$ route.startLocation.displayName() $} - {$ route.endLocation.displayName()
-        $}
+            $}
 
         </span>
 
@@ -42,22 +39,20 @@
 <div class="trips-diary-route-container">
 
 
-    <div class="trips-route-mode" class="trips-location-overlay slide-panel-left"
-         md-swipe-down="toggleRouteMap(true)"
-         md-swipe-up="toggleRouteMap(false)"
-         ng-class="{'route-location-overlay-hidden ': routeMapToggle,'toggle-active': routeToggle,'toggle-collapse': mapOverlayState == 'COLLAPSED'}"
-         ng-cloak>
+    <div class="trips-route-mode" class="trips-location-overlay slide-panel-left" md-swipe-down="toggleRouteMap(true)"
+        md-swipe-up="toggleRouteMap(false)" ng-class="{'route-location-overlay-hidden ': routeMapToggle,'toggle-active': routeToggle,'toggle-collapse': mapOverlayState == 'COLLAPSED'}"
+        ng-cloak>
         <div ng-show="expandPanelText" translate="EXPAND_PANEL_TEXT" class="expand-panel-text">
 
         </div>
-        <div class="toggle-route-button" ng-click="toggleRouteMap(routeToggle)"
-             aria-label="Expand / collapse Route Information">
+        <div class="toggle-route-button" ng-click="toggleRouteMap(routeToggle)" aria-label="Expand / collapse Route Information">
             <span>
-            <md-icon ng-cloak ng-show="routeToggle">keyboard_arrow_down</md-icon>
-            <md-icon ng-cloak ng-show="!routeToggle">keyboard_arrow_up</md-icon></span>
+                <span ng-cloak ng-show="routeToggle"><i class="fas fa-arrow-up"></i></span>
+                <span ng-cloak ng-show="!routeToggle"><i class="fas fa-arrow-up"></i></span>
+            </span>
         </div>
         <div class="route-start" scroll-view-watcher scroll-enter-callback="_rmc.startScrollEnter()"
-             scroll-leave-callback="_rmc.startScrollLeave()">
+            scroll-leave-callback="_rmc.startScrollLeave()">
 
             <div class="route-terminal">
 
@@ -65,7 +60,8 @@
                 <span>{$ tds.state.tripRoutes[ tds.state.activeRouteIndex].startLocation.locationName $}</span>
 
                 <span class="route-time">
-                    {$ $parent.$parent.$parent.tc.value.tripRoutes[ $parent.$parent.$parent.tc.value.activeRouteIndex].getAdjustedStartTime() | customDate $}
+                    {$ $parent.$parent.$parent.tc.value.tripRoutes[
+                    $parent.$parent.$parent.tc.value.activeRouteIndex].getAdjustedStartTime() | customDate $}
                 </span>
             </div>
 
@@ -75,60 +71,49 @@
 
         <div ng-if="tds.state.activeRouteIndex >= 0" class="route-mode-inner" scroll-view-watcher>
 
-            <div ng-class="{'trip-leg-inactive':tripLeg._isComplete}" class="trip-leg-section"
-                 ng-repeat="tripLeg in activeTripRoute()._tripLegs track by $index"
+            <div ng-class="{'trip-leg-inactive':tripLeg._isComplete}" class="trip-leg-section" ng-repeat="tripLeg in activeTripRoute()._tripLegs track by $index"
+                ng-click="" id="trip-leg-{$ $index $}">
 
-                 ng-click=""
-                 id="trip-leg-{$ $index $}">
-
-                <div class="trip-leg-container-inner"
-                     ng-class="{'md-whiteframe-6dp': activeTripRoute().activeTripLegIndex == $index && tripLeg._isComplete == false}">
+                <div class="trip-leg-container-inner" ng-class="{'md-whiteframe-6dp': activeTripRoute().activeTripLegIndex == $index && tripLeg._isComplete == false}">
                     <span class="trip-leg-container-m">
 
 
-                        <div ng-class="{'incomplete': tripLeg._mode == undefined}" class="trip-leg-complete"
-                             ng-if="tripLeg._isComplete ||  activeTripRoute().activeTripLegIndex != $index"
-                             ng-click="_rmc.setTripLegIncomplete($index)">
+                        <div ng-class="{'incomplete': tripLeg._mode == undefined}" class="trip-leg-complete" ng-if="tripLeg._isComplete ||  activeTripRoute().activeTripLegIndex != $index"
+                            ng-click="_rmc.setTripLegIncomplete($index)">
 
-                     <span class="mode-colour-block"
-                     >
+                            <span class="mode-colour-block">
 
-                </span>
+                            </span>
 
 
                             <div class="mode-right-block">
-  <span ng-if="tripLeg._mode != undefined" class="mode-icon"
-        style="background-color: {$ getModeColourString(tripLeg._mode.modeName); $}; border:dashed 2px {$ getDarkModeColourString(tripLeg._mode.modeName); $}">
- <md-icon>{$ getModeIconString(tripLeg._mode.modeName) $}</md-icon></span>
+                                <span ng-if="tripLeg._mode != undefined" class="mode-icon" style="background-color: {$ getModeColourString(tripLeg._mode.modeName); $}; border:dashed 2px {$ getDarkModeColourString(tripLeg._mode.modeName); $}">
+                                    <i class="{$ getModeIconString(tripLeg._mode.modeName) $}"></i></span>
 
-                                <span ng-if="tripLeg._mode == undefined" class="mode-icon"
-                                      style='background-color: #fecc00'>
- <md-icon>error</md-icon></span>
+                                <span ng-if="tripLeg._mode == undefined" class="mode-icon" style='background-color: #fecc00'>
+                                    <md-icon>error</md-icon>
+                                </span>
                                 <span class="trip-leg-container-m">
-                                <span class="trip-leg-modeName"
-                                    ng-if="tripLeg._unknownRoute == false ||_rmc.shouldShowAlternativeSummary(tripLeg) "
-                                    ng-bind-html="tds.getModeConfig(tripLeg._mode.modeName).displayName"></span>
-                                <span class="trip-leg-name"
-                                      ng-if="tripLeg._unknownRoute == false ||_rmc.shouldShowAlternativeSummary(tripLeg) "
-                                      ng-bind-html="_rmc.routeName(tripLeg)"></span>
-                                    </span>
+                                    <span class="trip-leg-modeName" ng-if="tripLeg._unknownRoute == false ||_rmc.shouldShowAlternativeSummary(tripLeg) "
+                                        ng-bind-html="tds.getModeConfig(tripLeg._mode.modeName).displayName"></span>
+                                    <span class="trip-leg-name" ng-if="tripLeg._unknownRoute == false ||_rmc.shouldShowAlternativeSummary(tripLeg) "
+                                        ng-bind-html="_rmc.routeName(tripLeg)"></span>
+                                </span>
                                 <!--<span class="trip-leg-name" ng-if="tripLeg._mode == undefined">
                                  {$ 'REQUIRES_INFORMATION' | translate $}
                              </span> -->
 
-                                <span class="trip-leg-name"
-                                      ng-if="!tripLeg._isComplete && tripLeg._mode == undefined && activeTripRoute().activeTripLegIndex != $index">
-                            {$ 'NO_MODE_SELECTED' | translate $}
-                        </span>
+                                <span class="trip-leg-name" ng-if="!tripLeg._isComplete && tripLeg._mode == undefined && activeTripRoute().activeTripLegIndex != $index">
+                                    {$ 'NO_MODE_SELECTED' | translate $}
+                                </span>
 
-                                <span class="trip-leg-name"
-                                      ng-if="tripLeg._unknownRoute == true && !_rmc.shouldShowAlternativeSummary(tripLeg)">
-                                {$ 'UNKNOWN_ROUTE_INFORMATION' | translate $}
-                             </span>
+                                <span class="trip-leg-name" ng-if="tripLeg._unknownRoute == true && !_rmc.shouldShowAlternativeSummary(tripLeg)">
+                                    {$ 'UNKNOWN_ROUTE_INFORMATION' | translate $}
+                                </span>
                                 <span class="edit-trip-leg-block" ng-click="rmc.setTripLegIncomplete($index)">
 
-                        <md-icon>edit</md-icon>
-                    </span>
+                                    <i class="fas fa-edit"></i>
+                                </span>
                             </div>
 
 
@@ -140,77 +125,75 @@
 
                     <div ng-show="!tripLeg._isComplete" class="leg-space">
 
-                        <div class="mode-button-panel {$ $parent.$parent.$parent.tc.questionId $}"
-                             ng-show="activeTripRoute().activeTripLegIndex == $index">
+                        <div class="mode-button-panel {$ $parent.$parent.$parent.tc.questionId $}" ng-show="activeTripRoute().activeTripLegIndex == $index">
 
 
-                        <span ng-repeat="mode in ::modes track by $index">
+                            <span ng-repeat="mode in ::modes track by $index">
 
-                            <md-button ng-if="mode.subModes.length == 1" ng-click="selectMode($event,mode.subModes[0])"
-                                       class="md-icon-button md-mini"
-                                       aria-label="Add Home Location"
-                                       ng-class="{'active-mode': activeTripLeg()._mode.modeCategory == mode.name }">
+                                <md-button ng-if="mode.subModes.length == 1" ng-click="selectMode($event,mode.subModes[0])"
+                                    class="md-icon-button md-mini" aria-label="Add Home Location" ng-class="{'active-mode': activeTripLeg()._mode.modeCategory == mode.name }"
+                                    ng-class="{'inactive-mode': activeTripLeg()._mode.modeCategory != mode.name }">
 
 
-                                <md-icon
+                                    <i class="{$ mode.icon $}"></i>
+                                    <!-- <md-icon
                                         ng-class="{'inactive-mode': activeTripLeg()._mode.modeCategory != mode.name }"
                                         class="md-16">
                                     {$mode.icon $}
-                                </md-icon>
-
-
-                            </md-button>
-
-                            <md-menu ng-if="mode.subModes.length > 1" md-offset="10 20">
-
-
-                                <md-button ng-click="$mdMenu.open($event)" class="md-icon-button md-mini"
-                                           aria-label="Add Home Location"
-                                           ng-class="{'active-mode': activeTripLeg()._mode.modeCategory == mode.name }">
-
-
-                                    <md-icon
-                                            ng-class="{'inactive-mode': activeTripLeg()._mode.modeCategory != mode.name }"
-                                            class="md-16">
-                                        {$mode.icon $}
-                                    </md-icon>
+                                </md-icon> -->
 
 
                                 </md-button>
 
+                                <md-menu ng-if="mode.subModes.length > 1" md-offset="10 20">
 
-                                <md-menu-content prevent-scroll width="2"> 
 
-                                    <md-menu-item ng-repeat="subMode in ::mode.subModes">
-                                        <md-button ng-click="selectMode($event,subMode,$mdMenu)">
-                                            <md-icon class="md-8">{$ subMode.icon $}</md-icon>
-                                            {$ subMode.displayName $}
-                                        </md-button>
-                                    </md-menu-item>
-                                </md-menu-content>
+                                    <md-button ng-click="$mdMenu.open($event)" class="md-icon-button md-mini"
+                                        aria-label="Add Home Location" ng-class="{'active-mode': activeTripLeg()._mode.modeCategory == mode.name }">
 
-                            </md-menu>
-                        </span>
+
+                                        <!--<md-icon
+                                            ng-class="{'inactive-mode': activeTripLeg()._mode.modeCategory != mode.name }"
+                                            class="md-16">
+                                        {$mode.icon $}
+                                    </md-icon> -->
+
+                                        <i class="{$ mode.icon $}" ng-class="{'inactive-mode': activeTripLeg()._mode.modeCategory != mode.name }"></i>
+
+
+                                    </md-button>
+
+
+                                    <md-menu-content prevent-scroll width="2">
+
+                                        <md-menu-item ng-repeat="subMode in ::mode.subModes">
+                                            <md-button ng-click="selectMode($event,subMode,$mdMenu)">
+                                                <i class="{$ subMode.icon $}"></i>
+                                                <!--<md-icon class="md-8">{$ subMode.icon $}</md-icon> -->
+                                                {$ subMode.displayName $}
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+
+                                </md-menu>
+                            </span>
 
 
                         </div>
 
-                        <div class="route-selected-mode" style="background-color: {$ getModeColourString(tripLeg._mode.modeName); $};"  ng-show="!tripLeg._isComplete && activeTripRoute().activeTripLegIndex == $index ">
+                        <div class="route-selected-mode" style="background-color: {$ getModeColourString(tripLeg._mode.modeName); $};"
+                            ng-show="!tripLeg._isComplete && activeTripRoute().activeTripLegIndex == $index ">
                             {$ tds.getModeConfig(activeTripLeg()._mode.modeName).displayName $}
                         </div>
-                        <div class="routes-list" id="routes-list-{$ $index $}"
-                             ng-show="!tripLeg._isComplete && activeTripRoute().activeTripLegIndex == $index ">
+                        <div class="routes-list" id="routes-list-{$ $index $}" ng-show="!tripLeg._isComplete && activeTripRoute().activeTripLegIndex == $index ">
 
                         </div>
 
-                        <div id="route-options-container-{$ $index $}-{$ _tdc.questionId $}"
-                             class="route-options-container-{$ _tdc.questionId $} route-options-container"
-                             ng-if="activeTripRoute().activeTripLegIndex == $index ">
-                            <md-progress-linear ng-if="routeQueryActive && tripLeg._mode != null"
-                                                md-mode="query"></md-progress-linear>
-                            <div ng-class="{'route-active': selectedRoute == route && !tripLeg._unknownRoute}"
-                                 ng-click="selectRouteClick($event, route)"
-                                 class="route-option" ng-repeat="route in foundRoutes track by $index">
+                        <div id="route-options-container-{$ $index $}-{$ _tdc.questionId $}" class="route-options-container-{$ _tdc.questionId $} route-options-container"
+                            ng-if="activeTripRoute().activeTripLegIndex == $index ">
+                            <md-progress-linear ng-if="routeQueryActive && tripLeg._mode != null" md-mode="query"></md-progress-linear>
+                            <div ng-class="{'route-active': selectedRoute == route && !tripLeg._unknownRoute}" ng-click="selectRouteClick($event, route)"
+                                class="route-option" ng-repeat="route in foundRoutes track by $index">
                                 <span class="route-name" ng-bind-html="route.name"></span>
 
                                 <span class="route-distance">{$ route.summary.totalDistance / 1000 $} km</span>
@@ -220,8 +203,7 @@
                             </div>
 
                             <div ng-click="_rmc.showRouteDescriptionDialog(tripLeg,$event,tripLeg._mode.modeName,false)"
-                                 class="route-option" ng-class="{'route-active': tripLeg._unknownRoute}"
-                                 ng-if="_rmc.shouldShowAlternativeSummary(tripLeg) && tds.shouldShowCustomRouteInput(tripLeg._mode.modeName)">
+                                class="route-option" ng-class="{'route-active': tripLeg._unknownRoute}" ng-if="_rmc.shouldShowAlternativeSummary(tripLeg) && tds.shouldShowCustomRouteInput(tripLeg._mode.modeName)">
                                 <span class="route-name" ng-bind-html="_rmc.routeName(tripLeg,true)"></span>
                             </div>
                         </div>
@@ -230,48 +212,41 @@
 
                             {$ 'NO_ROUTES_FOUND' | translate $}
                         </div>
-                        <div class="unknown-route"
-                             ng-if="foundRoutes.length > 0 && activeTripRoute().activeTripLegIndex == $index && tds.shouldShowCustomRouteInput(tripLeg._mode.modeName)"
-                             ng-click="_rmc.showRouteDescriptionDialog(tripLeg,$event,tripLeg._mode.modeName);">
+                        <div class="unknown-route" ng-if="foundRoutes.length > 0 && activeTripRoute().activeTripLegIndex == $index && tds.shouldShowCustomRouteInput(tripLeg._mode.modeName)"
+                            ng-click="_rmc.showRouteDescriptionDialog(tripLeg,$event,tripLeg._mode.modeName);">
                             <md-icon style="color:white">info_outline</md-icon>
-                            <span>{$  tds.getNoRouteMessage(tripLeg._mode.modeName) $}</span>
+                            <span>{$ tds.getNoRouteMessage(tripLeg._mode.modeName) $}</span>
                         </div>
 
-                        <div id="confirm-route-{$ _tdc.questionId $}"
-                             class="confirm-route confirm-route-{$ _tdc.questionId $}"
-                             ng-disabled="tds.state.switchRouteModeActive"
-                             ng-show="foundRoutes.length > 0 && activeTripRoute().activeTripLegIndex == $index"
-                             ng-click="_rmc.setTripLegEditComplete(tds.state.activeRouteIndex,tds.getActiveTripRoute()._activeTripLegIndex);">
+                        <div id="confirm-route-{$ _tdc.questionId $}" class="confirm-route confirm-route-{$ _tdc.questionId $}"
+                            ng-disabled="tds.state.switchRouteModeActive" ng-show="foundRoutes.length > 0 && activeTripRoute().activeTripLegIndex == $index"
+                            ng-click="_rmc.setTripLegEditComplete(tds.state.activeRouteIndex,tds.getActiveTripRoute()._activeTripLegIndex);">
                             <md-icon style="color:white">check</md-icon>
                             {$ 'CONFIRM' | translate $}
                         </div>
-                        <div id="switch-mode-{$ _tdc.questionId $}"
-                             class="switch-mode switch-mode-{$ _tdc.questionId $}"
-                             ng-click="_rmc.setSwitchRouteModeStateClick(true)"
-                             ng-if="!routingError && !tripLeg._isComplete && tripLeg._mode != undefined && activeTripRoute().activeTripLegIndex == $index && $last  && !tds.state.switchRouteModeActive"
-                        >
+                        <div id="switch-mode-{$ _tdc.questionId $}" class="switch-mode switch-mode-{$ _tdc.questionId $}"
+                            ng-click="_rmc.setSwitchRouteModeStateClick(true)" ng-if="!routingError && !tripLeg._isComplete && tripLeg._mode != undefined && activeTripRoute().activeTripLegIndex == $index && $last  && !tds.state.switchRouteModeActive">
                             <md-icon style="color:white">add</md-icon>
                             {$ 'SWITCH_TRAVEL_MODE' | translate $}
                         </div>
 
-                        <div class="switch-mode" id="switch-mode-{$ _tdc.questionId $}"
-                             ng-click="_rmc.setSwitchRouteModeStateClick(false)"
-                             ng-if="!tripLeg._isComplete && tripLeg._mode != undefined && activeTripRoute().activeTripLegIndex == $index && $last  && tds.state.switchRouteModeActive"
-                        >
+                        <div class="switch-mode" id="switch-mode-{$ _tdc.questionId $}" ng-click="_rmc.setSwitchRouteModeStateClick(false)"
+                            ng-if="!tripLeg._isComplete && tripLeg._mode != undefined && activeTripRoute().activeTripLegIndex == $index && $last  && tds.state.switchRouteModeActive">
                             <md-icon style="color:white">cancel</md-icon>
                             {$ 'CANCEL_SWITCH_TRAVEL_MODE' | translate $}
                         </div>
 
-                        <div class="select-mode-message"
-                             ng-if="!(foundRoutes.length > 0) && routingError != true && activeTripRoute().activeTripLegIndex == $index">
+                        <div class="select-mode-message" ng-if="!(foundRoutes.length > 0) && routingError != true && activeTripRoute().activeTripLegIndex == $index">
 
 
-                        <span ng-if="activeTripRoute()._tripLegs.length == 1">
-                        Select the mode used to to travel from {$ activeTripRoute().startLocation.locationName $} to {$
-                        activeTripRoute().endLocation.locationName $}.</span>
+                            <span ng-if="activeTripRoute()._tripLegs.length == 1">
+                                Select the mode used to to travel from {$ activeTripRoute().startLocation.locationName
+                                $} to {$
+                                activeTripRoute().endLocation.locationName $}.</span>
                             <span ng-if="activeTripRoute()._tripLegs.length > 1">
-                        Select the {$ activeTripRoute()._tripLegs.length | ordinalFilter $} mode used to to travel from {$ activeTripRoute().startLocation.locationName $} to {$
-                        activeTripRoute().endLocation.locationName $}.</span>
+                                Select the {$ activeTripRoute()._tripLegs.length | ordinalFilter $} mode used to to
+                                travel from {$ activeTripRoute().startLocation.locationName $} to {$
+                                activeTripRoute().endLocation.locationName $}.</span>
                         </div>
 
 
@@ -280,12 +255,11 @@
                 </div>
                 <div class="switched-modes-outer" ng-if="!$last && activeTripRoute()._tripLegs.length > 1">
 
-                    <md-icon ng-if="!tripLeg._isComplete" class="mode-switch-canel"
-                             ng-click="removeModeSwitch(activeTripRouteIndex,$index)">
+                    <md-icon ng-if="!tripLeg._isComplete" class="mode-switch-canel" ng-click="removeModeSwitch(activeTripRouteIndex,$index)">
                         cancel
                     </md-icon>
                     <div class="switched-modes-divider">
-                        <span ng-if="tripLeg._isComplete" class="route-terminal-code">{$ $index+2  $}</span>
+                        <span ng-if="tripLeg._isComplete" class="route-terminal-code">{$ $index+2 $}</span>
                         <md-icon style="color:white">compare_arrows</md-icon>
                         {$ 'SWITCHED_MODES' | translate $}
                     </div>
@@ -298,7 +272,8 @@
 
             <div class="route-terminal">
 
-                <span class="route-terminal-code">{$ tds.state.tripRoutes[ tds.state.activeRouteIndex].tripLegs.length+1 $}</span>
+                <span class="route-terminal-code">{$ tds.state.tripRoutes[
+                    tds.state.activeRouteIndex].tripLegs.length+1 $}</span>
                 <span>{$ tds.state.tripRoutes[ tds.state.activeRouteIndex].endLocation.locationName $}</span>
                 <span class="route-time">
                     {$ tds.state.tripRoutes[ tds.state.activeRouteIndex].getAdjustedEndTime() | customDate $}
@@ -317,15 +292,12 @@
 
     <div class="trip-route-mode-map-container">
 
-        <survey-map-router
-                ng-class="{'toggle-active': routeToggle}"
-                id="survey-map=router-{$ $parent.tc.questionId $}" config=$parent.tripsConfig
-                ready="$parent.tc.routeMapReady" callback="$parent.tc.routeCallback"
-                controller="$parent.tc" md-swipe-up="routeMapToggle = false"
-                map="$parent.tc._routeMap"></survey-map-router>
+        <survey-map-router ng-class="{'toggle-active': routeToggle}" id="survey-map=router-{$ $parent.tc.questionId $}"
+            config=$parent.tripsConfig ready="$parent.tc.routeMapReady" callback="$parent.tc.routeCallback" controller="$parent.tc"
+            md-swipe-up="routeMapToggle = false" map="$parent.tc._routeMap"></survey-map-router>
 
-        <input ng-show="tds.state.switchRouteModeActive" class="route-map-location-input"
-               placeholder="{$ 'SEARCH_FOR_LOCATION' | translate $}" autocomplete="off">
+        <input ng-show="tds.state.switchRouteModeActive" class="route-map-location-input" placeholder="{$ 'SEARCH_FOR_LOCATION' | translate $}"
+            autocomplete="off">
 
 
         <div class="switch-mode-overlay" ng-show="tds.state.switchRouteModeActive" translate="SWITCH_MODE_OVERLAY">
@@ -334,20 +306,18 @@
         </div>
 
 
-        <div class="switch-mode-cancel-overlay" ng-click="_rmc.cancelSwitchModeState()"
-             ng-show="tds.state.switchRouteModeActive">
+        <div class="switch-mode-cancel-overlay" ng-click="_rmc.cancelSwitchModeState()" ng-show="tds.state.switchRouteModeActive">
             <md-button class="md-primary md-raised">CANCEL</md-button>
         </div>
 
     </div>
 
 
-    <div class="route-help-overlay-mobile"
-         ng-show="(showMultipleTourTripText && !showMultipleTourTripTextPerm) || showSelectRouteTourTripText || showSelectModeTourTripText ">
+    <div class="route-help-overlay-mobile" ng-show="(showMultipleTourTripText && !showMultipleTourTripTextPerm) || showSelectRouteTourTripText || showSelectModeTourTripText ">
 
         <span class="route-help-close" ng-show="showMultipleTourTripText">
-        <md-icon ng-click="_rmc.hideRouteMultipleTripTourText()">close</md-icon>
-            </span>
+            <md-icon ng-click="_rmc.hideRouteMultipleTripTourText()">close</md-icon>
+        </span>
         <span ng-show="showSelectRouteTourTripText" translate="ROUTE_TOUR_SELECT_ROUTE"></span>
         <span ng-show="showMultipleTourTripText" translate="ROUTE_TOUR_MULTIPLE_TRIPS"></span>
 
