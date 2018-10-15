@@ -18,11 +18,12 @@
             </span>
 
 
-            <md-icon class="location-icon" md-colors="white">
+            <i class="{$ route.startLocation.timelineIcon | lowercase $}" class="location-icon" ></i>
+            <!-- <md-icon class="location-icon" md-colors="white">
 
                 {$ route.startLocation.timelineIcon | lowercase $}
 
-            </md-icon>
+            </md-icon>-->
 
             {$ route.startLocation.displayName() $} - {$ route.endLocation.displayName()
             $}
@@ -258,9 +259,10 @@
                 </div>
                 <div class="switched-modes-outer" ng-if="!$last && activeTripRoute()._tripLegs.length > 1">
 
-                    <md-icon ng-if="!tripLeg._isComplete" class="mode-switch-canel" ng-click="removeModeSwitch(activeTripRouteIndex,$index)">
+                        <i class="fas fa-ban mode-switch-cancel"  ng-if="!tripLeg._isComplete" class="mode-switch-canel"  ng-click="removeModeSwitch(activeTripRouteIndex,$index)"></i>
+                    <!--<md-icon>
                         cancel
-                    </md-icon>
+                    </md-icon> -->
                     <div class="switched-modes-divider">
                         <span ng-if="tripLeg._isComplete" class="route-terminal-code">{$ $index+2 $}</span>
                         <md-icon style="color:white">compare_arrows</md-icon>

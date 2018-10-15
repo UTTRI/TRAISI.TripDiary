@@ -491,6 +491,7 @@ export class SurveyQuestion {
                 },
                 startTime: Date(),
                 endTime: Date,
+                timelineIcon: 'fas fa-home'
             },
             
             endLocation:
@@ -502,6 +503,7 @@ export class SurveyQuestion {
                 },
                 startTime: Date(),
                 endTime: Date,
+                timelineIcon: 'fas fa-building'
             },
             activeRouteIndex: 0
 
