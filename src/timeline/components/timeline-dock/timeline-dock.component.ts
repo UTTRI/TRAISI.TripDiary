@@ -28,7 +28,6 @@ export class TimelineDockComponent implements OnInit {
 	@ViewChild('startSlotPopover')
 	startSlotPopover: PopoverDirective;
 
-
 	/**
 	 *
 	 * @param _element
@@ -43,37 +42,28 @@ export class TimelineDockComponent implements OnInit {
 	 * Angular's ngOnInit
 	 */
 	ngOnInit(): void {
-		this.timelineService.availableLocations.subscribe(this.onShelfItemsChanged);
-		this.timelineService.timelineItemRemoved.subscribe(this.onTimelineEntryRemoved);
+		// this.timelineService.availableLocations.subscribe(this.onShelfItemsChanged);
+		// this.timelineService.timelineItemRemoved.subscribe(this.onTimelineEntryRemoved);
 
 		this.sub = this.timelineService.timelineLocations.subscribe(value => {
 			value.forEach(entry => {
-				if (entry.locationType == TimelineLocationType.Undefined) {
+				this.dockItems = [];
 
-					let item = this.dockItems.find(s => {
-						return s.id == entry.id
-					});
-
-					if (item === undefined) {
-						this.dockItems.push(entry);
-					}
+				if (entry.locationType === TimelineLocationType.IntermediateLocation) {
+					this.dockItems.push(entry);
 				}
 			});
-
-		}
-
-		);
+		});
 	}
 
 	/**
 	 * Callback for when a timeline item has deleted itself
 	 */
 	private onTimelineEntryRemoved: (entry: TimelineEntry) => void = (entry: TimelineEntry) => {
-		var index = this.dockItems.findIndex(p => {
-			return p.id == entry.id
+		let index = this.dockItems.findIndex(p => {
+			return p.id === entry.id;
 		});
 		this.dockItems.splice(index, 1);
-
 	};
 
 	/**
@@ -89,15 +79,15 @@ export class TimelineDockComponent implements OnInit {
 	 */
 	onDrop(dropResult: IDropResult) {
 		if (this.dragOver) {
-
 			if (!(dropResult.payload in this.dockItems)) {
 				if (dropResult.removedIndex != null) {
 					this.dockItems.splice(dropResult.removedIndex, 1);
 				}
-				var model = Object.assign({}, dropResult.payload);
-				
+				let model = Object.assign({}, dropResult.payload);
+
 				this.dockItems.splice(dropResult.addedIndex, 0, model);
 				model.id = Symbol();
+				model.locationType = TimelineLocationType.IntermediateLocation;
 				this.timelineService.addTimelineLocation(model);
 			}
 		}
@@ -122,8 +112,8 @@ export class TimelineDockComponent implements OnInit {
 	}
 
 	/**
-	 * 
-	 * @param $event 
+	 *
+	 * @param $event
 	 */
 	public onDragEnd($event) {
 		this.dragActive = false;
@@ -135,5 +125,5 @@ export class TimelineDockComponent implements OnInit {
 	 * @private
 	 * @memberof TimelineShelfComponent
 	 */
-	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => { };
+	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => {};
 }

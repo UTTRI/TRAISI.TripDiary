@@ -21,7 +21,7 @@ import { TripRouteModeDirective } from '../directives/trip-route-mode-directive'
 import { TripDiaryController } from '../controllers/trip-diary-controller';
 import 'angular-translate-loader-static-files';
 import 'angular-translate-interpolation-messageformat';
-import { downgradeComponent } from '@angular/upgrade/static';
+import { downgradeComponent, downgradeInjectable } from '@angular/upgrade/static';
 import { TimelineLineDirective } from '../directives/timeline-line-directive';
 import { TimelineLineMapDirective } from '../directives/timeline-line-map-directive';
 import { HtmlFilter } from '../shared/filters/html-filter';
@@ -50,6 +50,7 @@ import { DragResizeDirective } from '../shared/directives/drag-resize-directive'
 import { RoutesComponent } from '../../routes.component';
 import { RoutesV1Component } from '../../../routes-v1/routes-v1.component';
 import { tripRouteModeContainer } from '../../../../directives/trip-route-mode.directive';
+import { RoutesService } from '../../../../services/routes.service';
 
 export class TripDiaryModule {
 	questionId: string;
@@ -68,7 +69,7 @@ export class TripDiaryModule {
 	 * @param {string} questionId
 	 * @returns {boolean}
 	 */
-	bootstrap(questionId: string): boolean {
+	bootstrap(questionId: string, v2SurveyId: number = -1): boolean {
 		/* Create app and controller */
 		let app: IModule = angular
 			.module('trips', [ngRedux, ngMessages, ngAria, ngMaterial, ngTimePicker, ngTranslate, ngCookies, ngSanitize])
@@ -123,11 +124,10 @@ export class TripDiaryModule {
 			.config([
 				'$compileProvider',
 				$compileProvider => {
-
-					//$compileProvider.preAssignBindingsEnabled(true);
+					// $compileProvider.preAssignBindingsEnabled(true);
 					$compileProvider.commentDirectivesEnabled(false);
 					$compileProvider.cssClassDirectivesEnabled(false);
-					//$compileProvider.debugInfoEnabled(false);
+					// $compileProvider.debugInfoEnabled(false);
 				}
 			])
 			.directive('scrollViewWatcher', ['$window', ScrollViewWatcher.Factory()])
@@ -166,7 +166,9 @@ export class TripDiaryModule {
 			.factory('SurveyConfigService', ['$http', SurveyConfigService.Factory(userId, surveyId, '')])
 			.factory('TripDiaryService', ['$ngRedux', 'TripDiaryTourService', TripDiaryService.Factory()])
 			.factory('TripDiaryTourService', ['$ngRedux', '$translate', TripDiaryTourService.Factory()])
+			.factory('routesService', downgradeInjectable(RoutesService))
 			.constant('QUESTION_ID', questionId)
+			.constant('SurveyV2Id', v2SurveyId)
 			.constant('questionId', questionId)
 			.directive('traisiRoutesV1', downgradeComponent({ component: RoutesV1Component }) as angular.IDirectiveFactory);
 
@@ -198,6 +200,8 @@ export class TripDiaryModule {
 			'TripDiaryTourService',
 			'TripDiaryService',
 			'$timeout',
+			'routesService',
+			'SurveyV2Id',
 			TripDiaryController
 		]);
 

@@ -58,8 +58,7 @@ import { TimelineSummaryComponent } from './components/timeline-summary/timeline
 				}
 			],
 			multi: true
-		},
-		TimelineService
+		}
 	],
 	imports: [
 		CommonModule,

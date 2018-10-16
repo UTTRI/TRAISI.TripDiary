@@ -104,18 +104,10 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	public edit(): void {
 		console.log(this.timelineNewEntry);
 
-		/*
-		this.editModel = Object.assign({}, this.model);
-		this.modalRef = this._timelineService.openEditTimelineEntryModal(this.editTimelineEntryTemplateRef);
 
-		this.viewChildren.changes.subscribe(value => {
-			this.viewChildren.forEach((i: ViewContainerRef) => {
-				this._timelineService.openEditMapLocationModal(i, this.callback);
-			});
-		}); */
 
 		this.timelineNewEntry.show(value => {
-			console.log(value);
+
 			this.model = value;
 		}, Object.assign({}, this.model));
 	}
@@ -132,8 +124,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 */
 	public save(): void {
 		this.model = Object.assign({}, this.editModel);
-		console.log('saving');
-		console.log(this.model);
+
 		this.modalRef.hide();
 	}
 

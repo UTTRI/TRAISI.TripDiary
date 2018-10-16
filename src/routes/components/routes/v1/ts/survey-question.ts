@@ -3,6 +3,8 @@ import * as angular from 'angular';
 import * as material from 'angular-animate';
 import { MultipageQuestion } from './survey-multipage';
 import { SurveyConfigService } from 'routes/components/routes/v1/shared/services/survey-config-service';
+import { RoutesService } from '../../../../services/routes.service';
+import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 
 declare var moment: any;
 
@@ -185,6 +187,17 @@ export class SurveyQuestion {
 		this._startTime = value;
 	}
 
+	private config;
+
+	/* transalte data */
+	private _translateData = {
+		startTime: '',
+		endTime: '',
+		startDate: '',
+		endDate: '',
+		householdName: ''
+	};
+
 	private _questionId: string;
 
 	private _startTime;
@@ -208,6 +221,8 @@ export class SurveyQuestion {
 	private _todayDateDisplay: string;
 
 	private _tomorrowDateDisplay: string;
+
+	private _startDate: any;
 
 	/**
 	 *
@@ -233,7 +248,9 @@ export class SurveyQuestion {
 		protected _$location: ng.ILocationService,
 		protected _$translate: angular.translate.ITranslateService,
 		protected _$cookies: angular.cookies.ICookiesService,
-		protected _configService: SurveyConfigService
+		protected _configService: SurveyConfigService,
+		protected _routesService: RoutesService,
+		protected _surveyV2Id: number
 	) {}
 
 	/**
@@ -243,8 +260,6 @@ export class SurveyQuestion {
 		this.basicState = {};
 		this._responseInputElement.value = '';
 	}
-
-	private _startDate;
 
 	/**
 	 * Initialize survey question
@@ -263,16 +278,16 @@ export class SurveyQuestion {
 		let endTime = moment();
 		let endDate = moment();
 		let startDate = moment();
-		//let jsonData = JSON.parse(surveyData);
+		// let jsonData = JSON.parse(surveyData);
 
 		let jsonData = surveyData;
-		//let startDate = moment(jsonData['startDate']);
+		// let startDate = moment(jsonData['startDate']);
 
 		console.log('Start Date:' + startDate);
 
 		this.todayDateDisplay = startDate.format('MMMM Do');
 
-		//let endDate = moment(jsonData['startDate']).add(1, 'days');
+		// let endDate = moment(jsonData['startDate']).add(1, 'days');
 
 		this.tomorrowDateDisplay = endDate.format('MMMM Do');
 
@@ -322,11 +337,7 @@ export class SurveyQuestion {
 
 		this.config = this._translateData;
 
-		var responseElement: HTMLInputElement = angular.element('.answer-container #id_' + this.questionId)[0] as HTMLInputElement;
-
-		//var csrfElement = (angular.element('input[name="csrfmiddlewaretoken"]')[0] as HTMLInputElement).defaultValue;
-
-		//this._csrfToken = csrfElement;
+		let responseElement: HTMLInputElement = angular.element('.answer-container #id_' + this.questionId)[0] as HTMLInputElement;
 
 		this._responseInputElement = responseElement;
 
@@ -343,7 +354,7 @@ export class SurveyQuestion {
 
 		$scope.$watch(
 			() => {
-				//return responseElement.value;
+				// return responseElement.value;
 			},
 			function(value: void, value2: void, scope: any) {
 				/* Send the updated value to the server */
@@ -388,7 +399,7 @@ export class SurveyQuestion {
 			} else {
 				ev.stopImmediatePropagation();
 				ev.preventDefault();
-				//ev.returnValue = false;
+				// ev.returnValue = false;
 				return false;
 			}
 		});
@@ -414,7 +425,7 @@ export class SurveyQuestion {
 	 * @param value
 	 */
 	protected updateResponse(value: string) {
-		//this._responseInputElement.value = value;
+		// this._responseInputElement.value = value;
 	}
 
 	/**
@@ -431,10 +442,12 @@ export class SurveyQuestion {
         state.endLocation.locationName,
                 state.endLocation.latLng, state.endLocation.locationInput,
                 state.endLocation.locationPurpose, state.endLocation.id);
-        
+
         */
 
-		this.basicState = {
+
+
+		/*this.basicState = {
 			startLocation: {
 				_locationName: 'Home',
 				latLng: {
@@ -457,17 +470,6 @@ export class SurveyQuestion {
 				timelineIcon: 'fas fa-building'
 			},
 			activeRouteIndex: 0
-		};
+		}; */
 	}
-
-	private config;
-
-	/* transalte data */
-	private _translateData = {
-		startTime: '',
-		endTime: '',
-		startDate: '',
-		endDate: '',
-		householdName: ''
-	};
 }

@@ -50,6 +50,11 @@ export class TimelineService {
 		this.availableLocations.next(this._availableLocations);
 	}
 
+	public clearTimelineLocations() {
+		this._timelineLocations = [];
+		this.timelineLocations.next(this._timelineLocations);
+	}
+
 	/**
 	 *
 	 * @param modalService
@@ -115,10 +120,6 @@ export class TimelineService {
 		});
 		this._timelineStateValid = hasStartLocation && hasEndLocation;
 
-		console.log(this._timelineLocations);
-
-		console.log(this._timelineStateValid + ' isvalid');
-
 		this.surveyViewerService.updateNavigationState(this._timelineStateValid);
 	}
 
@@ -152,7 +153,6 @@ export class TimelineService {
 		this._timelineLocations.push(location);
 		this.updateLocationsValidation();
 
-		
 		this.timelineLocations.next(this._timelineLocations);
 	}
 
@@ -162,11 +162,13 @@ export class TimelineService {
 	 */
 	public removeTimelineLocation(location: TimelineEntry) {
 		let index: number = this._timelineLocations.findIndex(loc => {
-			return loc.id == location.id;
+			return loc.id === location.id;
 		});
+
 		this._timelineLocations.splice(index, 1);
 		this.timelineItemRemoved.next(location);
 		this.updateLocationsValidation();
+
 		this.timelineLocations.next(this._timelineLocations);
 	}
 

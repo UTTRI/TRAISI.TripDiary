@@ -40,7 +40,8 @@ import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component'
 	entryComponents: [TimelineWedgeComponent],
 	selector: 'traisi-timeline-question',
 	template: require('./timeline.component.html').toString(),
-	styles: [require('./timeline.component.scss').toString()]
+	styles: [require('./timeline.component.scss').toString()],
+	providers: [TimelineService]
 })
 export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	implements OnInit, AfterViewInit, AfterViewChecked, OnVisibilityChanged {
@@ -119,6 +120,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * Angular's ngOnInit
 	 */
 	ngOnInit(): void {
+		this._timelineService.clearTimelineLocations();
 		this.savedResponse.subscribe(this.onSavedResponseData);
 	}
 
@@ -188,7 +190,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 */
 	public canNavigateInternalNext(): boolean {
 		if (this.isStep2) {
-			console.log('cannot navigate next');
 			return false;
 		} else {
 			return this._timelineService.isTimelineStatevalid;
@@ -238,16 +239,19 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 				location.latitude = timelineResponse.latitude;
 				location.longitude = timelineResponse.longitude;
 				location.purpose = timelineResponse.purpose;
+				location.name = timelineResponse.name;
 				this._timelineService.addTimelineLocation(location);
 			}
 			if (response.length >= 2) {
 				location = Object.assign({}, location);
+				location.id = Symbol();
 				const timelineResponse = <TimelineResponseData>response[1];
 				location.locationType = TimelineLocationType.EndLocation;
 				location.address = timelineResponse.address;
 				location.latitude = timelineResponse.latitude;
 				location.longitude = timelineResponse.longitude;
 				location.purpose = timelineResponse.purpose;
+				location.name = timelineResponse.name;
 				this._timelineService.addTimelineLocation(location);
 			}
 
@@ -256,12 +260,14 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 
 				midResponses.forEach(entry => {
 					location = Object.assign({}, location);
+					location.id = Symbol();
 					const timelineResponse = <TimelineResponseData>entry;
 					location.locationType = TimelineLocationType.IntermediateLocation;
 					location.address = timelineResponse.address;
 					location.latitude = timelineResponse.latitude;
 					location.longitude = timelineResponse.longitude;
 					location.purpose = timelineResponse.purpose;
+					location.name = timelineResponse.name;
 					this._timelineService.addTimelineLocation(location);
 				});
 			}
