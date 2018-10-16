@@ -34,7 +34,7 @@ import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component'
 	template: require('./timeline.component.html').toString(),
 	styles: [require('./timeline.component.scss').toString()]
 })
-export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
+export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	implements OnInit, AfterViewInit, AfterViewChecked, OnVisibilityChanged {
 	typeName: string;
 	icon: string;
@@ -85,34 +85,36 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 		this._timelineService.clearAvailableLocations();
 		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
 
-			result.forEach(element => {
-				let location: TimelineEntry = {
-					address: element.responseValue.address,
-					latitude: element.responseValue.latitude,
-					purpose: 'home',
-					longitude: element.responseValue.longitude,
-					time: new Date(),
-					timeB: new Date(),
-					id: Symbol(),
-					locationType: TimelineLocationType.Undefined,
-					name: 'Prior Location'
-				};
-				location.time.setHours(0);
-				location.time.setMinutes(0);
-				this._timelineService.addShelfLocation(location);
+
+			result.forEach(responses => {
+				responses.responseValues.forEach(responseValue => {
+					const element = responseValue;
+
+					let location: TimelineEntry = {
+						address: element.address,
+						latitude: element.latitude,
+						purpose: 'home',
+						longitude: element.longitude,
+						time: new Date(),
+						timeB: new Date(),
+						id: Symbol(),
+						locationType: TimelineLocationType.Undefined,
+						name: 'Prior Location'
+					};
+					location.time.setHours(0);
+					location.time.setMinutes(0);
+					this._timelineService.addShelfLocation(location);
+				});
 			});
-
 		});
-
-		console.log(' in on init');
 	}
 
-	/**
+	/** 
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void { }
+	ngOnInit(): void {}
 
-	saveNewLocation(): void { }
+	saveNewLocation(): void {}
 
 	/**
 	 *
@@ -134,9 +136,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 	 * @param type
 	 * @param $event
 	 */
-	handler(type: string, $event: ModalDirective) {
-		//this._timelineService.openEditMapLocationModal(this.mapTemplate);
-	}
+	handler(type: string, $event: ModalDirective) {}
 
 	/**
 	 *
@@ -148,7 +148,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 	/**
 	 *
 	 */
-	ngAfterViewChecked(): void { }
+	ngAfterViewChecked(): void {}
 
 	/**
 	 * Override of base method class
@@ -157,6 +157,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 		if (this.isStep1 && this._timelineService.isTimelineStatevalid) {
 			this.isStep1 = false;
 			this.isStep2 = true;
+			this.saveCurrentResponseState();
+
 			return false;
 		}
 
@@ -165,19 +167,24 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 		}
 	}
 
+	private saveCurrentResponseState(): void {
+		this._timelineService.timelineLocations.subscribe((entries: TimelineEntry[]) => {
+			console.log(entries);
+			this.response.emit(entries);
+		});
+		// this.response.emit();
+	}
+
 	/**
 	 * Override - signfies an internal navigation possible.
 	 */
 	public canNavigateInternalNext(): boolean {
-
 		if (this.isStep2) {
 			console.log('cannot navigate next');
 			return false;
-		}
-		else {
+		} else {
 			return this._timelineService.isTimelineStatevalid;
 		}
-
 	}
 
 	public navigateInternalPrevious() {
@@ -199,5 +206,5 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline>
 			this.isStep2 = true;
 		}
 	}
-	onQuestionHidden(): void { }
+	onQuestionHidden(): void {}
 }
