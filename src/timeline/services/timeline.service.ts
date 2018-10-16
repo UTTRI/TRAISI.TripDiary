@@ -45,8 +45,7 @@ export class TimelineService {
 		return this._timelineStateValid;
 	}
 
-	public clearAvailableLocations()
-	{
+	public clearAvailableLocations() {
 		this._availableLocations = [];
 		this.availableLocations.next(this._availableLocations);
 	}
@@ -67,7 +66,6 @@ export class TimelineService {
 		this.initializeConfiguration();
 		this._availableLocations = [];
 		this._timelineLocations = [];
-
 
 		this.availableLocations = new BehaviorSubject(this._availableLocations);
 		this.timelineLocations = new BehaviorSubject(this._timelineLocations);
@@ -109,15 +107,18 @@ export class TimelineService {
 		let hasStartLocation: boolean = false;
 		let hasEndLocation: boolean = false;
 		this._timelineLocations.forEach(location => {
-			if (location.locationType == TimelineLocationType.StartLocation) {
+			if (location.locationType === TimelineLocationType.StartLocation) {
 				hasStartLocation = true;
-			} else if (location.locationType == TimelineLocationType.EndLocation) {
+			} else if (location.locationType === TimelineLocationType.EndLocation) {
 				hasEndLocation = true;
 			}
 		});
 		this._timelineStateValid = hasStartLocation && hasEndLocation;
 
-		
+		console.log(this._timelineLocations);
+
+		console.log(this._timelineStateValid + ' isvalid');
+
 		this.surveyViewerService.updateNavigationState(this._timelineStateValid);
 	}
 
@@ -150,6 +151,8 @@ export class TimelineService {
 	public addTimelineLocation(location: TimelineEntry) {
 		this._timelineLocations.push(location);
 		this.updateLocationsValidation();
+
+		
 		this.timelineLocations.next(this._timelineLocations);
 	}
 

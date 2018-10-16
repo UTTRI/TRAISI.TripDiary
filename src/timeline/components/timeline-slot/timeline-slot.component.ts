@@ -75,7 +75,6 @@ export class TimelineSlotComponent implements OnInit {
 	 * @param location
 	 */
 	private addLocationToSlot(location: TimelineEntry) {
-
 		this.model = location;
 		this.hasTimelineEntryItem = true;
 		//this.model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
@@ -102,9 +101,11 @@ export class TimelineSlotComponent implements OnInit {
 	 */
 	onDrop(dropResult: IDropResult) {
 		if (this.dragOver) {
-			
 			let model: TimelineEntry = Object.assign({}, dropResult.payload);
+			model.id = Symbol();
 			model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
+
+			console.log(model);
 			this._timelineService.addTimelineLocation(model);
 		}
 		this.dragOver = false;
@@ -116,6 +117,7 @@ export class TimelineSlotComponent implements OnInit {
 	 */
 	public onDragStart($event) {
 		this.dragActive = true;
+		this.dragOver = false;
 	}
 
 	/* */

@@ -17,7 +17,15 @@ import {
 } from '@angular/core';
 
 import { TimelineService } from '../../services/timeline.service';
-import { SurveyQuestion, ResponseTypes, SurveyViewer, OnVisibilityChanged, SurveyResponder } from 'traisi-question-sdk';
+import {
+	SurveyQuestion,
+	ResponseTypes,
+	SurveyViewer,
+	OnVisibilityChanged,
+	SurveyResponder,
+	ResponseData,
+	TimelineResponseData
+} from 'traisi-question-sdk';
 import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
 import { faHome } from '../../shared/icons';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
@@ -84,8 +92,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		this.surveyViewerService.updateNavigationState(false);
 		this._timelineService.clearAvailableLocations();
 		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
-
-
 			result.forEach(responses => {
 				responses.responseValues.forEach(responseValue => {
 					const element = responseValue;
@@ -109,10 +115,12 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		});
 	}
 
-	/** 
+	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.savedResponse.subscribe(this.onSavedResponseData);
+	}
 
 	saveNewLocation(): void {}
 
@@ -207,4 +215,56 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		}
 	}
 	onQuestionHidden(): void {}
+
+	private onSavedResponseData: (response: 'none' | ResponseData<ResponseTypes.Timeline>[]) => void = (
+		response: 'none' | ResponseData<ResponseTypes.Timeline>[]
+	) => {
+		let location: TimelineEntry = {
+			address: undefined,
+			latitude: undefined,
+			purpose: undefined,
+			longitude: undefined,
+			time: new Date(),
+			timeB: new Date(),
+			id: Symbol(),
+			locationType: TimelineLocationType.Undefined,
+			name: 'Prior Location'
+		};
+		if (response instanceof Array) {
+			if (response.length >= 1) {
+				const timelineResponse = <TimelineResponseData>response[0];
+				location.locationType = TimelineLocationType.StartLocation;
+				location.address = timelineResponse.address;
+				location.latitude = timelineResponse.latitude;
+				location.longitude = timelineResponse.longitude;
+				location.purpose = timelineResponse.purpose;
+				this._timelineService.addTimelineLocation(location);
+			}
+			if (response.length >= 2) {
+				location = Object.assign({}, location);
+				const timelineResponse = <TimelineResponseData>response[1];
+				location.locationType = TimelineLocationType.EndLocation;
+				location.address = timelineResponse.address;
+				location.latitude = timelineResponse.latitude;
+				location.longitude = timelineResponse.longitude;
+				location.purpose = timelineResponse.purpose;
+				this._timelineService.addTimelineLocation(location);
+			}
+
+			if (response.length >= 3) {
+				const midResponses = response.slice(2, response.length);
+
+				midResponses.forEach(entry => {
+					location = Object.assign({}, location);
+					const timelineResponse = <TimelineResponseData>entry;
+					location.locationType = TimelineLocationType.IntermediateLocation;
+					location.address = timelineResponse.address;
+					location.latitude = timelineResponse.latitude;
+					location.longitude = timelineResponse.longitude;
+					location.purpose = timelineResponse.purpose;
+					this._timelineService.addTimelineLocation(location);
+				});
+			}
+		}
+	};
 }
