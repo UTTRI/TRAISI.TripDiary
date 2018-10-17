@@ -271,11 +271,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
 		$scope['$tds'] = _tripDiaryService;
 
-		console.log(TripDiary.config);
-
-		console.log('routes service: ');
-		console.log(this._routesService);
-
 		let tcRef: TripDiaryController = this;
 
 		this._tripTimeline = new TripTimeline();
@@ -283,23 +278,23 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		this.initializeLocationWatcher();
 
 		$ngRedux.subscribe(() => {
-			_$timeout(() => {
-				this.manageCompleteState($ngRedux.getState().tripsState);
-			});
+			// _$timeout(() => {
+			//	this.manageCompleteState($ngRedux.getState().tripsState);
+			// });
 
-			this.manageActiveSubSections($ngRedux.getState().tripsState);
+			// this.manageActiveSubSections($ngRedux.getState().tripsState);
 
 			// manage the route map state
 			this.manageRouteMapState($ngRedux.getState());
 
 			// manage the location map state
-			this.manageLocationMapState($ngRedux.getState());
+			// this.manageLocationMapState($ngRedux.getState());
 			_.delay(() => {
 				// window.dispatchEvent(new Event('resize'));
 			}, 300);
 		});
 
-		$scope.$watch('tc.value.madeTrips.value', (newValue, oldValue) => {
+		/* $scope.$watch('tc.value.madeTrips.value', (newValue, oldValue) => {
 			let titleElement = $('#div_id_' + this.questionId).closest('.question-item');
 			titleElement = titleElement.find('.question-container').first();
 			titleElement.addClass('success');
@@ -310,11 +305,11 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			if (newValue === false) {
 				$scope.tc.noTripsTaken();
 			}
-		});
+		}); */
 
-		$scope.$watch('tc.value.madeTrips.reason', (newValue, oldValue) => {
+		/* $scope.$watch('tc.value.madeTrips.reason', (newValue, oldValue) => {
 			$scope.tc.noTripsReasonGiven();
-		});
+		}); */
 
 		this._$scope.$on('waypointsChanged', (evt, args) => {
 			_$timeout(() => {
@@ -618,9 +613,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					tripRoute.startLocation.latLng.lng !== tripRoute.endLocation.latLng.lng
 				) {
 					routes.push(tripRoute);
-				}
-				else
-				{
+				} else {
 					console.log('coords match');
 				}
 			}
@@ -635,7 +628,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
 				// if (startTripRoute.startLocation.locationName !== startTripRoute.endLocation.locationName) {
 				routes.push(startTripRoute);
-
 
 				// }
 			}
@@ -694,8 +686,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
 						routes.push(route1);
 						routes.push(route2);
-					}
-					else{
+					} else {
 						console.log('embedded location was null');
 					}
 				}
@@ -742,9 +733,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		this.questionId = questionID;
 		this.initializeSurvey(this.$window['surveyData_' + this.questionId], this.$scope, this.$http);
 
-		this._routesService.listTimelineEntries(this._surveyV2Id).subscribe(entries => {
-
-
+		this._routesService.listTimelineEntries(this._surveyV2Id).subscribe((entries) => {
 			let timelineEntries: TimelineEntry[] = entries[0].responseValues;
 
 			let startLocation = null;
@@ -778,7 +767,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			if (timelineEntries.length >= 3) {
 				const locations = timelineEntries.slice(2, timelineEntries.length);
 
-				locations.forEach(entry => {
+				locations.forEach((entry) => {
 					let newEntry = {
 						_locationName: entry.purpose,
 						latLng: {
@@ -814,7 +803,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		let $scope = this._$scope as ITripsScope;
 
 		$scope.$watch('tc.value.previousAction', (newValue, oldValue) => {
-			if (newValue == UPDATE_STATE) {
+			if (newValue === UPDATE_STATE) {
 				$scope.tc.updateTripRouteModes();
 			} else if (newValue == CANCEL_ADD_TRIP_LOCATION) {
 				let markerList = [];
@@ -846,20 +835,20 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		/* Update the state of the question */
 		this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
 
-		let titleElement = $('#div_id_' + this.questionId).closest('.question-item');
-		titleElement = titleElement.find('.question-container').first();
+		// let titleElement = $('#div_id_' + this.questionId).closest('.question-item');
+		// titleElement = titleElement.find('.question-container').first();
 
 		console.log(this.basicState);
 		this.updateTripRouteModes();
 
-		_.delay(() => {
+		/* _.delay(() => {
 			this._$translate('DID_MAKE_TRIPS', this.translateData)
 				.then(function(value) {
 					titleElement.html(value);
 				})
-				.catch(reason => {})
+				.catch((reason) => {})
 				.finally(() => {});
-		}, 5);
+		}, 5); */
 	}
 
 	pageValid(): boolean {
@@ -960,6 +949,11 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		}
 	}
 
+	/**
+	 * Gets embedded location
+	 * @param tripLocation
+	 * @returns embedded location
+	 */
 	private getEmbeddedLocation(tripLocation: TripLocation): TripLocation {
 		let surroundingLocation: TripLocation = null;
 
@@ -1039,7 +1033,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	private initStateManagement() {
 		let $ngReduxRef = this.$ngRedux;
 
-		window.onpopstate = ev => {
+		window.onpopstate = (ev) => {
 			$ngReduxRef.dispatch(updateState(ev.state as TripsQuestionState));
 		};
 	}
@@ -1107,10 +1101,10 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		}
 
 		for (let location of compareList) {
-			if (location.id != this.state.activeTripLocation.id) {
+			if (location.id !== this.state.activeTripLocation.id) {
 				if (location.locationName == this.state.activeTripLocation.locationName) {
-					//unmatching addresses
-					if (location.locationInput != this.state.activeTripLocation.locationInput) {
+					// unmatching addresses
+					if (location.locationInput !== this.state.activeTripLocation.locationInput) {
 						this._$scope['tripsLocationForm'].$error['conflictingName'] = true;
 						error = true;
 						break;
@@ -1150,7 +1144,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			this.state.activeTripLocation.locationType == TripLocationType.IntermediateLocation
 		) {
 			error = true;
-			//return false;
+			// return false;
 		}
 
 		if (this.state.activeTripLocation._locationType == TripLocationType.StartLocation) {

@@ -1,9 +1,9 @@
 import { SurveyQuestion } from './survey-question';
 
 export interface MultipageQuestion extends SurveyQuestion {
-	pageChanged(selfRef: SurveyQuestion, page: number): boolean;
+  pageChanged(selfRef: SurveyQuestion, page: number): boolean;
 
-    activePageValid: boolean;
-    
-     value: any; 
+  activePageValid: boolean;
+
+  value: any;
 }

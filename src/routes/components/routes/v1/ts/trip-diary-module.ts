@@ -36,7 +36,7 @@ let userId = window['USER_ID'];
 require('../js/lrm-google.js');
 
 import 'leaflet-control-geocoder';
-//var polyline = require('@mapbox/polyline');
+// var polyline = require('@mapbox/polyline');
 
 let translate = require('../assets/trips-en.json');
 
@@ -44,10 +44,6 @@ import { TripDiaryService } from './trip-diary-service';
 import { TripDiaryTourService } from './trip-diary-tour-service';
 import { OrdinalFilter } from '../shared/filters/ordinal-filter';
 import { TimeFilter } from '../shared/filters/time-filter';
-import { ScrollViewWatcher } from '../shared/directives/scroll-view-watcher';
-import { PreventScrollDirective } from '../shared/directives/prevent-scroll-directive';
-import { DragResizeDirective } from '../shared/directives/drag-resize-directive';
-import { RoutesComponent } from '../../routes.component';
 import { RoutesV1Component } from '../../../routes-v1/routes-v1.component';
 import { tripRouteModeContainer } from '../../../../directives/trip-route-mode.directive';
 import { RoutesService } from '../../../../services/routes.service';
@@ -65,9 +61,10 @@ export class TripDiaryModule {
 	}
 
 	/**
-	 *
-	 * @param {string} questionId
-	 * @returns {boolean}
+	 * Bootstraps trip diary module
+	 * @param questionId
+	 * @param [v2SurveyId]
+	 * @returns true if bootstrap
 	 */
 	bootstrap(questionId: string, v2SurveyId: number = -1): boolean {
 		/* Create app and controller */
@@ -76,7 +73,7 @@ export class TripDiaryModule {
 
 			.config([
 				'$ngReduxProvider',
-				$ngReduxProvider => {
+				($ngReduxProvider) => {
 					let reducer = reducers;
 					$ngReduxProvider.createStoreWith(reducer);
 				}
@@ -123,22 +120,22 @@ export class TripDiaryModule {
 			])
 			.config([
 				'$compileProvider',
-				$compileProvider => {
+				($compileProvider) => {
 					// $compileProvider.preAssignBindingsEnabled(true);
 					$compileProvider.commentDirectivesEnabled(false);
 					$compileProvider.cssClassDirectivesEnabled(false);
 					// $compileProvider.debugInfoEnabled(false);
 				}
 			])
-			.directive('scrollViewWatcher', ['$window', ScrollViewWatcher.Factory()])
+			// .directive('scrollViewWatcher', ['$window', ScrollViewWatcher.Factory()])
 			.directive('tripRouteModeContainer', [tripRouteModeContainer])
-			.directive('preventScroll', ['$window', PreventScrollDirective.Factory()])
-			.directive('dragResize', ['$window', DragResizeDirective.Factory()])
-			.directive('timelineSegment', ['$ngRedux', TimelineSegmentDirective.Factory()])
-			.directive('timeline', ['$window', '$timeout', 'QUESTION_ID', TimelineDirective.Factory()])
-			.directive('timelineLine', ['$window', TimelineLineDirective.Factory()])
-			.directive('timelineLineMap', ['$window', TimelineLineMapDirective.Factory()])
-			.directive('timelineConnector', ['$window', '$timeout', TimelineConnectorDirective.Factory()])
+			// .directive('preventScroll', ['$window', PreventScrollDirective.Factory()])
+			// .directive('dragResize', ['$window', DragResizeDirective.Factory()])
+			// .directive('timelineSegment', ['$ngRedux', TimelineSegmentDirective.Factory()])
+			// .directive('timeline', ['$window', '$timeout', 'QUESTION_ID', TimelineDirective.Factory()])
+			// .directive('timelineLine', ['$window', TimelineLineDirective.Factory()])
+			// .directive('timelineLineMap', ['$window', TimelineLineMapDirective.Factory()])
+			// .directive('timelineConnector', ['$window', '$timeout', TimelineConnectorDirective.Factory()])
 			.directive('tripRouteMode', [
 				'$ngRedux',
 				'$mdPanel',
@@ -174,7 +171,7 @@ export class TripDiaryModule {
 
 		app.config([
 			'$compileProvider',
-			$compileProvider => {
+			($compileProvider) => {
 				// $compileProvider.debugInfoEnabled(false);
 			}
 		]);

@@ -14,13 +14,20 @@ export class RoutesComponent extends SurveyQuestion<ResponseTypes.Json> implemen
 	public typeName: string;
 	public icon: string;
 
+	/**
+	 * View child of routes component
+	 */
 	@ViewChild('routesV1')
 	private _routesV1: ElementRef;
 
 	public timelineLocations: Array<TimelineEntry>;
 
 	/**
-	 *
+	 * Creates an instance of routes component.
+	 * @param _elementRef
+	 * @param _upgrade
+	 * @param _routesService
+	 * @param _surveyResponderService
 	 */
 	constructor(
 		private _elementRef: ElementRef,
@@ -45,9 +52,9 @@ export class RoutesComponent extends SurveyQuestion<ResponseTypes.Json> implemen
 	ngAfterViewInit(): void {}
 
 	/**
-	 *
+	 * Bootstraps routes component
 	 */
-	public bootstrap() {}
+	public bootstrap(): void {}
 
 	traisiOnLoaded() {}
 }

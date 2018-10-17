@@ -21,7 +21,9 @@ export class RoutesV1Component implements OnInit {
 	public surveyId: number;
 
 	/**
-	 *
+	 * Creates an instance of routes v1 component.
+	 * @param _elementRef
+	 * @param _upgrade
 	 */
 	constructor(private _elementRef: ElementRef, private _upgrade: UpgradeModule) {}
 
