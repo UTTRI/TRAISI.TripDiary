@@ -5,5 +5,5 @@ export interface MultipageQuestion extends SurveyQuestion {
 
     activePageValid: boolean;
     
-    public value: any;
+     value: any; 
 }
