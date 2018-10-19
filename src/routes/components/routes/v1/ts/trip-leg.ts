@@ -1,89 +1,87 @@
-import {TripMode} from "./trip-mode";
-import {TripRoute} from "./trip-route";
-import {IModeConfig} from "../shared/survey-map-config";
+import { TripMode } from './trip-mode';
+import { TripRoute } from './trip-route';
+import { IModeConfig } from '../shared/survey-map-config';
 
 /**
  * A TripLeg contains a start and finish point, as well as the mode used for transit (and the route taken)
  */
 export class TripLeg {
-    _coordinates: L.LatLng [];
-    _routeIndex: number;
-    id: string;
-    _isComplete: boolean;
+	_coordinates: L.LatLng[];
+	_routeIndex: number;
+	id: string;
+	_isComplete: boolean;
 
-    constructor() {
+	constructor() {
+		this._waypoints = [];
+		this._coordinates = [];
+		this._data = {};
 
-        this._waypoints = [];
-        this._coordinates = [];
-        this._data = {};
+		this.id = Math.random()
+			.toString(36)
+			.substring(10);
+	}
 
-        this.id = Math.random().toString(36).substring(10);
+	private _instructions: string;
 
-    }
+	get instructions(): string {
+		return this._instructions;
+	}
 
-    private _instructions: string;
+	set instructions(value: string) {
+		this._instructions = value;
+	}
 
-    get instructions(): string {
-        return this._instructions;
-    }
+	private _data: {};
 
-    set instructions(value: string) {
-        this._instructions = value;
-    }
+	get data(): {} {
+		return this._data;
+	}
 
-    private _data: {};
+	set data(value: {}) {
+		this._data = value;
+	}
 
-    get data(): {} {
-        return this._data;
-    }
+	_mode: TripMode;
 
-    set data(value: {}) {
-        this._data = value;
-    }
+	get mode(): TripMode {
+		return this._mode;
+	}
 
-    _mode: TripMode;
+	set mode(value: TripMode) {
+		this._mode = value;
+	}
 
-    get mode(): TripMode {
-        return this._mode;
-    }
+	_waypoints: L.LatLng[];
 
-    set mode(value: TripMode) {
-        this._mode = value;
-    }
+	public get waypoints(): L.LatLng[] {
+		return this._waypoints;
+	}
 
-    _waypoints: L.LatLng [];
+	public set waypoints(value: L.LatLng[]) {
+		this._waypoints = value;
+	}
 
-    public get waypoints(): L.LatLng [] {
-        return this._waypoints;
-    }
+	_legName: string;
 
-    public set waypoints(value: L.LatLng []) {
-        this._waypoints = value;
-    }
+	get legName(): string {
+		return this._legName;
+	}
 
-    _legName: string;
+	set legName(value: string) {
+		this._legName = value;
+	}
 
-    get legName(): string {
-        return this._legName;
-    }
+	public _unknownRoute: boolean;
 
-    set legName(value: string) {
-        this._legName = value;
-    }
+	get unknownRoute(): boolean {
+		return this._unknownRoute;
+	}
 
-    public _unknownRoute: boolean;
+	set unknownRoute(value: boolean) {
+		this._unknownRoute = value;
+	}
 
-    get unknownRoute(): boolean {
-        return this._unknownRoute;
-    }
-
-    set unknownRoute(value: boolean) {
-        this._unknownRoute = value;
-    }
-
-    public addExtraData(key, value) {
-        this._data[key] = value;
-    }
-
-
+	public addExtraData(key, value) {
+		this._data[key] = value;
+	}
 }
