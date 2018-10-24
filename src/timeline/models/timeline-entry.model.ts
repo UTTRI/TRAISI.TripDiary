@@ -7,6 +7,7 @@ export interface TimelineEntry {
 	purpose: string;
 	name: string;
 	id: symbol;
+	pipedLocation: boolean;
 	locationType: TimelineLocationType;
 }
 

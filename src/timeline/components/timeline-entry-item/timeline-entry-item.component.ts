@@ -66,15 +66,15 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	default: IconDefinition = faHandScissors;
 
 	public get icon() {
-		if (this.model.purpose == 'home') {
+		if (this.model.purpose === 'home') {
 			return this.homeIcon;
-		} else if (this.model.purpose == 'work') {
+		} else if (this.model.purpose === 'work') {
 			return this.workIcon;
-		} else if (this.model.purpose == 'school') {
+		} else if (this.model.purpose === 'school') {
 			return this.schoolIcon;
-		} else if (this.model.purpose == 'daycare') {
+		} else if (this.model.purpose === 'daycare') {
 			return this.daycare;
-		} else if (this.model.purpose == 'facilitate_passenger') {
+		} else if (this.model.purpose === 'facilitate_passenger') {
 			return this.passenger;
 		} else {
 			return this.default;

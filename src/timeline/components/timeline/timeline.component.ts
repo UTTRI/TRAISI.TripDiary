@@ -92,9 +92,9 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		this.isStep1 = true;
 		this.surveyViewerService.updateNavigationState(false);
 		this._timelineService.clearAvailableLocations();
-		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
-			result.forEach(responses => {
-				responses.responseValues.forEach(responseValue => {
+		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe((result) => {
+			result.forEach((responses) => {
+				responses.responseValues.forEach((responseValue) => {
 					const element = responseValue;
 
 					let location: TimelineEntry = {
@@ -104,6 +104,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 						longitude: element.longitude,
 						time: new Date(),
 						timeB: new Date(),
+						pipedLocation: true,
 						id: Symbol(),
 						locationType: TimelineLocationType.Undefined,
 						name: 'Prior Location'
@@ -228,6 +229,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			time: new Date(),
 			timeB: new Date(),
 			id: Symbol(),
+			pipedLocation: true,
 			locationType: TimelineLocationType.Undefined,
 			name: 'Prior Location'
 		};
@@ -258,7 +260,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			if (response.length >= 3) {
 				const midResponses = response.slice(2, response.length);
 
-				midResponses.forEach(entry => {
+				midResponses.forEach((entry) => {
 					location = Object.assign({}, location);
 					location.id = Symbol();
 					const timelineResponse = <TimelineResponseData>entry;

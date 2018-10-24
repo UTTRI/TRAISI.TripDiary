@@ -111,7 +111,7 @@ export class TimelineService {
 	public updateLocationsValidation() {
 		let hasStartLocation: boolean = false;
 		let hasEndLocation: boolean = false;
-		this._timelineLocations.forEach(location => {
+		this._timelineLocations.forEach((location) => {
 			if (location.locationType === TimelineLocationType.StartLocation) {
 				hasStartLocation = true;
 			} else if (location.locationType === TimelineLocationType.EndLocation) {
@@ -154,6 +154,8 @@ export class TimelineService {
 		this.updateLocationsValidation();
 
 		this.timelineLocations.next(this._timelineLocations);
+
+		console.log('here add ');
 	}
 
 	/**
@@ -161,7 +163,7 @@ export class TimelineService {
 	 * @param location
 	 */
 	public removeTimelineLocation(location: TimelineEntry) {
-		let index: number = this._timelineLocations.findIndex(loc => {
+		let index: number = this._timelineLocations.findIndex((loc) => {
 			return loc.id === location.id;
 		});
 

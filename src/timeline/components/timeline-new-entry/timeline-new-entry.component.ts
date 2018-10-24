@@ -59,6 +59,7 @@ export class TimelineNewEntryComponent implements OnInit {
 			longitude: 0,
 			time: new Date(),
 			timeB: new Date(),
+			pipedLocation: false,
 			name: '',
 			locationType: TimelineLocationType.Undefined,
 			id: Symbol()
@@ -75,7 +76,7 @@ export class TimelineNewEntryComponent implements OnInit {
 	 * @param callback
 	 */
 	show(callback: (value: any) => void, entry?: TimelineEntry): void {
-		//this.timelineService.openEditMapLocationModal(this.mapTemplate, this.callback);
+		// this.timelineService.openEditMapLocationModal(this.mapTemplate, this.callback);
 
 		this.saveCallback = callback;
 
@@ -92,6 +93,7 @@ export class TimelineNewEntryComponent implements OnInit {
 				time: new Date(),
 				timeB: new Date(),
 				name: '',
+				pipedLocation: false,
 				locationType: TimelineLocationType.Undefined,
 				id: Symbol()
 			};
@@ -140,22 +142,22 @@ export class TimelineNewEntryComponent implements OnInit {
 		this.newTimelineEntryTemplateRef.hide();
 	}
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		let componentRef = null;
 
-		let sub = this._questionLoaderService.componentFactories$.subscribe(factory => {
+		let sub = this._questionLoaderService.componentFactories$.subscribe((factory) => {
 			if (factory.selector == 'traisi-map-question') {
 				componentRef = this.mapTemplate.createComponent(factory, undefined, this.injector);
 
 				let instance: SurveyQuestion<any> = <SurveyQuestion<any>>componentRef.instance;
 
-				instance.response.subscribe(value => {
+				instance.response.subscribe((value) => {
 					this.callback(value);
 				});
 			}
 		});
 
-		this.timelineService.configuration.subscribe(config => {
+		this.timelineService.configuration.subscribe((config) => {
 			this.configuration = config;
 		});
 	}

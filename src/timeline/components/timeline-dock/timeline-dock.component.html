@@ -34,3 +34,23 @@
         END OF THE DAY
     </div>
 </div>
+
+<ng-template #confirmPurposeTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Confirm Purpose</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div *ngFor="let purpose of configuration.purposes">
+            <input type="radio" name="purpose" [value]="purpose.key" [(ngModel)]="pipedPurpose"  />
+            <label for="huey">{{ purpose.label }}</label>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+            <button type="button" class="btn btn-default" (click)="confirmPurpose()">Confirm</button>
+    </div>
+</ng-template>
