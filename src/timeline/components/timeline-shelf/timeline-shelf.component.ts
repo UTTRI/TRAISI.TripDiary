@@ -31,11 +31,9 @@ export class TimelineShelfComponent implements OnInit {
 	 *
 	 * @param dropResult
 	 */
-	onDrop(dropResult: IDropResult) {
-		console.log(dropResult);
-	}
+	public onDrop(dropResult: IDropResult): void {}
 
-	getChildPayload = (index: number): any => {
+	public getChildPayload = (index: number): any => {
 		return this.shelfItems[index];
 	};
 
@@ -43,7 +41,7 @@ export class TimelineShelfComponent implements OnInit {
 	 *
 	 * @param $event
 	 */
-	onDragStart($event) {}
+	public onDragStart($event): void {}
 
 	/**
 	 *
@@ -52,17 +50,15 @@ export class TimelineShelfComponent implements OnInit {
 	 * @memberof TimelineShelfComponent
 	 */
 	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => {
-		console.log('Shelf items changed');
+
 		this.shelfItems = items;
 
-		console.log(items);
-		console.log(this.shelfItems);
 	};
 
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		this._timelineService.availableLocations.subscribe(this.onShelfItemsChanged);
 	}
 }
