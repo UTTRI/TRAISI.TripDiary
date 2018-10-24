@@ -44,13 +44,16 @@
     </div>
     <div class="modal-body">
 
-        <div *ngFor="let purpose of configuration.purposes">
-            <input type="radio" name="purpose" [value]="purpose.key" [(ngModel)]="pipedPurpose"  />
-            <label for="huey">{{ purpose.label }}</label>
+        <div class="form-group custom-control custom-radio">
+            <div *ngFor="let purpose of configuration.purposes">
+                <input type="radio" name="purpose" [id]="purpose.key" [value]="purpose.key" [(ngModel)]="pipedPurpose"
+                    class="custom-control-input" />
+                <label class="custom-control-label" [for]="purpose.key">{{ purpose.label }}</label>
 
+            </div>
         </div>
     </div>
     <div class="modal-footer">
-            <button type="button" class="btn btn-default" (click)="confirmPurpose()">Confirm</button>
+        <button type="button" class="btn btn-default" (click)="confirmPurpose()">Confirm</button>
     </div>
 </ng-template>

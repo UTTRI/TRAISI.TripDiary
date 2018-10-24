@@ -80,7 +80,7 @@ export class TimelineService {
 	/**
 	 * Initialie the base configuration data
 	 */
-	private initializeConfiguration() {
+	private initializeConfiguration(): void {
 		this._configuration = new ReplaySubject(1);
 
 		let startTime: Date = new Date();
@@ -98,7 +98,7 @@ export class TimelineService {
 			purposes: [
 				{ key: 'home', label: 'Home' },
 				{ key: 'work', label: 'Work' },
-				{ key: 'school', label: 'Schhool' },
+				{ key: 'school', label: 'School' },
 				{ key: 'daycare', label: 'Daycare' },
 				{ key: 'facilitate_passenger', label: 'Facilitate Passenger' }
 			]
@@ -149,7 +149,7 @@ export class TimelineService {
 	 * Adds a new location to the list of dock items
 	 * @param location
 	 */
-	public addTimelineLocation(location: TimelineEntry) {
+	public addTimelineLocation(location: TimelineEntry): void {
 		this._timelineLocations.push(location);
 		this.updateLocationsValidation();
 
@@ -171,7 +171,6 @@ export class TimelineService {
 		this.timelineItemRemoved.next(location);
 		this.updateLocationsValidation();
 
-		
 		this.timelineLocations.next(this._timelineLocations);
 	}
 
