@@ -27,7 +27,6 @@ import {
 	TimelineResponseData
 } from 'traisi-question-sdk';
 import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
-import { faHome } from '../../shared/icons';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { QuestionLoaderService } from 'traisi-question-sdk';
@@ -48,23 +47,19 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	typeName: string;
 	icon: string;
 
-	editModel: TimelineEntry;
-
-	icons: {} = {
-		faHome: faHome
-	};
+	public editModel: TimelineEntry;
 
 	@ViewChild(PopoverDirective)
-	popovers;
+	public popovers;
 
 	@ViewChild(TemplateRef, { read: ViewContainerRef })
-	inputTemplate: ViewContainerRef;
+	public inputTemplate: ViewContainerRef;
 
 	@ViewChild('newEntry')
-	newEntryDialog: TimelineNewEntryComponent;
+	public newEntryDialog: TimelineNewEntryComponent;
 
 	@ViewChild('timelineDock')
-	timelineDock: TimelineDockComponent;
+	public timelineDock: TimelineDockComponent;
 
 	public isStep1: boolean = false;
 

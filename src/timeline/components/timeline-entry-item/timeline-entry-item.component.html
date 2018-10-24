@@ -7,8 +7,9 @@
     </div>
     <div class="btn-group" dropdown [class]="'timeline-draggable'">
         <div class="timeline-btn-inner">
-            <button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl">
-                <fa-icon [icon]="icon"></fa-icon>
+            <button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl"  tooltip="{{model.purpose}}" placement="bottom">
+                <i [ngClass]="icon"></i>
+                <!--<fa-icon [icon]="icon"></fa-icon> -->
             </button>
             <div *ngIf="!inShelf">
                 <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">

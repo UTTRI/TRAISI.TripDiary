@@ -79,15 +79,23 @@ export class TimelineDockComponent implements OnInit {
 		});
 	}
 
+	public hideConfirmPurpose(): void {
+		this._modelRef.hide();
+	}
+
 	/**
 	 * Confirms purpose
 	 */
 	public confirmPurpose(): void {
 		this._tempEntry.purpose = this.pipedPurpose;
 		this.dockItems.splice(this._tempDropResult.addedIndex, 0, this._tempEntry);
-		this._tempEntry.id = Symbol();
+
 		this._tempEntry.locationType = TimelineLocationType.IntermediateLocation;
-		this.timelineService.addTimelineLocation(this._tempEntry);
+
+		this.timelineService.updateTimelineLocation(this._tempEntry);
+
+		// this.timelineService.addTimelineLocation(this._tempEntry);
+
 		this._tempEntry = null;
 		this._modelRef.hide();
 	}
@@ -120,7 +128,7 @@ export class TimelineDockComponent implements OnInit {
 	 *
 	 * @param dropResult
 	 */
-	onDrop(dropResult: IDropResult) {
+	public onDrop(dropResult: IDropResult): void {
 		if (this.dragOver) {
 			if (!(dropResult.payload in this.dockItems)) {
 				if (dropResult.removedIndex != null) {
@@ -129,16 +137,16 @@ export class TimelineDockComponent implements OnInit {
 
 				let model: TimelineEntry = Object.assign({}, dropResult.payload);
 
+				this.dockItems.splice(dropResult.addedIndex, 0, model);
+				model.id = Symbol();
+				model.locationType = TimelineLocationType.IntermediateLocation;
+				this.timelineService.addTimelineLocation(model);
+
 				if (model.pipedLocation) {
 					this._tempEntry = model;
 					this._modelRef = this._modalService.show(this.confirmPurposeTemplate);
 					this._tempDropResult = dropResult;
 					this.pipedPurpose = model.purpose;
-				} else {
-					this.dockItems.splice(dropResult.addedIndex, 0, model);
-					model.id = Symbol();
-					model.locationType = TimelineLocationType.IntermediateLocation;
-					this.timelineService.addTimelineLocation(model);
 				}
 			}
 		}
@@ -146,11 +154,11 @@ export class TimelineDockComponent implements OnInit {
 		this.dragOver = false;
 	}
 
-	public onDragEnter() {
+	public onDragEnter(): void {
 		this.dragOver = true;
 	}
 
-	public onDragLeave() {
+	public onDragLeave(): void {
 		this.dragOver = false;
 	}
 

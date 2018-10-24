@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { DndDropEvent } from 'ngx-drag-drop';
-import { faHome, faBriefcase, faSchool, faHandScissors, IconDefinition, faCarSide, faChild } from '../../shared/icons';
+
 
 import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
 import { IDropResult } from 'ngx-smooth-dnd';
@@ -23,31 +23,24 @@ export class TimelineSlotComponent implements OnInit {
 
 	hasTimelineEntryItem: boolean = false;
 
-	homeIcon: IconDefinition = faHome;
-	workIcon: IconDefinition = faBriefcase;
-	schoolIcon: IconDefinition = faSchool;
-	passenger: IconDefinition = faCarSide;
-	daycare: IconDefinition = faChild;
-
-	default: IconDefinition = faHandScissors;
 
 	public dragOver: boolean = false;
 	public model: TimelineEntry;
 	public dragActive: boolean = false;
 
 	public get icon() {
-		if (this.model.purpose == 'home') {
-			return this.homeIcon;
-		} else if (this.model.purpose == 'work') {
-			return this.workIcon;
-		} else if (this.model.purpose == 'school') {
-			return this.schoolIcon;
-		} else if (this.model.purpose == 'daycare') {
-			return this.daycare;
-		} else if (this.model.purpose == 'facilitate_passenger') {
-			return this.passenger;
+		if (this.model.purpose === 'home') {
+			return 'fas fa-home';
+		} else if (this.model.purpose === 'work') {
+			return 'fas fa-building';
+		} else if (this.model.purpose === 'school') {
+			return 'fas fa-school';
+		} else if (this.model.purpose === 'daycare') {
+			return 'fas fa-child';
+		} else if (this.model.purpose === 'facilitate_passenger') {
+			return 'fas fa-car-side';
 		} else {
-			return this.default;
+			return 'fas fa-edit';
 		}
 	}
 
@@ -107,7 +100,7 @@ export class TimelineSlotComponent implements OnInit {
 			let model: TimelineEntry = Object.assign({}, dropResult.payload);
 			model.id = Symbol();
 			model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
-			
+
 			if (this.startLocation && model.purpose !== 'home') {
 				this.timelineDock.popover.show();
 			}

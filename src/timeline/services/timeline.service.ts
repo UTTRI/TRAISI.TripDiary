@@ -106,9 +106,21 @@ export class TimelineService {
 	}
 
 	/**
+	 * Updates timeline location
+	 * @param model
+	 */
+	public updateTimelineLocation(model: TimelineEntry): void {
+		let entry: TimelineEntry = this._timelineLocations.find((s) => s.id === model.id);
+
+		entry.purpose = model.purpose;
+
+		this.timelineLocations.next(this._timelineLocations);
+	}
+
+	/**
 	 * Updates the validation of the timeline
 	 */
-	public updateLocationsValidation() {
+	public updateLocationsValidation(): void {
 		let hasStartLocation: boolean = false;
 		let hasEndLocation: boolean = false;
 		this._timelineLocations.forEach((location) => {

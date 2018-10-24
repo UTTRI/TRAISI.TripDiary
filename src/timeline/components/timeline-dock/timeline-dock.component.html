@@ -8,7 +8,7 @@
 
         <smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'move'" [orientation]="'horizontal'" [groupName]="'timeline'"
             [getChildPayload]="getChildPayload" (dragEnter)="onDragEnter()" (dragLeave)="onDragLeave()" class="timeline-dnd-dock"
-            (dragStart)="onDragStart($event)" (dragEnd)="onDragEnd($event)" #dockContainer>
+            [shouldAnimateDrop]="false" (dragStart)="onDragStart($event)" (dragEnd)="onDragEnd($event)" #dockContainer>
 
             <smooth-dnd-draggable *ngFor="let item of dockItems">
                 <div class="draggable-item">
@@ -39,7 +39,7 @@
 <ng-template #confirmPurposeTemplate>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Confirm Purpose</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideConfirmPurpose()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>

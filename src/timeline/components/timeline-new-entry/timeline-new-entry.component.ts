@@ -7,20 +7,22 @@ import {
 	TemplateRef,
 	ViewContainerRef,
 	Inject,
-	Injector
+	Injector,
+	AfterContentInit
 } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry, TimelineLocationType } from '../../models/timeline-entry.model';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { QuestionLoaderService, SurveyQuestion } from 'traisi-question-sdk';
 import { TimelineConfiguration } from '../../models/timeline-configuration.model';
+import { AfterViewInit } from '@angular/core';
 
 @Component({
 	selector: 'timeline-new-entry',
 	template: require('./timeline-new-entry.component.html').toString(),
 	styles: [require('./timeline-new-entry.component.scss').toString()]
 })
-export class TimelineNewEntryComponent implements OnInit {
+export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterContentInit {
 	modalRef: ModalDirective;
 
 	@ViewChild('newEntryModal')
@@ -37,6 +39,8 @@ export class TimelineNewEntryComponent implements OnInit {
 	saveCallback: (value: any) => void;
 
 	model: TimelineEntry;
+
+	private _mapComponent: any;
 
 	/**
 	 *
@@ -82,6 +86,13 @@ export class TimelineNewEntryComponent implements OnInit {
 
 		this.newTimelineEntryTemplateRef.onHidden.subscribe(this.onHidden);
 
+		this.newTimelineEntryTemplateRef.onShown.subscribe((val) => {
+			let sub = (<any>this._mapComponent).mapInstance.subscribe((mapInstance) => {
+				console.log('in here');
+				mapInstance.resize();
+			});
+			sub.unsubscribe();
+		});
 		this.newTimelineEntryTemplateRef.show();
 
 		if (entry == null) {
@@ -125,18 +136,17 @@ export class TimelineNewEntryComponent implements OnInit {
 		this.model.longitude = value.longitude;
 	};
 
-	stepTwoNext(): void {
+	public stepTwoNext(): void {
 		this.stepThree = true;
 		this.stepTwo = false;
 	}
 
-	stepThreePrevious(): void {
+	public stepThreePrevious(): void {
 		this.stepThree = false;
 		this.stepTwo = true;
 	}
 
-	//save
-	stepThreeNext(): void {
+	public stepThreeNext(): void {
 		console.log(this.model);
 		this.saveCallback(this.model);
 		this.newTimelineEntryTemplateRef.hide();
@@ -154,6 +164,8 @@ export class TimelineNewEntryComponent implements OnInit {
 				instance.response.subscribe((value) => {
 					this.callback(value);
 				});
+
+				this._mapComponent = instance;
 			}
 		});
 
@@ -161,4 +173,8 @@ export class TimelineNewEntryComponent implements OnInit {
 			this.configuration = config;
 		});
 	}
+
+	public ngAfterViewInit(): void {}
+
+	public ngAfterContentInit(): void {}
 }

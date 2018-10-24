@@ -3,7 +3,6 @@ import { TimelineComponent } from './components/timeline/timeline.component';
 import { TimelineWedgeComponent } from './components/timeline-wedge/timeline-wedge.component';
 import { TimelineService } from './services/timeline.service';
 import { CommonModule } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TimelineShelfComponent } from './components/timeline-shelf/timeline-shelf.component';
@@ -18,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { NgxSmoothDnDModule } from 'ngx-smooth-dnd';
 import { TimelineNewEntryComponent } from './components/timeline-new-entry/timeline-new-entry.component';
 import { TimelineSummaryComponent } from './components/timeline-summary/timeline-summary.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
 	entryComponents: [
@@ -66,12 +66,12 @@ import { TimelineSummaryComponent } from './components/timeline-summary/timeline
 		AlertModule,
 		CarouselModule.forRoot(),
 		ModalModule.forRoot(),
-		FontAwesomeModule,
 		PopoverModule.forRoot(),
 		ButtonsModule.forRoot(),
 		BsDropdownModule.forRoot(),
 		FormsModule,
-		NgxSmoothDnDModule
+		NgxSmoothDnDModule,
+		TooltipModule.forRoot()
 		//TranslateModule.forRoot()
 	]
 })

@@ -1,4 +1,18 @@
-.modal-footer .btn:first-of-type
-{
-    margin-right:20px;
+.modal-footer .btn:first-of-type {
+	margin-right: 20px;
+}
+
+timeline-new-entry .map-container {
+	width: 500px;
+	height: 430px;
+}
+
+timeline-new-entry mgl-map {
+	width: 500px;
+	height: 400px !important;
+}
+
+.model-body-map {
+    padding: 0 !important;
+    min-height: 300px;
 }
