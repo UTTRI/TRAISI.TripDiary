@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { NgxSmoothDnDModule } from 'ngx-smooth-dnd';
 import { TimelineNewEntryComponent } from './components/timeline-new-entry/timeline-new-entry.component';
 import { TimelineSummaryComponent } from './components/timeline-summary/timeline-summary.component';
+
 @NgModule({
 	entryComponents: [
 		TimelineWedgeComponent,
@@ -71,6 +72,7 @@ import { TimelineSummaryComponent } from './components/timeline-summary/timeline
 		BsDropdownModule.forRoot(),
 		FormsModule,
 		NgxSmoothDnDModule
+		//TranslateModule.forRoot()
 	]
 })
 export default class TimelineModule {}

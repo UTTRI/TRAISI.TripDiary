@@ -1,6 +1,7 @@
 <div class="timeline-dock-top">
 
-    <timeline-slot [startLocation]="true"></timeline-slot>
+    <timeline-slot [timelineDock]="this" [startLocation]="true" triggers="" popoverTitle="Confirm Location" placement="right"
+        [popover]="confirmLocationPopTemplate" #popover="bs-popover"></timeline-slot>
 
     <div class="timeline-dock-inner-container">
         <div class="timeline-bar" [ngClass]="{'timeline-drag-over' : dragActive}"></div>
@@ -11,14 +12,14 @@
 
             <smooth-dnd-draggable *ngFor="let item of dockItems">
                 <div class="draggable-item">
-                    <timeline-entry-item [model]="item" [timelineNewEntry]="timelineNewEntry">
+                    <timeline-entry-item [model]="item" [timelineNewEntry]="timelineNewEntry" [inShelf]="false">
 
                     </timeline-entry-item>
                 </div>
             </smooth-dnd-draggable>
         </smooth-dnd-container>
     </div>
-    <timeline-slot [endLocation]="true"></timeline-slot>
+    <timeline-slot [timelineDock]="this" [endLocation]="true"></timeline-slot>
 </div>
 <div class="timeline-dock-info">
 
@@ -55,5 +56,14 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" (click)="confirmPurpose()">Confirm</button>
+    </div>
+</ng-template>
+
+<ng-template #confirmLocationPopTemplate>
+    <div>
+        You have entered a start location that is not home.
+    </div>
+    <div class="confirm-start-location-button">
+        <button type="button" class="btn btn-primary" (click)="confirmStartLocation()">Confirm</button>
     </div>
 </ng-template>

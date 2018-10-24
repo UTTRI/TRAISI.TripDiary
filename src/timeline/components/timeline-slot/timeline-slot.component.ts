@@ -5,6 +5,7 @@ import { faHome, faBriefcase, faSchool, faHandScissors, IconDefinition, faCarSid
 
 import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
 import { IDropResult } from 'ngx-smooth-dnd';
+import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component';
 @Component({
 	selector: 'timeline-slot',
 	template: require('./timeline-slot.component.html').toString(),
@@ -17,6 +18,9 @@ export class TimelineSlotComponent implements OnInit {
 	@Input()
 	endLocation: boolean = false;
 
+	@Input()
+	public timelineDock: TimelineDockComponent;
+
 	hasTimelineEntryItem: boolean = false;
 
 	homeIcon: IconDefinition = faHome;
@@ -28,7 +32,7 @@ export class TimelineSlotComponent implements OnInit {
 	default: IconDefinition = faHandScissors;
 
 	public dragOver: boolean = false;
-	model: TimelineEntry;
+	public model: TimelineEntry;
 	public dragActive: boolean = false;
 
 	public get icon() {
@@ -58,9 +62,9 @@ export class TimelineSlotComponent implements OnInit {
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {
-		this._timelineService.timelineLocations.subscribe(locations => {
-			locations.forEach(loc => {
+	public ngOnInit(): void {
+		this._timelineService.timelineLocations.subscribe((locations) => {
+			locations.forEach((loc) => {
 				if (loc.locationType == TimelineLocationType.StartLocation && this.startLocation) {
 					this.addLocationToSlot(loc);
 				} else if (loc.locationType == TimelineLocationType.EndLocation && this.endLocation) {
@@ -77,14 +81,13 @@ export class TimelineSlotComponent implements OnInit {
 	private addLocationToSlot(location: TimelineEntry) {
 		this.model = location;
 		this.hasTimelineEntryItem = true;
-		//this.model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
 	}
 
 	/**
 	 *
 	 * @param event
 	 */
-	public locationPlaced(event: DndDropEvent) {
+	public locationPlaced(event: DndDropEvent): void {
 		this.model = event.data;
 		this.hasTimelineEntryItem = true;
 	}
@@ -99,13 +102,15 @@ export class TimelineSlotComponent implements OnInit {
 	 *
 	 * @param dropResult
 	 */
-	onDrop(dropResult: IDropResult) {
+	public onDrop(dropResult: IDropResult): void {
 		if (this.dragOver) {
 			let model: TimelineEntry = Object.assign({}, dropResult.payload);
 			model.id = Symbol();
 			model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
-
-			console.log(model);
+			
+			if (this.startLocation && model.purpose !== 'home') {
+				this.timelineDock.popover.show();
+			}
 			this._timelineService.addTimelineLocation(model);
 		}
 		this.dragOver = false;

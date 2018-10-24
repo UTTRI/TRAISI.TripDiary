@@ -32,9 +32,12 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 * @memberof TimelineEntryItemComponent
 	 */
 	@Input()
-	model: TimelineEntry;
+	public model: TimelineEntry;
 
-	editModel: TimelineEntry;
+	public editModel: TimelineEntry;
+
+	@Input()
+	public inShelf: boolean = true;
 
 	@Input()
 	public timelineNewEntry: TimelineNewEntryComponent;

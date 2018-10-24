@@ -30,10 +30,10 @@ export class TimelineDockComponent implements OnInit {
 	public sub: Subscription;
 
 	@ViewChild('startSlotPopover')
-	startSlotPopover: PopoverDirective;
+	public startSlotPopover: PopoverDirective;
 
 	@ViewChild('confirmPurposeTemplate')
-	confirmPurposeTemplate: TemplateRef<any>;
+	public confirmPurposeTemplate: TemplateRef<any>;
 
 	private _tempEntry: TimelineEntry;
 
@@ -42,6 +42,11 @@ export class TimelineDockComponent implements OnInit {
 	private _modelRef: BsModalRef;
 
 	public pipedPurpose: string;
+
+	public title: string = 'Confirm Location';
+
+	@ViewChild('popover')
+	public popover: PopoverDirective;
 
 	/**
 	 *
@@ -85,6 +90,13 @@ export class TimelineDockComponent implements OnInit {
 		this.timelineService.addTimelineLocation(this._tempEntry);
 		this._tempEntry = null;
 		this._modelRef.hide();
+	}
+
+	/**
+	 * Confirms start location
+	 */
+	public confirmStartLocation(): void {
+		this.popover.hide();
 	}
 
 	/**
