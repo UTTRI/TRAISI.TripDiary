@@ -61,9 +61,8 @@ export class TimelineDockComponent implements OnInit {
 		// this.timelineService.timelineItemRemoved.subscribe(this.onTimelineEntryRemoved);
 
 		this.sub = this.timelineService.timelineLocations.subscribe((value) => {
+			this.dockItems = [];
 			value.forEach((entry) => {
-				this.dockItems = [];
-
 				if (entry.locationType === TimelineLocationType.IntermediateLocation) {
 					this.dockItems.push(entry);
 				}

@@ -94,9 +94,9 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {}
+	public ngOnInit(): void {}
 
-	ngAfterViewInit(): void {}
+	public ngAfterViewInit(): void {}
 
 	/**
 	 *
@@ -104,15 +104,12 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	public edit(): void {
 		console.log(this.timelineNewEntry);
 
-
-
-		this.timelineNewEntry.show(value => {
-
+		this.timelineNewEntry.show((value) => {
 			this.model = value;
 		}, Object.assign({}, this.model));
 	}
 
-	callback(value): void {}
+	public callback(value): void {}
 
 	/**
 	 *
@@ -132,6 +129,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 *
 	 */
 	public delete(): void {
+		console.log('in delete');
 		this._timelineService.removeTimelineLocation(this.model);
 	}
 }

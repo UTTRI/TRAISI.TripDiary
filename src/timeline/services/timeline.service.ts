@@ -154,23 +154,24 @@ export class TimelineService {
 		this.updateLocationsValidation();
 
 		this.timelineLocations.next(this._timelineLocations);
-
-		console.log('here add ');
 	}
 
 	/**
 	 *
 	 * @param location
 	 */
-	public removeTimelineLocation(location: TimelineEntry) {
+	public removeTimelineLocation(location: TimelineEntry): void {
 		let index: number = this._timelineLocations.findIndex((loc) => {
 			return loc.id === location.id;
 		});
+
+		console.log(index);
 
 		this._timelineLocations.splice(index, 1);
 		this.timelineItemRemoved.next(location);
 		this.updateLocationsValidation();
 
+		
 		this.timelineLocations.next(this._timelineLocations);
 	}
 
