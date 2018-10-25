@@ -84,6 +84,11 @@ export class TripRoute {
         this._activeTripLegIndex = value;
     }
 
+    /**
+     * Determines whether embedded location is
+     * @param secondInFirst 
+     * @returns true if embedded location 
+     */
     private isEmbeddedLocation(secondInFirst: boolean): boolean {
         
         let tripLocation1 = this.startLocation;
