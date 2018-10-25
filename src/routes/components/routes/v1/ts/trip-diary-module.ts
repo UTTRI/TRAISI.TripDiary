@@ -15,18 +15,14 @@ import { DateFilterBrackets } from '../shared/filters/date-filter-brackets';
 import { default as ngRedux } from 'ng-redux';
 import { IModule } from 'angular';
 import { SurveyConfigService } from '../shared/services/survey-config-service';
-import { TimelineDirective } from '../directives/timeline-directive';
-import { TimelineSegmentDirective } from '../directives/timeline-segment-directive';
+
 import { TripRouteModeDirective } from '../directives/trip-route-mode-directive';
 import { TripDiaryController } from '../controllers/trip-diary-controller';
 import 'angular-translate-loader-static-files';
 import 'angular-translate-interpolation-messageformat';
 import { downgradeComponent, downgradeInjectable } from '@angular/upgrade/static';
-import { TimelineLineDirective } from '../directives/timeline-line-directive';
-import { TimelineLineMapDirective } from '../directives/timeline-line-map-directive';
-import { HtmlFilter } from '../shared/filters/html-filter';
 
-import { TimelineConnectorDirective } from '../directives/timeline-connector-directive';
+import { HtmlFilter } from '../shared/filters/html-filter';
 
 import * as moment from 'moment';
 window['moment'] = moment;
@@ -41,7 +37,7 @@ import 'leaflet-control-geocoder';
 let translate = require('../assets/trips-en.json');
 
 import { TripDiaryService } from './trip-diary-service';
-import { TripDiaryTourService } from './trip-diary-tour-service';
+
 import { OrdinalFilter } from '../shared/filters/ordinal-filter';
 import { TimeFilter } from '../shared/filters/time-filter';
 import { RoutesV1Component } from '../../../routes-v1/routes-v1.component';
@@ -73,7 +69,7 @@ export class TripDiaryModule {
 
 			.config([
 				'$ngReduxProvider',
-				($ngReduxProvider) => {
+				$ngReduxProvider => {
 					let reducer = reducers;
 					$ngReduxProvider.createStoreWith(reducer);
 				}
@@ -120,7 +116,7 @@ export class TripDiaryModule {
 			])
 			.config([
 				'$compileProvider',
-				($compileProvider) => {
+				$compileProvider => {
 					// $compileProvider.preAssignBindingsEnabled(true);
 					$compileProvider.commentDirectivesEnabled(false);
 					$compileProvider.cssClassDirectivesEnabled(false);
@@ -161,8 +157,8 @@ export class TripDiaryModule {
 				SurveyMapDirective.Factory()
 			])
 			.factory('SurveyConfigService', ['$http', SurveyConfigService.Factory(userId, surveyId, '')])
-			.factory('TripDiaryService', ['$ngRedux', 'TripDiaryTourService', TripDiaryService.Factory()])
-			.factory('TripDiaryTourService', ['$ngRedux', '$translate', TripDiaryTourService.Factory()])
+			.factory('TripDiaryService', ['$ngRedux', TripDiaryService.Factory()])
+			// .factory('TripDiaryTourService', ['$ngRedux', '$translate', TripDiaryTourService.Factory()])
 			.factory('routesService', downgradeInjectable(RoutesService))
 			.constant('QUESTION_ID', questionId)
 			.constant('SurveyV2Id', v2SurveyId)
@@ -171,7 +167,7 @@ export class TripDiaryModule {
 
 		app.config([
 			'$compileProvider',
-			($compileProvider) => {
+			$compileProvider => {
 				// $compileProvider.debugInfoEnabled(false);
 			}
 		]);

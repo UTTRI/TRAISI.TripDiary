@@ -14,8 +14,6 @@ import {
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 
-import { faHome, faBriefcase, faHandScissors, faSchool, IconDefinition, faCarSide, faChild } from '../../shared/icons';
-
 import { BsModalRef, ModalDirective, ModalBackdropComponent } from 'ngx-bootstrap/modal';
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
 
@@ -32,9 +30,12 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 * @memberof TimelineEntryItemComponent
 	 */
 	@Input()
-	model: TimelineEntry;
+	public model: TimelineEntry;
 
-	editModel: TimelineEntry;
+	public editModel: TimelineEntry;
+
+	@Input()
+	public inShelf: boolean = true;
 
 	@Input()
 	public timelineNewEntry: TimelineNewEntryComponent;
@@ -57,27 +58,19 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	@ViewChildren(ViewContainerRef, { read: ViewContainerRef })
 	viewChildren!: QueryList<ViewContainerRef>;
 
-	homeIcon: IconDefinition = faHome;
-	workIcon: IconDefinition = faBriefcase;
-	schoolIcon: IconDefinition = faSchool;
-	passenger: IconDefinition = faCarSide;
-	daycare: IconDefinition = faChild;
-
-	default: IconDefinition = faHandScissors;
-
 	public get icon() {
-		if (this.model.purpose == 'home') {
-			return this.homeIcon;
-		} else if (this.model.purpose == 'work') {
-			return this.workIcon;
-		} else if (this.model.purpose == 'school') {
-			return this.schoolIcon;
-		} else if (this.model.purpose == 'daycare') {
-			return this.daycare;
-		} else if (this.model.purpose == 'facilitate_passenger') {
-			return this.passenger;
+		if (this.model.purpose === 'home') {
+			return 'fas fa-home';
+		} else if (this.model.purpose === 'work') {
+			return 'fas fa-building';
+		} else if (this.model.purpose === 'school') {
+			return 'fas fa-school';
+		} else if (this.model.purpose === 'daycare') {
+			return 'fas fa-child';
+		} else if (this.model.purpose === 'facilitate_passenger') {
+			return 'fas fa-car-side';
 		} else {
-			return this.default;
+			return 'fas fa-edit';
 		}
 	}
 
@@ -94,9 +87,9 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {}
+	public ngOnInit(): void {}
 
-	ngAfterViewInit(): void {}
+	public ngAfterViewInit(): void {}
 
 	/**
 	 *
@@ -104,15 +97,12 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	public edit(): void {
 		console.log(this.timelineNewEntry);
 
-
-
-		this.timelineNewEntry.show(value => {
-
+		this.timelineNewEntry.show((value) => {
 			this.model = value;
 		}, Object.assign({}, this.model));
 	}
 
-	callback(value): void {}
+	public callback(value): void {}
 
 	/**
 	 *
@@ -132,6 +122,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 *
 	 */
 	public delete(): void {
+		console.log('in delete');
 		this._timelineService.removeTimelineLocation(this.model);
 	}
 }

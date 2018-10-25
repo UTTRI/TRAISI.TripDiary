@@ -27,7 +27,6 @@ import {
 	TimelineResponseData
 } from 'traisi-question-sdk';
 import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
-import { faHome } from '../../shared/icons';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { QuestionLoaderService } from 'traisi-question-sdk';
@@ -48,23 +47,19 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	typeName: string;
 	icon: string;
 
-	editModel: TimelineEntry;
-
-	icons: {} = {
-		faHome: faHome
-	};
+	public editModel: TimelineEntry;
 
 	@ViewChild(PopoverDirective)
-	popovers;
+	public popovers;
 
 	@ViewChild(TemplateRef, { read: ViewContainerRef })
-	inputTemplate: ViewContainerRef;
+	public inputTemplate: ViewContainerRef;
 
 	@ViewChild('newEntry')
-	newEntryDialog: TimelineNewEntryComponent;
+	public newEntryDialog: TimelineNewEntryComponent;
 
 	@ViewChild('timelineDock')
-	timelineDock: TimelineDockComponent;
+	public timelineDock: TimelineDockComponent;
 
 	public isStep1: boolean = false;
 
@@ -92,9 +87,9 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		this.isStep1 = true;
 		this.surveyViewerService.updateNavigationState(false);
 		this._timelineService.clearAvailableLocations();
-		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
-			result.forEach(responses => {
-				responses.responseValues.forEach(responseValue => {
+		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe((result) => {
+			result.forEach((responses) => {
+				responses.responseValues.forEach((responseValue) => {
 					const element = responseValue;
 
 					let location: TimelineEntry = {
@@ -104,6 +99,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 						longitude: element.longitude,
 						time: new Date(),
 						timeB: new Date(),
+						pipedLocation: true,
 						id: Symbol(),
 						locationType: TimelineLocationType.Undefined,
 						name: 'Prior Location'
@@ -228,6 +224,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			time: new Date(),
 			timeB: new Date(),
 			id: Symbol(),
+			pipedLocation: true,
 			locationType: TimelineLocationType.Undefined,
 			name: 'Prior Location'
 		};
@@ -258,7 +255,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			if (response.length >= 3) {
 				const midResponses = response.slice(2, response.length);
 
-				midResponses.forEach(entry => {
+				midResponses.forEach((entry) => {
 					location = Object.assign({}, location);
 					location.id = Symbol();
 					const timelineResponse = <TimelineResponseData>entry;

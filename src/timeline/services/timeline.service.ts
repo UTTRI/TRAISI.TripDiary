@@ -80,7 +80,7 @@ export class TimelineService {
 	/**
 	 * Initialie the base configuration data
 	 */
-	private initializeConfiguration() {
+	private initializeConfiguration(): void {
 		this._configuration = new ReplaySubject(1);
 
 		let startTime: Date = new Date();
@@ -98,7 +98,7 @@ export class TimelineService {
 			purposes: [
 				{ key: 'home', label: 'Home' },
 				{ key: 'work', label: 'Work' },
-				{ key: 'school', label: 'Schhool' },
+				{ key: 'school', label: 'School' },
 				{ key: 'daycare', label: 'Daycare' },
 				{ key: 'facilitate_passenger', label: 'Facilitate Passenger' }
 			]
@@ -106,12 +106,24 @@ export class TimelineService {
 	}
 
 	/**
+	 * Updates timeline location
+	 * @param model
+	 */
+	public updateTimelineLocation(model: TimelineEntry): void {
+		let entry: TimelineEntry = this._timelineLocations.find((s) => s.id === model.id);
+
+		entry.purpose = model.purpose;
+
+		this.timelineLocations.next(this._timelineLocations);
+	}
+
+	/**
 	 * Updates the validation of the timeline
 	 */
-	public updateLocationsValidation() {
+	public updateLocationsValidation(): void {
 		let hasStartLocation: boolean = false;
 		let hasEndLocation: boolean = false;
-		this._timelineLocations.forEach(location => {
+		this._timelineLocations.forEach((location) => {
 			if (location.locationType === TimelineLocationType.StartLocation) {
 				hasStartLocation = true;
 			} else if (location.locationType === TimelineLocationType.EndLocation) {
@@ -149,7 +161,7 @@ export class TimelineService {
 	 * Adds a new location to the list of dock items
 	 * @param location
 	 */
-	public addTimelineLocation(location: TimelineEntry) {
+	public addTimelineLocation(location: TimelineEntry): void {
 		this._timelineLocations.push(location);
 		this.updateLocationsValidation();
 
@@ -160,10 +172,12 @@ export class TimelineService {
 	 *
 	 * @param location
 	 */
-	public removeTimelineLocation(location: TimelineEntry) {
-		let index: number = this._timelineLocations.findIndex(loc => {
+	public removeTimelineLocation(location: TimelineEntry): void {
+		let index: number = this._timelineLocations.findIndex((loc) => {
 			return loc.id === location.id;
 		});
+
+		console.log(index);
 
 		this._timelineLocations.splice(index, 1);
 		this.timelineItemRemoved.next(location);

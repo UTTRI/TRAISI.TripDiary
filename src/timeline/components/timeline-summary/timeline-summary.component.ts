@@ -14,8 +14,6 @@ import {
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 
-import { faClock, IconDefinition } from '../../shared/icons';
-
 import { BsModalRef, ModalDirective, ModalBackdropComponent } from 'ngx-bootstrap/modal';
 import { NgTemplateOutlet } from '@angular/common';
 import { TimelineConfiguration } from '../../models/timeline-configuration.model';
@@ -35,8 +33,6 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 
 	public config: TimelineConfiguration;
 
-	clockIcon: IconDefinition = faClock;
-
 	public timeEntries: Array<{ hours: number; minutes: number; am: boolean }>;
 
 	private _timelineConfiguration: TimelineConfiguration;
@@ -51,12 +47,12 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 		this.hours = [];
 	}
 
-	ngAfterViewInit(): void {}
+	public ngAfterViewInit(): void {}
 
 	/**
 	 * ngOnInit method
 	 */
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		this._timelineService.timelineLocations.subscribe((locations: Array<TimelineEntry>) => {
 			this.timelineLocations = locations;
 			this.timeEntries = [];
@@ -70,7 +66,7 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 			}
 		});
 
-		this._timelineService.configuration.subscribe(config => {
+		this._timelineService.configuration.subscribe((config) => {
 			this._timelineConfiguration = config;
 
 			let tempTime = new Date(config.startTime);

@@ -1,10 +1,12 @@
-import { Component, OnInit, ElementRef, ViewEncapsulation, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewEncapsulation, ViewChild, ViewChildren, TemplateRef } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { IDropResult } from 'ngx-smooth-dnd';
 import { TimelineEntry, TimelineLocationType } from '../../models/timeline-entry.model';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
 import { Subscription } from 'rxjs';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { TimelineConfiguration } from '../../models/timeline-configuration.model';
 
 @Component({
 	selector: 'timeline-dock',
@@ -23,17 +25,35 @@ export class TimelineDockComponent implements OnInit {
 
 	public timelineNewEntry: TimelineNewEntryComponent;
 
+	public configuration: TimelineConfiguration;
+
 	public sub: Subscription;
 
 	@ViewChild('startSlotPopover')
-	startSlotPopover: PopoverDirective;
+	public startSlotPopover: PopoverDirective;
+
+	@ViewChild('confirmPurposeTemplate')
+	public confirmPurposeTemplate: TemplateRef<any>;
+
+	private _tempEntry: TimelineEntry;
+
+	private _tempDropResult: IDropResult;
+
+	private _modelRef: BsModalRef;
+
+	public pipedPurpose: string;
+
+	public title: string = 'Confirm Location';
+
+	@ViewChild('popover')
+	public popover: PopoverDirective;
 
 	/**
 	 *
 	 * @param _element
 	 * @param timelineService
 	 */
-	constructor(private _element: ElementRef, private timelineService: TimelineService) {
+	constructor(private _element: ElementRef, private timelineService: TimelineService, private _modalService: BsModalService) {
 		this.typeName = 'Trip Diary Timeline';
 		this.icon = 'business-time';
 		this.dockItems = [];
@@ -41,26 +61,57 @@ export class TimelineDockComponent implements OnInit {
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		// this.timelineService.availableLocations.subscribe(this.onShelfItemsChanged);
 		// this.timelineService.timelineItemRemoved.subscribe(this.onTimelineEntryRemoved);
 
-		this.sub = this.timelineService.timelineLocations.subscribe(value => {
-			value.forEach(entry => {
-				this.dockItems = [];
-
+		this.sub = this.timelineService.timelineLocations.subscribe((value) => {
+			this.dockItems = [];
+			value.forEach((entry) => {
 				if (entry.locationType === TimelineLocationType.IntermediateLocation) {
 					this.dockItems.push(entry);
 				}
 			});
 		});
+
+		this.timelineService.configuration.subscribe((config) => {
+			this.configuration = config;
+		});
+	}
+
+	public hideConfirmPurpose(): void {
+		this._modelRef.hide();
+	}
+
+	/**
+	 * Confirms purpose
+	 */
+	public confirmPurpose(): void {
+		this._tempEntry.purpose = this.pipedPurpose;
+		this.dockItems.splice(this._tempDropResult.addedIndex, 0, this._tempEntry);
+
+		this._tempEntry.locationType = TimelineLocationType.IntermediateLocation;
+
+		this.timelineService.updateTimelineLocation(this._tempEntry);
+
+		// this.timelineService.addTimelineLocation(this._tempEntry);
+
+		this._tempEntry = null;
+		this._modelRef.hide();
+	}
+
+	/**
+	 * Confirms start location
+	 */
+	public confirmStartLocation(): void {
+		this.popover.hide();
 	}
 
 	/**
 	 * Callback for when a timeline item has deleted itself
 	 */
 	private onTimelineEntryRemoved: (entry: TimelineEntry) => void = (entry: TimelineEntry) => {
-		let index = this.dockItems.findIndex(p => {
+		let index = this.dockItems.findIndex((p) => {
 			return p.id === entry.id;
 		});
 		this.dockItems.splice(index, 1);
@@ -77,29 +128,37 @@ export class TimelineDockComponent implements OnInit {
 	 *
 	 * @param dropResult
 	 */
-	onDrop(dropResult: IDropResult) {
+	public onDrop(dropResult: IDropResult): void {
 		if (this.dragOver) {
 			if (!(dropResult.payload in this.dockItems)) {
 				if (dropResult.removedIndex != null) {
 					this.dockItems.splice(dropResult.removedIndex, 1);
 				}
-				let model = Object.assign({}, dropResult.payload);
+
+				let model: TimelineEntry = Object.assign({}, dropResult.payload);
 
 				this.dockItems.splice(dropResult.addedIndex, 0, model);
 				model.id = Symbol();
 				model.locationType = TimelineLocationType.IntermediateLocation;
 				this.timelineService.addTimelineLocation(model);
+
+				if (model.pipedLocation) {
+					this._tempEntry = model;
+					this._modelRef = this._modalService.show(this.confirmPurposeTemplate);
+					this._tempDropResult = dropResult;
+					this.pipedPurpose = model.purpose;
+				}
 			}
 		}
 
 		this.dragOver = false;
 	}
 
-	public onDragEnter() {
+	public onDragEnter(): void {
 		this.dragOver = true;
 	}
 
-	public onDragLeave() {
+	public onDragLeave(): void {
 		this.dragOver = false;
 	}
 

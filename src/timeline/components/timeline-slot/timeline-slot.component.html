@@ -13,8 +13,8 @@
 
 <div *ngIf="hasTimelineEntryItem" class="timeline-slot-container">
     <div class="btn-group" dropdown>
-        <button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl">
-            <fa-icon [icon]="icon"></fa-icon>
+        <button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl"  tooltip="{{model.purpose}}" placement="top">
+                <i [ngClass]="icon"></i>
         </button>
         <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
             <li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="edit()">Edit</a></li>

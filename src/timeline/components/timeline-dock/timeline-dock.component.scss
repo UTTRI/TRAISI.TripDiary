@@ -73,8 +73,7 @@ timeline-dock .timeline-entry-model-info {
 	margin-left: 40px;
 	margin-right: 40px;
 
-	.dock-info-item
-	{
+	.dock-info-item {
 		width: $timeline-entry-size + 40px;
 		display: inline-block;
 		font-weight: bold;
@@ -102,6 +101,11 @@ timeline-dock .timeline-entry-model-info {
 
 .timeline-dock-info div {
 	display: inline-block;
+}
+
+.confirm-start-location-button {
+	text-align: center;
+	margin: 10px;
 }
 
 @import 'timeline-dock.component.sm.scss';

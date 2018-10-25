@@ -7,7 +7,7 @@ import * as Color from 'color';
 import { TripDiary } from './trips-diary';
 import { TimelineIcon, TripLocation, TripLocationType } from './trip-location';
 import { config } from './config';
-import { TripDiaryTourService } from './trip-diary-tour-service';
+
 import { isNullOrUndefined } from 'util';
 import { IModeConfig } from '../shared/survey-map-config';
 import { ISurveyMapRoute } from '../shared/survey-map-route';
@@ -60,8 +60,8 @@ export class TripDiaryService {
 	}
 
 	static Factory() {
-		let service = ($ngRedux, tripDiaryTourService) => {
-			return new TripDiaryService($ngRedux, tripDiaryTourService);
+		let service = ($ngRedux) => {
+			return new TripDiaryService($ngRedux);
 		};
 
 		return service;
@@ -99,7 +99,12 @@ export class TripDiaryService {
 	};
 	private _renderCallbacks = [];
 
-	constructor(private _$ngRedux: any, private _tripDiaryTourService: TripDiaryTourService) {
+	
+	/**
+	 * Creates an instance of trip diary service.
+	 * @param _$ngRedux 
+	 */
+	constructor(private _$ngRedux: any) {
 		let unsubscribe = _$ngRedux.connect(
 			this.mapStateToThis,
 			TripsActions
@@ -167,41 +172,29 @@ export class TripDiaryService {
 	 *
 	 */
 	public tripLegShown() {
-		this._tripDiaryTourService.tripLegShown();
+		// this._tripDiaryTourService.tripLegShown();
 	}
 
 	public tripLegHidden() {
-		this._tripDiaryTourService.tripLegHidden();
+		// this._tripDiaryTourService.tripLegHidden();
 	}
 
 	public routesShown() {
-		this._tripDiaryTourService.routesShown();
+		// this._tripDiaryTourService.routesShown();
 	}
 
 	public routesHidden() {
-		this._tripDiaryTourService.routesHidden();
+		// this._tripDiaryTourService.routesHidden();
 	}
 
-	public timelineShown() {
-		this._tripDiaryTourService.timelineShown();
-	}
 
-	public timelineShownByOption() {
-		// this._tripDiaryTourService.initializeTimelineButtonVisibility();
-		this._tripDiaryTourService.timelineShownByOption();
 
-		window.dispatchEvent(new Event('visibilityScrollCheck'));
-	}
-
-	public timelineHidden() {
-		this._tripDiaryTourService.timelineHidden();
-	}
-
-	public timelineHiddenByOption() {
-		this._tripDiaryTourService.timelineHiddenByOption();
-	}
-
-	public shouldAskNoRouteDescription(modeName: string): boolean {
+/**
+ * Should ask no route description
+ * @param modeName 
+ * @returns true if ask no route description 
+ */
+public shouldAskNoRouteDescription(modeName: string): boolean {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
 				if (subMode.name == modeName) {
@@ -324,7 +317,7 @@ export class TripDiaryService {
 	 *
 	 */
 	public toggleRouteMapTour() {
-		this._tripDiaryTourService.toggleRouteMapTour();
+		// this._tripDiaryTourService.toggleRouteMapTour();
 	}
 
 	/**
@@ -374,7 +367,7 @@ export class TripDiaryService {
 	public setElementScrollVisibility(elementName: string, visible: boolean) {
 		this._scrollVisibleComponents[elementName] = visible;
 
-		this._tripDiaryTourService.setElementScrollVisibility(elementName, visible);
+		// this._tripDiaryTourService.setElementScrollVisibility(elementName, visible);
 	}
 
 	/**
