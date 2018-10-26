@@ -173,9 +173,12 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		}
 	}
 
+	/**
+	 * Saves current response state
+	 */
 	private saveCurrentResponseState(): void {
 		this._timelineService.timelineLocations.subscribe((entries: TimelineEntry[]) => {
-			console.log(entries);
+
 			this.response.emit(entries);
 		});
 		// this.response.emit();
@@ -192,6 +195,9 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		}
 	}
 
+	/**
+	 * Navigates internal previous
+	 */
 	public navigateInternalPrevious() {
 		this.isStep2 = false;
 		this.isStep1 = true;
