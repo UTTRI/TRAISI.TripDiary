@@ -283,7 +283,7 @@ export class SurveyQuestion {
 		let jsonData = surveyData;
 		// let startDate = moment(jsonData['startDate']);
 
-		console.log('Start Date:' + startDate);
+		
 
 		this.todayDateDisplay = startDate.format('MMMM Do');
 
@@ -433,43 +433,6 @@ export class SurveyQuestion {
 	 * @returns {string}
 	 */
 	protected loadSavedResponseData() {
-		/*if (this._responseInputElement.value != '') {
-            this.basicState = JSON.parse(this._responseInputElement.value);
-        }
-        else{
-
-        }
-        state.endLocation.locationName,
-                state.endLocation.latLng, state.endLocation.locationInput,
-                state.endLocation.locationPurpose, state.endLocation.id);
-
-        */
-
-
-
-		/*this.basicState = {
-			startLocation: {
-				_locationName: 'Home',
-				latLng: {
-					lat: 43.834208,
-					lng: -79.095633
-				},
-				startTime: Date(),
-				endTime: Date,
-				timelineIcon: 'fas fa-home'
-			},
-
-			endLocation: {
-				_locationName: 'Work',
-				latLng: {
-					lat: 43.660313,
-					lng: -79.395692
-				},
-				startTime: Date(),
-				endTime: Date,
-				timelineIcon: 'fas fa-building'
-			},
-			activeRouteIndex: 0
-		}; */
+	
 	}
 }
