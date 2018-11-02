@@ -1,3 +1,3 @@
-import * as TripDiary from "./index";
+import * as TripDiary from './index';
 
 export {TripDiary};

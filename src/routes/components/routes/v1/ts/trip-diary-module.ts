@@ -190,7 +190,6 @@ export class TripDiaryModule {
 			'$translate',
 			'$cookies',
 			'SurveyConfigService',
-			'TripDiaryTourService',
 			'TripDiaryService',
 			'$timeout',
 			'routesService',

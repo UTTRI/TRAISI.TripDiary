@@ -48,7 +48,6 @@ import PlaceResult = google.maps.places.PlaceResult;
 import { TripLocation, TripLocationType } from '../ts/trip-location';
 
 import { INITIAL_STATE } from '../ts/trips-reducers';
-import { TimelineSegmentDirective } from '../directives/timeline-segment-directive';
 import { ITripsScope } from '../ts/trips-scope';
 
 import 'angular-cookies/index';
@@ -56,7 +55,6 @@ import { SurveyConfigService } from '../shared/services/survey-config-service';
 import { SurveyManager } from '../ts/survey-manager';
 import { SurveyManagerEvents } from '../ts/survey-manager-events';
 
-import { TripDiaryTourService } from '../ts/trip-diary-tour-service';
 import { TripDiaryService } from '../ts/trip-diary-service';
 import { isNullOrUndefined } from 'util';
 import { SurveyMapLocation } from '../shared/survey-map-location';
@@ -111,7 +109,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			this._map.setMarkerActive(obj);
 			this._map.hideMarker(this.value.activeTripLocation);
 		}
-	}
+	};
 
 	/**
 	 * Route callback to add a new waypoint for the router
@@ -135,7 +133,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				this.$scope.$digest();
 			}
 		}
-	}
+	};
 
 	public defaultView: () => any;
 	tripsTaken: () => any;
@@ -179,7 +177,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			this._map.showMarker(this.value.activeTripLocation);
 			this._map.setMarkerActive(this.value.activeTripLocation);
 		}
-	}
+	};
 
 	/**
 	 * Callback for when route map is ready
@@ -190,7 +188,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				this._routeMap.addRouting(this.state.tripRoutes[this.state.activeRouteIndex]);
 			}
 		});
-	}
+	};
 
 	/**
 	 *
@@ -203,7 +201,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				.concat(this.state.tripLocations)
 				.concat(this.state.endLocation)
 		);
-	}
+	};
 
 	/**
 	 *
@@ -218,7 +216,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	 * @param {"angular".translate.ITranslateService} $translate
 	 * @param {"angular".cookies.ICookiesService} $cookies
 	 * @param {SurveyConfigService} configService
-	 * @param {TripDiaryTourService} tripDiaryTourService
 	 * @param {TripDiaryService} _tripDiaryService
 	 * @param {angular.ITimeoutService} _$timeout
 	 */
@@ -234,7 +231,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		$translate: angular.translate.ITranslateService,
 		$cookies: ng.cookies.ICookiesService,
 		private configService: SurveyConfigService,
-		private tripDiaryTourService: TripDiaryTourService,
 		private _tripDiaryService: TripDiaryService,
 		private _$timeout: ng.ITimeoutService,
 		_routesService: RoutesService,
@@ -295,21 +291,21 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		});
 
 		/* $scope.$watch('tc.value.madeTrips.value', (newValue, oldValue) => {
-			let titleElement = $('#div_id_' + this.questionId).closest('.question-item');
-			titleElement = titleElement.find('.question-container').first();
-			titleElement.addClass('success');
-			if (newValue === true && (oldValue == false || oldValue == null)) {
-				$scope.tc.tripsTaken();
-			}
+            let titleElement = $('#div_id_' + this.questionId).closest('.question-item');
+            titleElement = titleElement.find('.question-container').first();
+            titleElement.addClass('success');
+            if (newValue === true && (oldValue == false || oldValue == null)) {
+                $scope.tc.tripsTaken();
+            }
 
-			if (newValue === false) {
-				$scope.tc.noTripsTaken();
-			}
-		}); */
+            if (newValue === false) {
+                $scope.tc.noTripsTaken();
+            }
+        }); */
 
 		/* $scope.$watch('tc.value.madeTrips.reason', (newValue, oldValue) => {
-			$scope.tc.noTripsReasonGiven();
-		}); */
+            $scope.tc.noTripsReasonGiven();
+        }); */
 
 		this._$scope.$on('waypointsChanged', (evt, args) => {
 			_$timeout(() => {
@@ -419,6 +415,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			}, 1000);
 		});
 	}
+
 	/**
 	 *
 	 */
@@ -433,7 +430,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
 	$onInit = () => {
 		this.initQuestion(this.questionId);
-	}
+	};
 
 	get tripsScope(): ITripsScope {
 		return this.$scope as ITripsScope;
@@ -495,16 +492,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		this._activePageValid = value;
 	}
 
-	private _timelineSegments: TimelineSegmentDirective[];
-
-	get timelineSegments(): TimelineSegmentDirective[] {
-		return this._timelineSegments;
-	}
-
-	set timelineSegments(value: TimelineSegmentDirective[]) {
-		this._timelineSegments = value;
-	}
-
 	private _rootScope: ng.IScope;
 
 	public get rootScope(): ng.IScope {
@@ -528,62 +515,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
 	isValid(): boolean {
 		return true;
-	}
-
-	/**
-	 *
-	 * @param {TripsQuestionState} state
-	 */
-	private manageCompleteState(state: TripsQuestionState) {
-		let question = $('#div_id_' + this.questionId).closest('.question-item');
-		let tripsInitialTitle = question.find('.question-container').first();
-		let timelineSearch = question
-			.find('.timeline-outer-container')
-			.first()
-			.find('.question-container')
-			.first();
-		let tripsDetailsSearch = question
-			.find('.router-outer-container')
-			.first()
-			.find('.question-container')
-			.first();
-
-		if (!isNullOrUndefined(state.madeTrips)) {
-			tripsInitialTitle.addClass('success');
-			tripsInitialTitle.removeClass('error');
-
-			if (state.madeTrips.value === false) {
-				if (!isNullOrUndefined(state.madeTrips.reason)) {
-					addSuccess($('#no-trips-container-' + this.questionId));
-					state.completeView = true;
-				}
-			} else {
-				if (state.tripRoutes.length === 0 || isNullOrUndefined(state.startLocation) || isNullOrUndefined(state.endLocation)) {
-					// make sure there is at least one route
-					timelineSearch.removeClass('success');
-					tripsDetailsSearch.removeClass('success');
-					state.completeView = false;
-				} else {
-					timelineSearch.removeClass('error');
-					timelineSearch.addClass('success');
-					// check if all routes are complete
-					let allComplete = true;
-					for (let route of state.tripRoutes) {
-						allComplete = allComplete && route.editComplete;
-					}
-					if (allComplete) {
-						addSuccess($('#trip-diary-' + this.questionId));
-						state.completeView = true;
-					} else {
-						tripsDetailsSearch.removeClass('success');
-						state.completeView = false;
-					}
-				}
-			}
-		} else {
-			tripsInitialTitle.removeClass('success');
-			state.completeView = false;
-		}
 	}
 
 	/**
@@ -707,6 +638,11 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
 		this.updateTripRoutes(routes);
 
+		// tslint:disable-next-line:no-console
+		console.debug('route information');
+		// tslint:disable-next-line:no-console
+		console.debug(routes);
+
 		if (this.state.activeRouteIndex >= routes.length) {
 			// settings route edit active
 
@@ -719,7 +655,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			this._tripDiaryService.routesHidden();
 		}
 
-		this._$window.dispatchEvent(new CustomEvent('visibilityScrollCheck'));
+		// this._$window.dispatchEvent(new CustomEvent('visibilityScrollCheck'));
 	}
 
 	/**
@@ -733,7 +669,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		this.questionId = questionID;
 		this.initializeSurvey(this.$window['surveyData_' + this.questionId], this.$scope, this.$http);
 
-		this._routesService.listTimelineEntries(this._surveyV2Id).subscribe((entries) => {
+		this._routesService.listTimelineEntries(this._surveyV2Id).subscribe(entries => {
 			let timelineEntries: TimelineEntry[] = entries[0].responseValues;
 
 			let startLocation = null;
@@ -767,7 +703,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			if (timelineEntries.length >= 3) {
 				const locations = timelineEntries.slice(2, timelineEntries.length);
 
-				locations.forEach((entry) => {
+				locations.forEach(entry => {
 					let newEntry = {
 						_locationName: entry.purpose,
 						latLng: {
@@ -798,7 +734,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
 		this._$rootScope['questionId'] = this.questionId;
 
-		this.tripDiaryTourService.setQuestionId(this.questionId, this.translateData);
+		// this.tripDiaryTourService.setQuestionId(this.questionId, this.translateData);
 
 		let $scope = this._$scope as ITripsScope;
 
@@ -842,13 +778,13 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		this.updateTripRouteModes();
 
 		/* _.delay(() => {
-			this._$translate('DID_MAKE_TRIPS', this.translateData)
-				.then(function(value) {
-					titleElement.html(value);
-				})
-				.catch((reason) => {})
-				.finally(() => {});
-		}, 5); */
+            this._$translate('DID_MAKE_TRIPS', this.translateData)
+                .then(function(value) {
+                    titleElement.html(value);
+                })
+                .catch((reason) => {})
+                .finally(() => {});
+        }, 5); */
 	}
 
 	pageValid(): boolean {
@@ -875,36 +811,36 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		return;
 
 		/*
-		let selfRefTc: TripDiaryController = selfRef as TripDiaryController;
+        let selfRefTc: TripDiaryController = selfRef as TripDiaryController;
 
-		if (page == -1) {
-			if (selfRefTc.state.timelineView) {
-				selfRefTc.tripsScope.tc.defaultView();
-			}
+        if (page == -1) {
+            if (selfRefTc.state.timelineView) {
+                selfRefTc.tripsScope.tc.defaultView();
+            }
 
-			if (selfRefTc.state.routeModeView) {
-				selfRefTc.tripsScope.tc.tripsTaken();
-			}
-		} else if (page == 1) {
-			if (selfRefTc.state.initialView) {
-				if (selfRefTc.state.madeTrips.value) {
-					selfRefTc.tripsScope.tc.tripsTaken();
-				} else {
-					selfRefTc.tripsScope.tc.noTripsTaken();
-				}
+            if (selfRefTc.state.routeModeView) {
+                selfRefTc.tripsScope.tc.tripsTaken();
+            }
+        } else if (page == 1) {
+            if (selfRefTc.state.initialView) {
+                if (selfRefTc.state.madeTrips.value) {
+                    selfRefTc.tripsScope.tc.tripsTaken();
+                } else {
+                    selfRefTc.tripsScope.tc.noTripsTaken();
+                }
 
-				return false;
-			} else if (selfRefTc.state.timelineView) {
-				selfRefTc.tripsScope.tc.tripRouteModeView();
-				return false;
-			}
+                return false;
+            } else if (selfRefTc.state.timelineView) {
+                selfRefTc.tripsScope.tc.tripRouteModeView();
+                return false;
+            }
 
-			if (selfRefTc.state.noTripsSelectView) {
-				if (selfRefTc.activePageValid) {
-					return true;
-				}
-			}
-		}
+            if (selfRefTc.state.noTripsSelectView) {
+                if (selfRefTc.activePageValid) {
+                    return true;
+                }
+            }
+        }
   */
 		return false;
 	}
@@ -1033,7 +969,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	private initStateManagement() {
 		let $ngReduxRef = this.$ngRedux;
 
-		window.onpopstate = (ev) => {
+		window.onpopstate = ev => {
 			$ngReduxRef.dispatch(updateState(ev.state as TripsQuestionState));
 		};
 	}
@@ -1374,14 +1310,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	}
 
 	/**
-	 *
-	 * @param tripsState
-	 */
-	private manageTourState(tripsState: any) {
-		this.tripDiaryTourService.manageTourState(tripsState.tripsState);
-	}
-
-	/**
 	 * Manages the state of the route map
 	 * @param tripsState
 	 */
@@ -1449,23 +1377,21 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		}
 
 		if (state.previousAction === ADD_TRIP_LOCATION_VIEW) {
-			this._tripDiaryService.timelineHiddenByOption();
+			// this._tripDiaryService.timelineHiddenByOption();
 			if (state.activeTripLocation.lockedLocation) {
 			}
 		}
 		if (state.previousAction === CANCEL_ADD_TRIP_LOCATION) {
-			this._tripDiaryService.timelineShownByOption();
+			// this._tripDiaryService.timelineShownByOption();
 		}
 		if (state.previousAction === ADD_TRIP_LOCATION_DATA) {
-			this._tripDiaryService.timelineShownByOption();
+			// this._tripDiaryService.timelineShownByOption();
 		}
 
 		if (state.previousAction === OPTION_TRIPS_TAKEN) {
 			this._$timeout(() => {
 				// console.log('timeline');
-
-				this._tripDiaryService.timelineShown();
-
+				// this._tripDiaryService.timelineShown();
 				// $('body').scrollTop(1);
 				// this._$window.scrollBy(0, 1);
 			}, 200);

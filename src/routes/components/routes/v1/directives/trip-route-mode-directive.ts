@@ -153,7 +153,7 @@ export class TripRouteModeDirective {
 
 		let routeIndex = _.indexOf(routes, route);
 
-		//if no valid route index, select index 0
+		// if no valid route index, select index 0
 		if (routeIndex < 0) {
 			routeIndex = 0;
 			route = this._$scope['foundRoutes'][0];
@@ -170,12 +170,9 @@ export class TripRouteModeDirective {
 			waypoints.push(route.waypoints[i].latLng);
 		}
 
-
-
 		this._tripDiaryService.setTripLegData(route.coordinates, waypoints, route.name, route.routesIndex, route.instructions);
 
 		this._$timeout(() => {
-			console.log(this._tripDiaryService.state.previousAction);
 			this._tripDiaryService.notifyActiveRouteChanged(this._tripDiaryService.getActiveTripRoute());
 
 			this._tripDiaryService.isAutoFitBounds = true;
@@ -234,7 +231,7 @@ export class TripRouteModeDirective {
 	 *
 	 */
 	private switchedModes = () => {
-		//this._tripDiaryService.setSwitchRouteModeState(true);
+		// this._tripDiaryService.setSwitchRouteModeState(true);
 	};
 
 	/**
@@ -323,8 +320,8 @@ export class TripRouteModeDirective {
 		$ngRedux.subscribe(() => {
 			let state = $ngRedux.getState().tripsState as TripsQuestionState;
 
-			if (state.previousAction == SET_SWITCH_ROUTE_MODE_STATE) {
-				if (state.switchRouteModeActive == false) {
+			if (state.previousAction === SET_SWITCH_ROUTE_MODE_STATE) {
+				if (state.switchRouteModeActive === false) {
 					this._tc.routeMap.removeMarker('SWITCH_ROUTE');
 				}
 			}
@@ -421,8 +418,6 @@ export class TripRouteModeDirective {
 	 */
 	public link($scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, controllers: Array<ng.IController>): void {
 		this._tc = $scope.$parent['tc'] as TripDiaryController;
-
-
 
 		$scope['element'] = element;
 		$scope['routeModeController'] = controllers[0];

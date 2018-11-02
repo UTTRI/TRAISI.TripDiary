@@ -10,6 +10,10 @@
       <e p=".git\info\exclude" t="IncludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="src" t="IncludeRecursive">
+        <e p="assets" t="Include">
+          <e p="_styles.scss" t="Include" />
+        </e>
+        <e p="babel.config.js" t="Include" />
         <e p="bin" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netstandard2.0" t="Include">
@@ -18,6 +22,7 @@
           </e>
         </e>
         <e p="dist" t="Include">
+          <e p="traisi-trip-diary-routes.module.js" t="Include" />
           <e p="traisi-trip-diary-timeline.module.js" t="Include" />
           <e p="traisi-trip-diary-timeline.module.js.map" t="Include" />
         </e>
@@ -31,43 +36,81 @@
           <e p="@angular\platform-browser" t="IncludeRecursive" />
           <e p="@angular\platform-browser-dynamic" t="IncludeRecursive" />
           <e p="@angular\router" t="IncludeRecursive" />
+          <e p="@angular\upgrade" t="IncludeRecursive" />
           <e p="@angular-devkit\build-angular" t="IncludeRecursive" />
           <e p="@babel\core" t="IncludeRecursive" />
           <e p="@babel\preset-env" t="IncludeRecursive" />
           <e p="@fortawesome\angular-fontawesome" t="IncludeRecursive" />
           <e p="@fortawesome\fontawesome-svg-core" t="IncludeRecursive" />
           <e p="@fortawesome\free-solid-svg-icons" t="IncludeRecursive" />
+          <e p="@mapbox\polyline" t="IncludeRecursive" />
           <e p="@ngrx\core" t="IncludeRecursive" />
           <e p="@ngrx\store" t="IncludeRecursive" />
           <e p="@types" t="IncludeRecursive">
+            <e p="angular" t="IncludeRecursive" />
+            <e p="angular-animate" t="IncludeRecursive" />
+            <e p="angular-cookies" t="IncludeRecursive" />
+            <e p="angular-material" t="IncludeRecursive" />
+            <e p="angular-translate" t="IncludeRecursive" />
             <e p="geojson" t="IncludeRecursive" />
+            <e p="googlemaps" t="IncludeRecursive" />
             <e p="jquery" t="IncludeRecursive" />
+            <e p="leaflet" t="IncludeRecursive" />
             <e p="mapbox-gl" t="IncludeRecursive" />
             <e p="node" t="IncludeRecursive" />
+            <e p="webpack-env" t="IncludeRecursive" />
           </e>
+          <e p="angular" t="IncludeRecursive" />
+          <e p="angular-animate" t="IncludeRecursive" />
+          <e p="angular-aria" t="IncludeRecursive" />
+          <e p="angular-cookies" t="IncludeRecursive" />
+          <e p="angular-material" t="IncludeRecursive" />
+          <e p="angular-material-time-picker" t="IncludeRecursive" />
+          <e p="angular-messages" t="IncludeRecursive" />
+          <e p="angular-sanitize" t="IncludeRecursive" />
+          <e p="angular-translate" t="IncludeRecursive" />
+          <e p="angular-translate-interpolation-messageformat" t="IncludeRecursive" />
+          <e p="angular-translate-loader-static-files" t="IncludeRecursive" />
           <e p="awesome-typescript-loader" t="IncludeRecursive" />
           <e p="babel-core" t="IncludeRecursive" />
           <e p="babel-loader" t="IncludeRecursive" />
+          <e p="babel-plugin-transform-imports" t="IncludeRecursive" />
           <e p="babel-preset-env" t="IncludeRecursive" />
+          <e p="class-transformer" t="IncludeRecursive" />
+          <e p="color" t="IncludeRecursive" />
           <e p="copy-webpack-plugin" t="IncludeRecursive" />
           <e p="core-js" t="IncludeRecursive" />
           <e p="css-loader" t="IncludeRecursive" />
+          <e p="easy-query" t="IncludeRecursive" />
           <e p="environments" t="IncludeRecursive" />
           <e p="file-loader" t="IncludeRecursive" />
+          <e p="font-awesome" t="IncludeRecursive" />
+          <e p="google" t="IncludeRecursive" />
+          <e p="googlemaps" t="IncludeRecursive" />
           <e p="image-webpack-loader" t="IncludeRecursive" />
           <e p="jquery" t="IncludeRecursive" />
+          <e p="json-loader" t="IncludeRecursive" />
+          <e p="leaflet" t="IncludeRecursive" />
+          <e p="leaflet-control-geocoder" t="IncludeRecursive" />
+          <e p="leaflet-extra-markers" t="IncludeRecursive" />
+          <e p="leaflet-routing-machine" t="IncludeRecursive" />
           <e p="mapbox-gl" t="IncludeRecursive" />
+          <e p="moment" t="IncludeRecursive" />
+          <e p="ng-redux" t="IncludeRecursive" />
           <e p="ng2-datetime" t="IncludeRecursive" />
           <e p="ng2-select2" t="IncludeRecursive" />
           <e p="ngx-bootstrap" t="IncludeRecursive" />
           <e p="ngx-drag-drop" t="IncludeRecursive" />
           <e p="ngx-mapbox-gl" t="IncludeRecursive" />
+          <e p="ngx-smooth-dnd" t="IncludeRecursive" />
           <e p="node-sass" t="IncludeRecursive" />
           <e p="raw-loader" t="IncludeRecursive" />
+          <e p="redux" t="IncludeRecursive" />
           <e p="rxjs" t="IncludeRecursive" />
           <e p="rxjs-compat" t="IncludeRecursive" />
           <e p="sass-loader" t="IncludeRecursive" />
           <e p="select2" t="IncludeRecursive" />
+          <e p="serializer.ts" t="IncludeRecursive" />
           <e p="style-loader" t="IncludeRecursive" />
           <e p="ts-loader" t="IncludeRecursive" />
           <e p="tsconfig-paths-webpack-plugin" t="IncludeRecursive" />
@@ -128,13 +171,129 @@
               <e p="routes.component.html" t="Include" />
               <e p="routes.component.scss" t="Include" />
               <e p="routes.component.ts" t="Include" />
+              <e p="v1" t="Include">
+                <e p="assets" t="Include">
+                  <e p="trips-en.json" t="Include" />
+                </e>
+                <e p="controllers" t="Include">
+                  <e p="dynamic-dialog-controller.ts" t="Include" />
+                  <e p="passenger-count-dialog-controller.ts" t="Include" />
+                  <e p="route-description-dialog-controller.ts" t="Include" />
+                  <e p="trip-diary-controller.ts" t="Include" />
+                  <e p="trip-diary-route-mode-controller.ts" t="Include" />
+                  <e p="trip-diary-timeline-dialog-controller.ts" t="Include" />
+                  <e p="trip-diary-timeline-home-confirm-dialog-controller.ts" t="Include" />
+                </e>
+                <e p="directives" t="Include">
+                  <e p="trip-route-mode-directive.ts" t="Include" />
+                </e>
+                <e p="interfaces" t="Include">
+                  <e p="trip-route-mode-diary-scope.ts" t="Include" />
+                </e>
+                <e p="js" t="Include">
+                  <e p="lrm-google.js" t="Include" />
+                </e>
+                <e p="shared" t="Include">
+                  <e p="controllers" t="Include">
+                    <e p="survey-map-controller.ts" t="Include" />
+                  </e>
+                  <e p="directives" t="Include">
+                    <e p="drag-resize-directive.ts" t="Include" />
+                    <e p="prevent-scroll-directive.ts" t="Include" />
+                    <e p="scroll-view-watcher.ts" t="Include" />
+                    <e p="survey-map-directive.ts" t="Include" />
+                    <e p="survey-map-scope.ts" t="Include" />
+                  </e>
+                  <e p="filters" t="Include">
+                    <e p="date-filter-brackets.ts" t="Include" />
+                    <e p="date-filter.ts" t="Include" />
+                    <e p="html-filter.ts" t="Include" />
+                    <e p="ordinal-filter.ts" t="Include" />
+                    <e p="time-filter.ts" t="Include" />
+                  </e>
+                  <e p="services" t="Include">
+                    <e p="survey-config-service.ts" t="Include" />
+                    <e p="survey-location.ts" t="Include" />
+                  </e>
+                  <e p="survey-map-config.ts" t="Include" />
+                  <e p="survey-map-location.ts" t="Include" />
+                  <e p="survey-map-marker-type.ts" t="Include" />
+                  <e p="survey-map-marker.ts" t="Include" />
+                  <e p="survey-map-route.ts" t="Include" />
+                  <e p="survey-map-svg-icon.ts" t="Include" />
+                  <e p="templates" t="Include">
+                    <e p="survey-map.html" t="Include" />
+                  </e>
+                </e>
+                <e p="styles" t="Include">
+                  <e p="colours.scss" t="Include" />
+                  <e p="shared.scss" t="Include" />
+                  <e p="trips-mobile.scss" t="Include" />
+                  <e p="trips.scss" t="Include" />
+                </e>
+                <e p="templates" t="Include">
+                  <e p="dynamic-dialog.html" t="Include" />
+                  <e p="passenger-count-dialog.html" t="Include" />
+                  <e p="route-description-dialog.html" t="Include" />
+                  <e p="trip-diary-delete-mode-switch-popup.html" t="Include" />
+                  <e p="trip-diary-route-delete-popup.html" t="Include" />
+                  <e p="trip-diary-switch-mode-popup.html" t="Include" />
+                  <e p="trip-route-mode.html" t="Include" />
+                  <e p="trips_template.html" t="Include" />
+                </e>
+                <e p="ts" t="Include">
+                  <e p="bootstrap.ts" t="Include" />
+                  <e p="config.ts" t="Include" />
+                  <e p="index.ts" t="Include" />
+                  <e p="survey-manager-controller.ts" t="Include" />
+                  <e p="survey-manager-events.ts" t="Include" />
+                  <e p="survey-manager.ts" t="Include" />
+                  <e p="survey-multipage.ts" t="Include" />
+                  <e p="survey-page.ts" t="Include" />
+                  <e p="survey-question-interface.ts" t="Include" />
+                  <e p="survey-question.ts" t="Include" />
+                  <e p="survey.ts" t="Include" />
+                  <e p="timeline-scope.ts" t="Include" />
+                  <e p="trip-diary-module.ts" t="Include" />
+                  <e p="trip-diary-question.ts" t="Include" />
+                  <e p="trip-diary-service.ts" t="Include" />
+                  <e p="trip-diary-tour.ts" t="Include" />
+                  <e p="trip-leg.ts" t="Include" />
+                  <e p="trip-location.ts" t="Include" />
+                  <e p="trip-mode.ts" t="Include" />
+                  <e p="trip-route.ts" t="Include" />
+                  <e p="trip-timeline.ts" t="Include" />
+                  <e p="trips-actions.ts" t="Include" />
+                  <e p="trips-diary.ts" t="Include" />
+                  <e p="trips-question-state.ts" t="Include" />
+                  <e p="trips-reducers-helper.ts" t="Include" />
+                  <e p="trips-reducers.ts" t="Include" />
+                  <e p="trips-scope.ts" t="Include" />
+                </e>
+              </e>
             </e>
+            <e p="routes-v1" t="Include">
+              <e p="routes-v1.component.html" t="Include" />
+              <e p="routes-v1.component.scss" t="Include" />
+              <e p="routes-v1.component.ts" t="Include" />
+            </e>
+          </e>
+          <e p="directives" t="Include">
+            <e p="trip-route-mode.directive.ts" t="Include" />
+          </e>
+          <e p="routes.module.ts" t="Include" />
+          <e p="services" t="Include">
+            <e p="routes.service.ts" t="Include" />
           </e>
           <e p="TripDiaryRoutes.cs" t="Include" />
         </e>
         <e p="timeline" t="Include">
           <e p="assets" t="Include">
             <e p="_timeline.scss" t="Include" />
+            <e p="locale" t="Include">
+              <e p="en.json" t="Include" />
+              <e p="fr.json" t="Include" />
+            </e>
           </e>
           <e p="components" t="Include">
             <e p="timeline" t="Include">
@@ -144,22 +303,28 @@
               <e p="timeline.component.scss" t="Include" />
               <e p="timeline.component.sm.scss" t="Include" />
               <e p="timeline.component.ts" t="Include" />
-              <e p="timeline.component.xs.scss" t="Include" />
             </e>
             <e p="timeline-dock" t="Include">
               <e p="timeline-dock.component.html" t="Include" />
               <e p="timeline-dock.component.scss" t="Include" />
+              <e p="timeline-dock.component.sm.scss" t="Include" />
               <e p="timeline-dock.component.ts" t="Include" />
+              <e p="timeline-dock.lg.component.scss" t="Include" />
               <e p="timeline-dock.lg.scss" t="Include" />
               <e p="timeline-dock.md.scss" t="Include" />
               <e p="timeline-dock.scss" t="Include" />
-              <e p="timeline-dock.sm.scss" t="Include" />
+              <e p="timeline-dock.sm.component.scss" t="Include" />
               <e p="timeline-dock.xs.scss" t="Include" />
             </e>
             <e p="timeline-entry-item" t="Include">
               <e p="timeline-entry-item.component.html" t="Include" />
               <e p="timeline-entry-item.component.scss" t="Include" />
               <e p="timeline-entry-item.component.ts" t="Include" />
+            </e>
+            <e p="timeline-new-entry" t="Include">
+              <e p="timeline-new-entry.component.html" t="Include" />
+              <e p="timeline-new-entry.component.scss" t="Include" />
+              <e p="timeline-new-entry.component.ts" t="Include" />
             </e>
             <e p="timeline-shelf" t="Include">
               <e p="timeline-shelf.component.html" t="Include" />
@@ -171,6 +336,11 @@
               <e p="timeline-slot.component.scss" t="Include" />
               <e p="timeline-slot.component.ts" t="Include" />
             </e>
+            <e p="timeline-summary" t="Include">
+              <e p="timeline-summary.component.html" t="Include" />
+              <e p="timeline-summary.component.scss" t="Include" />
+              <e p="timeline-summary.component.ts" t="Include" />
+            </e>
             <e p="timeline-wedge" t="Include">
               <e p="timeline-wedge.component.html" t="Include" />
               <e p="timeline-wedge.component.scss" t="Include" />
@@ -180,6 +350,7 @@
           <e p="models" t="Include">
             <e p="timeline-configuration.model.ts" t="Include" />
             <e p="timeline-entry.model.ts" t="Include" />
+            <e p="timeline-location-purpose.ts" t="Include" />
             <e p="timeline-state.model.ts" t="Include" />
           </e>
           <e p="redux" t="Include">
@@ -188,6 +359,9 @@
           <e p="services" t="Include">
             <e p="timeline.service.ts" t="Include" />
           </e>
+          <e p="shared" t="Include">
+            <e p="rxjs.ts" t="Include" />
+          </e>
           <e p="timeline.module.ts" t="Include" />
           <e p="TripDiaryTimeline.cs" t="Include" />
         </e>
@@ -195,8 +369,10 @@
         <e p="TripDiaryController.cs" t="Include" />
         <e p="TripDiaryService.cs" t="Include" />
         <e p="tsconfig.json" t="Include" />
+        <e p="tslint.json" t="Include" />
         <e p="webpack.config.dev.js" t="Include" />
         <e p="webpack.config.js" t="Include" />
+        <e p="webpack.config.production.js" t="Include" />
       </e>
       <e p="traisi-trip-diary.sln" t="IncludeFlat" />
     </e>
