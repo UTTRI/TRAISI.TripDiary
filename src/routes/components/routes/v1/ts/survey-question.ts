@@ -283,8 +283,6 @@ export class SurveyQuestion {
 		let jsonData = surveyData;
 		// let startDate = moment(jsonData['startDate']);
 
-		
-
 		this.todayDateDisplay = startDate.format('MMMM Do');
 
 		// let endDate = moment(jsonData['startDate']).add(1, 'days');
@@ -432,7 +430,5 @@ export class SurveyQuestion {
 	 * Returns the any response data that may exist on the server.
 	 * @returns {string}
 	 */
-	protected loadSavedResponseData() {
-	
-	}
+	protected loadSavedResponseData() {}
 }
