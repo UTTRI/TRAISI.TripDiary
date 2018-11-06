@@ -5,11 +5,11 @@ using TRAISI.SDK.Interfaces;
 
 namespace TRAISI.SDK.Questions
 {
-    [SurveyQuestion(QuestionResponseType.Timeline, 
+    [SurveyQuestion(QuestionResponseType.Timeline,
         CodeBundleName = "traisi-trip-diary-timeline.module.js",
         InternalNavigationViewCount = 2,
-        ModuleDependencies = new string [] {"traisi-questions-map.module.js"}
-        
+        ModuleDependencies = new string[] { "location" }
+
         )]
     public class TripDiaryTimeline : ISurveyQuestion
     {
