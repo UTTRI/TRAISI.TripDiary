@@ -50,7 +50,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 					name: 'traisi-timeline-question',
 					id: 'trip-diary-timeline',
 					component: TimelineComponent,
-					dependencies: ['trip-diary-timeline-wedge']
+					dependencies: ['location']
 				},
 				{
 					name: 'traisi-timeline-wedge',
@@ -59,6 +59,13 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 				}
 			],
 			multi: true
+		},
+		{
+			provide: 'dependencies',
+			useValue: {
+				dependency: true,
+				name: 'location'
+			}
 		}
 	],
 	imports: [
@@ -72,7 +79,6 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 		FormsModule,
 		NgxSmoothDnDModule,
 		TooltipModule.forRoot()
-		//TranslateModule.forRoot()
 	]
 })
 export default class TimelineModule {}
