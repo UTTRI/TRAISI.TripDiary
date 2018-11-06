@@ -1,4 +1,4 @@
-//import {INgRedux} from "ng-redux";
+// import {INgRedux} from "ng-redux";
 import * as TripsActions from './trips-actions';
 import { TripsQuestionState } from './trips-question-state';
 import { TripRoute } from './trip-route';
@@ -99,10 +99,9 @@ export class TripDiaryService {
 	};
 	private _renderCallbacks = [];
 
-	
 	/**
 	 * Creates an instance of trip diary service.
-	 * @param _$ngRedux 
+	 * @param _$ngRedux
 	 */
 	constructor(private _$ngRedux: any) {
 		let unsubscribe = _$ngRedux.connect(
@@ -187,14 +186,12 @@ export class TripDiaryService {
 		// this._tripDiaryTourService.routesHidden();
 	}
 
-
-
-/**
- * Should ask no route description
- * @param modeName 
- * @returns true if ask no route description 
- */
-public shouldAskNoRouteDescription(modeName: string): boolean {
+	/**
+	 * Should ask no route description
+	 * @param modeName
+	 * @returns true if ask no route description
+	 */
+	public shouldAskNoRouteDescription(modeName: string): boolean {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
 				if (subMode.name == modeName) {

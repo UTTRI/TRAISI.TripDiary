@@ -1,47 +1,36 @@
-import * as ng from "angular";
+import * as ng from 'angular';
 
 export class RouteDescriptionDialogController {
-    get description() {
-        return this._description;
-    }
+	get description() {
+		return this._description;
+	}
 
-    set description(value) {
-        this._description = value;
-    }
+	set description(value) {
+		this._description = value;
+	}
 
-    private _description;
+	private _description;
 
-    /**
-     *
-     * @param {angular.IScope} $scope
-     * @param {"angular".material.IDialogService} $mdDialog
-     */
-    constructor(private $scope: ng.IScope, private $mdDialog: ng.material.IDialogService) {
+	/**
+	 *
+	 * @param {angular.IScope} $scope
+	 * @param {"angular".material.IDialogService} $mdDialog
+	 */
+	constructor(private $scope: ng.IScope, private $mdDialog: ng.material.IDialogService) {
+		this._description = '';
+	}
 
+	/**
+	 * Hides the overlay dialog
+	 */
+	private close() {
+		this.$mdDialog.hide(this._description);
+	}
 
-        this._description = "";
-
-    }
-
-    /**
-     * Hides the overlay dialog
-     */
-    private close() {
-
-
-        this.$mdDialog.hide(this._description);
-    }
-
-    /**
-     * Hides the overlay dialog
-     */
-    private cancel() {
-
-
-        this.$mdDialog.cancel();
-    }   
-
-
-
-
+	/**
+	 * Hides the overlay dialog
+	 */
+	private cancel() {
+		this.$mdDialog.cancel();
+	}
 }

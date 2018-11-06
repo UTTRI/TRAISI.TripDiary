@@ -1,213 +1,200 @@
-import {TripLeg} from './trip-leg';
+import { TripLeg } from './trip-leg';
 import * as L from 'leaflet';
-import {TripLocation} from "./trip-location";
-import {config} from "./config";
-import {Type} from "class-transformer";
-import "reflect-metadata";
-import {isNullOrUndefined} from "util";
+import { TripLocation } from './trip-location';
+import { config } from './config';
+import { Type } from 'class-transformer';
+import 'reflect-metadata';
+import { isNullOrUndefined } from 'util';
 /**
  *
  */
 export class TripRoute {
-    /**
-     *
-     * @param {TripLocation} startLocation
-     * @param {TripLocation} endLocation
-     */
-    constructor() {
+	/**
+	 *
+	 * @param {TripLocation} startLocation
+	 * @param {TripLocation} endLocation
+	 */
+	constructor() {}
 
+	/**
+	 * Each leg of this route, each leg is broken into different modes
+	 */
+	private _tripLegs: TripLeg[];
 
-    }
+	get tripLegs(): TripLeg[] {
+		return this._tripLegs;
+	}
 
-    /**
-     * Each leg of this route, each leg is broken into different modes
-     */
-    private _tripLegs: TripLeg[];
+	set tripLegs(value: TripLeg[]) {
+		this._tripLegs = value;
+	}
 
-    get tripLegs(): TripLeg[] {
-        return this._tripLegs;
-    }
+	@Type(() => TripLocation)
+	private _startLocation: TripLocation;
 
-    set tripLegs(value: TripLeg[]) {
-        this._tripLegs = value;
-    }
+	get startLocation(): TripLocation {
+		return this._startLocation;
+	}
 
-    @Type(() => TripLocation)
-    private _startLocation: TripLocation;
+	set startLocation(value: TripLocation) {
+		this._startLocation = value;
+	}
 
-    get startLocation(): TripLocation {
-        return this._startLocation;
-    }
+	@Type(() => TripLocation)
+	private _endLocation: TripLocation;
 
-    set startLocation(value: TripLocation) {
-        this._startLocation = value;
-    }
+	get endLocation(): TripLocation {
+		return this._endLocation;
+	}
 
-    @Type(() => TripLocation)
-    private _endLocation: TripLocation;
+	set endLocation(value: TripLocation) {
+		this._endLocation = value;
+	}
 
-    get endLocation(): TripLocation {
-        return this._endLocation;
-    }
+	private _id: string;
 
-    set endLocation(value: TripLocation) {
-        this._endLocation = value;
-    }
+	get id(): string {
+		return this._id;
+	}
 
-    private _id: string;
+	set id(value: string) {
+		this._id = value;
+	}
 
-    get id(): string {
-        return this._id;
-    }
+	private _editComplete: boolean;
 
-    set id(value: string) {
-        this._id = value;
-    }
+	get editComplete(): boolean {
+		return this._editComplete;
+	}
 
-    private _editComplete: boolean;
+	set editComplete(value: boolean) {
+		this._editComplete = value;
+	}
 
-    get editComplete(): boolean {
-        return this._editComplete;
-    }
+	_activeTripLegIndex: number;
 
-    set editComplete(value: boolean) {
-        this._editComplete = value;
-    }
+	get activeTripLegIndex(): number {
+		return this._activeTripLegIndex;
+	}
 
-    _activeTripLegIndex: number;
+	set activeTripLegIndex(value: number) {
+		this._activeTripLegIndex = value;
+	}
 
-    get activeTripLegIndex(): number {
-        return this._activeTripLegIndex;
-    }
+	/**
+	 *
+	 * @param {TripLocation} startLocation
+	 * @param {TripLocation} endLocation
+	 * @returns {TripRoute}
+	 */
+	public static create(startLocation: TripLocation, endLocation: TripLocation): TripRoute {
+		let tripRoute = new TripRoute();
 
-    set activeTripLegIndex(value: number) {
-        this._activeTripLegIndex = value;
-    }
+		tripRoute._tripLegs = [];
+		tripRoute._endLocation = endLocation;
+		tripRoute._startLocation = startLocation;
+		tripRoute._activeTripLegIndex = 0;
+		tripRoute._editComplete = false;
 
-    /**
-     * Determines whether embedded location is
-     * @param secondInFirst 
-     * @returns true if embedded location 
-     */
-    private isEmbeddedLocation(secondInFirst: boolean): boolean {
-        
-        let tripLocation1 = this.startLocation;
-        let tripLocation2 = this.endLocation;
-        if (secondInFirst) {
-            if (tripLocation2._startTime > tripLocation1._startTime &&
-                tripLocation2._endTime > tripLocation1._startTime && tripLocation2._startTime < tripLocation1._endTime &&
-                tripLocation2._endTime < tripLocation1._endTime) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else 
-        {
-            if (tripLocation1._startTime > tripLocation2._startTime &&
-                tripLocation1._endTime > tripLocation2._startTime && 
-                (isNullOrUndefined(tripLocation2._endTime) || tripLocation1._startTime < tripLocation2._endTime) &&
-                (isNullOrUndefined(tripLocation2._endTime) || tripLocation1._endTime < tripLocation2._endTime)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-    }
+		tripRoute._tripLegs[0] = new TripLeg();
+		tripRoute.tripLegs[0]._isComplete = false;
 
-    public getAdjustedStartTime(): Date {
-        let locOneInTwo = this.isEmbeddedLocation(false);
-        let locTwoInOne = this.isEmbeddedLocation(true);
+		tripRoute.tripLegs[0].waypoints = [];
+		tripRoute.tripLegs[0].waypoints[0] = startLocation.latLng;
+		tripRoute.tripLegs[0].waypoints[1] = endLocation.latLng;
 
-        if (locOneInTwo || (!locOneInTwo && !locTwoInOne))
-        {
-            return this.startLocation.endTime;
-        }
-        else
-        {
-            return null;
-        }
-        
-    }
+		tripRoute.tripLegs[0]._mode = config.modes['transit'];
 
-    public getAdjustedEndTime(): Date {
-        let locOneInTwo = this.isEmbeddedLocation(false);
-        let locTwoInOne = this.isEmbeddedLocation(true);
-        if (locTwoInOne || (!locOneInTwo && !locTwoInOne))
-        {
-            return this.endLocation.startTime;
-        }
-        else
-        {
-            return null;
-        }      
-    }
+		tripRoute.init();
 
-    /**
-     *
-     * @param {TripLocation} startLocation
-     * @param {TripLocation} endLocation
-     * @returns {TripRoute}
-     */
-    public static create(startLocation: TripLocation, endLocation: TripLocation): TripRoute {
-        let tripRoute = new TripRoute();
+		return tripRoute;
+	}
 
-        tripRoute._tripLegs = [];
-        tripRoute._endLocation = endLocation;
-        tripRoute._startLocation = startLocation;
-        tripRoute._activeTripLegIndex = 0;
-        tripRoute._editComplete = false;
+	/**
+	 * Compares two routes and determines if they are "similar". Similar being they have the same start and end
+	 * locations, but other properties can vary (location type etc). This is to check preservation of used data
+	 * when recreating routes.
+	 * @param {TripRoute} route1
+	 * @param {TripRoute} route2
+	 */
+	public static similarRoutes(route1: TripRoute, route2: TripRoute): boolean {
+		if (route1.startLocation.id === route2.startLocation.id && route1.endLocation.id === route2.endLocation.id) {
+			if (
+				route1.startLocation.latLng.lat === route2.startLocation.latLng.lat &&
+				route1.endLocation.latLng.lat === route2.endLocation.latLng.lat
+			) {
+				return true;
+			}
+		} else {
+			return false;
+		}
+	}
 
+	/**
+	 * Determines whether embedded location is
+	 * @param secondInFirst
+	 * @returns true if embedded location
+	 */
+	private isEmbeddedLocation(secondInFirst: boolean): boolean {
+		let tripLocation1 = this.startLocation;
+		let tripLocation2 = this.endLocation;
+		if (secondInFirst) {
+			if (
+				tripLocation2._startTime > tripLocation1._startTime &&
+				tripLocation2._endTime > tripLocation1._startTime &&
+				tripLocation2._startTime < tripLocation1._endTime &&
+				tripLocation2._endTime < tripLocation1._endTime
+			) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			if (
+				tripLocation1._startTime > tripLocation2._startTime &&
+				tripLocation1._endTime > tripLocation2._startTime &&
+				(isNullOrUndefined(tripLocation2._endTime) || tripLocation1._startTime < tripLocation2._endTime) &&
+				(isNullOrUndefined(tripLocation2._endTime) || tripLocation1._endTime < tripLocation2._endTime)
+			) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
 
-        tripRoute._tripLegs[0] = new TripLeg();
-        tripRoute.tripLegs[0]._isComplete = false;
+	public getAdjustedStartTime(): Date {
+		let locOneInTwo = this.isEmbeddedLocation(false);
+		let locTwoInOne = this.isEmbeddedLocation(true);
 
-        tripRoute.tripLegs[0].waypoints = [];
-        tripRoute.tripLegs[0].waypoints[0] = startLocation.latLng;
-        tripRoute.tripLegs[0].waypoints[1] = endLocation.latLng;
+		if (locOneInTwo || (!locOneInTwo && !locTwoInOne)) {
+			return this.startLocation.endTime;
+		} else {
+			return null;
+		}
+	}
 
+	public getAdjustedEndTime(): Date {
+		let locOneInTwo = this.isEmbeddedLocation(false);
+		let locTwoInOne = this.isEmbeddedLocation(true);
+		if (locTwoInOne || (!locOneInTwo && !locTwoInOne)) {
+			return this.endLocation.startTime;
+		} else {
+			return null;
+		}
+	}
 
-        tripRoute.tripLegs[0]._mode = config.modes["transit"];
+	public generateId() {
+		this.id = Math.random()
+			.toString(36)
+			.substring(7);
+	}
 
-
-        tripRoute.init();
-
-        return tripRoute;
-    }
-
-    /**
-     * Compares two routes and determines if they are "similar". Similar being they have the same start and end
-     * locations, but other properties can vary (location type etc). This is to check preservation of used data
-     * when recreating routes.
-     * @param {TripRoute} route1
-     * @param {TripRoute} route2
-     */
-    public static similarRoutes(route1: TripRoute, route2: TripRoute): boolean {
-
-        if (route1.startLocation.id == route2.startLocation.id && route1.endLocation.id == route2.endLocation.id) {
-
-
-            if (route1.startLocation.latLng.lat == route2.startLocation.latLng.lat && route1.endLocation.latLng.lat == route2.endLocation.latLng.lat) {
-
-                return true;
-            }
-        }
-        else {
-            return false;
-        }
-    }
-
-    public generateId() {
-        this.id = Math.random().toString(36).substring(7);
-    }
-
-    public init() {
-        //this.latLng = new L.LatLng(0, 0);
-        this.id = Math.random().toString(36).substring(7);
-        //console.log(new L.LatLng(0, 0));
-    }
-
-
+	public init() {
+		// this.latLng = new L.LatLng(0, 0);
+		this.id = Math.random()
+			.toString(36)
+			.substring(7);
+		// console.log(new L.LatLng(0, 0));
+	}
 }

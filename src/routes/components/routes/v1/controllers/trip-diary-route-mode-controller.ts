@@ -92,42 +92,42 @@ export class TripDiaryRouteModeController {
 	 * @param {TripsQuestionState} state
 	 */
 	private stateSubscription = (state: TripsQuestionState) => {
-		if (isNullOrUndefined(state.madeTrips) || state.madeTrips.value == false) {
+		if (isNullOrUndefined(state.madeTrips) || state.madeTrips.value === false) {
 			this._tripDiaryService.routesHidden();
 		}
 
-		if (state.previousAction == SET_TRIP_LEG_DATA && state.switchRouteModeActive == false) {
+		if (state.previousAction === SET_TRIP_LEG_DATA && state.switchRouteModeActive === false) {
 			this.toggleMapState(MAP_OVERLAY_STATE.FULL);
 
 			this.refreshMap();
 		}
 
-		if (state.activeRouteIndex == 0) {
+		if (state.activeRouteIndex === 0) {
 			if (
 				!isNullOrUndefined(this._tripDiaryService.getActiveTripRoute()) &&
-				this._tripDiaryService.getActiveTripRoute().activeTripLegIndex == 0 &&
+				this._tripDiaryService.getActiveTripRoute().activeTripLegIndex === 0 &&
 				(isNullOrUndefined(this._tripDiaryService.getActiveTripLeg().mode) ||
 					isNullOrUndefined(this._tripDiaryService.getActiveTripLeg().mode.modeName))
 			) {
 				this.$scope['showSelectModeTourTripText'] = true;
 				this.$scope['tourPassedInitial'] = true;
 				this.$scope['expandPanelText'] = true;
-				//this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
-			} else if (state.previousAction == SET_TRIP_MODE && this.$scope['tourPassedInitial']) {
+				// this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+			} else if (state.previousAction === SET_TRIP_MODE && this.$scope['tourPassedInitial']) {
 				this.$scope['showSelectModeTourTripText'] = false;
-				//this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+				// this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
 				this.$scope['showSelectRouteTourTripText'] = true;
-			} else if (state.previousAction == SET_TRIP_LEG_EDIT_COMPLETE) {
+			} else if (state.previousAction === SET_TRIP_LEG_EDIT_COMPLETE) {
 				this.$scope['showSelectModeTourTripText'] = false;
 				this.$scope['showSelectRouteTourTripText'] = false;
 				this.$scope['showMultipleTourTripText'] = false;
-				//this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
-			} else if (state.previousAction == SET_TRIP_LEG_DATA) {
+				// this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+			} else if (state.previousAction === SET_TRIP_LEG_DATA) {
 				if (!isNullOrUndefined(this.$scope['selectOnce'])) {
 					this.$scope['showMultipleTourTripText'] = true;
 					this.$scope['showSelectModeTourTripText'] = false;
 					this.$scope['showSelectRouteTourTripText'] = false;
-					//this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+					// this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
 				} else {
 					this.$scope['selectOnce'] = true;
 				}
@@ -144,12 +144,12 @@ export class TripDiaryRouteModeController {
 
 		if (!this._tripDiaryService.state.switchRouteModeActive) {
 			if (value) {
-				//console.log("it was active");
+				// console.log("it was active");
 
 				if (!isNullOrUndefined(this._tripDiaryService.getActiveTripLeg())) {
 					!isNullOrUndefined(this._tripDiaryService.getActiveTripLeg().mode);
 					{
-						//this._tripDiaryService.setTripLegEditComplete(this._tripDiaryService.state.activeRouteIndex,
+						// this._tripDiaryService.setTripLegEditComplete(this._tripDiaryService.state.activeRouteIndex,
 						//      this._tripDiaryService.getActiveTripRoute().activeTripLegIndex);
 
 						this.toggleMapState(MAP_OVERLAY_STATE.FULL);
@@ -157,8 +157,8 @@ export class TripDiaryRouteModeController {
 					}
 				} else {
 				}
-				//this._tripDiaryService.setTripLegActive(-1);
-				//this._tripDiaryService.getActiveTripLeg()
+				// this._tripDiaryService.setTripLegActive(-1);
+				// this._tripDiaryService.getActiveTripLeg()
 			}
 
 			this.$scope['mapOverlayState'] = '';
@@ -219,7 +219,7 @@ export class TripDiaryRouteModeController {
 				}
 			} else {
 				if (window.matchMedia('(max-width: 480px)').matches) {
-					if (this.$scope['mapOverlayState'] != MAP_OVERLAY_STATE.FULL) {
+					if (this.$scope['mapOverlayState'] !== MAP_OVERLAY_STATE.FULL) {
 						this.$scope['_tdc']['_routeMap'].fitTripRouteBounds(this._tripDiaryService.getActiveTripRoute(), {
 							paddingTopLeft: [10, 10],
 							paddingBottomRight: [0, 100]
@@ -292,12 +292,12 @@ export class TripDiaryRouteModeController {
 			})
 
 			.then(
-				result => {
-					//console.log("callin back");
+				(result) => {
+					// console.log("callin back");
 					callback(result);
 				},
 				() => {
-					//console.log("cancelled?");
+					// console.log("cancelled?");
 				}
 			);
 	}
@@ -306,7 +306,7 @@ export class TripDiaryRouteModeController {
 	 *
 	 * @param {boolean} value
 	 */
-	private setSwitchRouteModeStateClick = v => {
+	private setSwitchRouteModeStateClick = (v) => {
 		if (v) {
 			$('path.leaflet-interactive').css('pointer-events', 'none');
 		} else {
@@ -320,18 +320,18 @@ export class TripDiaryRouteModeController {
 		this.$scope['showSelectRouteTourTripText'] = false;
 		this._tripDiaryService.setSwitchRouteModeState(v);
 
-		//this.toggleRouteMap(true);
+		// this.toggleRouteMap(true);
 		this.toggleMapState(MAP_OVERLAY_STATE.COLLAPSED);
 		this.refreshMap();
 	};
 
 	private startScrollEnter() {
-		//console.log("enter");
+		// console.log("enter");
 		this._tripDiaryService.setElementScrollVisibility(TRIP_ROUTE_MODE_VIEW, true);
 	}
 
 	private startScrollLeave() {
-		//console.log("leave");
+		// console.log("leave");
 
 		this._tripDiaryService.setElementScrollVisibility(TRIP_ROUTE_MODE_VIEW, false);
 	}
@@ -358,7 +358,7 @@ export class TripDiaryRouteModeController {
 						modeConfig.customRoute.dataInputs,
 						modeConfig.customRoute.dialogTitle,
 						tripLeg.data,
-						result => {
+						(result) => {
 							this._tripDiaryService.addTripLegExtraData(
 								this._tripDiaryService.state.activeRouteIndex,
 								this._tripDiaryService.getActiveTripRoute()._activeTripLegIndex,
@@ -433,7 +433,7 @@ export class TripDiaryRouteModeController {
 	 *
 	 */
 	public $onInit() {
-		//this._tripDiaryService.tripLegShown();
+		// this._tripDiaryService.tripLegShown();
 
 		this.$scope['tourPassedInitial'] = false;
 		this.$scope['showMultipleTourTripText'] = false;
@@ -447,13 +447,13 @@ export class TripDiaryRouteModeController {
 	 * Hook into the SMC's onNext callback;
 	 * @returns {boolean}
 	 */
-	private onNext: (activePage) => boolean = activePage => {
+	private onNext: (activePage) => boolean = (activePage) => {
 		if (!isNullOrUndefined(activePage.parentQuestion)) {
-			if (activePage.parentQuestion.id != this.questionId) {
+			if (activePage.parentQuestion.id !== this.questionId) {
 				return true;
 			}
 		} else {
-			if (activePage['id'] != this.questionId) {
+			if (activePage['id'] !== this.questionId) {
 				return true;
 			}
 		}
@@ -462,9 +462,9 @@ export class TripDiaryRouteModeController {
 			return true;
 		}
 
-		if (activePage[0].dataset.segmentName == 'TIMELINE') {
-			//set active route to 0
-			if (this._tripDiaryService.state.activeRouteIndex != 0) {
+		if (activePage[0].dataset.segmentName === 'TIMELINE') {
+			// set active route to 0
+			if (this._tripDiaryService.state.activeRouteIndex !== 0) {
 				this.setRouteEditActive(0);
 			}
 
@@ -473,10 +473,10 @@ export class TripDiaryRouteModeController {
 			});
 		}
 
-		if (activePage[0].dataset.segmentName == 'ROUTE_MAP') {
+		if (activePage[0].dataset.segmentName === 'ROUTE_MAP') {
 			let currentIndex = this._tripDiaryService.state.activeRouteIndex;
 			let currentTripLeg = this._tripDiaryService.getActiveTripRoute().activeTripLegIndex;
-			var activeRoute = this._tripDiaryService.state.tripRoutes[this._tripDiaryService.state.activeRouteIndex];
+			let activeRoute = this._tripDiaryService.state.tripRoutes[this._tripDiaryService.state.activeRouteIndex];
 			let modesFilled: boolean = true;
 
 			for (let tripLeg of activeRoute.tripLegs) {
@@ -500,7 +500,7 @@ export class TripDiaryRouteModeController {
 			}
 		}
 
-		//return false
+		// return false
 		return true;
 	};
 
@@ -509,13 +509,13 @@ export class TripDiaryRouteModeController {
 	 * @param activePage
 	 * @returns {boolean}
 	 */
-	private onPrevious: (activePage) => boolean = activePage => {
+	private onPrevious: (activePage) => boolean = (activePage) => {
 		if (!isNullOrUndefined(activePage.parentQuestion)) {
-			if (activePage.parentQuestion.id != this.questionId) {
+			if (activePage.parentQuestion.id !== this.questionId) {
 				return true;
 			}
 		} else {
-			if (activePage['id'] != this.questionId) {
+			if (activePage['id'] !== this.questionId) {
 				return true;
 			}
 		}
@@ -524,7 +524,7 @@ export class TripDiaryRouteModeController {
 			return true;
 		}
 
-		if (activePage[0].dataset.segmentName == 'ROUTE_MAP') {
+		if (activePage[0].dataset.segmentName === 'ROUTE_MAP') {
 			let index = this._tripDiaryService.state.activeRouteIndex;
 			if (this._tripDiaryService.state.activeRouteIndex > 0) {
 				this.setRouteEditActive(index - 1);
@@ -532,7 +532,7 @@ export class TripDiaryRouteModeController {
 			}
 		}
 
-		//return false
+		// return false
 		return true;
 	};
 

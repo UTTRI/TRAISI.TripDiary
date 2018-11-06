@@ -1,240 +1,217 @@
-import {SurveyMapMarker} from "../shared/survey-map-marker";
-import {MarkerType} from "../shared/survey-map-marker-type";
-import {ISurveyLocation} from "../shared/services/survey-location";
-import {Type} from "serializer.ts/Decorators";
+import { SurveyMapMarker } from '../shared/survey-map-marker';
+import { MarkerType } from '../shared/survey-map-marker-type';
+import { ISurveyLocation } from '../shared/services/survey-location';
+import { Type } from 'serializer.ts/Decorators';
 
 export enum TripLocationType {
-    StartLocation = "START_LOCATION",
-    FinalLocation = "END_LOCATION",
-    IntermediateLocation = "INTERMEDIATE_LOCATION"
+	StartLocation = 'START_LOCATION',
+	FinalLocation = 'END_LOCATION',
+	IntermediateLocation = 'INTERMEDIATE_LOCATION'
 }
 
 export enum TimelineIcon {
-    Home = "home",
-    Work = "work",
-    School = "school",
-    Shopping = "shopping_cart",
-    Daycare = "child_friendly",
-    Default = "place",
-    Passenger = "fas fa-car",
-    Other = "map"
+	Home = 'home',
+	Work = 'work',
+	School = 'school',
+	Shopping = 'shopping_cart',
+	Daycare = 'child_friendly',
+	Default = 'place',
+	Passenger = 'fas fa-car',
+	Other = 'map'
 }
 
 /**
  * Trip Location, attachable to a Map
  */
 export class TripLocation extends SurveyMapMarker {
-    get lockedLocationId(): string {
-        return this._lockedLocationId;
-    }
+	get lockedLocationId(): string {
+		return this._lockedLocationId;
+	}
 
-    set lockedLocationId(value: string) {
-        this._lockedLocationId = value;
-    }
+	set lockedLocationId(value: string) {
+		this._lockedLocationId = value;
+	}
 
-    _valid: boolean;
-    _invalidReason: string;
-    _lockedLocationData: ISurveyLocation;
-    public timelineIcon: TimelineIcon;
-    private _lockedLocationId: string;
+	_valid: boolean;
+	_invalidReason: string;
+	_lockedLocationData: ISurveyLocation;
+	public timelineIcon: TimelineIcon;
+	private _lockedLocationId: string;
 
-    constructor() {
-        super();
+	constructor() {
+		super();
 
-        this._locationInput = "";
-        this._lockedLocationData = null;
-        this._locationName = "";
+		this._locationInput = '';
+		this._lockedLocationData = null;
+		this._locationName = '';
+	}
 
+	private _locationName;
 
-    }
+	get locationName() {
+		return this._locationName;
+	}
 
-    private _locationName;
+	/**
+	 *
+	 * @param {string} value
+	 */
+	set locationName(value: string) {
+		this._locationName = value;
+		this.label = value;
 
-    get locationName() {
-        return this._locationName;
-    }
+		if (value !== undefined) {
+		}
+	}
 
-    /**
-     *
-     * @param {string} value
-     */
-    set locationName(value: string) {
-        this._locationName = value;
-        this.label = value;
+	private _locationInput;
 
-        if (value != undefined) {
+	get locationInput() {
+		return this._locationInput;
+	}
 
-        }
-    }
+	set locationInput(value) {
+		this._locationInput = value;
+	}
 
-    private _locationInput;
+	private _locationPurpose: string;
 
-    get locationInput() {
-        return this._locationInput;
-    }
+	get locationPurpose(): string {
+		return this._locationPurpose;
+	}
 
-    set locationInput(value) {
-        this._locationInput = value;
-    }
+	set locationPurpose(value: string) {
+		this._locationPurpose = value;
 
-    private _locationPurpose: string;
+		if (value.toUpperCase() === 'SHOPPING') {
+			this.markerType = MarkerType.Shopping;
+			this.timelineIcon = TimelineIcon.Shopping;
+		} else if (value.toUpperCase() === 'DAYCARE') {
+			this.markerType = MarkerType.Daycare;
+			this.timelineIcon = TimelineIcon.Daycare;
+		} else if (value.toUpperCase() === 'FACILITATE_PASSENGER') {
+			this.markerType = MarkerType.Passenger;
+			this.timelineIcon = TimelineIcon.Passenger;
+		} else if (value.toUpperCase() === 'OTHER') {
+			this.markerType = MarkerType.Other;
+			this.timelineIcon = TimelineIcon.Other;
+		} else if (value.toUpperCase() === 'HOME') {
+			this.markerType = MarkerType.Home;
+			this.timelineIcon = TimelineIcon.Home;
+		} else if (value.toUpperCase() === 'WORK') {
+			this.markerType = MarkerType.Work;
+			this.timelineIcon = TimelineIcon.Work;
+		} else if (value.toUpperCase() === 'SCHOOL') {
+			this.markerType = MarkerType.School;
+			this.timelineIcon = TimelineIcon.School;
+		} else if (value.toUpperCase() === 'OTHER') {
+			this.markerType = MarkerType.Other;
+			this.timelineIcon = TimelineIcon.Other;
+		} else {
+			this.markerType = MarkerType.Default;
+			this.timelineIcon = TimelineIcon.Default;
+		}
 
-    get locationPurpose(): string {
-        return this._locationPurpose;
-    }
+		this.label = value;
+	}
 
-    set locationPurpose(value: string) {
-        this._locationPurpose = value;
+	@Type(() => Date)
+	_startTime: Date;
 
-        if (value.toUpperCase() == 'SHOPPING') {
-            this.markerType = MarkerType.Shopping;
-            this.timelineIcon = TimelineIcon.Shopping;
-        }
-        else if (value.toUpperCase() == 'DAYCARE') {
-            this.markerType = MarkerType.Daycare;
-            this.timelineIcon = TimelineIcon.Daycare;
-        }
-        else if (value.toUpperCase() == 'FACILITATE_PASSENGER') {
-            this.markerType = MarkerType.Passenger;
-            this.timelineIcon = TimelineIcon.Passenger;
-        }
-        else if (value.toUpperCase() == 'OTHER') {
-            this.markerType = MarkerType.Other;
-            this.timelineIcon = TimelineIcon.Other;
-        }
-        else if (value.toUpperCase() == "HOME") {
-            this.markerType = MarkerType.Home;
-            this.timelineIcon = TimelineIcon.Home;
-        }
-        else if (value.toUpperCase() == "WORK") {
-            this.markerType = MarkerType.Work;
-            this.timelineIcon = TimelineIcon.Work;
-        }
-        else if (value.toUpperCase() == "SCHOOL") {
-            this.markerType = MarkerType.School;
-            this.timelineIcon = TimelineIcon.School;
-        }
-        else if (value.toUpperCase() == "OTHER") {
+	get startTime(): Date {
+		return this._startTime;
+	}
 
-            this.markerType = MarkerType.Other;
-            this.timelineIcon = TimelineIcon.Other;
-        }
-        else {
-            this.markerType = MarkerType.Default;
-            this.timelineIcon = TimelineIcon.Default;
-        }
+	set startTime(value: Date) {
+		this._startTime = value;
+	}
 
-        this.label = value;
+	@Type(() => Date)
+	_endTime: Date;
 
-    }
+	get endTime(): Date {
+		return this._endTime;
+	}
 
-    @Type(() => Date)
-    _startTime: Date;
+	set endTime(value: Date) {
+		this._endTime = value;
+	}
 
-    get startTime(): Date {
-        return this._startTime;
-    }
+	_locationType: TripLocationType;
 
-    set startTime(value: Date) {
-        this._startTime = value;
-    }
+	get locationType(): TripLocationType {
+		return this._locationType;
+	}
 
-    @Type(() => Date)
-    _endTime: Date;
+	set locationType(value: TripLocationType) {
+		this._locationType = value;
+	}
 
-    get endTime(): Date {
-        return this._endTime;
-    }
+	_lockedLocation: boolean;
 
-    set endTime(value: Date) {
-        this._endTime = value;
-    }
+	get lockedLocation(): boolean {
+		return this._lockedLocation;
+	}
 
-    _locationType: TripLocationType;
+	set lockedLocation(value: boolean) {
+		this._lockedLocation = value;
+	}
 
-    get locationType(): TripLocationType {
-        return this._locationType;
-    }
+	private _otherLocationName: string;
 
-    set locationType(value: TripLocationType) {
-        this._locationType = value;
-    }
+	get otherLocationName(): string {
+		return this._otherLocationName;
+	}
 
-    _lockedLocation: boolean;
+	set otherLocationName(value: string) {
+		this._otherLocationName = value;
+	}
 
-    get lockedLocation(): boolean {
-        return this._lockedLocation;
-    }
+	private _otherLocationPurpose: string;
 
-    set lockedLocation(value: boolean) {
-        this._lockedLocation = value;
-    }
+	/**
+	 *
+	 * @returns {string}
+	 */
+	get otherLocationPurpose() {
+		return this._otherLocationPurpose;
+	}
 
-    private _otherLocationName: string;
+	/**
+	 *
+	 * @param {string} value
+	 */
+	set otherLocationPurpose(value: string) {}
 
-    get otherLocationName(): string {
-        return this._otherLocationName;
-    }
+	/**
+	 *
+	 * @returns {string}
+	 */
+	public displayName(): string {
+		if (this._locationName !== undefined) {
+			if (this._locationName.toUpperCase() !== 'OTHER') {
+				return this._locationName;
+			} else {
+				return this._otherLocationName;
+			}
+		} else {
+			return this._otherLocationName;
+		}
+	}
 
-    set otherLocationName(value: string) {
-        this._otherLocationName = value;
-    }
+	/**
+	 * Determines if the time / end time set  by this location is valid.
+	 * @returns {boolean}
+	 */
+	public valid(): boolean {
+		if (this._startTime.getHours() <= 4) {
+			return false;
+		}
 
-    private _otherLocationPurpose: string;
+		if (this._locationName == null) {
+			return false;
+		}
 
-    /**
-     *
-     * @returns {string}
-     */
-    get otherLocationPurpose() {
-        return this._otherLocationPurpose;
-    }
-
-    /**
-     *
-     * @param {string} value
-     */
-    set otherLocationPurpose(value: string) {
-
-
-    }
-
-    /**
-     *
-     * @returns {string}
-     */
-    public displayName(): string {
-        if (this._locationName != undefined) {
-            if (this._locationName.toUpperCase() != 'OTHER') {
-                return this._locationName;
-            }
-
-
-            else {
-                return this._otherLocationName
-            }
-        }
-        else {
-            return this._otherLocationName;
-        }
-    }
-
-    /**
-     * Determines if the time / end time set  by this location is valid.
-     * @returns {boolean}
-     */
-    public valid(): boolean {
-        if (this._startTime.getHours() <= 4) {
-            return false;
-        }
-
-        if (this._locationName == null) {
-            return false;
-        }
-
-        return true;
-
-    }
-
-
+		return true;
+	}
 }

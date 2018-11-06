@@ -1,20 +1,16 @@
-import {SurveyMapDirective} from './survey-map-directive';
-import {TripDiaryController} from "../../controllers/trip-diary-controller";
+import { SurveyMapDirective } from './survey-map-directive';
+import { TripDiaryController } from '../../controllers/trip-diary-controller';
 
 export interface ISurveyMapScope extends ng.IScope {
+	callback: (ctrl, address, latlng) => void;
 
+	ready: (surveyMap) => void;
 
-    callback: (ctrl, address, latlng) => void;
+	map: SurveyMapDirective;
 
-    ready: (surveyMap) => void;
+	controller: TripDiaryController;
 
-    map: SurveyMapDirective;
+	updateMarkers: (any) => any;
 
-    controller: TripDiaryController;
-
-    updateMarkers: (any) => any;
-
-    config: any;
-
-
+	config: any;
 }

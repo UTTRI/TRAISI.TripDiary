@@ -1,14 +1,13 @@
 export class HtmlFilter {
-    public static Factory() {
-        var factoryFunction = ($filter: ng.ISCEService) => {
-            ;
-            return (value: string) => {
-                return $filter.trustAsHtml(value);
-            };
-        };
+	public static Factory() {
+		let factoryFunction = ($filter: ng.ISCEService) => {
+			return (value: string) => {
+				return $filter.trustAsHtml(value);
+			};
+		};
 
-        factoryFunction.$inject = ['$sce'];
+		factoryFunction.$inject = ['$sce'];
 
-        return factoryFunction;
-    }
+		return factoryFunction;
+	}
 }

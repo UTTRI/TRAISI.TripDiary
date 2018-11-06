@@ -1,7 +1,6 @@
 import { TripsQuestionState } from '../ts/trips-question-state';
 
 import * as TripsActions from '../ts/trips-actions';
-import * as config from '../ts/config';
 import { TripRoute } from '../ts/trip-route';
 import { TripLeg } from '../ts/trip-leg';
 import { TripDiaryController } from '../controllers/trip-diary-controller';
@@ -11,7 +10,8 @@ import 'jquery';
 import * as angular from 'angular';
 import * as Color from 'color';
 import { TripDiaryService } from '../ts/trip-diary-service';
-import * as _ from 'lodash';
+
+import { indexOf as _indexOf } from 'lodash';
 import { SET_SWITCH_ROUTE_MODE_STATE } from '../ts/trips-actions';
 import SearchBox = google.maps.places.SearchBox;
 import PlaceResult = google.maps.places.PlaceResult;
@@ -23,7 +23,7 @@ import { ITripDiaryRouteModeScope } from '../interfaces/trip-route-mode-diary-sc
 import { ISurveyMapRoute } from '../shared/survey-map-route';
 
 export class TripRouteModeDirective {
-	//public templateUrl = '/static/dist/directives/trips/templates/trip-route-mode.html';
+	// public templateUrl = '/static/dist/directives/trips/templates/trip-route-mode.html';
 
 	public template = require('../templates/trip-route-mode.html');
 	scope = {};
@@ -55,6 +55,26 @@ export class TripRouteModeDirective {
 	controllerAs = '_rmc';
 
 	require = ['tripRouteMode'];
+
+	/**
+	 * Factory method for the timeline directive
+	 */
+	public static Factory() {
+		let directive = (
+			$ngRedux: any,
+			$mdPanel: angular.material.IPanelService,
+			tripDiaryService: TripDiaryService,
+			$timeout: ng.ITimeoutService,
+			$mdDialog
+		) => {
+			return new TripRouteModeDirective($ngRedux, $mdPanel, tripDiaryService, $timeout, $mdDialog);
+		};
+
+		// directive['$inject'] = ['ngRedux'];
+		// directive['controller'] = TripDiaryRouteModeController;
+
+		return directive;
+	}
 
 	/**
 	 * Returns the active trip leg
@@ -100,7 +120,7 @@ export class TripRouteModeDirective {
 	 *
 	 * @param e
 	 */
-	private onRouteMajorSelected = e => {};
+	private onRouteMajorSelected = (e) => {};
 	/**
 	 * Shows the sub select route
 	 */
@@ -124,7 +144,7 @@ export class TripRouteModeDirective {
 	 *
 	 * @param {number} index
 	 */
-	private setTripLegIncompleteR = index => {
+	private setTripLegIncompleteR = (index) => {
 		this._tc.setTripLegIncomplete(index);
 	};
 
@@ -139,7 +159,7 @@ export class TripRouteModeDirective {
 	 *
 	 * @param route
 	 */
-	private showRoute = route => {
+	private showRoute = (route) => {
 		this._tc['routingControl'].fire('routeselected', { route: route });
 		this._$scope['selectedRoute'] = route;
 	};
@@ -151,7 +171,7 @@ export class TripRouteModeDirective {
 	private selectRoute = (evt: Event, route) => {
 		let routes = this._$scope['foundRoutes'];
 
-		let routeIndex = _.indexOf(routes, route);
+		let routeIndex = _indexOf(routes, route);
 
 		// if no valid route index, select index 0
 		if (routeIndex < 0) {
@@ -166,7 +186,7 @@ export class TripRouteModeDirective {
 		this._$scope['selectedRoute'] = route;
 
 		let waypoints = [];
-		for (var i = 0; i < route.waypoints.length; i++) {
+		for (let i = 0; i < route.waypoints.length; i++) {
 			waypoints.push(route.waypoints[i].latLng);
 		}
 
@@ -188,7 +208,7 @@ export class TripRouteModeDirective {
 	private getModeIconString = (modeName: string) => {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
-				if (subMode.name == modeName) {
+				if (subMode.name === modeName) {
 					return subMode.icon;
 				}
 			}
@@ -203,7 +223,7 @@ export class TripRouteModeDirective {
 	private getModeColourString = (modeName: string) => {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
-				if (subMode.name == modeName) {
+				if (subMode.name === modeName) {
 					return subMode.colour;
 				}
 			}
@@ -218,7 +238,7 @@ export class TripRouteModeDirective {
 	private getDarkModeColourString = (modeName: string) => {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
-				if (subMode.name == modeName) {
+				if (subMode.name === modeName) {
 					return Color(subMode.colour)
 						.darken(0.3)
 						.hex();
@@ -255,9 +275,9 @@ export class TripRouteModeDirective {
 			let event = new Event('selectmode');
 			if (evt != null) {
 				let showedDialog: boolean = false;
-				if (mode.dataInputs != undefined) {
+				if (mode.dataInputs !== undefined) {
 					if (mode.dataInputs.length > 0) {
-						//_.delay(() => {
+						// _.delay(() => {
 						showedDialog = true;
 
 						this.routeModeController.showDialog(
@@ -266,7 +286,7 @@ export class TripRouteModeDirective {
 							mode.dataInputs,
 							mode.dialogTitle,
 							this.tripDiaryService.getActiveTripLeg().data,
-							result => {
+							(result) => {
 								/* ask for passengers */
 								this.tripDiaryService.setTripMode(mode['name'], mode['category'], mode.allowAddWaypoints);
 								this.tripDiaryService.addTripLegExtraData(
@@ -362,26 +382,6 @@ export class TripRouteModeDirective {
 	}
 
 	/**
-	 * Factory method for the timeline directive
-	 */
-	public static Factory() {
-		var directive = (
-			$ngRedux: any,
-			$mdPanel: angular.material.IPanelService,
-			tripDiaryService: TripDiaryService,
-			$timeout: ng.ITimeoutService,
-			$mdDialog
-		) => {
-			return new TripRouteModeDirective($ngRedux, $mdPanel, tripDiaryService, $timeout, $mdDialog);
-		};
-
-		//directive['$inject'] = ['ngRedux'];
-		//directive['controller'] = TripDiaryRouteModeController;
-
-		return directive;
-	}
-
-	/**
 	 *
 	 * @param {ISurveyMapRoute[]} routes
 	 */
@@ -394,15 +394,15 @@ export class TripRouteModeDirective {
 				if (this._tripDiaryService.getActiveTripLeg()._routeIndex > 0) {
 					this._$scope['selectedRoute'] = routes[this._tripDiaryService.getActiveTripLeg()._routeIndex];
 
-					//if(this._tripDiaryService.state.activeRouteIndex < 0) {
+					// if(this._tripDiaryService.state.activeRouteIndex < 0) {
 					this.selectRoute(null, routes[this._tripDiaryService.getActiveTripLeg()._routeIndex]);
 				} else {
 					this._$scope['selectedRoute'] = routes[0];
 
-					//if(this._tripDiaryService.state.activeRouteIndex < 0) {
+					// if(this._tripDiaryService.state.activeRouteIndex < 0) {
 					this.selectRoute(null, routes[0]);
 				}
-				//}
+				// }
 
 				this._$scope.$apply();
 			});
@@ -497,7 +497,7 @@ export class TripRouteModeDirective {
 		this._$scope.$watch(
 			'foundRoutes',
 			(routes, oldValue) => {
-				if (routes == undefined) {
+				if (routes === undefined) {
 					this._$scope['noRoutesFound'] = true;
 				}
 			},

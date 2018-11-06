@@ -1,163 +1,153 @@
-import * as icons from './survey-map-marker-type'
-import {SurveyMapDirective} from "./directives/survey-map-directive";
-import * as L from "leaflet";
-
+import * as icons from './survey-map-marker-type';
+import { SurveyMapDirective } from './directives/survey-map-directive';
+import * as L from 'leaflet';
 
 /**
  *
  */
 export class SurveyMapMarker {
-    get surveyMap(): SurveyMapDirective {
-        return this._surveyMap;
-    }
+	get surveyMap(): SurveyMapDirective {
+		return this._surveyMap;
+	}
 
-    set surveyMap(value: SurveyMapDirective) {
+	set surveyMap(value: SurveyMapDirective) {
+		this._surveyMap = value;
+	}
 
-        this._surveyMap = value;
-    }
+	get label(): string {
+		return this._label;
+	}
 
+	set label(value: string) {
+		this._label = value;
+	}
 
-    get label(): string {
-        return this._label;
-    }
+	get id(): string {
+		return this._id;
+	}
 
-    set label(value: string) {
-        this._label = value;
-    }
+	set id(value: string) {
+		this._id = value;
+	}
 
-    get id(): string {
-        return this._id;
-    }
+	get mapMarker(): L.Marker {
+		return this._mapMarker;
+	}
 
-    set id(value: string) {
-        this._id = value;
-    }
+	set mapMarker(value: L.Marker) {
+		this._mapMarker = value;
+	}
 
-    get mapMarker(): L.Marker {
-        return this._mapMarker;
-    }
+	get markerType(): icons.MarkerType {
+		return this._markerType;
+	}
 
-    set mapMarker(value: L.Marker) {
-        this._mapMarker = value;
-    }
+	set markerType(value: icons.MarkerType) {
+		this._markerType = value;
+	}
 
+	get markerUrl(): string {
+		return this._markerUrl;
+	}
 
-    get markerType(): icons.MarkerType {
-        return this._markerType;
-    }
+	set markerUrl(value: string) {
+		this._markerUrl = value;
+	}
 
-    set markerType(value: icons.MarkerType) {
-        this._markerType = value;
-    }
+	get latLng(): L.LatLng {
+		return this._latLng;
+	}
 
-    get markerUrl(): string {
-        return this._markerUrl;
-    }
+	set latLng(value: L.LatLng) {
+		this._latLng = value;
+	}
 
-    set markerUrl(value: string) {
-        this._markerUrl = value;
-    }
+	get lat(): number {
+		return this._lat;
+	}
 
-    get latLng(): L.LatLng {
-        return this._latLng;
-    }
+	set lat(value: number) {
+		this._lat = value;
+	}
 
-    set latLng(value: L.LatLng) {
-        this._latLng = value;
-    }
+	get lng(): number {
+		return this._lng;
+	}
 
-    get lat(): number {
-        return this._lat;
-    }
+	set lng(value: number) {
+		this._lng = value;
+	}
 
-    set lat(value: number) {
-        this._lat = value;
-    }
+	private _latLng: L.LatLng = new L.LatLng(0, 0);
 
-    get lng(): number {
-        return this._lng;
-    }
+	private _lat: number = 0;
+	private _lng: number = 0;
+	private _id: string;
 
-    set lng(value: number) {
-        this._lng = value;
-    }
+	private _surveyMap: SurveyMapDirective;
 
-    private _latLng: L.LatLng = new L.LatLng(0, 0);
+	private _label: string;
 
-    private _lat: number = 0;
-    private _lng: number = 0;
-    private _id: string;
+	protected _markerUrl: string;
 
-    private _surveyMap: SurveyMapDirective;
+	protected _markerType: icons.MarkerType;
 
-    private _label: string;
+	private _mapMarker: L.Marker;
 
-    protected _markerUrl: string;
+	constructor() {
+		this._latLng = new L.LatLng(0, 0);
 
-    protected _markerType: icons.MarkerType;
+		this.id = Math.random()
+			.toString(36)
+			.substring(7);
+	}
 
-    private _mapMarker: L.Marker;
+	public generateId() {
+		this.id = Math.random()
+			.toString(36)
+			.substring(7);
+	}
 
-    constructor() {
-        this._latLng = new L.LatLng(0, 0);
+	/**
+	 * Init the service map marker
+	 */
+	public init() {
+		//this.latLng = new L.LatLng(0, 0);
+		if (this.id == null) {
+			this.id = Math.random()
+				.toString(36)
+				.substring(7);
+		}
+		//console.log(new L.LatLng(0, 0));
+	}
 
-        this.id = Math.random().toString(36).substring(7);
+	/**
+	 * Returns a marker icon.
+	 * @returns {L.Icon}
+	 */
+	public getMarkerIcon(): L.Icon {
+		switch (this._markerType) {
+			case icons.MarkerType.Home:
+				return icons.default.homeIcon;
+			case icons.MarkerType.Work:
+				return icons.default.workIcon;
+			case icons.MarkerType.School:
+				return icons.default.schoolIcon;
+			case icons.MarkerType.Switch:
+				return icons.default.switchIcon;
+			case icons.MarkerType.Daycare:
+				return icons.default.daycareIcon;
+			case icons.MarkerType.Shopping:
+				return icons.default.shoppingIcon;
+			case icons.MarkerType.Passenger:
+				return icons.default.passengerIcon;
 
+			default:
+				return icons.default.defaultIcon;
+		}
+	}
 
-    }
-
-    public generateId() {
-        this.id = Math.random().toString(36).substring(7);
-    }
-
-    /**
-     * Init the service map marker
-     */
-    public init() {
-        //this.latLng = new L.LatLng(0, 0);
-        if (this.id == null) {
-            this.id = Math.random().toString(36).substring(7);
-        }
-        //console.log(new L.LatLng(0, 0));
-    }
-
-
-    /**
-     * Returns a marker icon.
-     * @returns {L.Icon}
-     */
-    public getMarkerIcon(): L.Icon {
-
-
-        switch (this._markerType) {
-            case icons.MarkerType.Home:
-                return icons.default.homeIcon;
-            case icons.MarkerType.Work:
-                return icons.default.workIcon
-            case icons.MarkerType.School:
-                return icons.default.schoolIcon
-            case icons.MarkerType.Switch:
-
-                return icons.default.switchIcon;
-            case icons.MarkerType.Daycare:
-                return icons.default.daycareIcon;
-            case icons.MarkerType.Shopping:
-                return icons.default.shoppingIcon;
-            case icons.MarkerType.Passenger:
-                return icons.default.passengerIcon;
-
-            default:
-                return icons.default.defaultIcon;
-
-        }
-
-
-    }
-
-    public clear() {
-
-        this.surveyMap.removeMarker(this.id);
-    }
-
-
+	public clear() {
+		this.surveyMap.removeMarker(this.id);
+	}
 }

@@ -5,8 +5,8 @@ import { SurveyMapLocation } from '../survey-map-location';
 import * as angular from 'angular';
 import { ISurveyLocation } from './survey-location';
 import { isNullOrUndefined } from 'util';
-import * as _ from 'lodash';
 
+import { uniqBy } from 'lodash';
 const API_ROOT: string = '/api/survey/';
 
 declare var L;
@@ -68,7 +68,7 @@ export class SurveyConfigService {
 	 * @constructor
 	 */
 	public static Factory(userId: string, surveyId: string, questionId: string) {
-		let service = $http => {
+		let service = ($http) => {
 			return new SurveyConfigService($http, surveyId, userId, questionId);
 		};
 		service['$inject'] = ['$http'];
@@ -119,10 +119,7 @@ export class SurveyConfigService {
 	public combineLocations() {
 		this._surveyLocations = this._staticSurveyLocations.concat(this._surveyLocations);
 
-
-		this._surveyLocations = _.uniqBy(this._surveyLocations, 'latLng');
-
-
+		this._surveyLocations = uniqBy(this._surveyLocations, 'latLng');
 	}
 
 	/**
@@ -135,13 +132,13 @@ export class SurveyConfigService {
 		let hasLocation: boolean = false;
 
 		for (let location of this._staticSurveyLocations) {
-			if (location.latLng.lat == latLng.lat && location.latLng.lng === latLng.lng) {
+			if (location.latLng.lat === latLng.lat && location.latLng.lng === latLng.lng) {
 				hasLocation = true;
 			}
 		}
 
 		for (let location of this._surveyLocations) {
-			if (location.latLng.lat == latLng.lat && location.latLng.lng === latLng.lng) {
+			if (location.latLng.lat === latLng.lat && location.latLng.lng === latLng.lng) {
 				hasLocation = true;
 			}
 		}

@@ -1,3 +1,1 @@
-export class SurveyMapLocation {
-
-}
+export class SurveyMapLocation {}
