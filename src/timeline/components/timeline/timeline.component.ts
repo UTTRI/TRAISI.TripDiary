@@ -44,9 +44,6 @@ import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component'
 })
 export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	implements OnInit, AfterViewInit, AfterViewChecked, OnVisibilityChanged {
-	typeName: string;
-	icon: string;
-
 	public editModel: TimelineEntry;
 
 	@ViewChild(PopoverDirective)
@@ -76,20 +73,20 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		private _timelineService: TimelineService
 	) {
 		super();
-		this.typeName = 'Trip Diary Timeline';
-		this.icon = 'business-time';
+
+		this.isMultiPage = true;
 	}
 
 	/**
 	 * TRAISI life cycle called for when the question is prepared
 	 */
-	traisiOnInit(): void {
+	public traisiOnInit(): void {
 		this.isStep1 = true;
 		this.surveyViewerService.updateNavigationState(false);
 		this._timelineService.clearAvailableLocations();
-		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
-			result.forEach(responses => {
-				responses.responseValues.forEach(responseValue => {
+		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe((result) => {
+			result.forEach((responses) => {
+				responses.responseValues.forEach((responseValue) => {
 					const element = responseValue;
 
 					let location: TimelineEntry = {
@@ -115,17 +112,17 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		this._timelineService.clearTimelineLocations();
 		this.savedResponse.subscribe(this.onSavedResponseData);
 	}
 
-	saveNewLocation(): void {}
+	public saveNewLocation(): void {}
 
 	/**
 	 *
 	 */
-	addNewLocation(): void {
+	public addNewLocation(): void {
 		this.newEntryDialog.show(this.newEntryCallback);
 	}
 
@@ -142,35 +139,39 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * @param type
 	 * @param $event
 	 */
-	handler(type: string, $event: ModalDirective) {}
+	public handler(type: string, $event: ModalDirective) {}
 
 	/**
 	 *
 	 */
-	ngAfterViewInit(): void {
+	public ngAfterViewInit(): void {
 		this.timelineDock.timelineNewEntry = this.newEntryDialog;
 	}
 
 	/**
 	 *
 	 */
-	ngAfterViewChecked(): void {}
+	public ngAfterViewChecked(): void {}
 
 	/**
-	 * Override of base method class
+	 * Navigates internal next
+	 * @returns true if there are no more internal pages 
 	 */
 	public navigateInternalNext(): boolean {
-		if (this.isStep1 && this._timelineService.isTimelineStatevalid) {
+		console.log('in timeline');
+		if (this.isStep2) {
+			console.log('returning true here ');
+			return true;
+		} else if (this.isStep1 && this._timelineService.isTimelineStatevalid) {
 			this.isStep1 = false;
 			this.isStep2 = true;
 			this.saveCurrentResponseState();
 
+			console.log(' in here 1 ');
 			return false;
 		}
 
-		if (this.isStep2) {
-			return true;
-		}
+		return false;
 	}
 
 	/**
@@ -188,7 +189,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 */
 	public canNavigateInternalNext(): boolean {
 		if (this.isStep2) {
-			return false;
+			return true;
 		} else {
 			return this._timelineService.isTimelineStatevalid;
 		}
@@ -209,14 +210,17 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		return this.isStep2;
 	}
 
-	onQuestionShown(): void {
+	/**
+	 * Determines whether question shown on
+	 */
+	public onQuestionShown(): void {
 		this._timelineService.updateLocationsValidation();
 		if (this.isStep1 && this._timelineService.isTimelineStatevalid) {
-			this.isStep1 = false;
-			this.isStep2 = true;
+			// this.isStep1 = false;
+			// this.isStep2 = true;
 		}
 	}
-	onQuestionHidden(): void {}
+	public onQuestionHidden(): void {}
 
 	private onSavedResponseData: (response: 'none' | ResponseData<ResponseTypes.Timeline>[]) => void = (
 		response: 'none' | ResponseData<ResponseTypes.Timeline>[]
@@ -260,7 +264,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			if (response.length >= 3) {
 				const midResponses = response.slice(2, response.length - 1);
 
-				midResponses.forEach(entry => {
+				midResponses.forEach((entry) => {
 					location = Object.assign({}, location);
 					location.id = Symbol();
 					const timelineResponse = <TimelineResponseData>entry;

@@ -669,7 +669,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		this.questionId = questionID;
 		this.initializeSurvey(this.$window['surveyData_' + this.questionId], this.$scope, this.$http);
 
-		this._routesService.listTimelineEntries(this._surveyV2Id).subscribe(entries => {
+		this._routesService.listTimelineEntries(this._surveyV2Id).subscribe((entries) => {
 			let timelineEntries: TimelineEntry[] = entries[0].responseValues;
 
 			let startLocation = null;
@@ -703,7 +703,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			if (timelineEntries.length >= 3) {
 				const locations = timelineEntries.slice(2, timelineEntries.length);
 
-				locations.forEach(entry => {
+				locations.forEach((entry) => {
 					let newEntry = {
 						_locationName: entry.purpose,
 						latLng: {
@@ -969,7 +969,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	private initStateManagement() {
 		let $ngReduxRef = this.$ngRedux;
 
-		window.onpopstate = ev => {
+		window.onpopstate = (ev) => {
 			$ngReduxRef.dispatch(updateState(ev.state as TripsQuestionState));
 		};
 	}

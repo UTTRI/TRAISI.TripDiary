@@ -150,7 +150,6 @@ export class TimelineService {
 	public removeEntryFromShelf(entry: TimelineEntry): void {
 		const index: number = this._availableLocations.findIndex((x) => x.id === entry.id);
 
-		console.log(index); 
 		if (index >= 0) {
 			this._availableLocations.splice(index, 1);
 			this.availableLocations.next(this._availableLocations);
