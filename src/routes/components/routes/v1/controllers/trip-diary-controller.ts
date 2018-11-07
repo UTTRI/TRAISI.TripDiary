@@ -552,7 +552,9 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			let i: number = 0;
 
 			if (
-				!isNullOrUndefined(this.state.startLocation) &&
+				!isNullOrUndefined(
+					this.state.startLocation
+				) /*&&
 				isNullOrUndefined(this.state.endLocation) /*|| this.state.tripLocations[0].startTime < this.state.endLocation.startTime */
 			) {
 				let startTripRoute = TripRoute.create(this.state.startLocation, this.state.tripLocations[0]);
@@ -589,22 +591,23 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				}
 			}
 			if (lastNonEmbedded >= 0 && !isNullOrUndefined(this.state.endLocation)) {
+				console.log(' in 2nd if');
 				let latestLocation = this.state.tripLocations[lastNonEmbedded];
 
-				if (!isNullOrUndefined(this.state.endLocation) && latestLocation.startTime < this.state.endLocation.startTime) {
+				if (!isNullOrUndefined(this.state.endLocation) /* latestLocation.startTime < this.state.endLocation.startTime */) {
 					let endTripRoute = TripRoute.create(latestLocation, this.state.endLocation);
-					if (endTripRoute.startLocation.locationName !== endTripRoute.endLocation.locationName) {
-						routes.push(endTripRoute);
-					}
+					// if (endTripRoute.startLocation.locationName !== endTripRoute.endLocation.locationName) {
+					routes.push(endTripRoute);
+					// }
 				} else if (
 					lastNonEmbedded === 0 &&
-					!isNullOrUndefined(this.state.endLocation) &&
-					latestLocation.startTime > this.state.endLocation.startTime
+					!isNullOrUndefined(this.state.endLocation) /*&&
+					latestLocation.startTime > this.state.endLocation.startTime*/
 				) {
 					let directRoute = TripRoute.create(this.state.startLocation, this.state.endLocation);
-					if (directRoute.startLocation.locationName !== directRoute.endLocation.locationName) {
-						routes.push(directRoute);
-					}
+					// if (directRoute.startLocation.locationName !== directRoute.endLocation.locationName) {
+					routes.push(directRoute);
+					// }
 				}
 			}
 			if (!isNullOrUndefined(this.state.endLocation)) {
@@ -623,6 +626,8 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				}
 			}
 		}
+
+		console.log(this.state);
 
 		// if length of routes is the same
 

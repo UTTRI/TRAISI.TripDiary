@@ -155,19 +155,16 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 
 	/**
 	 * Navigates internal next
-	 * @returns true if there are no more internal pages 
+	 * @returns true if there are no more internal pages
 	 */
 	public navigateInternalNext(): boolean {
-		console.log('in timeline');
 		if (this.isStep2) {
-			console.log('returning true here ');
 			return true;
 		} else if (this.isStep1 && this._timelineService.isTimelineStatevalid) {
 			this.isStep1 = false;
 			this.isStep2 = true;
 			this.saveCurrentResponseState();
 
-			console.log(' in here 1 ');
 			return false;
 		}
 
@@ -225,6 +222,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	private onSavedResponseData: (response: 'none' | ResponseData<ResponseTypes.Timeline>[]) => void = (
 		response: 'none' | ResponseData<ResponseTypes.Timeline>[]
 	) => {
+		console.log(response);
 		let location: TimelineEntry = {
 			address: undefined,
 			latitude: undefined,
@@ -262,9 +260,10 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			}
 
 			if (response.length >= 3) {
-				const midResponses = response.slice(2, response.length - 1);
+				const midResponses = response.slice(1, response.length - 1);
 
 				midResponses.forEach((entry) => {
+					console.log('adding mid response');
 					location = Object.assign({}, location);
 					location.id = Symbol();
 					const timelineResponse = <TimelineResponseData>entry;

@@ -17,12 +17,13 @@ import { isNullOrUndefined } from 'util';
 import { SurveyMapController } from '../controllers/survey-map-controller';
 import { TripRoute } from '../../ts/trip-route';
 
-import { _last, _first, _delay, _findIndex } from 'lodash';
+import { last as _last, first as _first, delay as _delay, findIndex as _findIndex } from 'lodash';
 
 declare var L: any;
 
-let MAPBOX_TILE_URL = `https://api.mapbox.com/styles/v1/mapbox/streets-v8/tiles/256/{z}/{x}/{y}?
-    access_token=pk.eyJ1IjoiYnJlbmRhbmJlbnRpbmciLCJhIjoiY2oyOTlwdjNjMDB5cTMzcXFsdmRyM3NnNCJ9.NXgWTnWfvGRnNgkWdd5wKg`;
+let MAPBOX_TILE_URL =
+	`https://api.mapbox.com/styles/v1/mapbox/streets-v8/tiles/256/{z}/{x}/{y}` +
+	`?access_token=pk.eyJ1IjoiYnJlbmRhbmJlbnRpbmciLCJhIjoiY2oyOTlwdjNjMDB5cTMzcXFsdmRyM3NnNCJ9.NXgWTnWfvGRnNgkWdd5wKg`;
 
 let googleTravelMode = {};
 
@@ -887,7 +888,6 @@ export class SurveyMapDirective {
 	 * @param {TripRoute} route
 	 */
 	private onRouteChanged = (route: TripRoute) => {
-
 		if (this._tripDiaryService.isAutoFitBounds) {
 			this.fitTripRouteBounds(route);
 		}
