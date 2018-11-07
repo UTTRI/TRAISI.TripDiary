@@ -74,7 +74,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 		}
 	}
 
-	modalRef: BsModalRef;
+	public modalRef: BsModalRef;
 
 	/**
 	 *Creates an instance of TimelineEntryItemComponent.
@@ -123,6 +123,10 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 */
 	public delete(): void {
 		console.log('in delete');
-		this._timelineService.removeTimelineLocation(this.model);
+		if (!this.inShelf) {
+			this._timelineService.removeTimelineLocation(this.model);
+		} else {
+			this._timelineService.removeEntryFromShelf(this.model); 
+		}
 	}
 }

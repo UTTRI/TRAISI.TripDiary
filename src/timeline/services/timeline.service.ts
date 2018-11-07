@@ -144,6 +144,20 @@ export class TimelineService {
 	}
 
 	/**
+	 * Removes entry from shelf
+	 * @param entry
+	 */
+	public removeEntryFromShelf(entry: TimelineEntry): void {
+		const index: number = this._availableLocations.findIndex((x) => x.id === entry.id);
+
+		console.log(index); 
+		if (index >= 0) {
+			this._availableLocations.splice(index, 1);
+			this.availableLocations.next(this._availableLocations);
+		}
+	}
+
+	/**
 	 *
 	 */
 	public updateTimelineLocations(locations: Array<TimelineEntry>): void {}
@@ -177,8 +191,6 @@ export class TimelineService {
 			return loc.id === location.id;
 		});
 
-		console.log(index);
-
 		this._timelineLocations.splice(index, 1);
 		this.timelineItemRemoved.next(location);
 		this.updateLocationsValidation();
@@ -190,7 +202,7 @@ export class TimelineService {
 	 *
 	 * @param template
 	 */
-	openEditTimelineEntryModal(template: TemplateRef<any>): BsModalRef {
+	public openEditTimelineEntryModal(template: TemplateRef<any>): BsModalRef {
 		this.modalRef = this.modalService.show(template);
 		return this.modalRef;
 	}
@@ -199,7 +211,7 @@ export class TimelineService {
 	 *
 	 * @param template
 	 */
-	openNewTimelineEntryModal(template: TemplateRef<any>): BsModalRef {
+	public openNewTimelineEntryModal(template: TemplateRef<any>): BsModalRef {
 		this.modalRef = this.modalService.show(template);
 		return this.modalRef;
 	}
@@ -209,5 +221,5 @@ export class TimelineService {
 	 * @param mapModalTemplate
 	 * @param mapContainerRef
 	 */
-	openEditMapLocationModal(template: ViewContainerRef, callback) {}
+	public openEditMapLocationModal(template: ViewContainerRef, callback): void {}
 }
