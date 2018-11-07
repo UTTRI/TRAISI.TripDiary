@@ -591,7 +591,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				}
 			}
 			if (lastNonEmbedded >= 0 && !isNullOrUndefined(this.state.endLocation)) {
-				console.log(' in 2nd if');
 				let latestLocation = this.state.tripLocations[lastNonEmbedded];
 
 				if (!isNullOrUndefined(this.state.endLocation) /* latestLocation.startTime < this.state.endLocation.startTime */) {
@@ -621,13 +620,10 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 						routes.push(route1);
 						routes.push(route2);
 					} else {
-						console.log('embedded location was null');
 					}
 				}
 			}
 		}
-
-		console.log(this.state);
 
 		// if length of routes is the same
 
@@ -642,11 +638,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		}
 
 		this.updateTripRoutes(routes);
-
-		// tslint:disable-next-line:no-console
-		console.debug('route information');
-		// tslint:disable-next-line:no-console
-		console.debug(routes);
 
 		if (this.state.activeRouteIndex >= routes.length) {
 			// settings route edit active
@@ -732,7 +723,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				activeRouteIndex: 0
 			};
 
-			console.log(this.basicState);
 			this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
 			this.updateTripRouteModes();
 		});
@@ -779,7 +769,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		// let titleElement = $('#div_id_' + this.questionId).closest('.question-item');
 		// titleElement = titleElement.find('.question-container').first();
 
-		console.log(this.basicState);
 		this.updateTripRouteModes();
 
 		/* _.delay(() => {
@@ -1125,9 +1114,9 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		}
 
 		if (!isNullOrUndefined(endTimeAdjust)) {
-			console.log(endTimeAdjust.getHours());
+			// console.log(endTimeAdjust.getHours());
 			if (endTimeAdjust.getHours() >= 0 && endTimeAdjust.getHours() < 4) {
-				console.log(endTimeAdjust.getHours());
+				// console.log(endTimeAdjust.getHours());
 				endTimeAdjust.setDate(endTimeAdjust.getDate() + 1);
 			}
 		}
@@ -1145,7 +1134,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			if (this.state.activeTripLocation._locationType === TripLocationType.IntermediateLocation) {
 				if (endTimeAdjust <= startTimeAdjust) {
 					this._$scope['tripsLocationForm'].$error['invalidTime'] = true;
-					console.log('invalid time2');
+					// console.log('invalid time2');
 
 					error = true;
 					// return false;
