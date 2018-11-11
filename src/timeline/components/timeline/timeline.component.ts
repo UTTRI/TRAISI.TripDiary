@@ -88,7 +88,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
             .listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location)
             .subscribe(result => {
                 result.forEach(responses => {
-
                     let purpose = JSON.parse(responses.configuration.purpose).id;
 
                     responses.responseValues.forEach(responseValue => {
@@ -104,7 +103,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
                             pipedLocation: true,
                             id: Symbol(),
                             locationType: TimelineLocationType.Undefined,
-                            name: purpose !== undefined ? purpose : 'Prior Location',
+                            name: purpose !== undefined ? purpose : 'Prior Location'
                         };
                         location.time.setHours(0);
                         location.time.setMinutes(0);
@@ -249,6 +248,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
                 location.purpose = timelineResponse.purpose;
                 location.name = timelineResponse.name;
                 this._timelineService.addTimelineLocation(location);
+                this._timelineService.addShelfLocation(location);
             }
             if (response.length >= 2) {
                 location = Object.assign({}, location);
@@ -261,13 +261,13 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
                 location.purpose = timelineResponse.purpose;
                 location.name = timelineResponse.name;
                 this._timelineService.addTimelineLocation(location);
+                this._timelineService.addShelfLocation(location);
             }
 
             if (response.length >= 3) {
                 const midResponses = response.slice(1, response.length - 1);
 
                 midResponses.forEach(entry => {
-                    console.log('adding mid response');
                     location = Object.assign({}, location);
                     location.id = Symbol();
                     const timelineResponse = <TimelineResponseData>entry;
@@ -278,8 +278,13 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
                     location.purpose = timelineResponse.purpose;
                     location.name = timelineResponse.name;
                     this._timelineService.addTimelineLocation(location);
+                    this._timelineService.addShelfLocation(location);
                 });
             }
         }
+
+        this._timelineService.timelineLocations.subscribe((entries: TimelineEntry[]) => {
+            this.response.emit(entries);
+        });
     };
 }
