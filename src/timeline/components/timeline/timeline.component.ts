@@ -270,7 +270,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			if (response.length >= 3) {
 				const midResponses = response.slice(1, response.length - 1);
 
-				midResponses.forEach(entry => {
+				midResponses.forEach((entry, index) => {
 					location = Object.assign({}, location);
 					location.id = Symbol();
 					const timelineResponse = <TimelineResponseData>entry;
@@ -280,7 +280,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 					location.longitude = timelineResponse.longitude;
 					location.purpose = timelineResponse.purpose;
 					location.name = timelineResponse.name;
-					this._timelineService.addTimelineLocation(location);
+					this._timelineService.addTimelineLocation(location, index + 1);
 					this._timelineService.addShelfLocation(location);
 				});
 			}

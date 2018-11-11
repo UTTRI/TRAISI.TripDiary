@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { DndDropEvent } from 'ngx-drag-drop';
 
-
 import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
 import { IDropResult } from 'ngx-smooth-dnd';
 import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component';
@@ -22,7 +21,6 @@ export class TimelineSlotComponent implements OnInit {
 	public timelineDock: TimelineDockComponent;
 
 	hasTimelineEntryItem: boolean = false;
-
 
 	public dragOver: boolean = false;
 	public model: TimelineEntry;
@@ -56,8 +54,8 @@ export class TimelineSlotComponent implements OnInit {
 	 * Angular's ngOnInit
 	 */
 	public ngOnInit(): void {
-		this._timelineService.timelineLocations.subscribe((locations) => {
-			locations.forEach((loc) => {
+		this._timelineService.timelineLocations.subscribe(locations => {
+			locations.forEach(loc => {
 				if (loc.locationType == TimelineLocationType.StartLocation && this.startLocation) {
 					this.addLocationToSlot(loc);
 				} else if (loc.locationType == TimelineLocationType.EndLocation && this.endLocation) {
@@ -85,6 +83,9 @@ export class TimelineSlotComponent implements OnInit {
 		this.hasTimelineEntryItem = true;
 	}
 
+	/**
+	 * Deletes timeline slot component
+	 */
 	public delete(): void {
 		this._timelineService.removeTimelineLocation(this.model);
 		this.hasTimelineEntryItem = false;
@@ -104,7 +105,11 @@ export class TimelineSlotComponent implements OnInit {
 			if (this.startLocation && model.purpose !== 'home') {
 				this.timelineDock.popover.show();
 			}
-			this._timelineService.addTimelineLocation(model);
+			if (model.locationType === TimelineLocationType.StartLocation) {
+				this._timelineService.addTimelineLocation(model, 0);
+			} else {
+				this._timelineService.addTimelineLocation(model);
+			}
 		}
 		this.dragOver = false;
 	}
