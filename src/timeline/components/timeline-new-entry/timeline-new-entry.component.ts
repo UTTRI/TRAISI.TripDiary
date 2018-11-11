@@ -61,15 +61,15 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 			latitude: 0,
 			purpose: null,
 			longitude: 0,
-			time: new Date(),
+			timeA: new Date(),
 			timeB: new Date(),
 			pipedLocation: false,
 			name: '',
 			locationType: TimelineLocationType.Undefined,
 			id: Symbol()
 		};
-		this.model.time.setHours(0);
-		this.model.time.setMinutes(0);
+		this.model.timeA.setHours(0);
+		this.model.timeA.setMinutes(0);
 		this.stepOne = true;
 		this.stepTwo = false;
 		this.stepThree = false;
@@ -101,7 +101,7 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 				latitude: 0,
 				purpose: null,
 				longitude: 0,
-				time: new Date(),
+				timeA: new Date(),
 				timeB: new Date(),
 				name: '',
 				pipedLocation: false,
@@ -109,8 +109,8 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 				id: Symbol()
 			};
 
-			this.model.time.setHours(0);
-			this.model.time.setMinutes(0);
+			this.model.timeA.setHours(0);
+			this.model.timeA.setMinutes(0);
 		} else {
 			this.model = entry;
 		}

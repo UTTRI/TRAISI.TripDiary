@@ -96,15 +96,15 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 						latitude: element.latitude,
 						purpose: purpose !== undefined ? purpose : 'Prior Location',
 						longitude: element.longitude,
-						time: new Date(),
+						timeA: new Date(),
 						timeB: new Date(),
 						pipedLocation: true,
 						id: Symbol(),
 						locationType: TimelineLocationType.Undefined,
 						name: purpose !== undefined ? purpose : 'Prior Location'
 					};
-					location.time.setHours(0);
-					location.time.setMinutes(0);
+					location.timeA.setHours(0);
+					location.timeA.setMinutes(0);
 					this._timelineService.addShelfLocation(location);
 				});
 			});
@@ -234,7 +234,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			latitude: undefined,
 			purpose: undefined,
 			longitude: undefined,
-			time: new Date(),
+			timeA: new Date(),
 			timeB: new Date(),
 			id: Symbol(),
 			pipedLocation: true,
@@ -242,6 +242,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			name: 'Prior Location'
 		};
 		if (response instanceof Array) {
+			console.log(response);
 			if (response.length >= 1) {
 				const timelineResponse = <TimelineResponseData>response[0];
 				location.locationType = TimelineLocationType.StartLocation;
@@ -250,6 +251,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 				location.longitude = timelineResponse.longitude;
 				location.purpose = timelineResponse.purpose;
 				location.name = timelineResponse.name;
+				location.timeA = new Date(timelineResponse.timeA);
+				location.timeB = new Date(timelineResponse.timeB);
 				this._timelineService.addTimelineLocation(location);
 				this._timelineService.addShelfLocation(location);
 			}
@@ -263,6 +266,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 				location.longitude = timelineResponse.longitude;
 				location.purpose = timelineResponse.purpose;
 				location.name = timelineResponse.name;
+				location.timeA = new Date(timelineResponse.timeA);
+				location.timeB = new Date(timelineResponse.timeB);
 				this._timelineService.addTimelineLocation(location);
 				this._timelineService.addShelfLocation(location);
 			}
@@ -279,6 +284,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 					location.latitude = timelineResponse.latitude;
 					location.longitude = timelineResponse.longitude;
 					location.purpose = timelineResponse.purpose;
+					location.timeA = new Date(timelineResponse.timeA);
+					location.timeB = new Date(timelineResponse.timeB);
 					location.name = timelineResponse.name;
 					this._timelineService.addTimelineLocation(location, index + 1);
 					this._timelineService.addShelfLocation(location);
