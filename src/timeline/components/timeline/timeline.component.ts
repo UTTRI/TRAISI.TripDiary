@@ -160,7 +160,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * @returns true if there are no more internal pages
 	 */
 	public navigateInternalNext(): boolean {
-		
 		if (this.isStep2) {
 			return true;
 		} else if (this.isStep1 && this._timelineService.isTimelineStatevalid) {
