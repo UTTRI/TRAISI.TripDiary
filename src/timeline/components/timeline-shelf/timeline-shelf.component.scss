@@ -5,8 +5,18 @@
     justify-content: center;
 }
 
+.shelf-dnd-container {
+    overflow-x: auto;
+    max-width: 700px;
+}
+
 
 @media #{$sm-down} {
+
+    .shelf-dnd-container {
+        overflow-x: auto;
+    }
+    
 
     .shelf-dnd-container .smooth-dnd-container
     {
