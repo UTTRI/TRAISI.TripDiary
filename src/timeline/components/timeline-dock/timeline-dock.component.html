@@ -1,69 +1,79 @@
 <div class="timeline-dock-top">
+	<timeline-slot
+		[timelineDock]="this"
+		[startLocation]="true"
+		triggers=""
+		popoverTitle="Confirm Location"
+		placement="right"
+		[popover]="confirmLocationPopTemplate"
+		#popover="bs-popover"
+	></timeline-slot>
 
-    <timeline-slot [timelineDock]="this" [startLocation]="true" triggers="" popoverTitle="Confirm Location" placement="right"
-        [popover]="confirmLocationPopTemplate" #popover="bs-popover"></timeline-slot>
+	<div class="timeline-dock-inner-container">
+		<div class="timeline-bar" [ngClass]="{ 'timeline-drag-over': dragActive }"></div>
 
-    <div class="timeline-dock-inner-container">
-        <div class="timeline-bar" [ngClass]="{'timeline-drag-over' : dragActive}"></div>
-
-        <smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'move'" [orientation]="'horizontal'" [groupName]="'timeline'"
-            [getChildPayload]="getChildPayload" (dragEnter)="onDragEnter()" (dragLeave)="onDragLeave()" class="timeline-dnd-dock"
-            [shouldAnimateDrop]="false" (dragStart)="onDragStart($event)" (dragEnd)="onDragEnd($event)" #dockContainer>
-
-            <smooth-dnd-draggable *ngFor="let item of dockItems">
-                <div class="draggable-item">
-                    <timeline-entry-item [model]="item" [timelineNewEntry]="timelineNewEntry" [inShelf]="false">
-
-                    </timeline-entry-item>
-                </div>
-            </smooth-dnd-draggable>
-        </smooth-dnd-container>
-    </div>
-    <timeline-slot [timelineDock]="this" [endLocation]="true"></timeline-slot>
+		<div class="timeline-placeholder">
+			<div class="slot-container btn-circle btn-xl" [ngClass]="{ 'slot-drag-over': showPlaceholder && dragActive }"></div>
+		</div>
+		<smooth-dnd-container
+			(drop)="onDrop($event)"
+			[behaviour]="'move'"
+			[orientation]="'horizontal'"
+			[groupName]="'timeline'"
+			[getChildPayload]="getChildPayload"
+			(dragEnter)="onDragEnter()"
+			(dragLeave)="onDragLeave()"
+			class="timeline-dnd-dock"
+			[shouldAnimateDrop]="false"
+			(dragStart)="onDragStart($event)"
+			(dragEnd)="onDragEnd($event)"
+			#dockContainer
+		>
+			<smooth-dnd-draggable *ngFor="let item of dockItems">
+				<div class="draggable-item">
+					<timeline-entry-item [model]="item" [timelineNewEntry]="timelineNewEntry" [inShelf]="false"> </timeline-entry-item>
+				</div>
+			</smooth-dnd-draggable>
+		</smooth-dnd-container>
+	</div>
+	<timeline-slot [timelineDock]="this" [endLocation]="true"></timeline-slot>
 </div>
 <div class="timeline-dock-info">
-
-    <div class="timeline-dock-info-start">
-        START OF THE DAY
-    </div>
-    <div class="timeline-dock-info-centre">
-        <span *ngFor="let item of dockItems" class="dock-info-item">
-            {{item.name}}
-        </span>
-    </div>
-    <div class="timeline-dock-info-end">
-        END OF THE DAY
-    </div>
+	<div class="timeline-dock-info-start">START OF THE DAY</div>
+	<div class="timeline-dock-info-centre">
+		<span *ngFor="let item of dockItems" class="dock-info-item"> {{ item.name }} </span>
+	</div>
+	<div class="timeline-dock-info-end">END OF THE DAY</div>
 </div>
 
 <ng-template #confirmPurposeTemplate>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Confirm Purpose</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="hideConfirmPurpose()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-
-        <div class="form-group custom-control custom-radio">
-            <div *ngFor="let purpose of configuration.purposes">
-                <input type="radio" name="purpose" [id]="purpose.key" [value]="purpose.key" [(ngModel)]="pipedPurpose"
-                    class="custom-control-input" />
-                <label class="custom-control-label" [for]="purpose.key">{{ purpose.label }}</label>
-
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" (click)="confirmPurpose()">Confirm</button>
-    </div>
+	<div class="modal-header">
+		<h4 class="modal-title pull-left">Confirm Purpose</h4>
+		<button type="button" class="close pull-right" aria-label="Close" (click)="hideConfirmPurpose()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<div class="form-group custom-control custom-radio">
+			<div *ngFor="let purpose of configuration.purposes">
+				<input
+					type="radio"
+					name="purpose"
+					[id]="purpose.key"
+					[value]="purpose.key"
+					[(ngModel)]="pipedPurpose"
+					class="custom-control-input"
+				/>
+				<label class="custom-control-label" [for]="purpose.key">{{ purpose.label }}</label>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer"><button type="button" class="btn btn-default" (click)="confirmPurpose()">Confirm</button></div>
 </ng-template>
 
 <ng-template #confirmLocationPopTemplate>
-    <div>
-        You have entered a start location that is not home.
-    </div>
-    <div class="confirm-start-location-button">
-        <button type="button" class="btn btn-primary" (click)="confirmStartLocation()">Confirm</button>
-    </div>
+	<div>You have entered a start location that is not home.</div>
+	<div class="confirm-start-location-button">
+		<button type="button" class="btn btn-primary" (click)="confirmStartLocation()">Confirm</button>
+	</div>
 </ng-template>

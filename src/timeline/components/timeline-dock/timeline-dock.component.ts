@@ -41,12 +41,40 @@ export class TimelineDockComponent implements OnInit {
 
 	private _modelRef: BsModalRef;
 
+	private _locations: Array<TimelineEntry>;
+
 	public pipedPurpose: string;
 
 	public title: string = 'Confirm Location';
 
+	public showPlaceholder = false;
+
 	@ViewChild('popover')
 	public popover: PopoverDirective;
+
+	public shouldShowPlaceholder(): void {
+		let hasStart = false;
+		let hasEnd = false;
+
+		this._locations.forEach(v => {
+			if (v.locationType === TimelineLocationType.EndLocation) {
+				hasEnd = true;
+			} else if (v.locationType === TimelineLocationType.StartLocation) {
+				hasStart = true;
+			}
+		});
+
+		console.log(this._locations);
+
+		if (this.dockItems.length === 0 && hasStart && hasEnd) {
+			console.log('placeholder');
+			this.showPlaceholder = true;
+		} else {
+			console.log('no placeholder');
+			console.log(this.dockItems.length);
+			this.showPlaceholder = false;
+		}
+	}
 
 	/**
 	 *
@@ -57,6 +85,7 @@ export class TimelineDockComponent implements OnInit {
 		this.typeName = 'Trip Diary Timeline';
 		this.icon = 'business-time';
 		this.dockItems = [];
+		this._locations = [];
 	}
 	/**
 	 * Angular's ngOnInit
@@ -67,7 +96,9 @@ export class TimelineDockComponent implements OnInit {
 
 		this.sub = this.timelineService.timelineLocations.subscribe(value => {
 			this.dockItems = [];
+			this._locations = [];
 			value.forEach(entry => {
+				this._locations.push(entry);
 				if (entry.locationType === TimelineLocationType.IntermediateLocation) {
 					this.dockItems.push(entry);
 				}
@@ -180,6 +211,7 @@ export class TimelineDockComponent implements OnInit {
 	 * @param $event
 	 */
 	public onDragStart($event) {
+		this.shouldShowPlaceholder();
 		this.dragActive = true;
 	}
 

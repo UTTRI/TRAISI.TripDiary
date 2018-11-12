@@ -15,10 +15,40 @@
 	position: absolute;
 	left: 10px;
 	right: 10px;
+
+	.slot-container.slot-drag-over 
+	{
+		border: 3px dashed#3498DB;
+		display: block;
+	}
+
+
 }
 
 .timeline-bar.timeline-drag-over {
 	background-color: #3498db;
+}
+
+.timeline-placeholder {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top:	0;
+	bottom: 0;
+	display: flex;
+    align-items: center;
+	justify-content: center;
+	
+	.slot-container {
+		background: white;
+		opacity: .6;
+		display: none;
+	}
+	.slot-container.slot-drag-over 
+	{
+		border: 3px dashed#3498DB;
+		display: block;
+	}
 }
 
 .timeline-dock-top {
