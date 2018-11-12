@@ -88,6 +88,9 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			result.forEach(responses => {
 				let purpose = JSON.parse(responses.configuration.purpose).id;
 
+				let respondentName = responses.respondent.name;
+
+				let locationName: string = respondentName === undefined ? purpose : respondentName + ' - ' + purpose;
 				responses.responseValues.forEach(responseValue => {
 					const element = responseValue;
 
@@ -101,7 +104,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 						pipedLocation: true,
 						id: Symbol(),
 						locationType: TimelineLocationType.Undefined,
-						name: purpose !== undefined ? purpose : 'Prior Location'
+						name: locationName
 					};
 					location.timeA.setHours(0);
 					location.timeA.setMinutes(0);
@@ -242,7 +245,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			name: 'Prior Location'
 		};
 		if (response instanceof Array) {
-
 			if (response.length >= 1) {
 				const timelineResponse = <TimelineResponseData>response[0];
 				location.locationType = TimelineLocationType.StartLocation;
