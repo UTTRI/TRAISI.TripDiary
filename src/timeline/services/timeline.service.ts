@@ -189,7 +189,7 @@ export class TimelineService {
 			this._timelineLocations.splice(index, 0, location);
 		}
 
-		console.log(this._timelineLocations);
+
 		this.timelineLocations.next(this._timelineLocations);
 	}
 
