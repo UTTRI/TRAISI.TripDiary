@@ -749,9 +749,21 @@ export class SurveyMapDirective {
 										let tripRouteI: TripRoute = this._tripDiaryService.getActiveTripRoute();
 										let tripLegI: TripLeg = this._tripDiaryService.getActiveTripLeg();
 
-										let marker = L.marker(wp.latLng, {
-											draggable: i > 0 && i < n - 1 ? true : false
+
+
+										let icon = L.icon({
+											iconUrl: require('/node_modules/leaflet/dist/images/marker-icon.png'),
+											iconSize: [25, 41],
+											iconAnchor: [13, 41],
+											popupAnchor: [0, -44],
 										});
+
+										let marker = L.marker(wp.latLng, {
+											draggable: i > 0 && i < n - 1 ? true : false,
+											icon: icon
+
+										});
+
 
 										// do not allow deleting on end markers
 										if (i !== 0 && i !== n - 1) {
@@ -778,7 +790,6 @@ export class SurveyMapDirective {
 													direction: 'top',
 													interactive: true
 												});
-											
 										}
 										this._layersByRoute[tripRouteI.id].push(marker);
 
