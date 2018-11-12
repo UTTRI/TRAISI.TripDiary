@@ -36,17 +36,16 @@ export class RoutesComponent extends SurveyQuestion<ResponseTypes.Json> implemen
 		@Inject('SurveyResponderService') private _surveyResponderService: SurveyResponder
 	) {
 		super();
-
-		console.log('in constructor');
 	}
 
 	/**
 	 * Angular's ngOnInit
 	 */
 	ngOnInit(): void {
+		/* console.log(this.respondent); 
 		this._surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Timeline).subscribe(responses => {
 			console.log(responses);
-		});
+		}); */
 	}
 
 	ngAfterViewInit(): void {}
@@ -56,5 +55,5 @@ export class RoutesComponent extends SurveyQuestion<ResponseTypes.Json> implemen
 	 */
 	public bootstrap(): void {}
 
-	traisiOnLoaded() {}
+	public traisiOnLoaded(): void {}
 }

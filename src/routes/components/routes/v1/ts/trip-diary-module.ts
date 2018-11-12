@@ -43,6 +43,7 @@ import { TimeFilter } from '../shared/filters/time-filter';
 import { RoutesV1Component } from '../../../routes-v1/routes-v1.component';
 import { tripRouteModeContainer } from '../../../../directives/trip-route-mode.directive';
 import { RoutesService } from '../../../../services/routes.service';
+import { GroupMember } from 'traisi-question-sdk';
 
 export class TripDiaryModule {
 	questionId: string;
@@ -62,7 +63,7 @@ export class TripDiaryModule {
 	 * @param [v2SurveyId]
 	 * @returns true if bootstrap
 	 */
-	bootstrap(questionId: string, v2SurveyId: number = -1): boolean {
+	bootstrap(questionId: string, v2SurveyId: number = -1, respondent?: GroupMember): boolean {
 		/* Create app and controller */
 		let app: IModule = angular
 			.module('trips', [ngRedux, ngMessages, ngAria, ngMaterial, ngTimePicker, ngTranslate, ngCookies, ngSanitize])
@@ -163,6 +164,7 @@ export class TripDiaryModule {
 			.constant('QUESTION_ID', questionId)
 			.constant('SurveyV2Id', v2SurveyId)
 			.constant('questionId', questionId)
+			.constant('respondent', respondent)
 			.directive('traisiRoutesV1', downgradeComponent({ component: RoutesV1Component }) as angular.IDirectiveFactory);
 
 		app.config([
@@ -194,6 +196,7 @@ export class TripDiaryModule {
 			'$timeout',
 			'routesService',
 			'SurveyV2Id',
+			'respondent',
 			TripDiaryController
 		]);
 

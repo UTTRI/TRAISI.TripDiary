@@ -62,6 +62,7 @@ import { SurveyQuestion } from '../ts/survey-question';
 import { MultipageQuestion } from '../ts/survey-multipage';
 import { RoutesService } from '../../../../services/routes.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
+import { GroupMember } from 'traisi-question-sdk';
 
 declare var addSuccess: (element) => any;
 declare var removeClasses: (element) => any;
@@ -234,7 +235,8 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		private _tripDiaryService: TripDiaryService,
 		private _$timeout: ng.ITimeoutService,
 		_routesService: RoutesService,
-		_surveyV2Id: number
+		_surveyV2Id: number,
+		respondent: GroupMember
 	) {
 		super(
 			$scope,
@@ -249,7 +251,8 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			$cookies,
 			configService,
 			_routesService,
-			_surveyV2Id
+			_surveyV2Id,
+			respondent
 		);
 
 		let unsubscribe = $ngRedux.connect(
@@ -665,8 +668,18 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		this.questionId = questionID;
 		this.initializeSurvey(this.$window['surveyData_' + this.questionId], this.$scope, this.$http);
 
-		this._routesService.listTimelineEntries(this._surveyV2Id).subscribe((entries) => {
-			let timelineEntries: TimelineEntry[] = entries[0].responseValues;
+		this._routesService.listTimelineEntries(this._surveyV2Id, this._respondent).subscribe((entries: Array<any>) => {
+			console.log(entries);
+
+			// find index
+
+			let index = entries.findIndex(entry => {
+				return entry.respondent.id === this._respondent.id;
+			});
+			if (index < 0) {
+				index = 0;
+			}
+			let timelineEntries: TimelineEntry[] = entries[index].responseValues;
 
 			let startLocation = null;
 			let endLocation = null;
@@ -699,7 +712,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			if (timelineEntries.length >= 3) {
 				const locations = timelineEntries.slice(2, timelineEntries.length);
 
-				locations.forEach((entry) => {
+				locations.forEach(entry => {
 					let newEntry = {
 						_locationName: entry.purpose,
 						latLng: {
@@ -963,7 +976,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	private initStateManagement() {
 		let $ngReduxRef = this.$ngRedux;
 
-		window.onpopstate = (ev) => {
+		window.onpopstate = ev => {
 			$ngReduxRef.dispatch(updateState(ev.state as TripsQuestionState));
 		};
 	}

@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
 import { UpgradeModule } from '@angular/upgrade/static';
 
-import { ResponseTypes, SurveyQuestion, OnSurveyQuestionInit } from 'traisi-question-sdk';
+import { ResponseTypes, SurveyQuestion, OnSurveyQuestionInit, GroupMember } from 'traisi-question-sdk';
 import { TripDiaryModule } from '../routes/v1/ts';
 import { element } from '../../../node_modules/@angular/core/src/render3/instructions';
 
@@ -20,6 +20,9 @@ export class RoutesV1Component implements OnInit {
 	@Input('surveyId')
 	public surveyId: number;
 
+	@Input('respondent')
+	public respondent: GroupMember;
+
 	/**
 	 * Creates an instance of routes v1 component.
 	 * @param _elementRef
@@ -30,10 +33,12 @@ export class RoutesV1Component implements OnInit {
 	/**
 	 * Angular's ngOnInit
 	 */
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		//
+
+		new TripDiaryModule().bootstrap('test', this.surveyId, this.respondent);
+
 		
-		new TripDiaryModule().bootstrap('test', this.surveyId);
 
 		setTimeout(() => {
 			this._upgrade.bootstrap(this.divRef.nativeElement, ['trips'], { strictDi: false });

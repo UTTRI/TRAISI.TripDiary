@@ -84,6 +84,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		this.isStep1 = true;
 		this.surveyViewerService.updateNavigationState(false);
 		this._timelineService.clearAvailableLocations();
+
 		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
 			result.forEach(responses => {
 				let purpose = JSON.parse(responses.configuration.purpose).id;

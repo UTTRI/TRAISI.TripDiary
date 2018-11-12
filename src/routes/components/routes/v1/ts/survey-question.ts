@@ -5,6 +5,7 @@ import { MultipageQuestion } from './survey-multipage';
 import { SurveyConfigService } from 'routes/components/routes/v1/shared/services/survey-config-service';
 import { RoutesService } from '../../../../services/routes.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
+import { GroupMember } from 'traisi-question-sdk';
 
 declare var moment: any;
 
@@ -250,7 +251,8 @@ export class SurveyQuestion {
 		protected _$cookies: angular.cookies.ICookiesService,
 		protected _configService: SurveyConfigService,
 		protected _routesService: RoutesService,
-		protected _surveyV2Id: number
+		protected _surveyV2Id: number,
+		protected _respondent: GroupMember
 	) {}
 
 	/**
@@ -350,19 +352,10 @@ export class SurveyQuestion {
 
 		let surveyServiceRef: SurveyConfigService = this._configService;
 
-		$scope.$watch(
-			() => {
-				// return responseElement.value;
-			},
-			function(value: void, value2: void, scope: any) {
-				/* Send the updated value to the server */
-				if (value != null) {
-					console.log(questionIdRef);
+		console.log('got respondent');
+		console.log(this._respondent);
 
-					// surveyServiceRef.savePartialResponse(value, questionIdRef);
-				}
-			}
-		);
+
 
 		this.loadSavedResponseData();
 
@@ -376,47 +369,7 @@ export class SurveyQuestion {
 	 * @param pageChangeCallback callback function to next page. Next page should return true when the question is
 	 * finshed and the response should be submitted to the server.
 	 */
-	public requireMultiPage(selfRef: MultipageQuestion, pageChangeCallback: (selfRef: MultipageQuestion, page: number) => boolean) {
-		let ref = this;
-
-		this.surveyNextPageButton = angular.element('#next_page_button');
-		this.surveyPreviousPageButton = angular.element('#prev-page-button');
-
-		this.surveyNextPageButton.on('click', function(ev) {
-			if (pageChangeCallback(selfRef, 1)) {
-				/* regular next button action, question ididacted finished */
-				return true;
-			} else {
-				return false;
-			}
-		});
-		this.surveyPreviousPageButton.on('click', function(ev) {
-			if (pageChangeCallback(selfRef, -1)) {
-				/* return original next page functionality,
-                 * continue without preventing default */
-			} else {
-				ev.stopImmediatePropagation();
-				ev.preventDefault();
-				// ev.returnValue = false;
-				return false;
-			}
-		});
-
-		/* assign watches to page valid of question */
-		this.$scope.$watch(
-			() => {
-				return selfRef.activePageValid;
-			},
-			function(valid: boolean) {
-				// if valid next button is clickable
-				if (valid) {
-					ref.surveyNextPageButton.removeClass('disabled');
-				} else {
-					ref.surveyNextPageButton.addClass('disabled');
-				}
-			}
-		);
-	}
+	public requireMultiPage(selfRef: MultipageQuestion, pageChangeCallback: (selfRef: MultipageQuestion, page: number) => boolean) {}
 
 	/**
 	 *
