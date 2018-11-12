@@ -242,7 +242,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			name: 'Prior Location'
 		};
 		if (response instanceof Array) {
-			console.log(response);
+
 			if (response.length >= 1) {
 				const timelineResponse = <TimelineResponseData>response[0];
 				location.locationType = TimelineLocationType.StartLocation;
