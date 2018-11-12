@@ -24,7 +24,8 @@ import {
 	OnVisibilityChanged,
 	SurveyResponder,
 	ResponseData,
-	TimelineResponseData
+	TimelineResponseData,
+	ResponseValidationState
 } from 'traisi-question-sdk';
 import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
@@ -82,7 +83,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 */
 	public traisiOnInit(): void {
 		this.isStep1 = true;
-		this.surveyViewerService.updateNavigationState(false);
+		// this.surveyViewerService.updateNavigationState(false);
 		this._timelineService.clearAvailableLocations();
 
 		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
@@ -298,6 +299,10 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 
 		this._timelineService.timelineLocations.subscribe((entries: TimelineEntry[]) => {
 			this.response.emit(entries);
+
+			if (this._timelineService.isTimelineStatevalid) {
+				this.validationState.emit(ResponseValidationState.VALID);
+			}
 		});
 	};
 }

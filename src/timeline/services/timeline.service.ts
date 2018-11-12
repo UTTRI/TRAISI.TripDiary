@@ -133,6 +133,7 @@ export class TimelineService {
 		this._timelineStateValid = hasStartLocation && hasEndLocation;
 
 		if (this._timelineStateValid) {
+
 			this.surveyViewerService.updateNavigationState(this._timelineStateValid);
 		}
 	}
@@ -188,7 +189,6 @@ export class TimelineService {
 		} else {
 			this._timelineLocations.splice(index, 0, location);
 		}
-
 
 		this.timelineLocations.next(this._timelineLocations);
 	}
