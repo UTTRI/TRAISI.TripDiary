@@ -18,6 +18,7 @@ import { NgxSmoothDnDModule } from 'ngx-smooth-dnd';
 import { TimelineNewEntryComponent } from './components/timeline-new-entry/timeline-new-entry.component';
 import { TimelineSummaryComponent } from './components/timeline-summary/timeline-summary.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 @NgModule({
 	entryComponents: [
@@ -77,6 +78,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 		ButtonsModule.forRoot(),
 		BsDropdownModule.forRoot(),
 		FormsModule,
+		TimepickerModule.forRoot(),
 		NgxSmoothDnDModule,
 		TooltipModule.forRoot()
 	]

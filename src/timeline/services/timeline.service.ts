@@ -152,14 +152,12 @@ export class TimelineService {
 			}
 			if (index < this._timelineLocations.length - 2) {
 				if (location.timeA >= this._timelineLocations[index + 1].timeA) {
-
 					timeOrder = false;
 				}
 			}
 		});
 
 		this._timelineTimeStateValid = hasStartLocation && hasEndLocation && timeOrder;
-
 	}
 
 	/**

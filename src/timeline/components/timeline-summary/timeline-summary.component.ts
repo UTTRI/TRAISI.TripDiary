@@ -37,6 +37,8 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 
 	public timeEntries: Array<{ hours: number; minutes: number; am: boolean }>;
 
+	public times: Array<Date>;
+
 	private _timelineConfiguration: TimelineConfiguration;
 
 	@Input()
@@ -61,9 +63,10 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 		this._timelineService.timelineLocations.subscribe((locations: Array<TimelineEntry>) => {
 			this.timelineLocations = locations;
 			this.timeEntries = [];
+			this.times = [];
 
-			console.log(this.timelineLocations);
 			for (let i = 0; i < locations.length; i++) {
+				this.times.push(new Date());
 				this.timeEntries.push({
 					hours: locations[i].timeA.getHours() >= 12 ? locations[i].timeA.getHours() - 12 : locations[i].timeA.getHours(),
 					minutes: locations[i].timeA.getMinutes(),
@@ -82,6 +85,17 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 			}
 			this.config = config;
 		});
+	}
+
+	/**  */
+	public updateTime2(index: number): void {
+		this._timelineService.updateLocationsTimeValidation();
+		if (this._timelineService.isTimelineTimeStatevalid) {
+			this.timeline.validationState.emit(ResponseValidationState.VALID);
+		} else {
+			this.timeline.validationState.emit(ResponseValidationState.INVALID);
+		}
+		this.timeline.response.emit(this.timelineLocations);
 	}
 
 	/**
