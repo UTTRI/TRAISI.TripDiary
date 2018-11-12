@@ -36,16 +36,16 @@ var defaultIcon = L['ExtraMarkers'].icon({
   }); */
 
 let defaultIcon = SurveyMapSvgIcon.createIcon('', '#9eb3ce');
-let homeIcon = SurveyMapSvgIcon.createIcon('home', '#82b8e2');
-let schoolIcon = SurveyMapSvgIcon.createIcon('school', '#669d4d');
+let homeIcon = SurveyMapSvgIcon.createIcon('fas fa-home', '#82b8e2');
+let schoolIcon = SurveyMapSvgIcon.createIcon('fas fa-school', '#669d4d');
 let shoppingIcon = SurveyMapSvgIcon.createIcon('shopping_cart', '#7847b8');
-let workIcon = SurveyMapSvgIcon.createIcon('work', '#b29e85');
+let workIcon = SurveyMapSvgIcon.createIcon('fas fa-building', '#b29e85');
 let switchIcon = SurveyMapSvgIcon.createIcon('swap_horiz', '#ff9d02');
 let otherIcon = SurveyMapSvgIcon.createIcon('home', '#607D8B');
 let switchIconSummary = SurveyMapSvgIcon.createIcon('swap_horiz', '#ff9d02', 'summary-switch-marker');
 
 let passengerIcon = SurveyMapSvgIcon.createIcon('fas fa-car', '#276464');
-let daycareIcon = SurveyMapSvgIcon.createIcon('child_friendly', '#D768A5');
+let daycareIcon = SurveyMapSvgIcon.createIcon('fas fa-child', '#D768A5');
 
 let transitMarker = {};
 

@@ -42,10 +42,12 @@ export class RoutesComponent extends SurveyQuestion<ResponseTypes.Json> implemen
 	 * Angular's ngOnInit
 	 */
 	ngOnInit(): void {
-		/* console.log(this.respondent); 
+		/* console.log(this.respondent);
 		this._surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Timeline).subscribe(responses => {
 			console.log(responses);
 		}); */
+
+		this._routesService.routesComponent = this;
 	}
 
 	ngAfterViewInit(): void {}

@@ -5,7 +5,7 @@ using TRAISI.SDK.Interfaces;
 
 namespace TRAISI.SDK.Questions
 {
-    [SurveyQuestion(QuestionResponseType.OptionSelect,
+    [SurveyQuestion(QuestionResponseType.Json,
     CodeBundleName = "traisi-trip-diary-routes.module.js")]
     public class TripDiaryRoutes: ISurveyQuestion
     {

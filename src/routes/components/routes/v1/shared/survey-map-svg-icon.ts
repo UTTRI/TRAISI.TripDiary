@@ -20,7 +20,7 @@ let _svgMarkerXml = `
    version="1.1"><path class="marker-path"
      style="stroke-width:0.10546875"
      id="path2"
-     d="M 17,1 C 8.3021446,1 1.25,8.052142 1.25,16.75 1.25,25.447858 14.375,43 17,43 19.625,43 32.75,25.447858 32.75,16.75 32.75,8.052142 25.697855,1 17,1 Z"  />
+     d="M 17,1 C 8.3021446,1 1.25,8.052142 1.25,16.75 1.25,25.447858 14.375,43 17,43 19.625,43 32.75,25.447858 32.75,16.75 32.75,8.052142 25.697855,1 17,1 Z"/>
      </svg>
      <!--<img src="/static/dist/images/map-markers/marker-shadow.png" style=" position: relative;
     top: 3px;
@@ -53,15 +53,24 @@ export class SurveyMapSvgIcon {
 				.hex()
 		});
 
+		let classes = icon.split(' ');
+		classes.forEach(classItem => {
+			if (classItem.length !== 0) {
+				svgElement.find('.svg-marker-icon')[0].classList.add(classItem);
+			}
+		});
 		let iconElement = (svgElement.find('.svg-marker-icon')[0].innerText = String(icon));
 
+		// console.log(icon);
+		// svgElement.find('.svg-marker-icon')[0].classList.add('fas');
+		// svgElement.find('.svg-marker-icon')[0].classList.add('fa-home');
 		let iconMarker = L['ExtraMarkers'].icon({
 			icon: 'fa-coffee',
 			markerColor: 'red',
 			shape: 'square',
 			innerHTML: svgElement[0].outerHTML,
 			prefix: 'fa',
-			//shadowUrl: MARKER_URL.SHADOW,
+			// shadowUrl: MARKER_URL.SHADOW,
 			iconAnchor: [17, 44],
 			iconSize: [34, 44]
 		});

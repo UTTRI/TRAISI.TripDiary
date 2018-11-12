@@ -38,8 +38,6 @@ export class RoutesV1Component implements OnInit {
 
 		new TripDiaryModule().bootstrap('test', this.surveyId, this.respondent);
 
-		
-
 		setTimeout(() => {
 			this._upgrade.bootstrap(this.divRef.nativeElement, ['trips'], { strictDi: false });
 

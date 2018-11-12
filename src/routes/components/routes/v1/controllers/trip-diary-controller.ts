@@ -702,78 +702,87 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		this.questionId = questionID;
 		this.initializeSurvey(this.$window['surveyData_' + this.questionId], this.$scope, this.$http);
 
-		this._routesService.listTimelineEntries(this._surveyV2Id, this._respondent).subscribe((entries: Array<any>) => {
-			console.log(entries);
-
-			// find index
-
-			let index = entries.findIndex(entry => {
-				return entry.respondent.id === this._respondent.id;
-			});
-			if (index < 0) {
-				index = 0;
+		this._routesService.savedResponse().subscribe(response => {
+			console.log('got response');
+			console.log(response);
+			let state;
+			if (response !== 'none') {
+				state = JSON.parse(response[0].value);
+				console.log(state);
 			}
-			let timelineEntries: TimelineEntry[] = entries[index].responseValues;
+			this._routesService.listTimelineEntries(this._surveyV2Id, this._respondent).subscribe((entries: Array<any>) => {
+				// find index
 
-			let startLocation = null;
-			let endLocation = null;
-			let intermediateLocations = [];
-			if (timelineEntries.length >= 1) {
-				startLocation = {
-					_locationName: timelineEntries[0].name,
-					latLng: {
-						lat: timelineEntries[0].latitude,
-						lng: timelineEntries[0].longitude
-					},
-					startTime: Date(),
-					endTime: Date,
-					timelineIcon: this.getLocationIcon(timelineEntries[0].purpose)
-				};
-			}
-			if (timelineEntries.length >= 2) {
-				endLocation = {
-					_locationName: timelineEntries[timelineEntries.length - 1].name,
-					latLng: {
-						lat: timelineEntries[timelineEntries.length - 1].latitude,
-						lng: timelineEntries[timelineEntries.length - 1].longitude
-					},
-					startTime: Date(),
-					endTime: Date,
-					timelineIcon: this.getLocationIcon(timelineEntries[timelineEntries.length - 1].purpose)
-				};
-			}
+				let index = entries.findIndex(entry => {
+					return entry.respondent.id === this._respondent.id;
+				});
+				if (index < 0) {
+					index = 0;
+				}
+				let timelineEntries: TimelineEntry[] = entries[index].responseValues;
 
-			if (timelineEntries.length >= 3) {
-				const locations = timelineEntries.slice(1, timelineEntries.length - 1);
-
-				locations.forEach(entry => {
-					let newEntry = {
-						_locationName: entry.name,
+				let startLocation = null;
+				let endLocation = null;
+				let intermediateLocations = [];
+				if (timelineEntries.length >= 1) {
+					startLocation = {
+						_locationName: timelineEntries[0].name,
 						latLng: {
-							lat: entry.latitude,
-							lng: entry.longitude
+							lat: timelineEntries[0].latitude,
+							lng: timelineEntries[0].longitude
 						},
 						startTime: Date(),
 						endTime: Date,
-						timelineIcon: this.getLocationIcon(entry.purpose)
+						timelineIcon: this.getLocationIcon(timelineEntries[0].purpose)
 					};
+				}
+				if (timelineEntries.length >= 2) {
+					endLocation = {
+						_locationName: timelineEntries[timelineEntries.length - 1].name,
+						latLng: {
+							lat: timelineEntries[timelineEntries.length - 1].latitude,
+							lng: timelineEntries[timelineEntries.length - 1].longitude
+						},
+						startTime: Date(),
+						endTime: Date,
+						timelineIcon: this.getLocationIcon(timelineEntries[timelineEntries.length - 1].purpose)
+					};
+				}
 
-					intermediateLocations.push(newEntry);
-				});
-			}
+				if (timelineEntries.length >= 3) {
+					const locations = timelineEntries.slice(1, timelineEntries.length - 1);
 
-			this.basicState = {
-				startLocation: startLocation,
-				tripLocations: intermediateLocations,
+					locations.forEach(entry => {
+						let newEntry = {
+							_locationName: entry.name,
+							latLng: {
+								lat: entry.latitude,
+								lng: entry.longitude
+							},
+							startTime: Date(),
+							endTime: Date,
+							timelineIcon: this.getLocationIcon(entry.purpose)
+						};
 
-				endLocation: endLocation,
-				activeRouteIndex: 0
-			};
+						intermediateLocations.push(newEntry);
+					});
+				}
 
-			console.log(this.basicState);
+				if (state === undefined) {
+					this.basicState = {
+						startLocation: startLocation,
+						tripLocations: intermediateLocations,
 
-			this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
-			this.updateTripRouteModes();
+						endLocation: endLocation,
+						activeRouteIndex: 0
+					};
+				} else {
+					this.basicState = state.tripsState;
+				}
+
+				this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
+				this.updateTripRouteModes();
+			});
 		});
 
 		this._$rootScope['questionId'] = this.questionId;
@@ -1394,6 +1403,15 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			if (this._routeMap !== undefined) {
 				this._routeMap.removeActiveRouter();
 			}
+		}
+
+		if (
+			state.previousAction === SET_TRIP_LEG_DATA ||
+			state.previousAction === SET_MODE_SWITCH_DATA ||
+			state.previousAction === SET_TRIP_LEG_EDIT_COMPLETE ||
+			state.previousAction === SET_ROUTE_EDIT_COMPLETE
+		) {
+			this._routesService.saveRoutes(tripsState);
 		}
 	}
 
