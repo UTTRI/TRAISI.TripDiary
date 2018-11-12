@@ -61,9 +61,9 @@ L.Routing.Google = L.Class.extend({
                                         if (route.legs[legKey].steps[stepKey].travel_mode == 'WALKING') {
                                             if (transitDiv === '' || route.legs[legKey].steps[stepKey].duration.value > 300 || route.legs[legKey].steps.length - 1 == stepKey) {
                                                 if (transitDiv !== '') {
-                                                    transitDiv += '<i class="material-icons next-arrow">keyboard_arrow_right</i>';
+                                                    transitDiv += '<i class="fas fa-angle-right"></i>';
                                                 }
-                                                transitDiv += '<i class="material-icons next-arrow">directions_walk</i>';
+                                                transitDiv += '<i class="fas fa-walking"></i>';
                                                 currentMode = 'WALKING';
                                                 summaryString += '/walk';
                                             }
@@ -73,7 +73,7 @@ L.Routing.Google = L.Class.extend({
                                         if (route.legs[legKey].steps[stepKey].transit.line.short_name != 'undefined') {
                                             currentMode = route.legs[legKey].steps[stepKey].travel_mode;
                                             if (transitDiv !== '') {
-                                                transitDiv += '<i class="material-icons next-arrow">keyboard_arrow_right</i>';
+                                                transitDiv += '<i class="fas fa-angle-right"></i>';
                                             }
 
                                             if (route.legs[legKey].steps[stepKey].transit.line.hasOwnProperty('short_name')) {
