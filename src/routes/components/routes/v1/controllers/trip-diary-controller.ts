@@ -731,8 +731,8 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 							lat: timelineEntries[0].latitude,
 							lng: timelineEntries[0].longitude
 						},
-						startTime: Date(),
-						endTime: Date,
+						startTime: timelineEntries[0].timeA,
+						endTime: timelineEntries[0].timeB,
 						timelineIcon: this.getLocationIcon(timelineEntries[0].purpose)
 					};
 				}
@@ -743,8 +743,8 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 							lat: timelineEntries[timelineEntries.length - 1].latitude,
 							lng: timelineEntries[timelineEntries.length - 1].longitude
 						},
-						startTime: Date(),
-						endTime: Date,
+						startTime: timelineEntries[timelineEntries.length - 1].timeA,
+						endTime: timelineEntries[timelineEntries.length - 1].timeB,
 						timelineIcon: this.getLocationIcon(timelineEntries[timelineEntries.length - 1].purpose)
 					};
 				}
@@ -759,8 +759,8 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 								lat: entry.latitude,
 								lng: entry.longitude
 							},
-							startTime: Date(),
-							endTime: Date,
+							startTime: entry.timeA,
+							endTime: entry.timeB,
 							timelineIcon: this.getLocationIcon(entry.purpose)
 						};
 
