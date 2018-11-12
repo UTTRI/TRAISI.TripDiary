@@ -14,5 +14,24 @@ timeline-new-entry mgl-map {
 
 .model-body-map {
     padding: 0 !important;
-    min-height: 300px;
+	min-height: 300px;
+	position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+    display: flex;
+
+    .input-part{
+        width: 100%;
+        margin: 40px;
+    }
+
+    .purpose-select{
+        height: 60px;
+        width: 300px;
+    }
 }

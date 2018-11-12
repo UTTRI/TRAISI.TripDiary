@@ -1,58 +1,48 @@
-<div class="modal fade" bsModal #newEntryModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div *ngIf="stepOne">
-                    <h4 class="modal-title pull-left">Q1: Where is this new location?
-                    </h4>
-                </div>
-                <div *ngIf="stepTwo">
-                    <h4 class="modal-title pull-left">Q2: Give this location a name
-                    </h4>
-                </div>
-                <div *ngIf="stepThree">
-                    <h4 class="modal-title pull-left">Q3: What is the purpose for travelling to this location?
-                    </h4>
-                </div>
-                <button type="button" class="close pull-right" aria-label="Close" (click)="newEntryModal.hide()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body model-body-map">
-                <div [hidden]="!stepOne">
-                    <ng-template #mapTemplate>
-                        <ng-container #container></ng-container>
-                    </ng-template>
-                </div>
-                <div *ngIf="stepTwo">
-                    <input type="text" [(ngModel)]="model.name" class="form-control" placeholder="Enter a name"
-                        #inputElement />
-                </div>
-                <div *ngIf="stepThree">
-                    <select  [(ngModel)]="model.purpose" class="custom-select">
-                        <option selected="selected" [ngValue]="null">Choose a purpose</option>
-                        <option *ngFor="let purpose of configuration.purposes" [value]="purpose.key">{{purpose.label}}</option>
-                    </select>
-                </div>
-
-
-
-            </div>
-            <div class="modal-footer">
-                <div *ngIf="stepOne">
-                    <button type="button" class="btn btn-primary pull-left" [disabled]="true">Previous</button>
-                    <button type="button" class="btn btn-secondary" (click)="stepOneNext()">Next</button>
-                </div>
-                <div *ngIf="stepTwo">
-                    <button type="button" class="btn btn-primary" (click)="stepTwoPrevious()">Previous</button>
-                    <button type="button" class="btn btn-secondary" (click)="stepTwoNext()">Next</button>
-                </div>
-                <div *ngIf="stepThree">
-                    <button type="button" class="btn btn-primary" (click)="stepThreePrevious()">Previous</button>
-                    <button type="button" class="btn btn-secondary" (click)="stepThreeNext()">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+<div class="modal fade" bsModal #newEntryModal="bs-modal" [config]="{ backdrop: 'static' }" role="dialog">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div *ngIf="stepOne"><h4 class="modal-title pull-left">Q1: Where is this new location?</h4></div>
+				<div *ngIf="stepTwo"><h4 class="modal-title pull-left">Q2: Give this location a name</h4></div>
+				<div *ngIf="stepThree"><h4 class="modal-title pull-left">Q3: What is the purpose for travelling to this location?</h4></div>
+				<button type="button" class="close pull-right" aria-label="Close" (click)="newEntryModal.hide()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body model-body-map">
+				<div [hidden]="!stepOne">
+					<ng-template #mapTemplate> <ng-container #container></ng-container> </ng-template>
+				</div>
+				<div *ngIf="stepTwo" class="input-part">
+					<input
+						type="text"
+						[(ngModel)]="model.name"
+						class="form-control form-control-lg"
+						placeholder="Enter a name"
+						#inputElement
+					/>
+				</div>
+				<div *ngIf="stepThree">
+					<select [(ngModel)]="model.purpose" class="custom-select form-control-lg purpose-select">
+						<option selected="selected" [ngValue]="null">Choose a purpose</option>
+						<option *ngFor="let purpose of configuration.purposes" [value]="purpose.key">{{ purpose.label }}</option>
+					</select>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div *ngIf="stepOne">
+					<button type="button" class="btn btn-primary pull-left" [disabled]="true">Previous</button>
+					<button type="button" class="btn btn-secondary" (click)="stepOneNext()">Next</button>
+				</div>
+				<div *ngIf="stepTwo">
+					<button type="button" class="btn btn-primary" (click)="stepTwoPrevious()">Previous</button>
+					<button type="button" class="btn btn-secondary" (click)="stepTwoNext()">Next</button>
+				</div>
+				<div *ngIf="stepThree">
+					<button type="button" class="btn btn-primary" (click)="stepThreePrevious()">Previous</button>
+					<button type="button" class="btn btn-secondary" (click)="stepThreeNext()">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
