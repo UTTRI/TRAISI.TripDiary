@@ -41,8 +41,14 @@ export class TimelineService {
 
 	private _timelineStateValid: boolean = false;
 
+	private _timelineTimeStateValid: boolean = false;
+
 	public get isTimelineStatevalid(): boolean {
 		return this._timelineStateValid;
+	}
+
+	public get isTimelineTimeStatevalid(): boolean {
+		return this._timelineTimeStateValid;
 	}
 
 	public clearAvailableLocations() {
@@ -123,7 +129,8 @@ export class TimelineService {
 	public updateLocationsValidation(): void {
 		let hasStartLocation: boolean = false;
 		let hasEndLocation: boolean = false;
-		this._timelineLocations.forEach(location => {
+
+		this._timelineLocations.forEach((location, index) => {
 			if (location.locationType === TimelineLocationType.StartLocation) {
 				hasStartLocation = true;
 			} else if (location.locationType === TimelineLocationType.EndLocation) {
@@ -131,11 +138,29 @@ export class TimelineService {
 			}
 		});
 		this._timelineStateValid = hasStartLocation && hasEndLocation;
+	}
 
-		if (this._timelineStateValid) {
+	public updateLocationsTimeValidation(): void {
+		let hasStartLocation: boolean = false;
+		let hasEndLocation: boolean = false;
+		let timeOrder: boolean = true;
+		this._timelineLocations.forEach((location, index) => {
+			if (location.locationType === TimelineLocationType.StartLocation) {
+				hasStartLocation = true;
+			} else if (location.locationType === TimelineLocationType.EndLocation) {
+				hasEndLocation = true;
+			}
+			if (index < this._timelineLocations.length - 2) {
+				if (location.timeA >= this._timelineLocations[index + 1].timeA) {
 
-			this.surveyViewerService.updateNavigationState(this._timelineStateValid);
-		}
+					timeOrder = false;
+				}
+			}
+		});
+
+		this._timelineTimeStateValid = hasStartLocation && hasEndLocation && timeOrder;
+
+		console.log(this._timelineTimeStateValid);
 	}
 
 	/**

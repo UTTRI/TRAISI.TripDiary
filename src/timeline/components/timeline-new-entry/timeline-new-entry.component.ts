@@ -100,8 +100,8 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 				latitude: 0,
 				purpose: null,
 				longitude: 0,
-				timeA: new Date(),
-				timeB: new Date(),
+				timeA: new Date(1900, 0, 0, 0, 0, 0, 0),
+				timeB: new Date(1900, 0, 0, 0, 0, 0, 0),
 				name: '',
 				pipedLocation: false,
 				locationType: TimelineLocationType.Undefined,
@@ -124,7 +124,6 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		this.stepOne = false;
 		this.stepTwo = true;
 
-		console.log(this.model);
 	}
 
 	/**

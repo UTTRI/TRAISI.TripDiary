@@ -101,8 +101,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 						latitude: element.latitude,
 						purpose: purpose !== undefined ? purpose : 'Prior Location',
 						longitude: element.longitude,
-						timeA: new Date(),
-						timeB: new Date(),
+						timeA: new Date(1900, 0, 0, 0, 0, 0, 0),
+						timeB: new Date(1900, 0, 0, 0, 0, 0, 0),
 						pipedLocation: true,
 						id: Symbol(),
 						locationType: TimelineLocationType.Undefined,
@@ -299,9 +299,12 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 
 		this._timelineService.timelineLocations.subscribe((entries: TimelineEntry[]) => {
 			this.response.emit(entries);
-
-			if (this._timelineService.isTimelineStatevalid) {
+			this._timelineService.updateLocationsValidation();
+			this._timelineService.updateLocationsTimeValidation();
+			if (this._timelineService.isTimelineTimeStatevalid) {
 				this.validationState.emit(ResponseValidationState.VALID);
+			} else {
+				this.validationState.emit(ResponseValidationState.INVALID);
 			}
 		});
 	};

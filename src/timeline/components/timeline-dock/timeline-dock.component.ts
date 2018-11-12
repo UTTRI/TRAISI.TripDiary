@@ -64,14 +64,12 @@ export class TimelineDockComponent implements OnInit {
 			}
 		});
 
-		console.log(this._locations);
 
 		if (this.dockItems.length === 0 && hasStart && hasEnd) {
-			console.log('placeholder');
+
 			this.showPlaceholder = true;
 		} else {
-			console.log('no placeholder');
-			console.log(this.dockItems.length);
+
 			this.showPlaceholder = false;
 		}
 	}
@@ -161,7 +159,7 @@ export class TimelineDockComponent implements OnInit {
 	 */
 	public onDrop(dropResult: IDropResult): void {
 		if (this.dragOver) {
-			console.log('in here');
+
 			if (!(dropResult.payload in this.dockItems)) {
 				if (dropResult.removedIndex !== null) {
 					this.dockItems.splice(dropResult.removedIndex, 1);

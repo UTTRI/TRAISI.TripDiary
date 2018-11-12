@@ -18,6 +18,7 @@ import { BsModalRef, ModalDirective, ModalBackdropComponent } from 'ngx-bootstra
 import { NgTemplateOutlet } from '@angular/common';
 import { TimelineConfiguration } from '../../models/timeline-configuration.model';
 import { TimelineComponent } from '../timeline/timeline.component';
+import { ResponseValidationState } from 'traisi-question-sdk';
 
 @Component({
 	selector: 'timeline-summary',
@@ -84,7 +85,8 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 	}
 
 	/**
-	 *
+	 * Updates time
+	 * @param index
 	 */
 	public updateTime(index: number) {
 		let timeString = `${this.timeEntries[index].hours}:${this.timeEntries[index].minutes} ${this.timeEntries[index].am ? 'AM' : 'PM'}`;
@@ -99,6 +101,13 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 
 		this.timelineLocations[index].timeA = time;
 
+		// this._timelineService.updateLocationsValidation();
+		this._timelineService.updateLocationsTimeValidation();
+		if (this._timelineService.isTimelineTimeStatevalid) {
+			this.timeline.validationState.emit(ResponseValidationState.VALID);
+		} else {
+			this.timeline.validationState.emit(ResponseValidationState.INVALID);
+		}
 		this.timeline.response.emit(this.timelineLocations);
 	}
 }
