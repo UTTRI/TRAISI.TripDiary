@@ -10,7 +10,11 @@
 		<div class="time-input-container">
 			<div class="input-group input-group-sm">
 				<div *ngIf="i < timeEntries.length - 1">
-					<timepicker [(ngModel)]="timelineLocations[i].timeA" (ngModelChange)="updateTime2(i)"></timepicker>
+					<timepicker (isValid)="validChange($event)"
+						[(ngModel)]="timelineLocations[i].timeA"
+						(ngModelChange)="updateTime2(i)"
+						[min]="config.startTime"
+					></timepicker>
 				</div>
 				<!--
 					<div class="input-group-prepend">

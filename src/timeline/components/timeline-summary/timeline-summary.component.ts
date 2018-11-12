@@ -87,6 +87,10 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 		});
 	}
 
+	public validChange(event): void {
+		console.log(event);
+	}
+
 	/**  */
 	public updateTime2(index: number): void {
 		this._timelineService.updateLocationsTimeValidation();
