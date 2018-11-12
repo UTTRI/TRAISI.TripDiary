@@ -88,7 +88,6 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 
 		this.newTimelineEntryTemplateRef.onShown.subscribe(val => {
 			let sub = (<any>this._mapComponent).mapInstance.subscribe(mapInstance => {
-				console.log('in here');
 				mapInstance.resize();
 			});
 			sub.unsubscribe();
@@ -151,6 +150,7 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 	public stepThreeNext(): void {
 		this.saveCallback(this.model);
 		this.newTimelineEntryTemplateRef.hide();
+		this._mapComponent.resetInput();
 	}
 
 	public ngOnInit(): void {
