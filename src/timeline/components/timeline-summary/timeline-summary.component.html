@@ -1,83 +1,68 @@
 <div class="timeline-summary-container">
-    <div class="timeline-summary-bar"></div>
-    <span *ngFor="let location of timelineLocations">
-        <timeline-entry-item [model]="location" class="summary-item"></timeline-entry-item>
-    </span>
-
+	<div class="timeline-summary-bar"></div>
+	<span *ngFor="let location of timelineLocations">
+		<timeline-entry-item [model]="location" class="summary-item"></timeline-entry-item>
+	</span>
 </div>
 
 <div class="timeline-summary-time-input-container">
-
-    <span *ngFor="let location of timeEntries; index as i">
-        <div class="time-input-container">
-            <div class="input-group input-group-sm">
-                <div class="input-group-prepend">
-
-                    <div class="time-input">
-
-                            <div class="input-group">
-        
-                                <select [(ngModel)]="location.hours" class="form-control-sm hours" (ngModelChange)="updateTime(i)">
-                                    <option [ngValue]="0">12</option>
-                                    <option [ngValue]="1">01</option>
-                                    <option [ngValue]="2">02</option>
-                                    <option [ngValue]="3">03</option>
-                                    <option [ngValue]="4">04</option>
-                                    <option [ngValue]="5">05</option>
-                                    <option [ngValue]="6">06</option>
-                                    <option [ngValue]="7">07</option>
-                                    <option [ngValue]="8">08</option>
-                                    <option [ngValue]="9">09</option>
-                                    <option [ngValue]="10">10</option>
-                                    <option [ngValue]="11">11</option>
-                                </select>
-                                <select  [(ngModel)]="location.minutes"  class="form-control-sm minutes" (ngModelChange)="updateTime(i)">
-                                    <option [ngValue]="0">00</option>
-                                    <option [ngValue]="5">05</option>
-                                    <option [ngValue]="10">10</option>
-                                    <option [ngValue]="15">15</option>
-                                    <option [ngValue]="20">20</option>
-                                    <option [ngValue]="25">25</option>
-                                    <option [ngValue]="30">30</option>
-                                    <option [ngValue]="35">35</option>
-                                    <option [ngValue]="40">40</option>
-                                    <option [ngValue]="45">45</option>
-                                    <option [ngValue]="50">50</option>
-                                    <option [ngValue]="55">55</option>
-
-                                </select>
-                                <select  [(ngModel)]="location.am"  class="form-control-sm ampm"  (ngModelChange)="updateTime(i)">
-                                    <option [ngValue]="true">AM</option>
-                                    <option [ngValue]="false">PM</option>
-        
-                                </select>
-        
-        
-                            </div>
-                        </div>
+	<span *ngFor="let location of timeEntries; index as i">
+		<div class="time-input-container">
+			<div class="input-group input-group-sm">
+				<div class="input-group-prepend">
+					<div class="time-input">
+						<div class="input-group" *ngIf="i < timeEntries.length - 1">
+							<select [(ngModel)]="location.hours" class="form-control-sm hours" (ngModelChange)="updateTime(i)">
+								<option [ngValue]="0">12</option>
+								<option [ngValue]="1">01</option>
+								<option [ngValue]="2">02</option>
+								<option [ngValue]="3">03</option>
+								<option [ngValue]="4">04</option>
+								<option [ngValue]="5">05</option>
+								<option [ngValue]="6">06</option>
+								<option [ngValue]="7">07</option>
+								<option [ngValue]="8">08</option>
+								<option [ngValue]="9">09</option>
+								<option [ngValue]="10">10</option>
+								<option [ngValue]="11">11</option>
+							</select>
+							<select [(ngModel)]="location.minutes" class="form-control-sm minutes" (ngModelChange)="updateTime(i)">
+								<option [ngValue]="0">00</option>
+								<option [ngValue]="5">05</option>
+								<option [ngValue]="10">10</option>
+								<option [ngValue]="15">15</option>
+								<option [ngValue]="20">20</option>
+								<option [ngValue]="25">25</option>
+								<option [ngValue]="30">30</option>
+								<option [ngValue]="35">35</option>
+								<option [ngValue]="40">40</option>
+								<option [ngValue]="45">45</option>
+								<option [ngValue]="50">50</option>
+								<option [ngValue]="55">55</option>
+							</select>
+							<select [(ngModel)]="location.am" class="form-control-sm ampm" (ngModelChange)="updateTime(i)">
+								<option [ngValue]="true">AM</option>
+								<option [ngValue]="false">PM</option>
+							</select>
+						</div>
+					</div>
                 </div>
-
-
-
-            </div>
-        </div>
-    </span>
-
+                <div class="departure-time-label">
+                    Departure Time
+                </div>
+			</div>
+		</div>
+	</span>
 </div>
 
-<div class="summary-wedges">
-
-</div>
-
+<div class="summary-wedges"></div>
 
 <div class="summary-times-dates-container">
-    <div class="summary-times-dates" *ngIf="config">
-        <span class="start-date"> {{config.startTime | date:'mediumDate'}}</span>
-        <span class="end-date">
-            {{config.endTime | date:'mediumDate'}}
-        </span>
-    </div>
-    <div class="summary-times">
-        <span class="hour-label" *ngFor="let hour of hours">{{hour}}</span>
-    </div>
+	<div class="summary-times-dates" *ngIf="config">
+		<span class="start-date"> {{ config.startTime | date: 'mediumDate' }}</span>
+		<span class="end-date"> {{ config.endTime | date: 'mediumDate' }} </span>
+	</div>
+	<div class="summary-times">
+		<span class="hour-label" *ngFor="let hour of hours">{{ hour }}</span>
+	</div>
 </div>

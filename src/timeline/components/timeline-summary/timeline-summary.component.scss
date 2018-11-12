@@ -8,6 +8,12 @@
 
 .timeline-summary-time-input-container
 {
+    .departure-time-label{
+        font-weight: bold;
+        text-align:center;
+        font-size: 12px;
+
+    }
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -33,6 +39,7 @@
             .input-group
             {
                 width: 125px;
+                justify-content:center;
             }
         }
 }
