@@ -86,8 +86,8 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 
 		this.newTimelineEntryTemplateRef.onHidden.subscribe(this.onHidden);
 
-		this.newTimelineEntryTemplateRef.onShown.subscribe((val) => {
-			let sub = (<any>this._mapComponent).mapInstance.subscribe((mapInstance) => {
+		this.newTimelineEntryTemplateRef.onShown.subscribe(val => {
+			let sub = (<any>this._mapComponent).mapInstance.subscribe(mapInstance => {
 				console.log('in here');
 				mapInstance.resize();
 			});
@@ -116,14 +116,16 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		}
 	}
 
-	stepTwoPrevious(): void {
+	public stepTwoPrevious(): void {
 		this.stepOne = true;
 		this.stepTwo = false;
 	}
 
-	stepOneNext(): void {
+	public stepOneNext(): void {
 		this.stepOne = false;
 		this.stepTwo = true;
+
+		console.log(this.model);
 	}
 
 	/**
@@ -147,7 +149,6 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 	}
 
 	public stepThreeNext(): void {
-		console.log(this.model);
 		this.saveCallback(this.model);
 		this.newTimelineEntryTemplateRef.hide();
 	}
@@ -155,13 +156,13 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 	public ngOnInit(): void {
 		let componentRef = null;
 
-		let sub = this._questionLoaderService.componentFactories$.subscribe((factory) => {
+		let sub = this._questionLoaderService.componentFactories$.subscribe(factory => {
 			if (factory.selector == 'traisi-map-question') {
 				componentRef = this.mapTemplate.createComponent(factory, undefined, this.injector);
 
 				let instance: SurveyQuestion<any> = <SurveyQuestion<any>>componentRef.instance;
 
-				instance.response.subscribe((value) => {
+				instance.response.subscribe(value => {
 					this.callback(value);
 				});
 
@@ -169,7 +170,7 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 			}
 		});
 
-		this.timelineService.configuration.subscribe((config) => {
+		this.timelineService.configuration.subscribe(config => {
 			this.configuration = config;
 		});
 	}
