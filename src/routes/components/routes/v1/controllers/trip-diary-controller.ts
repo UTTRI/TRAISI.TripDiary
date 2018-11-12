@@ -568,14 +568,19 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				// }
 			}
 
-			let lastNonEmbedded = i;
-			if (this.state.tripLocations.length > 1) {
+			let lastNonEmbedded = 1;
+
+			// DISABLED FOR NOW
+			if (this.state.tripLocations.length > 1 && false) {
 				for (
 					;
 					i < this.state.tripLocations.length &&
-					(isNullOrUndefined(this.state.endLocation) || this.state.tripLocations[i].startTime < this.state.endLocation.startTime);
+					isNullOrUndefined(
+						this.state.endLocation
+					) /*||  this.state.tripLocations[i].startTime < this.state.endLocation.startTime */;
 					i++
 				) {
+					break;
 					let surroundingLocation = this.getEmbeddedLocation(this.state.tripLocations[i]);
 
 					if (surroundingLocation != null) {
@@ -586,14 +591,15 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 						routes.push(route2);
 					} else {
 						let route = TripRoute.create(this.state.tripLocations[lastNonEmbedded], this.state.tripLocations[i]);
-						if (route.startLocation.locationName !== route.endLocation.locationName) {
-							routes.push(route);
-							lastNonEmbedded = i;
-						}
+						// if (route.startLocation.address !== route.endLocation.address) {
+						routes.push(route);
+						lastNonEmbedded = i;
+						// }
 					}
 				}
 			}
-			if (lastNonEmbedded >= 0 && !isNullOrUndefined(this.state.endLocation)) {
+			// DISABLED
+			if (lastNonEmbedded >= 0 && !isNullOrUndefined(this.state.endLocation) && false) {
 				let latestLocation = this.state.tripLocations[lastNonEmbedded];
 
 				if (!isNullOrUndefined(this.state.endLocation) /* latestLocation.startTime < this.state.endLocation.startTime */) {
@@ -612,7 +618,9 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					// }
 				}
 			}
-			if (!isNullOrUndefined(this.state.endLocation)) {
+
+			// DISABLED
+			if (!isNullOrUndefined(this.state.endLocation) && false) {
 				for (; i < this.state.tripLocations.length; i++) {
 					let surroundingLocation = this.getEmbeddedLocation(this.state.tripLocations[i]);
 
@@ -625,6 +633,16 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					} else {
 					}
 				}
+			}
+
+			for (i = 0; i < this.state.tripLocations.length - 1; i++) {
+				let route = TripRoute.create(this.state.tripLocations[i], this.state.tripLocations[i + 1]);
+				routes.push(route);
+			}
+
+			if (!isNullOrUndefined(this.state.endLocation)) {
+				let route = TripRoute.create(this.state.tripLocations[this.state.tripLocations.length - 1], this.state.endLocation);
+				routes.push(route);
 			}
 		}
 
@@ -655,6 +673,10 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		}
 
 		// this._$window.dispatchEvent(new CustomEvent('visibilityScrollCheck'));
+	}
+
+	private getLocationIcon(): string {
+		return '';
 	}
 
 	/**
@@ -698,10 +720,10 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			}
 			if (timelineEntries.length >= 2) {
 				endLocation = {
-					_locationName: timelineEntries[1].name,
+					_locationName: timelineEntries[timelineEntries.length - 1].name,
 					latLng: {
-						lat: timelineEntries[1].latitude,
-						lng: timelineEntries[1].longitude
+						lat: timelineEntries[timelineEntries.length - 1].latitude,
+						lng: timelineEntries[timelineEntries.length - 1].longitude
 					},
 					startTime: Date(),
 					endTime: Date,
@@ -710,7 +732,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			}
 
 			if (timelineEntries.length >= 3) {
-				const locations = timelineEntries.slice(2, timelineEntries.length);
+				const locations = timelineEntries.slice(1, timelineEntries.length - 1);
 
 				locations.forEach(entry => {
 					let newEntry = {
@@ -735,6 +757,8 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				endLocation: endLocation,
 				activeRouteIndex: 0
 			};
+
+			console.log(this.basicState);
 
 			this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
 			this.updateTripRouteModes();
