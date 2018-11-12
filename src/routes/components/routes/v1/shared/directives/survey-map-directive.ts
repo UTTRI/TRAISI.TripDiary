@@ -92,7 +92,7 @@ declare var $: IAugmentedJQueryStatic;
 
 export class SurveyMapDirective {
 	public template = require('../templates/survey-map.html');
-	deletePopupTemplateUrl = '/static/dist/directives/trips/templates/trip-diary-route-delete-popup.html';
+	deletePopupTemplateUrl = require('../../templates/trip-diary-route-delete-popup.html');
 	switchModePopupTemplateUrl = '/static/dist/directives/trips/templates/trip-diary-switch-mode-popup.html';
 	deleteModeSwitchTemplateUrl = '/static/dist/directives/trips/templates/trip-diary-delete-mode-switch-popup.html';
 	link: ($scope: ISurveyMapScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => void;
@@ -764,7 +764,7 @@ export class SurveyMapDirective {
 											this._$scope['deleteWayPoint'] = ($event) => {
 												control.spliceWaypoints($event.target.waypointIndex, 1);
 											};
-											this._$templateRequest(this.deletePopupTemplateUrl).then((template) => {
+											let template = this.deletePopupTemplateUrl;
 												let toolTip = this._$compile(
 													$('<span></span>')
 														.html(template)
@@ -778,7 +778,7 @@ export class SurveyMapDirective {
 													direction: 'top',
 													interactive: true
 												});
-											});
+											
 										}
 										this._layersByRoute[tripRouteI.id].push(marker);
 
