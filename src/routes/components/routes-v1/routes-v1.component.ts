@@ -32,13 +32,13 @@ export class RoutesV1Component implements OnInit {
 	 */
 	ngOnInit(): void {
 		//
-		console.log(this._elementRef);
+		
 		new TripDiaryModule().bootstrap('test', this.surveyId);
 
 		setTimeout(() => {
 			this._upgrade.bootstrap(this.divRef.nativeElement, ['trips'], { strictDi: false });
 
-			console.log('after bootstrap;)');
+			// console.log('after bootstrap;)');
 		});
 	}
 

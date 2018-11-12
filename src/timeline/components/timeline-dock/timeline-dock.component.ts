@@ -155,10 +155,13 @@ export class TimelineDockComponent implements OnInit {
 				}
 			}
 		} else {
-			this.timelineService.removeTimelineLocation(this.dockItems[dropResult.removedIndex]);
+			// console.log(dropResult);
+			if (dropResult.removedIndex !== null) {
+				this.timelineService.removeTimelineLocation(this.dockItems[dropResult.removedIndex]);
+			}
 			// this.dockItems.splice(dropResult.removedIndex, 1);
 
-			console.log(this.dockItems);
+			// console.log(this.dockItems);
 		}
 
 		this.dragOver = false;
