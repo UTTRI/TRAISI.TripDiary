@@ -130,11 +130,14 @@ export class TimelineDockComponent implements OnInit {
 	 */
 	public onDrop(dropResult: IDropResult): void {
 		if (this.dragOver) {
+			console.log('in here');
 			if (!(dropResult.payload in this.dockItems)) {
 				if (dropResult.removedIndex !== null) {
 					this.dockItems.splice(dropResult.removedIndex, 1);
-					this.dockItems.splice(dropResult.addedIndex, 0, dropResult.payload);
-					this.timelineService.reorderTimelineLocation(dropResult.removedIndex + 1, dropResult.addedIndex + 1);
+					if (dropResult.addedIndex !== null) {
+						this.dockItems.splice(dropResult.addedIndex, 0, dropResult.payload);
+						this.timelineService.reorderTimelineLocation(dropResult.removedIndex + 1, dropResult.addedIndex + 1);
+					}
 				} else {
 					let model: TimelineEntry = Object.assign({}, dropResult.payload);
 
@@ -151,6 +154,11 @@ export class TimelineDockComponent implements OnInit {
 					}
 				}
 			}
+		} else {
+			this.timelineService.removeTimelineLocation(this.dockItems[dropResult.removedIndex]);
+			// this.dockItems.splice(dropResult.removedIndex, 1);
+
+			console.log(this.dockItems);
 		}
 
 		this.dragOver = false;
