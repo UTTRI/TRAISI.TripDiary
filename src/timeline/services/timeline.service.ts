@@ -160,7 +160,6 @@ export class TimelineService {
 
 		this._timelineTimeStateValid = hasStartLocation && hasEndLocation && timeOrder;
 
-		console.log(this._timelineTimeStateValid);
 	}
 
 	/**
