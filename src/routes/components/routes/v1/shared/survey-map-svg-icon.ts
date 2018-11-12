@@ -68,7 +68,7 @@ export class SurveyMapSvgIcon {
 
 		iconMarker.options.iconSize = [34, 44];
 
-		iconMarker.createShadow();
+		// iconMarker.createShadow();
 
 		return iconMarker;
 	}

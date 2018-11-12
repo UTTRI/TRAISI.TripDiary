@@ -25,7 +25,9 @@
 
             </md-icon>-->
 
-            {$ route.startLocation.displayName() $} - {$ route.endLocation.displayName()
+            {$ route.startLocation.displayName() $} - 
+            <i class="{$ route.endLocation.timelineIcon | lowercase $}" class="location-icon" ></i>
+            {$ route.endLocation.displayName()
             $}
 
         </span>

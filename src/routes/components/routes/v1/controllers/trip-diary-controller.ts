@@ -675,8 +675,20 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		// this._$window.dispatchEvent(new CustomEvent('visibilityScrollCheck'));
 	}
 
-	private getLocationIcon(): string {
-		return '';
+	private getLocationIcon(purpose: string): string {
+		if (purpose === 'home') {
+			return 'fas fa-home';
+		} else if (purpose === 'work') {
+			return 'fas fa-building';
+		} else if (purpose === 'school') {
+			return 'fas fa-school';
+		} else if (purpose === 'daycare') {
+			return 'fas fa-child';
+		} else if (purpose === 'facilitate_passenger') {
+			return 'fas fa-car-side';
+		} else {
+			return 'fas fa-edit';
+		}
 	}
 
 	/**
@@ -715,7 +727,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					},
 					startTime: Date(),
 					endTime: Date,
-					timelineIcon: 'fas fa-home'
+					timelineIcon: this.getLocationIcon(timelineEntries[0].purpose)
 				};
 			}
 			if (timelineEntries.length >= 2) {
@@ -727,7 +739,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					},
 					startTime: Date(),
 					endTime: Date,
-					timelineIcon: 'fas fa-home'
+					timelineIcon: this.getLocationIcon(timelineEntries[timelineEntries.length - 1].purpose)
 				};
 			}
 
@@ -736,14 +748,14 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
 				locations.forEach(entry => {
 					let newEntry = {
-						_locationName: entry.purpose,
+						_locationName: entry.name,
 						latLng: {
 							lat: entry.latitude,
 							lng: entry.longitude
 						},
 						startTime: Date(),
 						endTime: Date,
-						timelineIcon: 'fas fa-home'
+						timelineIcon: this.getLocationIcon(entry.purpose)
 					};
 
 					intermediateLocations.push(newEntry);
