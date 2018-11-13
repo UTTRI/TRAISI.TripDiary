@@ -324,9 +324,9 @@
 				</div>
 				<div class="switched-modes-outer" ng-if="!$last && activeTripRoute()._tripLegs.length > 1">
 					<i
-						ng-if="!tripLeg._isComplete"
+						ng-if="!tripLeg._isComplete && false"
 						class="mode-switch-canel fas fa-ban"
-						ng-click="removeModeSwitch(activeTripRouteIndex,$index)"
+						ng-click="removeModeSwitch(tds.state.activeRouteIndex,$index)"
 					>
 						cancel
 					</i>

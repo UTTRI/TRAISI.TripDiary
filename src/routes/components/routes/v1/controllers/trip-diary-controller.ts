@@ -499,11 +499,11 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	 */
 	private toggleRouteMapTour() {
 		if (window.matchMedia('(min-width: 480px)').matches) {
-			this._tripDiaryService.toggleRouteMapTour();
+			// 	this._tripDiaryService.toggleRouteMapTour();
 		}
 
 		this.$scope['routeMobileTourActive'] = true;
-		window.dispatchEvent(new CustomEvent('onShowRouteTour'));
+		// window.dispatchEvent(new CustomEvent('onShowRouteTour'));
 	}
 
 	public $onInit = (): void => {
@@ -878,10 +878,13 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					// this.tripsScope.tc.value = state;
 					// console.lo
 					this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
+					this._tripDiaryService.setRouteEditActive(this.basicState['activeRouteIndex']);
+					this.updateValidationV2();
 					// this.updateTripRouteModes();
 				}
 
 				this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
+
 				// this.updateTripRouteModes();
 			});
 		});

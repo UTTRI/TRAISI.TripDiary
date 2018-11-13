@@ -319,7 +319,7 @@ export class SurveyMapDirective {
 	 */
 
 	public toggleAddRoutingWaypoints(enable: boolean) {
-		if (this._activeRoutingControl !== undefined) {
+		if (this._activeRoutingControl !== null && this._activeRoutingControl !== undefined) {
 			this._activeRoutingControl.options.addWaypoints = enable;
 		}
 	}
@@ -331,7 +331,7 @@ export class SurveyMapDirective {
 	public cleanMarkers(markerList: SurveyMapMarker[]) {
 		let notFound = [];
 
-		for (let key in this._markers) {
+		for (let key of Object.keys(this._markers)) {
 			let found = false;
 			for (let i = 0; i < markerList.length; i++) {
 				if (markerList[i].id === key) {
@@ -436,9 +436,17 @@ export class SurveyMapDirective {
 		let mapMarker = null;
 
 		if (this._markers[marker.id] == null) {
+			let icon = L.icon({
+				iconUrl: require('/node_modules/leaflet/dist/images/marker-icon.png'),
+				iconSize: [25, 41],
+				iconAnchor: [13, 41],
+				popupAnchor: [0, -44]
+			});
+
 			mapMarker = L.marker([marker.latLng.lat, marker.latLng.lng], {
 				draggable: true,
-				marker: marker
+				marker: marker,
+				icon: icon
 			}).addTo(this._map);
 
 			// marker.mapMarker = mapMarker;
@@ -508,7 +516,10 @@ export class SurveyMapDirective {
 					}
 					let s = marker as TripLocation;
 
-					mapMarker.bindTooltip(s.displayName(), { permanent: true, direction: 'bottom' });
+					mapMarker.bindTooltip(s.displayName(), {
+						permanent: true,
+						direction: 'bottom'
+					});
 				}
 				mapMarker.setIcon(marker.getMarkerIcon());
 			}
@@ -810,7 +821,7 @@ export class SurveyMapDirective {
 							control.addTo(this._$scope['mapRef']);
 
 							this._activeRoutingControl = control;
-							console.log(this._activeRoutingControl);
+							// console.log(this._activeRoutingControl);
 
 							this._$scope.$emit('routeQueryActive');
 
@@ -1034,11 +1045,11 @@ export class SurveyMapDirective {
 			mapRef.invalidateSize();
 		}, 0);
 
-		this._$scope.$watchCollection('tc.value.tripLocations', (newValue: SurveyMapMarker[], oldValue: SurveyMapMarker[]) => {
+		/* this._$scope.$watchCollection('tc.value.tripLocations', (newValue: SurveyMapMarker[], oldValue: SurveyMapMarker[]) => {
 			if (oldValue !== newValue) {
 				surveyMapRef.cleanMarkers(newValue);
 			}
-		});
+		}); */
 
 		this._$scope.controller.updateTripRouteModes();
 
@@ -1150,12 +1161,27 @@ export class SurveyMapDirective {
 		if (tripRoute.tripLegs.length === 1) {
 			// add icon for start and end of this leg
 
-			console.log(tripRoute.startLocation.getMarkerIcon());
-			let marker = L.marker(tripLeg2._waypoints[0]);
+			// console.log(tripRoute.startLocation.getMarkerIcon());
+			// let marker = L.marker(tripLeg2._waypoints[0]);
+
+			let icon = L.icon({
+				iconUrl: require('/node_modules/leaflet/dist/images/marker-icon.png'),
+				iconSize: [25, 41],
+				iconAnchor: [13, 41],
+				popupAnchor: [0, -44]
+			});
+
+			let marker = L.marker(tripLeg2._waypoints[0], {
+				icon: icon
+			});
+
 			marker.setIcon(tripRoute.startLocation.getMarkerIcon());
 			marker.addTo(this._map);
 			this._layersByRoute[tripRoute.id].push(marker);
-			marker.bindTooltip(tripRoute.startLocation.displayName(), { permanent: true, direction: 'bottom' });
+			marker.bindTooltip(tripRoute.startLocation.displayName(), {
+				permanent: true,
+				direction: 'bottom'
+			});
 
 			$(marker._icon)
 				.find('mark')
@@ -1168,7 +1194,10 @@ export class SurveyMapDirective {
 			marker.setIcon(tripRoute.endLocation.getMarkerIcon());
 			marker.addTo(this._map);
 			this._layersByRoute[tripRoute.id].push(marker);
-			marker.bindTooltip(tripRoute.endLocation.displayName(), { permanent: true, direction: 'bottom' });
+			marker.bindTooltip(tripRoute.endLocation.displayName(), {
+				permanent: true,
+				direction: 'bottom'
+			});
 
 			markerIndex++;
 			$(marker._icon)
@@ -1182,10 +1211,14 @@ export class SurveyMapDirective {
 		} else if (tripRoute.tripLegs.length > 1) {
 			if (tripLeg2.id === _first(tripRoute.tripLegs).id) {
 				let marker = L.marker(tripLeg2._waypoints[0]);
+
 				marker.setIcon(tripRoute.startLocation.getMarkerIcon());
 				marker.addTo(this._map);
 				this._layersByRoute[tripRoute.id].push(marker);
-				marker.bindTooltip(tripRoute.startLocation.displayName(), { permanent: true, direction: 'bottom' });
+				marker.bindTooltip(tripRoute.startLocation.displayName(), {
+					permanent: true,
+					direction: 'bottom'
+				});
 
 				$(marker._icon)
 					.find('mark')
@@ -1228,7 +1261,10 @@ export class SurveyMapDirective {
 				marker.setIcon(tripRoute.endLocation.getMarkerIcon());
 				marker.addTo(this._map);
 				this._layersByRoute[tripRoute.id].push(marker);
-				marker.bindTooltip(tripRoute.endLocation.displayName(), { permanent: true, direction: 'bottom' });
+				marker.bindTooltip(tripRoute.endLocation.displayName(), {
+					permanent: true,
+					direction: 'bottom'
+				});
 				$(marker._icon)
 					.find('mark')
 					.css({ display: 'block' });
