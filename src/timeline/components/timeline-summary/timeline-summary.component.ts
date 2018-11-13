@@ -19,7 +19,8 @@ import { NgTemplateOutlet } from '@angular/common';
 import { TimelineConfiguration } from '../../models/timeline-configuration.model';
 import { TimelineComponent } from '../timeline/timeline.component';
 import { ResponseValidationState } from 'traisi-question-sdk';
-
+import { NgForm } from '@angular/forms';
+import 'rxjs/add/operator/debounceTime';
 @Component({
 	selector: 'timeline-summary',
 	template: require('./timeline-summary.component.html').toString(),
@@ -43,6 +44,9 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 
 	@Input()
 	public timeline: TimelineComponent;
+
+	@ViewChild('f')
+	public inputForm: NgForm;
 
 	/**
 	 *
@@ -85,22 +89,24 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 			}
 			this.config = config;
 		});
+
+		console.log('finish init ');
+
+		this.inputForm.valueChanges.debounceTime(1500).subscribe(value => {
+			this.timeline.response.emit(this.timelineLocations);
+			this._timelineService.updateLocationsTimeValidation();
+			if (this._timelineService.isTimelineTimeStatevalid) {
+				this.timeline.validationState.emit(ResponseValidationState.VALID);
+			} else {
+				this.timeline.validationState.emit(ResponseValidationState.INVALID);
+			}
+		});
 	}
 
-	public validChange(event): void {
-		console.log(event);
-	}
+	public validChange(event): void {}
 
 	/**  */
-	public updateTime2(index: number): void {
-		this._timelineService.updateLocationsTimeValidation();
-		if (this._timelineService.isTimelineTimeStatevalid) {
-			this.timeline.validationState.emit(ResponseValidationState.VALID);
-		} else {
-			this.timeline.validationState.emit(ResponseValidationState.INVALID);
-		}
-		this.timeline.response.emit(this.timelineLocations);
-	}
+	public updateTime2(index: number): void {}
 
 	/**
 	 * Updates time

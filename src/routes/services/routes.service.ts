@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { SurveyResponder, SurveyViewer, ResponseTypes, GroupMember, ResponseData } from 'traisi-question-sdk';
+import { SurveyResponder, SurveyViewer, ResponseTypes, GroupMember, ResponseData, ResponseValidationState } from 'traisi-question-sdk';
 import { ReplaySubject } from 'rxjs';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { RoutesComponent } from '../components/routes/routes.component';
@@ -32,5 +32,13 @@ export class RoutesService {
 	 */
 	public saveRoutes(value: any): void {
 		this.routesComponent.response.emit(value);
+	}
+
+	/**
+	 * Updates validation state
+	 * @param value 
+	 */
+	public updateValidationState(value: ResponseValidationState): void {
+		this.routesComponent.validationState.emit(value);
 	}
 }
