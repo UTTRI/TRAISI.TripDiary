@@ -154,7 +154,7 @@ export let config: ISurveyMapConfig = {
 				},
 				{
 					name: 'motorcycle',
-					icon: 'motorcycle',
+					icon: 'fas fa-motorcycle',
 					category: 'driver',
 					displayName: 'Motorcycle',
 					allowAddWaypoints: true,
@@ -254,7 +254,7 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'driver',
 					displayName: 'Private Shuttle',
 					showPrompt: false,
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: false,
 					shouldAskNoRouteDescription: false
 				}
@@ -277,7 +277,7 @@ export let config: ISurveyMapConfig = {
 					showPrompt: false,
 					routerMode: 'walk',
 					autoSaveRoute: false,
-					noRouteMessage: "I don't know the route."
+					noRouteMessage: 'I don\'t know the route.'
 				}
 			]
 		},
@@ -296,7 +296,7 @@ export let config: ISurveyMapConfig = {
 					colour: '#FF9800',
 					displayName: 'Bicycle',
 					showPrompt: false,
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					dialogTitle: 'Did you use bike share?',
 					routerMode: 'bicycle',
 					dataInputs: [
@@ -320,7 +320,7 @@ export let config: ISurveyMapConfig = {
 					showPrompt: false,
 					routerMode: 'driver',
 					autoSaveRoute: false,
-					noRouteMessage: "I don't know the route."
+					noRouteMessage: 'I don\'t know the route.'
 				}
 			]
 		},
@@ -340,7 +340,7 @@ export let config: ISurveyMapConfig = {
 					showPrompt: false,
 					customRoute: routeNotKnown,
 					routerMode: 'walk',
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: false
 				},
 				{
@@ -374,7 +374,7 @@ export let config: ISurveyMapConfig = {
 					displayName: 'Flight',
 					showPrompt: false,
 					routerMode: 'walk',
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: true
 				}
 			]
