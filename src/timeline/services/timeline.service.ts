@@ -45,6 +45,12 @@ export class TimelineService {
 
 	private _hasAdjacentIdenticalLocations: boolean = false;
 
+	private _isStartEndLocationsDifferent: boolean = false;
+
+	public get isStartEndLocationsDifferent(): boolean {
+		return this._isStartEndLocationsDifferent;
+	}
+
 	public get hasAdjacentIdenticalLocations(): boolean {
 		return this._hasAdjacentIdenticalLocations;
 	}
@@ -115,6 +121,21 @@ export class TimelineService {
 				{ key: 'facilitate_passenger', label: 'Facilitate Passenger' }
 			]
 		});
+	}
+
+	public updateIsStartEndLocationsDifferent(): void {
+		if (this._timelineLocations.length < 2) {
+			this._isStartEndLocationsDifferent = true;
+		} else {
+			if (
+				this._timelineLocations[0].latitude !== this._timelineLocations[this._timelineLocations.length - 1].latitude &&
+				this._timelineLocations[0].longitude !== this._timelineLocations[this._timelineLocations.length - 1].longitude
+			) {
+				this._isStartEndLocationsDifferent = true;
+			} else {
+				this._isStartEndLocationsDifferent = false;
+			}
+		}
 	}
 
 	/**

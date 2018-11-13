@@ -105,10 +105,17 @@ export class TimelineSlotComponent implements OnInit {
 			if (this.startLocation && model.purpose !== 'home') {
 				this.timelineDock.popover.show();
 			}
+
 			if (model.locationType === TimelineLocationType.StartLocation) {
 				this._timelineService.addTimelineLocation(model, 0);
 			} else {
 				this._timelineService.addTimelineLocation(model);
+			}
+
+			this._timelineService.updateIsStartEndLocationsDifferent();
+
+			if (this._timelineService.isStartEndLocationsDifferent) {
+				this.timelineDock.endPopover.show();
 			}
 		}
 		this.dragOver = false;

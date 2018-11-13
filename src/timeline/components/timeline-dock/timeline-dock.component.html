@@ -36,7 +36,13 @@
 			</smooth-dnd-draggable>
 		</smooth-dnd-container>
 	</div>
-	<timeline-slot [timelineDock]="this" [endLocation]="true"></timeline-slot>
+	<timeline-slot [timelineDock]="this" [endLocation]="true"
+	triggers=""
+	popoverTitle="Confirm Location"
+	placement="left"
+	[popover]="confirmEndLocationPopTemplate"
+	#endPopover="bs-popover"
+	></timeline-slot>
 </div>
 <div class="timeline-dock-info">
 	<div class="timeline-dock-info-start">START OF THE DAY</div>
@@ -75,5 +81,12 @@
 	<div>You have entered a start location that is not home.</div>
 	<div class="confirm-start-location-button">
 		<button type="button" class="btn btn-primary" (click)="confirmStartLocation()">Confirm</button>
+	</div>
+</ng-template>
+
+<ng-template #confirmEndLocationPopTemplate>
+	<div>Your start and end locations are not the same.</div>
+	<div class="confirm-start-location-button">
+		<button type="button" class="btn btn-primary" (click)="confirmEndLocation()">Confirm</button>
 	</div>
 </ng-template>
