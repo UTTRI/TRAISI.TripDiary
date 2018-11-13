@@ -59,6 +59,12 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	@ViewChild('timelineDock')
 	public timelineDock: TimelineDockComponent;
 
+	@ViewChild('popover')
+	public popover: PopoverDirective;
+
+	@ViewChild('duplicateLocationPopTemplate')
+	public confirmPurposeTemplate: TemplateRef<any>;
+
 	public isStep1: boolean = false;
 
 	public isStep2: boolean = false;
@@ -183,7 +189,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this.isStep1 = false;
 			this.isStep2 = true;
 			this.saveCurrentResponseState();
-			this.validationState.emit(ResponseValidationState.TOUCHED); 
+			this.validationState.emit(ResponseValidationState.TOUCHED);
 
 			return false;
 		}
@@ -240,6 +246,10 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		}
 	}
 	public onQuestionHidden(): void {}
+
+	public closePopover(): void {
+		this.popover.hide();
+	}
 
 	private onSavedResponseData: (response: 'none' | ResponseData<ResponseTypes.Timeline>[]) => void = (
 		response: 'none' | ResponseData<ResponseTypes.Timeline>[]
@@ -313,7 +323,12 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this._timelineService.updateLocationsTimeValidation();
 
 			if (this.isStep1) {
-				if (this._timelineService.isTimelineStatevalid) {
+				if (this._timelineService.hasAdjacentIdenticalLocations) {
+					this.popover.show();
+				} else {
+					this.popover.hide();
+				}
+				if (this._timelineService.isTimelineStatevalid && !this._timelineService.hasAdjacentIdenticalLocations) {
 					this.validationState.emit(ResponseValidationState.VALID);
 				} else {
 					this.validationState.emit(ResponseValidationState.INVALID);

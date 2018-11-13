@@ -43,6 +43,12 @@ export class TimelineService {
 
 	private _timelineTimeStateValid: boolean = false;
 
+	private _hasAdjacentIdenticalLocations: boolean = false;
+
+	public get hasAdjacentIdenticalLocations(): boolean {
+		return this._hasAdjacentIdenticalLocations;
+	}
+
 	public get isTimelineStatevalid(): boolean {
 		return this._timelineStateValid;
 	}
@@ -129,6 +135,7 @@ export class TimelineService {
 	public updateLocationsValidation(): void {
 		let hasStartLocation: boolean = false;
 		let hasEndLocation: boolean = false;
+		let hasAdjacentLocations: boolean = false;
 
 		this._timelineLocations.forEach((location, index) => {
 			if (location.locationType === TimelineLocationType.StartLocation) {
@@ -137,6 +144,20 @@ export class TimelineService {
 				hasEndLocation = true;
 			}
 		});
+
+		this._timelineLocations.forEach((location, index) => {
+			if (index < this._timelineLocations.length - 1) {
+				if (
+					location.latitude === this._timelineLocations[index + 1].latitude &&
+					location.longitude === this._timelineLocations[index + 1].longitude
+				) {
+					hasAdjacentLocations = true;
+				}
+			}
+		});
+
+		this._hasAdjacentIdenticalLocations = hasAdjacentLocations;
+
 		this._timelineStateValid = hasStartLocation && hasEndLocation;
 	}
 

@@ -18,8 +18,25 @@
             </button>
         </div>
 
-        <div class="timeline-dock-container"><timeline-dock #timelineDock></timeline-dock></div>
+
+        <div class="timeline-dock-container"><timeline-dock #timelineDock
+            
+            triggers=""
+            popoverTitle="Invalid Timeline"
+            placement="top"
+            [popover]="duplicateLocationPopTemplate"
+            #popover="bs-popover">
+
+
+        </timeline-dock></div>
     </div>
     <div *ngIf="isStep2"><timeline-summary [timeline]="this"></timeline-summary></div>
 </div>
 <timeline-new-entry #newEntry></timeline-new-entry>
+
+<ng-template #duplicateLocationPopTemplate>
+	<div>Two adjacent entries cannot be the same location.</div>
+	<div class="confirm-start-location-button">
+		<button type="button" class="btn btn-primary" (click)="closePopover()">Okay</button>
+	</div>
+</ng-template>

@@ -29,8 +29,8 @@ export class TimelineDockComponent implements OnInit {
 
 	public sub: Subscription;
 
-	@ViewChild('startSlotPopover')
-	public startSlotPopover: PopoverDirective;
+	/* @ViewChild('startSlotPopover')
+	public startSlotPopover: PopoverDirective; */
 
 	@ViewChild('confirmPurposeTemplate')
 	public confirmPurposeTemplate: TemplateRef<any>;
