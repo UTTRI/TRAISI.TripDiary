@@ -208,6 +208,25 @@
       text-align: center;
       line-height: 14px;
     }
+    .mode-switch-canel {
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      background-color: #9d77ff;
+      border-top: solid 1px #d5c7ff;
+      border-bottom: solid 2px #8069d6;
+      padding: 2px;
+      width: 90%;
+      margin: auto;
+      position: relative;
+      border-radius: 100px;
+      margin-top: 5px;
+    
+
+      i {
+        margin-right: 10px;
+      }
+    }
 
     .switched-modes-divider {
       color: white;
