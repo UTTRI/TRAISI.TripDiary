@@ -183,6 +183,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this.isStep1 = false;
 			this.isStep2 = true;
 			this.saveCurrentResponseState();
+			this.validationState.emit(ResponseValidationState.TOUCHED); 
 
 			return false;
 		}
@@ -194,9 +195,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * Saves current response state
 	 */
 	private saveCurrentResponseState(): void {
-		this._timelineService.timelineLocations.subscribe((entries: TimelineEntry[]) => {
-			this.response.emit(entries);
-		});
 		// this.response.emit();
 	}
 
@@ -313,9 +311,18 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this.response.emit(entries);
 			this._timelineService.updateLocationsValidation();
 			this._timelineService.updateLocationsTimeValidation();
-			if (this._timelineService.isTimelineTimeStatevalid) {
-				this.validationState.emit(ResponseValidationState.VALID);
-			} else {
+
+			if (this.isStep1) {
+				if (this._timelineService.isTimelineStatevalid) {
+					this.validationState.emit(ResponseValidationState.VALID);
+				} else {
+					this.validationState.emit(ResponseValidationState.INVALID);
+				}
+			} else if (this.isStep2) {
+				if (this._timelineService.isTimelineTimeStatevalid) {
+					this.validationState.emit(ResponseValidationState.VALID);
+				}
+			} else if (!this._timelineService.isTimelineTimeStatevalid) {
 				this.validationState.emit(ResponseValidationState.INVALID);
 			}
 		});

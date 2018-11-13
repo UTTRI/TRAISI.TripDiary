@@ -90,9 +90,7 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 			this.config = config;
 		});
 
-		console.log('finish init ');
-
-		this.inputForm.valueChanges.debounceTime(1500).subscribe(value => {
+		this.inputForm.valueChanges.debounceTime(1000).subscribe(value => {
 			this.timeline.response.emit(this.timelineLocations);
 			this._timelineService.updateLocationsTimeValidation();
 			if (this._timelineService.isTimelineTimeStatevalid) {
