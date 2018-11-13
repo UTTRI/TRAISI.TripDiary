@@ -78,7 +78,7 @@ export class SurveyMapMarker {
 		this._lng = value;
 	}
 
-	private _latLng: L.LatLng = new L.LatLng(0, 0);
+	public _latLng: L.LatLng = new L.LatLng(0, 0);
 
 	private _lat: number = 0;
 	private _lng: number = 0;

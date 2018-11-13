@@ -99,6 +99,7 @@ export class TimelineSlotComponent implements OnInit {
 	public onDrop(dropResult: IDropResult): void {
 		if (this.dragOver) {
 			let model: TimelineEntry = Object.assign({}, dropResult.payload);
+
 			model.id = Symbol();
 			model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
 

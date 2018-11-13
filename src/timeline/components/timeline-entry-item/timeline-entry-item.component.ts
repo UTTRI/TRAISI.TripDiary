@@ -14,8 +14,9 @@ import {
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 
-import { BsModalRef, ModalDirective, ModalBackdropComponent } from 'ngx-bootstrap/modal';
+import { BsModalRef, ModalDirective, ModalBackdropComponent, BsModalService } from 'ngx-bootstrap/modal';
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
+import { TimelineConfiguration } from '../../models/timeline-configuration.model';
 
 @Component({
 	selector: 'timeline-entry-item',
@@ -58,6 +59,13 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	@ViewChildren(ViewContainerRef, { read: ViewContainerRef })
 	viewChildren!: QueryList<ViewContainerRef>;
 
+	@ViewChild('confirmPurposeTemplate')
+	public confirmPurposeTemplate: TemplateRef<any>;
+
+	private _modelRef: BsModalRef;
+
+	public editPurpose: any;
+
 	public get icon() {
 		if (this.model.purpose === 'home') {
 			return 'fas fa-home';
@@ -76,18 +84,24 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 
 	public modalRef: BsModalRef;
 
+	public configuration: TimelineConfiguration;
+
 	/**
 	 *Creates an instance of TimelineEntryItemComponent.
 	 * @param {ElementRef} _element
 	 * @param {TimelineService} _timelineService
 	 * @memberof TimelineEntryItemComponent
 	 */
-	constructor(private _element: ElementRef, private _timelineService: TimelineService) {}
+	constructor(private _element: ElementRef, private _timelineService: TimelineService, private _modalService: BsModalService) {}
 
 	/**
 	 * Angular's ngOnInit
 	 */
-	public ngOnInit(): void {}
+	public ngOnInit(): void {
+		this._timelineService.configuration.subscribe(config => {
+			this.configuration = config;
+		});
+	}
 
 	public ngAfterViewInit(): void {}
 
@@ -95,11 +109,17 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 *
 	 */
 	public edit(): void {
-		console.log(this.timelineNewEntry);
+		// console.log(this.timelineNewEntry);
 
-		this.timelineNewEntry.show((value) => {
-			this.model = value;
-		}, Object.assign({}, this.model));
+		if (this.inShelf) {
+			this.timelineNewEntry.show(value => {
+				this.model = value;
+				this._timelineService.editShelfEntry(this.model);
+			}, Object.assign({}, this.model));
+		} else {
+			this.editPurpose = this.model.purpose;
+			this._modelRef = this._modalService.show(this.confirmPurposeTemplate);
+		}
 	}
 
 	public callback(value): void {}
@@ -112,7 +132,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	/**
 	 *
 	 */
-	public save(): void {
+	public save(entry): void {
 		this.model = Object.assign({}, this.editModel);
 
 		this.modalRef.hide();
@@ -122,11 +142,17 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 *
 	 */
 	public delete(): void {
-		console.log('in delete');
 		if (!this.inShelf) {
 			this._timelineService.removeTimelineLocation(this.model);
 		} else {
-			this._timelineService.removeEntryFromShelf(this.model); 
+			this._timelineService.removeEntryFromShelf(this.model);
 		}
+	}
+
+	public confirmPurpose(): void {
+		this.model.purpose = this.editPurpose;
+
+		this._timelineService.updateTimelineLocation(this.model); 
+		this._modelRef.hide();
 	}
 }

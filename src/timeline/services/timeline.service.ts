@@ -125,7 +125,7 @@ export class TimelineService {
 
 	public updateIsStartEndLocationsDifferent(): void {
 		if (this._timelineLocations.length < 2) {
-			this._isStartEndLocationsDifferent = true;
+			this._isStartEndLocationsDifferent = false;
 		} else {
 			if (
 				this._timelineLocations[0].latitude !== this._timelineLocations[this._timelineLocations.length - 1].latitude &&
@@ -220,6 +220,17 @@ export class TimelineService {
 		if (index >= 0) {
 			this._availableLocations.splice(index, 1);
 			this.availableLocations.next(this._availableLocations);
+		}
+	}
+
+	/**
+	 * Edits shelf entry
+	 * @param entry
+	 */
+	public editShelfEntry(entry: TimelineEntry): void {
+		const index: number = this._availableLocations.findIndex(x => x.id === entry.id);
+		if (index >= 0) {
+			this._availableLocations[index] = entry;
 		}
 	}
 
