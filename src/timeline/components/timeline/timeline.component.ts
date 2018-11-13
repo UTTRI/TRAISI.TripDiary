@@ -81,10 +81,19 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	/**
 	 * TRAISI life cycle called for when the question is prepared
 	 */
-	public traisiOnInit(): void {
-		this.isStep1 = true;
+	public traisiOnInit(isPrevActionNext: boolean): void {
+		// console.log('in on init ');
+		// this.isStep1 = true;
 		// this.surveyViewerService.updateNavigationState(false);
 		this._timelineService.clearAvailableLocations();
+
+		if (!isPrevActionNext) {
+			this.isStep1 = false;
+			this.isStep2 = true;
+		} else {
+			this.isStep1 = true;
+			this.isStep2 = false;
+		}
 
 		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
 			result.forEach(responses => {
@@ -121,6 +130,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 */
 	public ngOnInit(): void {
 		this._timelineService.clearTimelineLocations();
+		// this.isStep1 = true;
 		this.savedResponse.subscribe(this.onSavedResponseData);
 	}
 
@@ -152,7 +162,9 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 *
 	 */
 	public ngAfterViewInit(): void {
-		this.timelineDock.timelineNewEntry = this.newEntryDialog;
+		if (this.timelineDock !== undefined) {
+			this.timelineDock.timelineNewEntry = this.newEntryDialog;
+		}
 	}
 
 	/**

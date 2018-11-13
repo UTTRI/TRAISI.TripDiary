@@ -1,6 +1,5 @@
-import { TimelineEntry } from "./timeline-entry.model";
+import { TimelineEntry } from './timeline-entry.model';
 
-export interface TimelineState
-{
-    timelineLocations: Array<TimelineEntry>;
+export interface TimelineState {
+	timelineLocations: Array<TimelineEntry>;
 }
