@@ -1,7 +1,9 @@
 <div class="timeline-summary-container">
 	<div class="timeline-summary-bar"></div>
 	<span *ngFor="let location of timelineLocations">
-		<timeline-entry-item [model]="location" class="summary-item"></timeline-entry-item>
+		<timeline-entry-item [model]="location" class="summary-item"
+		[inShelf]="false"
+		 [inSummaryDisplay]="true"></timeline-entry-item>
 	</span>
 </div>
 <form #f="ngForm" name="form">

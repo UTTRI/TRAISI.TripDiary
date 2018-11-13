@@ -39,6 +39,9 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	public inShelf: boolean = true;
 
 	@Input()
+	public inSummaryDisplay: boolean = false;
+
+	@Input()
 	public timelineNewEntry: TimelineNewEntryComponent;
 
 	@ViewChild('editTimelineEntryTemplate')
