@@ -33,12 +33,14 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 
 	public configuration: TimelineConfiguration;
 
-	stepOne: boolean = true;
-	stepTwo: boolean = false;
-	stepThree: boolean = false;
-	saveCallback: (value: any) => void;
+	public stepOne: boolean = true;
+	public stepTwo: boolean = false;
+	public stepThree: boolean = false;
+	public saveCallback: (value: any) => void;
 
-	model: TimelineEntry;
+	public model: TimelineEntry;
+
+	public isEdit: boolean = false;
 
 	private _mapComponent: any;
 
@@ -79,10 +81,11 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 	 *
 	 * @param callback
 	 */
-	show(callback: (value: any) => void, entry?: TimelineEntry): void {
+	show(callback: (value: any) => void, entry?: TimelineEntry, isEdit: boolean = false): void {
 		// this.timelineService.openEditMapLocationModal(this.mapTemplate, this.callback);
 
 		this.saveCallback = callback;
+		this.isEdit = isEdit;
 
 		this.newTimelineEntryTemplateRef.onHidden.subscribe(this.onHidden);
 

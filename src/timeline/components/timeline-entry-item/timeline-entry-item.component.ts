@@ -118,7 +118,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 			this.timelineNewEntry.show(value => {
 				this.model = value;
 				this._timelineService.editShelfEntry(this.model);
-			}, Object.assign({}, this.model));
+			}, Object.assign({}, this.model),true);
 		} else {
 			this.editPurpose = this.model.purpose;
 			this._modelRef = this._modalService.show(this.confirmPurposeTemplate);
