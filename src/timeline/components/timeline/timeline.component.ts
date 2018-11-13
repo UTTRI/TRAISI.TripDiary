@@ -193,7 +193,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 */
 	public canNavigateInternalNext(): boolean {
 		if (this.isStep2) {
-			return true;
+			return this._timelineService.isTimelineTimeStatevalid;
 		} else {
 			return this._timelineService.isTimelineStatevalid;
 		}
