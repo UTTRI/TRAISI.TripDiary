@@ -831,22 +831,18 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 						// console.log(i);
 						if (compareEntries.length <= i + 1) {
 							route.tripLegs = [];
-							console.log('order wrong here');
+
 							break;
 						}
 
-						console.log(route);
 						if (
 							route._startLocation._latLng.lat !== compareEntries[i].latLng.lat ||
 							route._startLocation._latLng.lng !== compareEntries[i].latLng.lng ||
 							route._endLocation._latLng.lat !== compareEntries[i + 1].latLng.lat ||
 							route._endLocation._latLng.lng !== compareEntries[i + 1].latLng.lng
 						) {
-							console.log('not the same');
 							// let routeCrate = TripRoute.create(compareEntries[i], compareEntries[i + 1]);
 							state.tripRoutes[i] = TripRoute.create(compareEntries[i], compareEntries[i + 1]);
-
-							console.log(state.tripRoutes[i]);
 						}
 					}
 
