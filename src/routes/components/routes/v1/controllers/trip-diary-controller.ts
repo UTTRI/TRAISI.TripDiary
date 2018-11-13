@@ -812,8 +812,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					compareEntries.push(endLocation);
 				}
 
-				console.log(compareEntries);
-				console.log(state);
 				if (state === undefined) {
 					this.basicState = {
 						startLocation: startLocation,
@@ -830,7 +828,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					for (let i = 0; i < state.tripRoutes.length; i++) {
 						let route: TripRoute = state.tripRoutes[i];
 
-						console.log(i);
+						// console.log(i);
 						if (compareEntries.length <= i + 1) {
 							route.tripLegs = [];
 							console.log('order wrong here');
@@ -855,6 +853,13 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					// purge extra routes
 					if (compareEntries.length <= state.tripRoutes.length) {
 						state.tripRoutes = state.tripRoutes.slice(0, compareEntries.length - 1);
+					}
+
+					if (compareEntries.length > state.tripRoutes.length + 1) {
+						// create routes
+						for (let i = state.tripRoutes.length; i < compareEntries.length - 1; i++) {
+							state.tripRoutes[i] = TripRoute.create(compareEntries[i], compareEntries[i + 1]);
+						}
 					}
 
 					this.basicState = {
