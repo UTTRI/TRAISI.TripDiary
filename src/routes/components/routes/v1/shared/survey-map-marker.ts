@@ -112,13 +112,13 @@ export class SurveyMapMarker {
 	 * Init the service map marker
 	 */
 	public init() {
-		//this.latLng = new L.LatLng(0, 0);
+		// this.latLng = new L.LatLng(0, 0);
 		if (this.id == null) {
 			this.id = Math.random()
 				.toString(36)
 				.substring(7);
 		}
-		//console.log(new L.LatLng(0, 0));
+		// console.log(new L.LatLng(0, 0));
 	}
 
 	/**
@@ -126,6 +126,7 @@ export class SurveyMapMarker {
 	 * @returns {L.Icon}
 	 */
 	public getMarkerIcon(): L.Icon {
+
 		switch (this._markerType) {
 			case icons.MarkerType.Home:
 				return icons.default.homeIcon;

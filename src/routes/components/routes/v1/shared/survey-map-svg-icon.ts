@@ -8,8 +8,8 @@ import { isNullOrUndefined } from 'util';
 declare var MARKER_URL: any;
 
 let _svgMarkerXml = `
-<div class="svg-marker"><i class="material-icons svg-marker-icon">home</i>
-<mark style="display:none">20</mark> 
+<div class="svg-marker"><i class="material-icons svg-marker-icon"></i>
+<mark style="display:none">20</mark>
 <svg
     id="Layer_1"
    x="0px"
@@ -56,11 +56,12 @@ export class SurveyMapSvgIcon {
 				svgElement.find('.svg-marker-icon')[0].classList.add(classItem);
 			}
 		});
-		let iconElement = (svgElement.find('.svg-marker-icon')[0].innerText = String(icon));
+		// let iconElement = (svgElement.find('.svg-marker-icon')[0].innerText = String(icon));
 
 		// console.log(icon);
 		// svgElement.find('.svg-marker-icon')[0].classList.add('fas');
 		// svgElement.find('.svg-marker-icon')[0].classList.add('fa-home');
+
 		let iconMarker = L['ExtraMarkers'].icon({
 			icon: 'fa-coffee',
 			markerColor: 'red',

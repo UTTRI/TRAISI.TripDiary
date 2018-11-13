@@ -1,5 +1,18 @@
 @import 'colours';
 
+.add-travel-mode {
+
+  border-radius: 10px;
+
+  md-icon {
+    color: white;
+  }
+}
+
+.cancel-switch-mode {
+  background-color: rgb(213, 87, 18) !important;
+}
+
 .trips-app-container {
   button.md-primary.md-raised:not([disabled]) {
     background-color: #0d47a1;
@@ -14,10 +27,18 @@
 
   margin: auto;
   text-align: center;
+  padding: 3px 0px 3px 0px;
+
+  button.md-button {
+    margin:2px 2px !important;
+  }
 }
 
-.active-mode md-icon {
-  color: #4670ff;
+.active-mode {
+  background: rgb(189, 205, 247);
+  md-icon {
+    color: #4670ff;
+  }
 }
 
 md-dialog {
@@ -293,6 +314,7 @@ mark {
     display: inline;
     z-index: 2;
     color: white;
+    filter: none !important;
 
     border-radius: 100px;
     max-height: 38px;
@@ -451,17 +473,18 @@ timeline-line-map {
 
   display: flex;
   font-size: 12px;
-  .trip-leg-modeName
-  {
+  .trip-leg-modeName {
     //max-width: 200px;
     width: calc(100% - 22px);
     padding-left: 5px;
-    justify-content: center;
-    display: block;
+    justify-content: left;
+    display: inline-flex;
     align-content: center;
     margin: auto;
     margin-right: 19px;
     font-weight: bold;
+    height: auto;
+    align-items: center;
 
   }
   .trip-leg-name {
@@ -478,12 +501,12 @@ timeline-line-map {
 }
 
 .route-selected-mode {
-  display:block;
+  display: block;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
   color: white;
-  padding:3px;
+  padding: 3px;
 }
 
 .summary-switch-marker {
@@ -516,7 +539,10 @@ timeline-line-map {
     overflow: visible;
   }
   i {
-    font-size: 22px;
+    font-size: 18px;
+
+    width: 22px;
+    text-align: center;
   }
 
 }
@@ -571,7 +597,7 @@ timeline-line-map {
 }
 
 survey-map {
-  z-index:101;
+  z-index: 101;
 }
 
 .pac-item {
@@ -585,11 +611,15 @@ survey-map {
   z-index: 222;
   color: white;
 
+  i {
+    font-size: 18px;
+    width: 24px;
+  }
+
 }
 
 .trips-route-mode img, .trips-route-mode i {
   margin: auto;
-  vertical-align: top;
 }
 
 .trips-route-mode {
@@ -627,7 +657,7 @@ div.trip-route-mode-header-item:first-of-type .arrow_box:not(.active-route) {
 
 .trip-route-mode-header-item span.route-mode-header-inner:not(.active-route) {
 
-  color: #99afd2 !important;
+  color: #ffffff !important;
 
 }
 
@@ -703,7 +733,7 @@ div.trip-route-mode-header-item:first-of-type .arrow_box:not(.active-route) {
 }
 
 .trip-route-mode-header .active-route md-icon {
-  color: #5170ce !important;
+  color: #fff700 !important;
 }
 
 .trip-route-mode-header .active-route.arrow_box {
@@ -775,8 +805,19 @@ timeline-connector.facilitate_passenger svg path {
   font-size: 14px;
   margin: 5px;
 }
+
 timeline-line-map {
   background-color: #b2cfdc;
+}
+
+.trip-leg-modeName.full-height {
+  height: 100%;
+}
+
+.trip-leg-inactive {
+  .switch-mode, .route-options-container {
+    visibility: hidden;
+  }
 }
 
 .md-dialog-content .radio-button.dialog-location-address {

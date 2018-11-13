@@ -12,6 +12,9 @@ export interface ISurveyMapConfig {
 	noTripReasons?: Array<INoTripReason>;
 }
 
+/**
+ * Configuration interface for "general" or "parent" category of a travel mode ie: transit vs bus
+ */
 export interface IModeCategoryConfig {
 	name: string;
 	icon: string;
@@ -33,6 +36,7 @@ export interface IModeConfig {
 	dialogTitle?: string;
 	customRoute?: ICustomRouteInput;
 	routerMode: string;
+	autoSaveRoute?: boolean;
 }
 
 export interface ILocationConfig {

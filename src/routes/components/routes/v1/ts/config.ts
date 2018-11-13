@@ -31,7 +31,7 @@ let routeNotShown: ICustomRouteInput = {
 };
 
 let routeNotKnown: ICustomRouteInput = {
-	label: 'I don\'t know my route',
+	label: "I don't know my route",
 	routeKey: 'route_not_known'
 	// fieldAsSummary: "routeDescription",
 	// dialogTitle: "Route Description",
@@ -119,7 +119,8 @@ export let config: ISurveyMapConfig = {
 							]
 						}
 					],
-					noRouteMessage: 'I don\'t know the route.'
+					noRouteMessage: "I don't know the route.",
+					autoSaveRoute: false
 				},
 				{
 					name: 'passenger',
@@ -131,7 +132,7 @@ export let config: ISurveyMapConfig = {
 					customRoute: routeNotKnown,
 					displayName: 'Passenger',
 					showPrompt: false,
-					noRouteMessage: 'I don\'t know the route.',
+					noRouteMessage: "I don't know the route.",
 					dialogTitle: 'What was the type of vehicle?',
 					dataInputs: [
 						{
@@ -148,7 +149,8 @@ export let config: ISurveyMapConfig = {
 								{ value: 'other', label: 'Other' }
 							]
 						}
-					]
+					],
+					autoSaveRoute: false
 				},
 				{
 					name: 'motorcycle',
@@ -159,7 +161,8 @@ export let config: ISurveyMapConfig = {
 					colour: '#014664',
 					routerMode: 'driver',
 					showPrompt: false,
-					noRouteMessage: 'I don\'t know the route.'
+					noRouteMessage: "I don't know the route.",
+					autoSaveRoute: false
 				}
 			]
 		},
@@ -179,7 +182,8 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'transit',
 					noRouteMessage: 'My route is not shown.',
 					shouldAskNoRouteDescription: true,
-					customRoute: routeNotShown
+					customRoute: routeNotShown,
+					autoSaveRoute: false
 				},
 				{
 					name: 'Intercity Bus',
@@ -193,7 +197,8 @@ export let config: ISurveyMapConfig = {
 					customRoute: routeNotShown,
 
 					routerMode: 'transit',
-					shouldAskNoRouteDescription: true
+					shouldAskNoRouteDescription: true,
+					autoSaveRoute: false
 				},
 				{
 					name: 'intercity_rail',
@@ -206,7 +211,7 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'transit',
 					noRouteMessage: 'My route is not shown.',
 					customRoute: routeNotShown,
-
+					autoSaveRoute: false,
 					shouldAskNoRouteDescription: true
 				},
 				{
@@ -219,7 +224,8 @@ export let config: ISurveyMapConfig = {
 					displayName: 'Paratransit',
 					showPrompt: false,
 					routerMode: 'driver',
-					noRouteMessage: 'I don\'t know the route.',
+					noRouteMessage: "I don't know the route.",
+					autoSaveRoute: false,
 
 					shouldAskNoRouteDescription: false
 				},
@@ -233,8 +239,8 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'driver',
 					displayName: 'Schoolbus',
 					showPrompt: false,
-					noRouteMessage: 'I don\'t know the route.',
-
+					noRouteMessage: "I don't know the route.",
+					autoSaveRoute: false,
 					shouldAskNoRouteDescription: false
 				},
 
@@ -248,8 +254,8 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'driver',
 					displayName: 'Private Shuttle',
 					showPrompt: false,
-					noRouteMessage: 'I don\'t know the route.',
-
+					noRouteMessage: "I don't know the route.",
+					autoSaveRoute: false,
 					shouldAskNoRouteDescription: false
 				}
 			]
@@ -270,7 +276,8 @@ export let config: ISurveyMapConfig = {
 					displayName: 'Walking',
 					showPrompt: false,
 					routerMode: 'walk',
-					noRouteMessage: 'I don\'t know the route.'
+					autoSaveRoute: false,
+					noRouteMessage: "I don't know the route."
 				}
 			]
 		},
@@ -289,7 +296,7 @@ export let config: ISurveyMapConfig = {
 					colour: '#FF9800',
 					displayName: 'Bicycle',
 					showPrompt: false,
-					noRouteMessage: 'I don\'t know the route.',
+					noRouteMessage: "I don't know the route.",
 					dialogTitle: 'Did you use bike share?',
 					routerMode: 'bicycle',
 					dataInputs: [
@@ -312,7 +319,8 @@ export let config: ISurveyMapConfig = {
 					colour: '#ed8c00',
 					showPrompt: false,
 					routerMode: 'driver',
-					noRouteMessage: 'I don\'t know the route.'
+					autoSaveRoute: false,
+					noRouteMessage: "I don't know the route."
 				}
 			]
 		},
@@ -332,7 +340,8 @@ export let config: ISurveyMapConfig = {
 					showPrompt: false,
 					customRoute: routeNotKnown,
 					routerMode: 'walk',
-					noRouteMessage: 'I don\'t know the route.'
+					noRouteMessage: "I don't know the route.",
+					autoSaveRoute: false
 				},
 				{
 					name: 'paratransit',
@@ -344,7 +353,29 @@ export let config: ISurveyMapConfig = {
 					displayName: 'Paratransit',
 					showPrompt: false,
 					customRoute: routeNotKnown,
-					noRouteMessage: 'My route is not shown.'
+					noRouteMessage: 'My route is not shown.',
+					autoSaveRoute: false
+				}
+			]
+		},
+		{
+			name: 'flight',
+			icon: 'fas fa-plane-departure',
+			category: 'flight',
+
+			subModes: [
+				{
+					name: 'flight',
+					icon: 'fas fa-plane-departure',
+					category: 'flight',
+					customRoute: routeNotKnown,
+					allowAddWaypoints: false,
+					colour: '#4CAF50',
+					displayName: 'Flight',
+					showPrompt: false,
+					routerMode: 'walk',
+					noRouteMessage: "I don't know the route.",
+					autoSaveRoute: true
 				}
 			]
 		}
