@@ -391,8 +391,10 @@ export class TripDiaryService {
 	 */
 	public getActiveTripRoute(): TripRoute {
 		if (this.state.activeRouteIndex < 0) {
+			console.log('null');
 			return null;
 		}
+
 		return this.state.tripRoutes[this.state.activeRouteIndex];
 	}
 
@@ -476,12 +478,15 @@ export class TripDiaryService {
 	}
 
 	private stateSubscription = () => {
+		// console.log(this.state);
+
 		if (this._$ngRedux.getState().tripsState.previousAction === SET_ROUTE_EDIT_ACTIVE) {
 			this.isAutoFitBounds = true;
 			if (!isNullOrUndefined(this.getActiveTripRoute())) {
 				this.notifyActiveRouteChanged(this.getActiveTripRoute());
 			}
 		}
+		// console.log(this.state);
 	};
 
 	private isRouteComplete() {}

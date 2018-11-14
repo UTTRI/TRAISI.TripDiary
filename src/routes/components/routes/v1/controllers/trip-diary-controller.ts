@@ -124,7 +124,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	}
 
 	private _state: TripsQuestionState;
-
+	private shouldInit = false;
 	get state(): TripsQuestionState {
 		return this.tripsScope.tc.value;
 	}
@@ -526,10 +526,10 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	/**
 	 * Updates trip route modes
 	 */
-	public updateTripRouteModes(): void {
+	public updateTripRouteModes(force: boolean = false): void {
 		/* call action to add routes */
 
-		if (this.state.previousAction === UPDATE_STATE) {
+		if (this.state.previousAction === UPDATE_STATE && !this.shouldInit) {
 			return;
 		}
 
@@ -675,6 +675,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			this._tripDiaryService.routesHidden();
 		}
 
+		this.shouldInit = false;
 		this.updateValidationV2();
 
 		// this._$window.dispatchEvent(new CustomEvent('visibilityScrollCheck'));
@@ -718,6 +719,8 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			return 'fas fa-edit';
 		}
 	}
+
+	
 
 	/**
 	 *
@@ -816,6 +819,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				}
 
 				if (state === undefined) {
+					// console.log(' undefined ');
 					this.basicState = {
 						startLocation: startLocation,
 						_startLocation: startLocation,
@@ -823,8 +827,26 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 						_tripLocations: intermediateLocations,
 						tripLocations: intermediateLocations,
 						endLocation: endLocation,
-						activeRouteIndex: 0
+						activeRouteIndex: 0,
+						_activeRouteIndex: 0,
+						tripRoutes: []
+						// _tripRoutes: []
 					};
+
+					// this.state = this.basicState;
+					this.shouldInit = true;
+					this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
+
+					// this._tripDiaryService.setRouteEditActive(this.basicState['activeRouteIndex']);
+					// this.updateValidationV2();
+
+					if (this.state.activeRouteIndex >= 0) {
+						// settings route edit active
+
+						_.delay(() => {
+							this._tripDiaryService.setRouteEditActive(0);
+						}, 0);
+					}
 				} else {
 					// compare the routes
 
@@ -874,11 +896,14 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 						_tripRoutes: state.tripRoutes
 					};
 
+					this.shouldInit = false;
 					// this.basicState = state;
 					// this.tripsScope.tc.value = state;
 					// console.lo
-					this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
+					// this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
+					// this.updateState(<any>this.basicState);
 					this._tripDiaryService.setRouteEditActive(this.basicState['activeRouteIndex']);
+
 					this.updateValidationV2();
 					// this.updateTripRouteModes();
 				}
@@ -926,12 +951,12 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		});
 
 		/* Update the state of the question */
-		this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
+		// this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
 
 		// let titleElement = $('#div_id_' + this.questionId).closest('.question-item');
 		// titleElement = titleElement.find('.question-container').first();
 
-		this.updateTripRouteModes();
+		// this.updateTripRouteModes();
 
 		/* _.delay(() => {
             this._$translate('DID_MAKE_TRIPS', this.translateData)
@@ -1082,22 +1107,22 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	/** Setup watcher for tripLocations ( start and end too ) */
 	private initializeLocationWatcher() {
 		let tcRef = this;
-		/*this.$scope.$watchCollection('tc.value.tripLocations', function(oldValue, newValue) {
-			 update trip route 
+		this.$scope.$watchCollection('tc.value.tripLocations', function(oldValue, newValue) {
+			// update trip route
 			tcRef.updateTripRouteModes();
 
-			/* re order locations
-		});*/
-		/*
+			//	 re order locations
+		});
+
 		this.$scope.$watch('tc.value.startLocation', function(oldValue: TripLocation, newValue: TripLocation) {
-			 update trip route 
+			// update trip route
 			tcRef.updateTripRouteModes();
 		});
 
 		this.$scope.$watch('tc.value.endLocation', function(oldValue: TripLocation, newValue: TripLocation) {
-			/* update trip route
+			// update trip route
 			tcRef.updateTripRouteModes();
-		}); */
+		});
 	}
 
 	/**
