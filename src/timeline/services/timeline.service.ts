@@ -275,6 +275,7 @@ export class TimelineService {
 	 */
 	public reorderTimelineLocation(from: number, to: number) {
 		this._timelineLocations.splice(to, 0, this._timelineLocations.splice(from, 1)[0]);
+		this.timelineLocations.next(this._timelineLocations);
 	}
 
 	/**
