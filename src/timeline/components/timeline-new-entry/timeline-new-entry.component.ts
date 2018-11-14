@@ -92,6 +92,9 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		this.newTimelineEntryTemplateRef.onShown.subscribe(val => {
 			let sub = (<any>this._mapComponent).mapInstance.subscribe(mapInstance => {
 				mapInstance.resize();
+
+				(<any>this._mapComponent).setQuestionState(entry.latitude, entry.longitude, entry.address);
+				// (latitude: number, longitude: number, address: string): void {
 			});
 			sub.unsubscribe();
 		});
@@ -126,7 +129,6 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 	public stepOneNext(): void {
 		this.stepOne = false;
 		this.stepTwo = true;
-
 	}
 
 	/**
