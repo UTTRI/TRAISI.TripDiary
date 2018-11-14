@@ -17,6 +17,10 @@ export class TimelineShelfComponent implements OnInit {
 	@Input()
 	public timelineNewEntry: TimelineNewEntryComponent;
 
+	public isDragActive: boolean = false;
+
+	public draggedItem: any = undefined;
+
 	/**
 	 *Creates an instance of TimelineWedgeComponent.
 	 * @param {ElementRef} _element
@@ -25,6 +29,9 @@ export class TimelineShelfComponent implements OnInit {
 	 */
 	constructor(private _element: ElementRef, private _timelineService: TimelineService) {
 		this.shelfItems = [];
+		this.draggedItem = {
+			id: Symbol()
+		};
 	}
 
 	/**
@@ -41,7 +48,19 @@ export class TimelineShelfComponent implements OnInit {
 	 *
 	 * @param $event
 	 */
-	public onDragStart($event): void {}
+	public onDragStart($event): void {
+		this.isDragActive = true;
+
+		this.draggedItem = $event.payload;
+	}
+
+	public onDragEnd($event): void {
+		this.isDragActive = false;
+
+		this.draggedItem = {
+			id: Symbol()
+		};
+	}
 
 	/**
 	 *
@@ -50,9 +69,7 @@ export class TimelineShelfComponent implements OnInit {
 	 * @memberof TimelineShelfComponent
 	 */
 	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => {
-
 		this.shelfItems = items;
-
 	};
 
 	/**

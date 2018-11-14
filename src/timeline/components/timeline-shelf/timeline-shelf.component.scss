@@ -5,12 +5,56 @@
     justify-content: center;
 }
 
+.tshelf {
+	border-bottom: 30px solid #a5a5a5;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+	top: -15px;
+	z-index: -10;
+}
+/*Example adding pseudo element to give shelf depth*/
+.tshelf:after {
+    content: '';
+    background: #686868;
+    height: 20px;
+    /* width: calc(100% - 40px); */
+    /* width: 1000px; */
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    /* margin: 0 -20px; */
+}
+
 .shelf-dnd-container {
     overflow-x: auto;
     overflow-y: visible;
     max-width: 800px;
     height: 230px;
 
+    .draggable-item
+    {
+        text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    .draggable-item-shelf:before
+    {
+        content: '';
+        display: block;
+        width: 66px;
+        height: 1em;
+        background: rgba(0, 0, 0, 0.35);
+        border-radius: 50%;
+        position: absolute;
+        bottom: 11px;
+        -webkit-filter: blur(5px);
+        filter: blur(5px);
+        z-index: 0;
+    }
 }
 
 
