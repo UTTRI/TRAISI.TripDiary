@@ -530,6 +530,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		/* call action to add routes */
 
 		if (this.state.previousAction === UPDATE_STATE && !this.shouldInit) {
+			this.updateValidationV2();
 			return;
 		}
 
