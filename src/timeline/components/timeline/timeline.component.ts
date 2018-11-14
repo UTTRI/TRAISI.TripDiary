@@ -220,8 +220,17 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 */
 	public navigateInternalPrevious(): boolean {
 		if (this.isStep2) {
+			this._timelineService.updateLocationsValidation();
 			this.isStep2 = false;
 			this.isStep1 = true;
+			if (this._timelineService.isTimelineStatevalid && !this._timelineService.hasAdjacentIdenticalLocations) {
+				this.validationState.emit(ResponseValidationState.VALID);
+			} else {
+				// console.log('invalid');
+				this.validationState.emit(ResponseValidationState.INVALID);
+			}
+
+			// console.log('here');
 			return false;
 		} else {
 			return true;
@@ -338,6 +347,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 					this.validationState.emit(ResponseValidationState.VALID);
 				}
 			} else if (!this._timelineService.isTimelineTimeStatevalid) {
+				console.log('sending invalid here ');
 				this.validationState.emit(ResponseValidationState.INVALID);
 			}
 		});

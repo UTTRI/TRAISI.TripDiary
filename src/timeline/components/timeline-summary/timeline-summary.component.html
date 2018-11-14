@@ -1,9 +1,7 @@
 <div class="timeline-summary-container">
 	<div class="timeline-summary-bar"></div>
 	<span *ngFor="let location of timelineLocations">
-		<timeline-entry-item [model]="location" class="summary-item"
-		[inShelf]="false"
-		 [inSummaryDisplay]="true"></timeline-entry-item>
+		<timeline-entry-item [model]="location" class="summary-item" [inShelf]="false" [inSummaryDisplay]="true"></timeline-entry-item>
 	</span>
 </div>
 <form #f="ngForm" name="form">
@@ -59,11 +57,10 @@
 							</div>
 						</div>
 					-->
-
-					<div class="departure-time-label" *ngIf="i < timeEntries.length - 1">Departure Time</div>
-					<div class="location-time-label">{{ timelineLocations[i].name }}</div>
 				</div>
 			</div>
+			<div class="departure-time-label" *ngIf="i < timeEntries.length - 1">Departure Time</div>
+			<div class="location-time-label">{{ timelineLocations[i].name }}</div>
 		</span>
 	</div>
 </form>

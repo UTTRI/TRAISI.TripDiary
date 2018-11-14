@@ -93,7 +93,10 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 			let sub = (<any>this._mapComponent).mapInstance.subscribe(mapInstance => {
 				mapInstance.resize();
 
-				(<any>this._mapComponent).setQuestionState(entry.latitude, entry.longitude, entry.address);
+				if (entry !== undefined) {
+					(<any>this._mapComponent).setQuestionState(entry.latitude, entry.longitude, entry.address);
+				}
+				this._mapComponent.resetInput();
 				// (latitude: number, longitude: number, address: string): void {
 			});
 			sub.unsubscribe();
@@ -161,7 +164,7 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		let componentRef = null;
 
 		let sub = this._questionLoaderService.componentFactories$.subscribe(factory => {
-			if (factory.selector == 'traisi-map-question') {
+			if (factory.selector === 'traisi-map-question') {
 				componentRef = this.mapTemplate.createComponent(factory, undefined, this.injector);
 
 				let instance: SurveyQuestion<any> = <SurveyQuestion<any>>componentRef.instance;
@@ -177,7 +180,7 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		this.timelineService.configuration.subscribe(config => {
 			this.configuration = config;
 		});
-	}
+	} 
 
 	public ngAfterViewInit(): void {}
 
