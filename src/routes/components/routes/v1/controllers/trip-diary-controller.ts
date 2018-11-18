@@ -721,7 +721,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		}
 	}
 
-	
+
 
 	/**
 	 *
@@ -736,12 +736,30 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
 		this._routesService.savedResponse().subscribe(response => {
 			let state: TripsQuestionState;
-			if (response !== 'none') {
+			console.log(typeof response);
+			console.log(response instanceof Array);
+			if (response !== 'none' && !(response instanceof Array)) {
+
+
 				let t = JSON.parse(response[0].value);
 				if (t.tripsState !== undefined) {
 					state = t.tripsState;
 				}
+
+				// console.log(state); 
 			}
+			else {
+				// its an array
+				// console.log(response);
+				(<any>state) = {
+					activeRouteIndex: 0,
+					_activeRouteIndex: 0,
+					tripRoutes: []
+					// _tripRoutes: []
+				};
+			};
+
+
 
 			this._routesService.listTimelineEntries(this._surveyV2Id, this._respondent).subscribe((entries: Array<any>) => {
 				// find index
@@ -834,6 +852,12 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 						// _tripRoutes: []
 					};
 
+					for (let route of response) {
+						(<any>this.basicState).tripRoutes.push(JSON.parse(route.value));
+					}
+
+					console.log(this.basicState);
+
 					// this.state = this.basicState;
 					this.shouldInit = true;
 					this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
@@ -850,6 +874,17 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					}
 				} else {
 					// compare the routes
+
+					console.log(state);
+					if (response !== 'none') {
+						for (let route of response) {
+							console.log(route);
+							(<any>state).tripRoutes.push(JSON.parse(route.value));
+						}
+					}
+
+
+					console.log(state);
 
 					for (let i = 0; i < state.tripRoutes.length; i++) {
 						let route: TripRoute = state.tripRoutes[i];
@@ -993,37 +1028,37 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		return;
 
 		/*
-        let selfRefTc: TripDiaryController = selfRef as TripDiaryController;
-
-        if (page == -1) {
-            if (selfRefTc.state.timelineView) {
-                selfRefTc.tripsScope.tc.defaultView();
-            }
-
-            if (selfRefTc.state.routeModeView) {
-                selfRefTc.tripsScope.tc.tripsTaken();
-            }
-        } else if (page == 1) {
-            if (selfRefTc.state.initialView) {
-                if (selfRefTc.state.madeTrips.value) {
-                    selfRefTc.tripsScope.tc.tripsTaken();
-                } else {
-                    selfRefTc.tripsScope.tc.noTripsTaken();
-                }
-
-                return false;
-            } else if (selfRefTc.state.timelineView) {
-                selfRefTc.tripsScope.tc.tripRouteModeView();
-                return false;
-            }
-
-            if (selfRefTc.state.noTripsSelectView) {
-                if (selfRefTc.activePageValid) {
-                    return true;
-                }
-            }
-        }
-  */
+		let selfRefTc: TripDiaryController = selfRef as TripDiaryController;
+		
+		if (page == -1) {
+			if (selfRefTc.state.timelineView) {
+				selfRefTc.tripsScope.tc.defaultView();
+			}
+		
+			if (selfRefTc.state.routeModeView) {
+				selfRefTc.tripsScope.tc.tripsTaken();
+			}
+		} else if (page == 1) {
+			if (selfRefTc.state.initialView) {
+				if (selfRefTc.state.madeTrips.value) {
+					selfRefTc.tripsScope.tc.tripsTaken();
+				} else {
+					selfRefTc.tripsScope.tc.noTripsTaken();
+				}
+		
+				return false;
+			} else if (selfRefTc.state.timelineView) {
+				selfRefTc.tripsScope.tc.tripRouteModeView();
+				return false;
+			}
+		
+			if (selfRefTc.state.noTripsSelectView) {
+				if (selfRefTc.activePageValid) {
+					return true;
+				}
+			}
+		}
+	*/
 		return false;
 	}
 
@@ -1108,19 +1143,19 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	/** Setup watcher for tripLocations ( start and end too ) */
 	private initializeLocationWatcher() {
 		let tcRef = this;
-		this.$scope.$watchCollection('tc.value.tripLocations', function(oldValue, newValue) {
+		this.$scope.$watchCollection('tc.value.tripLocations', function (oldValue, newValue) {
 			// update trip route
 			tcRef.updateTripRouteModes();
 
 			//	 re order locations
 		});
 
-		this.$scope.$watch('tc.value.startLocation', function(oldValue: TripLocation, newValue: TripLocation) {
+		this.$scope.$watch('tc.value.startLocation', function (oldValue: TripLocation, newValue: TripLocation) {
 			// update trip route
 			tcRef.updateTripRouteModes();
 		});
 
-		this.$scope.$watch('tc.value.endLocation', function(oldValue: TripLocation, newValue: TripLocation) {
+		this.$scope.$watch('tc.value.endLocation', function (oldValue: TripLocation, newValue: TripLocation) {
 			// update trip route
 			tcRef.updateTripRouteModes();
 		});
@@ -1353,24 +1388,24 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		}
 
 		/*if (this.state.startLocation != null) {
-
-            if (!isNullOrUndefined(startTimeAdjust)) {
-                if (startTimeAdjust <= this.state.startLocation.endTime && active.id != this.state.startLocation.id) {
-
-                    //console.log(startTimeAdjust);
-                    //console.log(this.state.startLocation.endTime);
-                    // console.log("overlapping times");
-                    console.log("ov2");
-                    this._$scope['tripsLocationForm'].$error['overlappingTimes'] = true;
-
-                    error = true;
-                    //return false;
-                }
-            }
-            else {
-
-            }
-        }  */
+			
+			if (!isNullOrUndefined(startTimeAdjust)) {
+				if (startTimeAdjust <= this.state.startLocation.endTime && active.id != this.state.startLocation.id) {
+			
+					//console.log(startTimeAdjust);
+					//console.log(this.state.startLocation.endTime);
+					// console.log("overlapping times");
+					console.log("ov2");
+					this._$scope['tripsLocationForm'].$error['overlappingTimes'] = true;
+			
+					error = true;
+					//return false;
+				}
+			}
+			else {
+			
+			}
+		}  */
 
 		let countEmbedded = this.countEmbedded(active, compareList);
 
@@ -1539,10 +1574,9 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			state.previousAction === SET_TRIP_LEG_DATA ||
 			state.previousAction === SET_MODE_SWITCH_DATA ||
 			state.previousAction === SET_TRIP_LEG_EDIT_COMPLETE ||
-			state.previousAction === SET_ROUTE_EDIT_COMPLETE ||
 			state.previousAction === SET_ROUTE_EDIT_COMPLETE
 		) {
-			this._routesService.saveRoutes(tripsState);
+			this._routesService.saveRoutes(state.tripRoutes);
 		}
 
 		if (
@@ -1664,28 +1698,28 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	 */
 	private initLocationSearchBox() {
 		/* this._locationSearchBoxInput = $('#trip-diary-' + this.questionId)
-            .find('.location-input-map')[0] as HTMLInputElement;
-
-
-        //console.log(this._locationSearchBoxInput);
-        var searchOptions = {
-            bounds: this.torontoBounds
-        };
-
-        let searchBox = new SearchBox(this._locationSearchBoxInput, searchOptions);
-
-
-        let updateActiveLocation = this.updateActiveLocationPlaceResult;
-        let tcRef: TripDiaryController = this;
-
-
-        searchBox.addListener('places_changed', () => {
-            let places: PlaceResult[] = searchBox.getPlaces();
-
-            updateActiveLocation(tcRef, places[0]);
-
-
-        }); */
+			.find('.location-input-map')[0] as HTMLInputElement;
+		
+		
+		//console.log(this._locationSearchBoxInput);
+		var searchOptions = {
+			bounds: this.torontoBounds
+		};
+		
+		let searchBox = new SearchBox(this._locationSearchBoxInput, searchOptions);
+		
+		
+		let updateActiveLocation = this.updateActiveLocationPlaceResult;
+		let tcRef: TripDiaryController = this;
+		
+		
+		searchBox.addListener('places_changed', () => {
+			let places: PlaceResult[] = searchBox.getPlaces();
+		
+			updateActiveLocation(tcRef, places[0]);
+		
+		
+		}); */
 	}
 
 	/**
@@ -1696,4 +1730,4 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	}
 }
 
-function resetTripQuestion() {}
+function resetTripQuestion() { }

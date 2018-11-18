@@ -3,6 +3,7 @@ import { SurveyResponder, SurveyViewer, ResponseTypes, GroupMember, ResponseData
 import { ReplaySubject } from 'rxjs';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { RoutesComponent } from '../components/routes/routes.component';
+import { TripRoute } from '../components/routes/v1/ts/trip-route';
 
 @Injectable()
 export class RoutesService {
@@ -11,7 +12,7 @@ export class RoutesService {
 	constructor(
 		@Inject('SurveyViewerService') private _surveyViewerService: SurveyViewer,
 		@Inject('SurveyResponderService') private _surveyResponderService: SurveyResponder
-	) {}
+	) { }
 
 	public listTimelineEntries(surveyId: number, respondent: GroupMember): any {
 		let responses = this._surveyResponderService.listSurveyResponsesOfType(surveyId, ResponseTypes.Timeline);
@@ -28,9 +29,10 @@ export class RoutesService {
 
 	/**
 	 * Saves routes
-	 * @param value
+	 * @param value 
 	 */
-	public saveRoutes(value: any): void {
+	public saveRoutes(value: Array<TripRoute>): void {
+
 		this.routesComponent.response.emit(value);
 	}
 
