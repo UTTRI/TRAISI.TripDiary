@@ -856,7 +856,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 						(<any>this.basicState).tripRoutes.push(JSON.parse(route.value));
 					}
 
-					console.log(this.basicState);
+				
 
 					// this.state = this.basicState;
 					this.shouldInit = true;
@@ -875,16 +875,16 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				} else {
 					// compare the routes
 
-					console.log(state);
+				
 					if (response !== 'none') {
 						for (let route of response) {
-							console.log(route);
+						
 							(<any>state).tripRoutes.push(JSON.parse(route.value));
 						}
 					}
 
 
-					console.log(state);
+			
 
 					for (let i = 0; i < state.tripRoutes.length; i++) {
 						let route: TripRoute = state.tripRoutes[i];

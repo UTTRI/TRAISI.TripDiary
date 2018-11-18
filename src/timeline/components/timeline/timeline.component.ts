@@ -140,7 +140,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		this.savedResponse.subscribe(this.onSavedResponseData);
 	}
 
-	public saveNewLocation(): void {}
+	public saveNewLocation(): void { }
 
 	/**
 	 *
@@ -162,7 +162,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * @param type
 	 * @param $event
 	 */
-	public handler(type: string, $event: ModalDirective) {}
+	public handler(type: string, $event: ModalDirective) { }
 
 	/**
 	 *
@@ -176,7 +176,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	/**
 	 *
 	 */
-	public ngAfterViewChecked(): void {}
+	public ngAfterViewChecked(): void { }
 
 	/**
 	 * Navigates internal next
@@ -231,6 +231,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			}
 
 			// console.log('here');
+			
 			return false;
 		} else {
 			return true;
@@ -254,7 +255,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			// this.isStep2 = true;
 		}
 	}
-	public onQuestionHidden(): void {}
+	public onQuestionHidden(): void { }
 
 	public closePopover(): void {
 		this.popover.hide();
