@@ -5,6 +5,23 @@
     justify-content: center;
 }
 
+.shelf-item-label
+{
+    display: inline-block;
+    width: 150px;
+}
+
+
+.dragged {
+    opacity: 0.3;
+}
+
+.shelf-labels-container
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 .tshelf {
 	border-bottom: 30px solid #a5a5a5;
     border-left: 20px solid transparent;

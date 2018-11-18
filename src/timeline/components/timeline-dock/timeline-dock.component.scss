@@ -57,12 +57,29 @@
 	margin-left: 20px;
 	margin-right: 20px;
 	justify-content: center;
+
+	.drag-container-empty {
+		display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: $timeline-entry-size;
+    width: $timeline-entry-size * 2;
+	}
+
+	.drag-container-with-item {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		height: $timeline-entry-size;
+		min-width: $timeline-entry-size * 2; 
+		width: 100%;
+	}
 }
 
 .timeline-dock-inner-container {
 	display: inline-flex;
 	align-items: center;
-	justify-content: end;
+	justify-content: center;
 	width: 80%;
 	position: relative;
 	vertical-align: top;

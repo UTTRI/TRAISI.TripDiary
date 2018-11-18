@@ -1,5 +1,5 @@
 <div class="timeline-entry-item-inner-container">
-	<div class="timeline-entry-model-info">
+	<div class="timeline-entry-model-info" *ngIf="!inShelf">
 		<div class="timeline-entry-model-name">{{ model.name }}</div>
 		<div class="timeline-entry-model-address">{{ model.address }}</div>
 	</div>
