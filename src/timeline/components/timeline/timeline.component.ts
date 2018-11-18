@@ -231,7 +231,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			}
 
 			// console.log('here');
-			
+
 			return false;
 		} else {
 			return true;

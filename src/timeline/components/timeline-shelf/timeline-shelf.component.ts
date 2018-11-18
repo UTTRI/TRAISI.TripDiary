@@ -38,7 +38,17 @@ export class TimelineShelfComponent implements OnInit {
 	 *
 	 * @param dropResult
 	 */
-	public onDrop(dropResult: IDropResult): void {}
+	public onDrop(dropResult: IDropResult): void { }
+
+	/**
+	 * Gets tooltip
+	 * @param index 
+	 * @returns  
+	 */
+	public getTooltip(index: number): string {
+		let val =  `${this.shelfItems[index].name}<br/>${this.shelfItems[index].address}`;
+		return val;
+	}
 
 	public getChildPayload = (index: number): any => {
 		return this.shelfItems[index];

@@ -1,11 +1,16 @@
 <div class="shelf-labels-container">
 
-	<span *ngFor="let item of shelfItems" class="shelf-item-label" [ngClass]="{'dragged': item.id === draggedItem.id}">
+	<span *ngFor="let item of shelfItems; index as i" class="shelf-item-label" [ngClass]="{'dragged': item.id === draggedItem.id}">
+
 		<div class="timeline-entry-model-name">{{ item.name }}</div>
-		<div class="timeline-entry-model-address">{{ item.address }}</div>
+		<div class="timeline-entry-model-address" [delay]="500" [tooltip]="item.address">{{item.address}}</div>
+
 	</span>
 
 </div>
+
+
+
 <div class="timeline-shelf-inner-container">
 
 

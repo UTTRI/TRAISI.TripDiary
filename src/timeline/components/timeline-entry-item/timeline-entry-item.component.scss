@@ -2,6 +2,12 @@ timeline-entry-item {
 
 }
 
+.timeline-btn-outer
+{
+	display: flex;
+    justify-content: center;
+}
+
 timeline-entry-item.summary-item
 {
 	.timeline-entry-model-info

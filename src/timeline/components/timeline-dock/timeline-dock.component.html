@@ -10,12 +10,17 @@
 		</div>
 		<div [ngClass]="{'drag-container-empty': dockItems.length === 0, 'drag-container-with-item': dockItems.length > 0}">
 			<smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'move'" [orientation]="'horizontal'" [groupName]="'timeline'"
-			 [getChildPayload]="getChildPayload" (dragEnter)="onDragEnter()" (dragLeave)="onDragLeave()" class="timeline-dnd-dock"
-			 [shouldAnimateDrop]="false" (dragStart)="onDragStart($event)" (dragEnd)="onDragEnd($event)" #dockContainer>
+			 [getChildPayload]="getChildPayload" (dragEnter)="onDragEnter()" (dragLeave)="onDragLeave()" class="timeline-dnd-dock" [dragClass]="'drag-active'"
+			 [shouldAnimateDrop]="false" (dragStart)="onDragStart($event)" (dragEnd)="onDragEnd($event)" #dockContainer
+			 [dragHandleSelector]="'.draggable-item'" [nonDragAreaSelector]="'.non-drag'">
 				<smooth-dnd-draggable *ngFor="let item of dockItems">
 					<div class="draggable-item">
 						<timeline-entry-item [model]="item" [timelineNewEntry]="timelineNewEntry" [inShelf]="false">
 						</timeline-entry-item>
+					</div>
+					<div class="non-drag">
+						<div class="timeline-entry-model-name">{{ item.name }}</div>
+						<div class="timeline-entry-model-address">{{ item.address }}</div>
 					</div>
 				</smooth-dnd-draggable>
 			</smooth-dnd-container>
@@ -26,8 +31,11 @@
 </div>
 <div class="timeline-dock-info">
 	<div class="timeline-dock-info-start">START OF THE DAY</div>
-	<div class="timeline-dock-info-centre">
-		<span *ngFor="let item of dockItems" class="dock-info-item"> {{ item.name }} </span>
+	<div class="timeline-dock-info-centre-container">
+		<div class="timeline-dock-info-centre">
+
+			<!-- <span *ngFor="let item of dockItems" class="dock-info-item"> {{ item.name }} </span> -->
+		</div>
 	</div>
 	<div class="timeline-dock-info-end">END OF THE DAY</div>
 </div>

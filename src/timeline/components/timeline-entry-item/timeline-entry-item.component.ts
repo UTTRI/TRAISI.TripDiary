@@ -69,6 +69,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 
 	public editPurpose: any;
 
+
 	public get icon() {
 		if (this.model.purpose === 'home') {
 			return 'fas fa-home';
@@ -95,7 +96,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 * @param {TimelineService} _timelineService
 	 * @memberof TimelineEntryItemComponent
 	 */
-	constructor(private _element: ElementRef, private _timelineService: TimelineService, private _modalService: BsModalService) {}
+	constructor(private _element: ElementRef, private _timelineService: TimelineService, private _modalService: BsModalService) { }
 
 	/**
 	 * Angular's ngOnInit
@@ -106,7 +107,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 		});
 	}
 
-	public ngAfterViewInit(): void {}
+	public ngAfterViewInit(): void { }
 
 	/**
 	 *
@@ -118,19 +119,19 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 			this.timelineNewEntry.show(value => {
 				this.model = value;
 				this._timelineService.editShelfEntry(this.model);
-			}, Object.assign({}, this.model),true);
+			}, Object.assign({}, this.model), true);
 		} else {
 			this.editPurpose = this.model.purpose;
 			this._modelRef = this._modalService.show(this.confirmPurposeTemplate);
 		}
 	}
 
-	public callback(value): void {}
+	public callback(value): void { }
 
 	/**
 	 *
 	 */
-	public editLocation(): void {}
+	public editLocation(): void { }
 
 	/**
 	 *
@@ -155,7 +156,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	public confirmPurpose(): void {
 		this.model.purpose = this.editPurpose;
 
-		this._timelineService.updateTimelineLocation(this.model); 
+		this._timelineService.updateTimelineLocation(this.model);
 		this._modelRef.hide();
 	}
 }

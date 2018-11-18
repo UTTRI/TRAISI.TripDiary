@@ -164,6 +164,8 @@ export class TimelineDockComponent implements OnInit {
 	 * @param dropResult
 	 */
 	public onDrop(dropResult: IDropResult): void {
+		console.log('in drop');
+		console.log(dropResult); 
 		if (this.dragOver) {
 			if (!(dropResult.payload in this.dockItems)) {
 				if (dropResult.removedIndex !== null) {
@@ -232,5 +234,5 @@ export class TimelineDockComponent implements OnInit {
 	 * @private
 	 * @memberof TimelineShelfComponent
 	 */
-	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => {};
+	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => { };
 }
