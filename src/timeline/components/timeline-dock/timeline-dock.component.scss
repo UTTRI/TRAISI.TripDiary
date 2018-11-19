@@ -7,6 +7,7 @@
   font-size: 24px;
   line-height: 1.33;
   border-radius: 35px !important;
+  transition: width 0.8s, height 0.8s;
 }
 
 .timeline-bar {
@@ -174,5 +175,5 @@ timeline-dock .timeline-entry-model-info {
   text-align: center;
   margin: 10px;
 }
-
+@import 'timeline-dock.component.md.scss';
 @import 'timeline-dock.component.sm.scss';

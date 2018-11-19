@@ -47,9 +47,18 @@ timeline-slot smooth-dnd-container
 }
 
 @media #{$sm-down} {
-.timeline-slot-container
-{ 
-    width: $timeline-entry-size-sm;
-    height: $timeline-entry-size-sm;
+    .timeline-slot-container
+    { 
+        width: $timeline-entry-size-sm;
+        height: $timeline-entry-size-sm;
+    }
 }
-}
+
+@media #{$md-down} {
+
+    .timeline-slot-container
+    { 
+        width: $timeline-entry-size-md;
+        height: $timeline-entry-size-md;
+    }
+} 

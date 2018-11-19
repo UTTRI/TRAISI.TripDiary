@@ -29,7 +29,7 @@ timeline-entry-item.summary-item
 .timeline-entry-model-address {
 	text-align: center;
 	word-break: break-word;
-    width: 150px;
+    width: auto;
     max-height: 22px;
     overflow: hidden;
 }
@@ -61,3 +61,4 @@ timeline-entry-item.summary-item
 	position: relative;
 }
 
+@import 'timeline-entry-item.component.md.scss'; 
