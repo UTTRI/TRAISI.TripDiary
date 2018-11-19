@@ -3,6 +3,9 @@
 .slot-container
 {
     border: 2px solid#3498DB
+
+
+    
 }
 .slot-container.slot-drag-over 
 {
@@ -17,6 +20,7 @@
 timeline-slot{
     display: inline-block;
     vertical-align:top;
+    
 }
 
 timeline-slot smooth-dnd-container
@@ -33,7 +37,13 @@ timeline-slot smooth-dnd-container
 
 .timeline-slot-container
 {
-    
+    width: $timeline-entry-size;
+    height: $timeline-entry-size;
+
+    button {
+		border-color: #b9d0d8;
+		border-width: 3px;
+	}
 }
 
 @media #{$sm-down} {
