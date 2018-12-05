@@ -43,6 +43,18 @@ export class TimelineService {
 
 	private _timelineTimeStateValid: boolean = false;
 
+	private _hasAdjacentIdenticalLocations: boolean = false;
+
+	private _isStartEndLocationsDifferent: boolean = false;
+
+	public get isStartEndLocationsDifferent(): boolean {
+		return this._isStartEndLocationsDifferent;
+	}
+
+	public get hasAdjacentIdenticalLocations(): boolean {
+		return this._hasAdjacentIdenticalLocations;
+	}
+
 	public get isTimelineStatevalid(): boolean {
 		return this._timelineStateValid;
 	}
@@ -111,6 +123,21 @@ export class TimelineService {
 		});
 	}
 
+	public updateIsStartEndLocationsDifferent(): void {
+		if (this._timelineLocations.length < 2) {
+			this._isStartEndLocationsDifferent = false;
+		} else {
+			if (
+				this._timelineLocations[0].latitude !== this._timelineLocations[this._timelineLocations.length - 1].latitude &&
+				this._timelineLocations[0].longitude !== this._timelineLocations[this._timelineLocations.length - 1].longitude
+			) {
+				this._isStartEndLocationsDifferent = true;
+			} else {
+				this._isStartEndLocationsDifferent = false;
+			}
+		}
+	}
+
 	/**
 	 * Updates timeline location
 	 * @param model
@@ -129,6 +156,7 @@ export class TimelineService {
 	public updateLocationsValidation(): void {
 		let hasStartLocation: boolean = false;
 		let hasEndLocation: boolean = false;
+		let hasAdjacentLocations: boolean = false;
 
 		this._timelineLocations.forEach((location, index) => {
 			if (location.locationType === TimelineLocationType.StartLocation) {
@@ -137,6 +165,20 @@ export class TimelineService {
 				hasEndLocation = true;
 			}
 		});
+
+		this._timelineLocations.forEach((location, index) => {
+			if (index < this._timelineLocations.length - 1) {
+				if (
+					location.latitude === this._timelineLocations[index + 1].latitude &&
+					location.longitude === this._timelineLocations[index + 1].longitude
+				) {
+					hasAdjacentLocations = true;
+				}
+			}
+		});
+
+		this._hasAdjacentIdenticalLocations = hasAdjacentLocations;
+
 		this._timelineStateValid = hasStartLocation && hasEndLocation;
 	}
 
@@ -182,6 +224,17 @@ export class TimelineService {
 	}
 
 	/**
+	 * Edits shelf entry
+	 * @param entry
+	 */
+	public editShelfEntry(entry: TimelineEntry): void {
+		const index: number = this._availableLocations.findIndex(x => x.id === entry.id);
+		if (index >= 0) {
+			this._availableLocations[index] = entry;
+		}
+	}
+
+	/**
 	 *
 	 */
 	public updateTimelineLocations(locations: Array<TimelineEntry>): void {}
@@ -222,6 +275,7 @@ export class TimelineService {
 	 */
 	public reorderTimelineLocation(from: number, to: number) {
 		this._timelineLocations.splice(to, 0, this._timelineLocations.splice(from, 1)[0]);
+		this.timelineLocations.next(this._timelineLocations);
 	}
 
 	/**

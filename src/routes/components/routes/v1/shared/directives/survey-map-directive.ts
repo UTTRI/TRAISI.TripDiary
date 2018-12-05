@@ -2,7 +2,8 @@ import { ISurveyMapConfig } from '../survey-map-config';
 import { ISurveyMapScope } from './survey-map-scope';
 import { SurveyMapMarker } from '../survey-map-marker';
 
-declare var GOOGLE_API_KEY: any;
+const GOOGLE_API_KEY = 'AIzaSyBATO0zp9waSGcW13pWmzOl9PSaV0fdMVE';
+
 import 'leaflet-routing-machine';
 
 import { IAugmentedJQueryStatic } from 'angular';
@@ -74,6 +75,14 @@ lineOptions['wheelchair'] = {
 	]
 };
 
+lineOptions['flight'] = {
+	styles: [
+		{ color: 'black', opacity: 0.3, weight: 11 },
+		{ color: 'white', opacity: 0.9, weight: 9 },
+		{ color: '#3bffbb', opacity: 1, weight: 3 }
+	]
+};
+
 lineOptions['noMode'] = {
 	color: 'blue',
 	weight: 3,
@@ -91,23 +100,6 @@ lineOptions['nonActiveMode'] = {
 declare var $: IAugmentedJQueryStatic;
 
 export class SurveyMapDirective {
-	public template = require('../templates/survey-map.html');
-	deletePopupTemplateUrl = require('../../templates/trip-diary-route-delete-popup.html');
-	switchModePopupTemplateUrl = '/static/dist/directives/trips/templates/trip-diary-switch-mode-popup.html';
-	deleteModeSwitchTemplateUrl = '/static/dist/directives/trips/templates/trip-diary-delete-mode-switch-popup.html';
-	link: ($scope: ISurveyMapScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => void;
-
-	controllerAs = '_smc';
-	/**
-	 * Restore marker state to the map.
-	 */
-	public restoreMarkerState = (markers: SurveyMapMarker[]) => {
-		for (let i = 0; i < markers.length; i++) {
-			if (markers[i] != null) {
-				this.addMarker(markers[i]);
-			}
-		}
-	};
 	restrict = 'E';
 	scope = {
 		map: '=',
@@ -127,7 +119,9 @@ export class SurveyMapDirective {
 			return new SurveyMapController($scope);
 		}
 	];
-
+	private callback: any;
+	private markerClick: any;
+	private disableWaypointChange = false;
 	private _map: L.Map;
 	private _mapElement: JQuery;
 	private _markers: { [id: string]: L.Marker };
@@ -138,12 +132,68 @@ export class SurveyMapDirective {
 	private _attrs: ng.IAttributes;
 	private _routers: { [id: string]: any };
 	private _layersByRoute: { [id: string]: any[] };
-	private routingError = (evt) => {
+	public template = require('../templates/survey-map.html');
+	deletePopupTemplateUrl = require('../../templates/trip-diary-route-delete-popup.html');
+	switchModePopupTemplateUrl = require('../../templates/trip-diary-switch-mode-popup.html');
+	deleteModeSwitchTemplateUrl = require('../../templates/trip-diary-delete-mode-switch-popup.html');
+	link: ($scope: ISurveyMapScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => void;
+	private _reverseGeocodeResult: string;
+
+	get reverseGeocodeResult(): string {
+		return this._reverseGeocodeResult;
+	}
+
+	set reverseGeocodeResult(value: string) {
+		this._reverseGeocodeResult = value;
+	}
+
+	private _reverseGeocodeLatLng: L.LatLng;
+
+	get reverseGeocodeLatLng(): L.LatLng {
+		return this._reverseGeocodeLatLng;
+	}
+
+	set reverseGeocodeLatLng(value: L.LatLng) {
+		this._reverseGeocodeLatLng = value;
+	}
+
+	private _element: ng.IAugmentedJQuery;
+
+	public get element(): ng.IAugmentedJQuery {
+		return this._element;
+	}
+
+	public set element(value: ng.IAugmentedJQuery) {
+		this._element = value;
+	}
+
+	controllerAs = '_smc';
+
+	public static Factory() {
+		let directive = ($http, $compile, $templateRequest, tripDiaryService, $rootScope) => {
+			return new SurveyMapDirective($http, $compile, $templateRequest, tripDiaryService, $rootScope);
+		};
+
+		directive['$inject'] = ['$http'];
+		directive['restrict'] = 'AEC';
+
+		return directive;
+	}
+	/**
+	 * Restore marker state to the map.
+	 */
+	public restoreMarkerState = (markers: SurveyMapMarker[]) => {
+		for (let i = 0; i < markers.length; i++) {
+			if (markers[i] != null) {
+				this.addMarker(markers[i]);
+			}
+		}
+	};
+
+	private routingError = evt => {
 		this._$scope.$emit('routingError');
 		//
 	};
-
-	private disableWaypointChange = false;
 
 	public clearFoundRoutes() {
 		this._$scope.$parent['foundRoutes'] = [];
@@ -188,7 +238,7 @@ export class SurveyMapDirective {
 	 *
 	 * @param evt
 	 */
-	private routesFound = (evt) => {
+	private routesFound = evt => {
 		if (evt.target.tripLeg.hasOwnProperty('routeIndex')) {
 			evt.target._selectedRoute = evt.target_routes[evt.target.tripLeg.routeIndex];
 		}
@@ -213,7 +263,7 @@ export class SurveyMapDirective {
 	 * Called when waypoints are changed on the active route.
 	 * @param evt
 	 */
-	private waypointsChanged = (evt) => {
+	private waypointsChanged = evt => {
 		if (!this.disableWaypointChange) {
 			this._tripDiaryService.isAutoFitBounds = false;
 			this._$scope.$emit('waypointsChanged', evt);
@@ -225,10 +275,7 @@ export class SurveyMapDirective {
 	/**
 	 * When a route is selected
 	 */
-	private routeSelected = (evt) => {};
-
-	private callback: any;
-	private markerClick: any;
+	private routeSelected = evt => {};
 
 	/**
 	 *
@@ -265,54 +312,14 @@ export class SurveyMapDirective {
 		};
 	}
 
-	private _reverseGeocodeResult: string;
-
-	get reverseGeocodeResult(): string {
-		return this._reverseGeocodeResult;
-	}
-
-	set reverseGeocodeResult(value: string) {
-		this._reverseGeocodeResult = value;
-	}
-
-	private _reverseGeocodeLatLng: L.LatLng;
-
-	get reverseGeocodeLatLng(): L.LatLng {
-		return this._reverseGeocodeLatLng;
-	}
-
-	set reverseGeocodeLatLng(value: L.LatLng) {
-		this._reverseGeocodeLatLng = value;
-	}
-
-	private _element: ng.IAugmentedJQuery;
-
-	public get element(): ng.IAugmentedJQuery {
-		return this._element;
-	}
-
-	public set element(value: ng.IAugmentedJQuery) {
-		this._element = value;
-	}
-
 	/**
 	 *
 	 * @returns {($http) => SurveyMapDirective}
 	 * @constructor
 	 */
-	public static Factory() {
-		let directive = ($http, $compile, $templateRequest, tripDiaryService, $rootScope) => {
-			return new SurveyMapDirective($http, $compile, $templateRequest, tripDiaryService, $rootScope);
-		};
-
-		directive['$inject'] = ['$http'];
-		directive['restrict'] = 'AEC';
-
-		return directive;
-	}
 
 	public toggleAddRoutingWaypoints(enable: boolean) {
-		if (this._activeRoutingControl !== undefined) {
+		if (this._activeRoutingControl !== null && this._activeRoutingControl !== undefined) {
 			this._activeRoutingControl.options.addWaypoints = enable;
 		}
 	}
@@ -324,7 +331,7 @@ export class SurveyMapDirective {
 	public cleanMarkers(markerList: SurveyMapMarker[]) {
 		let notFound = [];
 
-		for (let key in this._markers) {
+		for (let key of Object.keys(this._markers)) {
 			let found = false;
 			for (let i = 0; i < markerList.length; i++) {
 				if (markerList[i].id === key) {
@@ -349,7 +356,7 @@ export class SurveyMapDirective {
 	 *
 	 */
 	public hideAllMarkers() {
-		Object.keys(this._markers).forEach((key) => {
+		Object.keys(this._markers).forEach(key => {
 			let marker = this._markers[key];
 			marker.setOpacity(0.0);
 			marker.closeTooltip();
@@ -429,9 +436,17 @@ export class SurveyMapDirective {
 		let mapMarker = null;
 
 		if (this._markers[marker.id] == null) {
+			let icon = L.icon({
+				iconUrl: require('/node_modules/leaflet/dist/images/marker-icon.png'),
+				iconSize: [25, 41],
+				iconAnchor: [13, 41],
+				popupAnchor: [0, -44]
+			});
+
 			mapMarker = L.marker([marker.latLng.lat, marker.latLng.lng], {
 				draggable: true,
-				marker: marker
+				marker: marker,
+				icon: icon
 			}).addTo(this._map);
 
 			// marker.mapMarker = mapMarker;
@@ -447,13 +462,13 @@ export class SurveyMapDirective {
 
 			mapMarker.surveyMap = this;
 
-			mapMarker.on('dragend', (evt) => {
+			mapMarker.on('dragend', evt => {
 				this.getLocation(evt.target._latlng, this);
 			});
 
-			mapMarker.on('mouseover', (e) => {});
+			mapMarker.on('mouseover', e => {});
 
-			mapMarker.on('click', (evt) => {
+			mapMarker.on('click', evt => {
 				if (this._$scope['markerClick'] != null) {
 					this._$scope['markerClick'](evt.target.options.marker);
 				}
@@ -494,14 +509,17 @@ export class SurveyMapDirective {
 			() => {
 				return marker.markerType;
 			},
-			(markerType) => {
+			markerType => {
 				if (marker.label !== undefined) {
 					if (mapMarker._tooltip != null) {
 						this._map.removeLayer(mapMarker._tooltip);
 					}
 					let s = marker as TripLocation;
 
-					mapMarker.bindTooltip(s.displayName(), { permanent: true, direction: 'bottom' });
+					mapMarker.bindTooltip(s.displayName(), {
+						permanent: true,
+						direction: 'bottom'
+					});
 				}
 				mapMarker.setIcon(marker.getMarkerIcon());
 			}
@@ -589,6 +607,9 @@ export class SurveyMapDirective {
 	 */
 	private generateRouterOptions(tripLeg: TripLeg, startTime: Date) {
 		let today = new Date();
+		if (typeof startTime === 'string') {
+			startTime = new Date(startTime);
+		}
 		let adjustedStartTime = new Date(
 			today.getFullYear(),
 			today.getMonth(),
@@ -631,17 +652,12 @@ export class SurveyMapDirective {
 		}
 	}
 
-	/**
-	 *
-	 * @param {TripRoute} tripRoute
-	 * @param {boolean} waypointChangedTrigger
-	 */
-	public addRouting(tripRoute: TripRoute, waypointChangedTrigger = false) {
+	public addRouting(tripRoute: TripRoute, waypointChangedTrigger = false, forceRender = false) {
 		let lastTime = this._$scope['routeTime'];
 
 		let currTime = Date.now() / 1000.0;
 
-		if (currTime - lastTime < 0.3 && this._$scope.controller.state.previousAction !== UPDATE_STATE) {
+		if (currTime - lastTime < 0.3 && this._$scope.controller.state.previousAction !== UPDATE_STATE && !forceRender) {
 			return;
 		}
 
@@ -661,24 +677,16 @@ export class SurveyMapDirective {
 			this._layersByRoute[tripRoute.id] = [];
 		}
 
-		Object.keys(this._layersByRoute).forEach((key) => {
-			let layers = this._layersByRoute[key];
-			for (let layer of layers) {
-				this._map.removeLayer(layer);
+		for (let key of Object.keys(this._layersByRoute)) {
+			for (let layer of Object.keys(this._layersByRoute[key])) {
+				this._map.removeLayer(this._layersByRoute[key][layer]);
+
+				if (tripRoute.id !== key) {
+					// this._map.removeControl(layer);
+				}
 			}
 			this._layersByRoute[key] = [];
-		});
-
-		/*for (let key in Object.keys(this._layersByRoute)) {
-			if (this._layersByRoute.hasOwnProperty(key)) {
-				let layers = this._layersByRoute[key];
-
-				for (let layer of layers) {
-					this._map.removeLayer(layer);
-				}
-				this._layersByRoute[key] = [];
-			}
-		}*/
+		}
 
 		if (!this._routers.hasOwnProperty(tripRoute.id) || true) {
 			let activeTripLeg = tripRoute.tripLegs[tripRoute.activeTripLegIndex];
@@ -702,7 +710,8 @@ export class SurveyMapDirective {
 					this.addTripLegSummaryLineMarkers(tripRoute, activeTripLeg, _findIndex(tripRoute.tripLegs, activeTripLeg), 0);
 				}
 
-				let routerActiveI = false;
+				// tslint:disable-next-line:no-shadowed-variable
+				let routerActive = false;
 
 				// let i = 0;
 				let markerIndex = 0;
@@ -740,58 +749,62 @@ export class SurveyMapDirective {
 					}
 
 					if (tripLeg.id === tripRoute.tripLegs[tripRoute.activeTripLegIndex].id && !tripLeg._isComplete) {
-						if (this._$scope.controller['routingControl'] === undefined) {
+						// do not add the routing control if this mode's route is not configurable
+
+						if (
+							this._$scope.controller['routingControl'] === undefined &&
+							!this._tripDiaryService.getModeConfig(tripLeg._mode.modeName).autoSaveRoute
+						) {
 							let control = L.Routing.control({
 								fitSelectedRoutes: false,
 								autoRoute: true,
 								plan: L.Routing.plan(latLngs, {
 									createMarker: (i, wp, n) => {
-										let tripRouteI: TripRoute = this._tripDiaryService.getActiveTripRoute();
-										let tripLegI: TripLeg = this._tripDiaryService.getActiveTripLeg();
-
-
+										let tripRoute: TripRoute = this._tripDiaryService.getActiveTripRoute();
+										let tripLeg: TripLeg = this._tripDiaryService.getActiveTripLeg();
 
 										let icon = L.icon({
 											iconUrl: require('/node_modules/leaflet/dist/images/marker-icon.png'),
 											iconSize: [25, 41],
 											iconAnchor: [13, 41],
-											popupAnchor: [0, -44],
+											popupAnchor: [0, -44]
 										});
 
 										let marker = L.marker(wp.latLng, {
 											draggable: i > 0 && i < n - 1 ? true : false,
 											icon: icon
-
 										});
-
 
 										// do not allow deleting on end markers
 										if (i !== 0 && i !== n - 1) {
-											let link = $('<span class="delete-popup">Delete</span>').on('click', (evt) => {
+											let link = $('<span class="delete-popup">Delete</span>').on('click', evt => {
 												control.spliceWaypoints(i, 1);
 											});
 
 											link[0]['waypointIndex'] = i;
 
-											this._$scope['deleteWayPoint'] = ($event) => {
+											this._$scope['deleteWayPoint'] = $event => {
 												control.spliceWaypoints($event.target.waypointIndex, 1);
 											};
+											// this._$templateRequest(this.deletePopupTemplateUrl).then(template => {
+
 											let template = this.deletePopupTemplateUrl;
-												let toolTip = this._$compile(
-													$('<span></span>')
-														.html(template)
-														.contents()
-												)(this._$scope);
+											let toolTip = this._$compile(
+												$('<span></span>')
+													.html(template)
+													.contents()
+											)(this._$scope);
 
-												toolTip[0]['waypointIndex'] = i;
+											toolTip[0]['waypointIndex'] = i;
 
-												marker.bindPopup(toolTip[0], {
-													permanent: false,
-													direction: 'top',
-													interactive: true
-												});
+											marker.bindPopup(toolTip[0], {
+												permanent: false,
+												direction: 'top',
+												interactive: true
+											});
+											// });
 										}
-										this._layersByRoute[tripRouteI.id].push(marker);
+										this._layersByRoute[tripRoute.id].push(marker);
 
 										return marker;
 									},
@@ -808,6 +821,7 @@ export class SurveyMapDirective {
 							control.addTo(this._$scope['mapRef']);
 
 							this._activeRoutingControl = control;
+							// console.log(this._activeRoutingControl);
 
 							this._$scope.$emit('routeQueryActive');
 
@@ -820,7 +834,10 @@ export class SurveyMapDirective {
 
 							this._$scope.controller['routingControl'] = control;
 							this._routers[tripRoute.id] = control;
-						} else {
+						} else if (
+							!isNullOrUndefined(this._$scope.controller['routingControl']) &&
+							!this._tripDiaryService.getModeConfig(tripLeg._mode.modeName).autoSaveRoute
+						) {
 							// let control = this._$scope.controller['routingControl'];
 							let control = this._$scope.controller['routingControl'];
 							control['tripLeg'] = tripRoute.tripLegs[tripRoute.activeTripLegIndex];
@@ -851,12 +868,12 @@ export class SurveyMapDirective {
 					}
 					this.addTripLegSummaryLineMarkers(tripRoute, tripLeg, _findIndex(tripRoute.tripLegs, tripLeg), markerIndex);
 
-					routerActiveI = true;
+					routerActive = true;
 					markerIndex++;
 				}
 
 				if (this._$scope.controller['routingControl'] !== undefined) {
-					if (!routerActiveI) {
+					if (!routerActive) {
 						this._$scope.controller['routingControl']._line.remove();
 					} else {
 						this._$scope.controller['routingControl'].show();
@@ -922,27 +939,29 @@ export class SurveyMapDirective {
 	private addDeleteModeSwitchPopup(marker, tripLegIndex) {
 		// link[0]['waypointIndex'] = i;
 
-		this._$scope['deleteModeSwitch'] = ($event) => {
+		this._$scope['deleteModeSwitch'] = $event => {
 			this._tripDiaryService.removeModeSwitch(this._tripDiaryService.state.activeRouteIndex, $event.target['tripLegIndex']);
 		};
-		this._$templateRequest(this.deleteModeSwitchTemplateUrl).then((template) => {
-			let toolTip = this._$compile(
-				$('<span></span>')
-					.html(template)
-					.contents()
-			)(this._$scope);
 
-			// console.log(toolTip);
+		// this._$templateRequest(this.deleteModeSwitchTemplateUrl).then(template => {
+		let template = this.deleteModeSwitchTemplateUrl;
+		let toolTip = this._$compile(
+			$('<span></span>')
+				.html(template)
+				.contents()
+		)(this._$scope);
 
-			toolTip[0]['tripLegIndex'] = tripLegIndex - 1;
-			// toolTip[0]['waypointIndex'] = i;
+		// console.log(toolTip);
 
-			marker.bindPopup(toolTip[0], {
-				permanent: false,
-				direction: 'top',
-				interactive: true
-			});
+		toolTip[0]['tripLegIndex'] = tripLegIndex - 1;
+		// toolTip[0]['waypointIndex'] = i;
+
+		marker.bindPopup(toolTip[0], {
+			permanent: false,
+			direction: 'top',
+			interactive: true
 		});
+		// });
 	}
 
 	/**
@@ -1003,9 +1022,9 @@ export class SurveyMapDirective {
 			() => {
 				return elemrentRef.attr('class');
 			},
-			(newValue) => {
+			newValue => {
 				if (newValue.match(/ng-hide/) !== null) {
-					return new Promise((resolve) => setTimeout(resolve, 100)).then((v) => {
+					return new Promise(resolve => setTimeout(resolve, 100)).then(v => {
 						mapRef.invalidateSize();
 					});
 				}
@@ -1026,15 +1045,15 @@ export class SurveyMapDirective {
 			mapRef.invalidateSize();
 		}, 0);
 
-		this._$scope.$watchCollection('tc.value.tripLocations', (newValue: SurveyMapMarker[], oldValue: SurveyMapMarker[]) => {
+		/* this._$scope.$watchCollection('tc.value.tripLocations', (newValue: SurveyMapMarker[], oldValue: SurveyMapMarker[]) => {
 			if (oldValue !== newValue) {
 				surveyMapRef.cleanMarkers(newValue);
 			}
-		});
+		}); */
 
 		this._$scope.controller.updateTripRouteModes();
 
-		this._$scope['switchModeConfirm'] = (evt) => {
+		this._$scope['switchModeConfirm'] = evt => {
 			this._$scope.controller.confirmModeSwitch();
 		};
 		this._tripDiaryService.onRouteChanged(this.onRouteChanged);
@@ -1054,7 +1073,7 @@ export class SurveyMapDirective {
 
 		let apiURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',%20' + lon + '&key=' + GOOGLE_API_KEY;
 
-		this._$http.get(apiURL).then((result) => {
+		this._$http.get(apiURL).then(result => {
 			surveyMap.reverseGeocodeResult = result.data['results'][0].formatted_address;
 
 			surveyMap.reverseGeocodeLatLng = L.latLng(lat, lon);
@@ -1071,16 +1090,18 @@ export class SurveyMapDirective {
 	 * @param {string} popupContentUrl
 	 */
 	private createPopupFromTemplateUrl(mapMarker: L.Marker, popupContentUrl: string) {
-		this._$templateRequest(popupContentUrl).then((template) => {
-			let toolTip = this._$compile(
-				$('<span></span>')
-					.html(template)
-					.contents()
-			)(this._$scope);
+		// this._$templateRequest(popupContentUrl).then(template => {
 
-			mapMarker.bindPopup(toolTip[0], { offset: [0, -15] });
-			mapMarker.openPopup();
-		});
+		let template = popupContentUrl;
+		let toolTip = this._$compile(
+			$('<span></span>')
+				.html(template)
+				.contents()
+		)(this._$scope);
+
+		mapMarker.bindPopup(toolTip[0], { offset: [0, -15] });
+		mapMarker.openPopup();
+		// });
 	}
 
 	private addTripLegSummaryLine(tripRoute: TripRoute, tripLeg: TripLeg) {
@@ -1140,11 +1161,27 @@ export class SurveyMapDirective {
 		if (tripRoute.tripLegs.length === 1) {
 			// add icon for start and end of this leg
 
-			let marker = L.marker(tripLeg2._waypoints[0]);
+			// console.log(tripRoute.startLocation.getMarkerIcon());
+			// let marker = L.marker(tripLeg2._waypoints[0]);
+
+			let icon = L.icon({
+				iconUrl: require('/node_modules/leaflet/dist/images/marker-icon.png'),
+				iconSize: [25, 41],
+				iconAnchor: [13, 41],
+				popupAnchor: [0, -44]
+			});
+
+			let marker = L.marker(tripLeg2._waypoints[0], {
+				icon: icon
+			});
+
 			marker.setIcon(tripRoute.startLocation.getMarkerIcon());
 			marker.addTo(this._map);
 			this._layersByRoute[tripRoute.id].push(marker);
-			marker.bindTooltip(tripRoute.startLocation.displayName(), { permanent: true, direction: 'bottom' });
+			marker.bindTooltip(tripRoute.startLocation.displayName(), {
+				permanent: true,
+				direction: 'bottom'
+			});
 
 			$(marker._icon)
 				.find('mark')
@@ -1157,7 +1194,10 @@ export class SurveyMapDirective {
 			marker.setIcon(tripRoute.endLocation.getMarkerIcon());
 			marker.addTo(this._map);
 			this._layersByRoute[tripRoute.id].push(marker);
-			marker.bindTooltip(tripRoute.endLocation.displayName(), { permanent: true, direction: 'bottom' });
+			marker.bindTooltip(tripRoute.endLocation.displayName(), {
+				permanent: true,
+				direction: 'bottom'
+			});
 
 			markerIndex++;
 			$(marker._icon)
@@ -1171,10 +1211,14 @@ export class SurveyMapDirective {
 		} else if (tripRoute.tripLegs.length > 1) {
 			if (tripLeg2.id === _first(tripRoute.tripLegs).id) {
 				let marker = L.marker(tripLeg2._waypoints[0]);
+
 				marker.setIcon(tripRoute.startLocation.getMarkerIcon());
 				marker.addTo(this._map);
 				this._layersByRoute[tripRoute.id].push(marker);
-				marker.bindTooltip(tripRoute.startLocation.displayName(), { permanent: true, direction: 'bottom' });
+				marker.bindTooltip(tripRoute.startLocation.displayName(), {
+					permanent: true,
+					direction: 'bottom'
+				});
 
 				$(marker._icon)
 					.find('mark')
@@ -1217,7 +1261,10 @@ export class SurveyMapDirective {
 				marker.setIcon(tripRoute.endLocation.getMarkerIcon());
 				marker.addTo(this._map);
 				this._layersByRoute[tripRoute.id].push(marker);
-				marker.bindTooltip(tripRoute.endLocation.displayName(), { permanent: true, direction: 'bottom' });
+				marker.bindTooltip(tripRoute.endLocation.displayName(), {
+					permanent: true,
+					direction: 'bottom'
+				});
 				$(marker._icon)
 					.find('mark')
 					.css({ display: 'block' });

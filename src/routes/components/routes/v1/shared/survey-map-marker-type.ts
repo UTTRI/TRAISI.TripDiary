@@ -32,7 +32,7 @@ var defaultIcon = L['ExtraMarkers'].icon({
     markerColor: 'red',
     shape: 'square',
     innerHTML: svgMarker,
-    prefix: 'fa'
+    prefix: 'fa'<i class="fas fa-retweet"></i>
   }); */
 
 let defaultIcon = SurveyMapSvgIcon.createIcon('', '#9eb3ce');
@@ -40,9 +40,9 @@ let homeIcon = SurveyMapSvgIcon.createIcon('fas fa-home', '#82b8e2');
 let schoolIcon = SurveyMapSvgIcon.createIcon('fas fa-school', '#669d4d');
 let shoppingIcon = SurveyMapSvgIcon.createIcon('shopping_cart', '#7847b8');
 let workIcon = SurveyMapSvgIcon.createIcon('fas fa-building', '#b29e85');
-let switchIcon = SurveyMapSvgIcon.createIcon('swap_horiz', '#ff9d02');
+let switchIcon = SurveyMapSvgIcon.createIcon('fas fa-retweet', '#ff9d02');
 let otherIcon = SurveyMapSvgIcon.createIcon('home', '#607D8B');
-let switchIconSummary = SurveyMapSvgIcon.createIcon('swap_horiz', '#ff9d02', 'summary-switch-marker');
+let switchIconSummary = SurveyMapSvgIcon.createIcon('fas fa-retweet', '#ff9d02');
 
 let passengerIcon = SurveyMapSvgIcon.createIcon('fas fa-car', '#276464');
 let daycareIcon = SurveyMapSvgIcon.createIcon('fas fa-child', '#D768A5');

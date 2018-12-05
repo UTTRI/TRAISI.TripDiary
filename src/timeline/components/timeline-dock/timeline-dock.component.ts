@@ -29,8 +29,8 @@ export class TimelineDockComponent implements OnInit {
 
 	public sub: Subscription;
 
-	@ViewChild('startSlotPopover')
-	public startSlotPopover: PopoverDirective;
+	/* @ViewChild('startSlotPopover')
+	public startSlotPopover: PopoverDirective; */
 
 	@ViewChild('confirmPurposeTemplate')
 	public confirmPurposeTemplate: TemplateRef<any>;
@@ -52,9 +52,14 @@ export class TimelineDockComponent implements OnInit {
 	@ViewChild('popover')
 	public popover: PopoverDirective;
 
+	@ViewChild('endPopover')
+	public endPopover: PopoverDirective;
+
 	public shouldShowPlaceholder(): void {
 		let hasStart = false;
 		let hasEnd = false;
+
+
 
 		this._locations.forEach(v => {
 			if (v.locationType === TimelineLocationType.EndLocation) {
@@ -64,12 +69,9 @@ export class TimelineDockComponent implements OnInit {
 			}
 		});
 
-
 		if (this.dockItems.length === 0 && hasStart && hasEnd) {
-
 			this.showPlaceholder = true;
 		} else {
-
 			this.showPlaceholder = false;
 		}
 	}
@@ -136,6 +138,10 @@ export class TimelineDockComponent implements OnInit {
 		this.popover.hide();
 	}
 
+	public confirmEndLocation(): void {
+		this.endPopover.hide();
+	}
+
 	/**
 	 * Callback for when a timeline item has deleted itself
 	 */
@@ -158,8 +164,9 @@ export class TimelineDockComponent implements OnInit {
 	 * @param dropResult
 	 */
 	public onDrop(dropResult: IDropResult): void {
+		console.log('in drop');
+		console.log(dropResult); 
 		if (this.dragOver) {
-
 			if (!(dropResult.payload in this.dockItems)) {
 				if (dropResult.removedIndex !== null) {
 					this.dockItems.splice(dropResult.removedIndex, 1);
@@ -227,5 +234,5 @@ export class TimelineDockComponent implements OnInit {
 	 * @private
 	 * @memberof TimelineShelfComponent
 	 */
-	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => {};
+	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => { };
 }

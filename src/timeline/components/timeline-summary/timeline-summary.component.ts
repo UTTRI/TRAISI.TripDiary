@@ -92,11 +92,14 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 
 		this.inputForm.valueChanges.debounceTime(1000).subscribe(value => {
 			this.timeline.response.emit(this.timelineLocations);
-			this._timelineService.updateLocationsTimeValidation();
-			if (this._timelineService.isTimelineTimeStatevalid) {
-				this.timeline.validationState.emit(ResponseValidationState.VALID);
-			} else {
-				this.timeline.validationState.emit(ResponseValidationState.INVALID);
+
+			if (this.timeline.isStep2) {
+				this._timelineService.updateLocationsTimeValidation();
+				if (this._timelineService.isTimelineTimeStatevalid) {
+					this.timeline.validationState.emit(ResponseValidationState.VALID);
+				} else {
+					this.timeline.validationState.emit(ResponseValidationState.INVALID);
+				}
 			}
 		});
 	}

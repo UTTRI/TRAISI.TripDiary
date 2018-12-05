@@ -96,6 +96,106 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	/* state of controller */
 	value: TripsQuestionState;
 	questionId: string;
+
+	public defaultView: () => any;
+	tripsTaken: () => any;
+	noTripsTaken: () => any;
+	noTripsReasonGiven: () => any;
+	tripRouteModeView: () => any;
+	setRouteEditActive: (number) => any;
+	setRouteEditComplete: (index: number) => void;
+	setRouteEditIncomplete: (index: number) => void;
+	updateState: (state: TripsQuestionState) => any;
+	updateTripRoutes: (routes: TripRoute[]) => any;
+	setTripMode: (mode: string, category: string) => any;
+	setTripLegData: (coordinates: L.LatLng[], indices: number[], routeName: string, routeIndex: number) => any;
+	setSwitchRouteModeState: (active: boolean) => any;
+	setModeSwitchData: () => any;
+	setTripLegActive: (index: number) => any;
+	removeTripLeg: (index: number) => any;
+	addTripLocationData: () => any;
+	addTripLocation: (loc: any) => any;
+	setUnknownRoute: () => any;
+	setTripLegIncomplete: (index: number) => any;
+	removeModeSwitch: (routeIndex: number, legIndex: number) => any;
+
+	get tripsScope(): ITripsScope {
+		return this.$scope as ITripsScope;
+	}
+
+	private _state: TripsQuestionState;
+	private shouldInit = false;
+	get state(): TripsQuestionState {
+		return this.tripsScope.tc.value;
+	}
+
+	private _tripTimeline: TripTimeline;
+
+	public get tripTimeline(): TripTimeline {
+		return this._tripTimeline;
+	}
+
+	public set tripTimeline(value: TripTimeline) {
+		this._tripTimeline = value;
+	}
+
+	private _map: SurveyMapDirective;
+
+	get map(): SurveyMapDirective {
+		return this._map;
+	}
+
+	set map(value: SurveyMapDirective) {
+		this._map = value;
+	}
+
+	private _locationEntry: string;
+
+	get locationEntry(): string {
+		return this._locationEntry;
+	}
+
+	set locationEntry(value: string) {
+		this._locationEntry = value;
+	}
+
+	private _surveyStartTime: moment.Moment;
+
+	get surveyStartTime(): moment.Moment {
+		return this._surveyStartTime;
+	}
+
+	set surveyStartTime(value: moment.Moment) {
+		this._surveyStartTime = value;
+	}
+
+	private _activePageValid: boolean;
+
+	get activePageValid(): boolean {
+		return this._activePageValid;
+	}
+
+	set activePageValid(value: boolean) {
+		this._activePageValid = value;
+	}
+
+	private _rootScope: ng.IScope;
+
+	public get rootScope(): ng.IScope {
+		return this._rootScope;
+	}
+
+	private _routeMap: SurveyMapDirective;
+
+	public get routeMap(): SurveyMapDirective {
+		return this._routeMap;
+	}
+
+	private _locationSearchBoxInput: HTMLInputElement;
+
+	private _pageValid: boolean;
+
+	private torontoBounds = new LatLngBounds(new LatLng(42.7066595635, -81.9635009766), new LatLng(45.3444241045, -77.0086669922));
 	/**
 	 *
 	 * @param {TripLocation} obj
@@ -135,35 +235,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			}
 		}
 	};
-
-	// tslint:disable-next-line:member-ordering
-	public defaultView: () => any;
-	tripsTaken: () => any;
-	noTripsTaken: () => any;
-	noTripsReasonGiven: () => any;
-	tripRouteModeView: () => any;
-	setRouteEditActive: (number) => any;
-	setRouteEditComplete: (index: number) => void;
-	setRouteEditIncomplete: (index: number) => void;
-	updateState: (state: TripsQuestionState) => any;
-	updateTripRoutes: (routes: TripRoute[]) => any;
-	setTripMode: (mode: string, category: string) => any;
-	setTripLegData: (coordinates: L.LatLng[], indices: number[], routeName: string, routeIndex: number) => any;
-	setSwitchRouteModeState: (active: boolean) => any;
-	setModeSwitchData: () => any;
-	setTripLegActive: (index: number) => any;
-	removeTripLeg: (index: number) => any;
-	addTripLocationData: () => any;
-	addTripLocation: (loc: any) => any;
-	setUnknownRoute: () => any;
-	setTripLegIncomplete: (index: number) => any;
-	removeModeSwitch: (routeIndex: number, legIndex: number) => any;
-
-	private _locationSearchBoxInput: HTMLInputElement;
-
-	private _pageValid: boolean;
-
-	private torontoBounds = new LatLngBounds(new LatLng(42.7066595635, -81.9635009766), new LatLng(45.3444241045, -77.0086669922));
 
 	/**
 	 *
@@ -334,7 +405,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			}
 		});
 
-		/* 
+		/*
 		$scope.$watch(
 			'tc.value.activeTripLocation',
 			(newValue: TripLocation, oldValue: TripLocation) => {
@@ -375,7 +446,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 							this._$scope['tripsLocationForm'].$tcInvalid = true;
 						}
 
-						/* Add this trip location 
+						/* Add this trip location
 						newValue.label = newValue.locationName;
 
 						if (newValue.mapMarker == null && tcRef.map != null) {
@@ -397,12 +468,12 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 							}
 						}
 
-						/* Update the scope 
+						/* Update the scope
 					} else if (tcRef.map != null && tcRef.state.previousAction !== CANCEL_ADD_TRIP_LOCATION) {
-						/*set marker active 
+						/*set marker active
 						tcRef.map.setMarkerActive(newValue, newValue._lockedLocation);
 					} else if (tcRef.state.previousAction !== CANCEL_ADD_TRIP_LOCATION) {
-						/* Add this trip location 
+						/* Add this trip location
 						newValue.label = newValue.locationName;
 					}
 				}
@@ -428,88 +499,16 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	 */
 	private toggleRouteMapTour() {
 		if (window.matchMedia('(min-width: 480px)').matches) {
-			this._tripDiaryService.toggleRouteMapTour();
+			// 	this._tripDiaryService.toggleRouteMapTour();
 		}
 
 		this.$scope['routeMobileTourActive'] = true;
-		window.dispatchEvent(new CustomEvent('onShowRouteTour'));
+		// window.dispatchEvent(new CustomEvent('onShowRouteTour'));
 	}
 
-	$onInit = () => {
+	public $onInit = (): void => {
 		this.initQuestion(this.questionId);
 	};
-
-	get tripsScope(): ITripsScope {
-		return this.$scope as ITripsScope;
-	}
-
-	private _state: TripsQuestionState;
-
-	get state(): TripsQuestionState {
-		return this.tripsScope.tc.value;
-	}
-
-	private _tripTimeline: TripTimeline;
-
-	public get tripTimeline(): TripTimeline {
-		return this._tripTimeline;
-	}
-
-	public set tripTimeline(value: TripTimeline) {
-		this._tripTimeline = value;
-	}
-
-	private _map: SurveyMapDirective;
-
-	get map(): SurveyMapDirective {
-		return this._map;
-	}
-
-	set map(value: SurveyMapDirective) {
-		this._map = value;
-	}
-
-	private _locationEntry: string;
-
-	get locationEntry(): string {
-		return this._locationEntry;
-	}
-
-	set locationEntry(value: string) {
-		this._locationEntry = value;
-	}
-
-	private _surveyStartTime: moment.Moment;
-
-	get surveyStartTime(): moment.Moment {
-		return this._surveyStartTime;
-	}
-
-	set surveyStartTime(value: moment.Moment) {
-		this._surveyStartTime = value;
-	}
-
-	private _activePageValid: boolean;
-
-	get activePageValid(): boolean {
-		return this._activePageValid;
-	}
-
-	set activePageValid(value: boolean) {
-		this._activePageValid = value;
-	}
-
-	private _rootScope: ng.IScope;
-
-	public get rootScope(): ng.IScope {
-		return this._rootScope;
-	}
-
-	private _routeMap: SurveyMapDirective;
-
-	public get routeMap(): SurveyMapDirective {
-		return this._routeMap;
-	}
 
 	/**
 	 *
@@ -520,18 +519,19 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		this.updateTripRouteModes();
 	}
 
-	isValid(): boolean {
+	public isValid(): boolean {
 		return true;
 	}
 
 	/**
 	 * Updates trip route modes
 	 */
-	public updateTripRouteModes(): void {
+	public updateTripRouteModes(force: boolean = false): void {
 		/* call action to add routes */
 
-		if (this.state.previousAction === UPDATE_STATE) {
-			// return;
+		if (this.state.previousAction === UPDATE_STATE && !this.shouldInit) {
+			this.updateValidationV2();
+			return;
 		}
 
 		//        if(this.state.previousAction == TRIP_LO)
@@ -676,6 +676,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			this._tripDiaryService.routesHidden();
 		}
 
+		this.shouldInit = false;
 		this.updateValidationV2();
 
 		// this._$window.dispatchEvent(new CustomEvent('visibilityScrollCheck'));
@@ -720,11 +721,13 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		}
 	}
 
+
+
 	/**
 	 *
 	 * @param questionID
 	 */
-	public initQuestion(questionID) {
+	public initQuestion(questionID): void {
 		this.initLocationSearchBox();
 
 		this.initStateManagement();
@@ -732,14 +735,36 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		this.initializeSurvey(this.$window['surveyData_' + this.questionId], this.$scope, this.$http);
 
 		this._routesService.savedResponse().subscribe(response => {
-			let state;
-			if (response !== 'none') {
-				state = JSON.parse(response[0].value);
+			let state: TripsQuestionState;
+			console.log(typeof response);
+			console.log(response instanceof Array);
+			if (response !== 'none' && !(response instanceof Array)) {
 
-				console.log(state);
+
+				let t = JSON.parse(response[0].value);
+				if (t.tripsState !== undefined) {
+					state = t.tripsState;
+				}
+
+				// console.log(state); 
 			}
+			else {
+				// its an array
+				// console.log(response);
+				(<any>state) = {
+					activeRouteIndex: 0,
+					_activeRouteIndex: 0,
+					tripRoutes: []
+					// _tripRoutes: []
+				};
+			};
+
+
+
 			this._routesService.listTimelineEntries(this._surveyV2Id, this._respondent).subscribe((entries: Array<any>) => {
 				// find index
+
+				let compareEntries = [];
 
 				let index = entries.findIndex(entry => {
 					return entry.respondent.id === this._respondent.id;
@@ -759,11 +784,16 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 							lat: timelineEntries[0].latitude,
 							lng: timelineEntries[0].longitude
 						},
-						startTime: timelineEntries[0].timeA,
-						endTime: timelineEntries[0].timeB,
+						locationPurpose: timelineEntries[0].purpose,
+						_locationPurpose: timelineEntries[0].purpose,
+						startTime: new Date(timelineEntries[0].timeA),
+						endTime: new Date(timelineEntries[0].timeB),
 						timelineIcon: this.getLocationIcon(timelineEntries[0].purpose)
 					};
+					// _startLocation = startLocation
+					compareEntries.push(startLocation);
 				}
+
 				if (timelineEntries.length >= 2) {
 					endLocation = {
 						_locationName: timelineEntries[timelineEntries.length - 1].name,
@@ -771,10 +801,16 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 							lat: timelineEntries[timelineEntries.length - 1].latitude,
 							lng: timelineEntries[timelineEntries.length - 1].longitude
 						},
-						startTime: timelineEntries[timelineEntries.length - 1].timeA,
-						endTime: timelineEntries[timelineEntries.length - 1].timeB,
+						locationPurpose: timelineEntries[timelineEntries.length - 1].purpose,
+						_locationPurpose: timelineEntries[timelineEntries.length - 1].purpose,
+						startTime: new Date(timelineEntries[timelineEntries.length - 1].timeA),
+						endTime: new Date(timelineEntries[timelineEntries.length - 1].timeB),
 						timelineIcon: this.getLocationIcon(timelineEntries[timelineEntries.length - 1].purpose)
 					};
+				}
+
+				if (timelineEntries.length === 2) {
+					compareEntries.push(endLocation);
 				}
 
 				if (timelineEntries.length >= 3) {
@@ -787,29 +823,130 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 								lat: entry.latitude,
 								lng: entry.longitude
 							},
-							startTime: entry.timeA,
-							endTime: entry.timeB,
+							locationPurpose: entry.purpose,
+							_locationPurpose: entry.purpose,
+							startTime: new Date(entry.timeA),
+							endTime: new Date(entry.timeB),
 							timelineIcon: this.getLocationIcon(entry.purpose)
 						};
 
 						intermediateLocations.push(newEntry);
+						compareEntries.push(newEntry);
 					});
+
+					compareEntries.push(endLocation);
 				}
 
 				if (state === undefined) {
+					// console.log(' undefined ');
 					this.basicState = {
 						startLocation: startLocation,
+						_startLocation: startLocation,
+						_endLocation: endLocation,
+						_tripLocations: intermediateLocations,
 						tripLocations: intermediateLocations,
-
 						endLocation: endLocation,
-						activeRouteIndex: 0
+						activeRouteIndex: 0,
+						_activeRouteIndex: 0,
+						tripRoutes: []
+						// _tripRoutes: []
 					};
+
+					for (let route of response) {
+						(<any>this.basicState).tripRoutes.push(JSON.parse(route.value));
+					}
+
+
+
+					// this.state = this.basicState;
+					this.shouldInit = true;
+					this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
+
+					// this._tripDiaryService.setRouteEditActive(this.basicState['activeRouteIndex']);
+					// this.updateValidationV2();
+
+					if (this.state.activeRouteIndex >= 0) {
+						// settings route edit active
+
+						_.delay(() => {
+							this._tripDiaryService.setRouteEditActive(0);
+						}, 0);
+					}
 				} else {
-					this.basicState = state.tripsState;
+					// compare the routes
+
+
+					if (response !== 'none') {
+						for (let route of response) {
+
+							(<any>state).tripRoutes.push(JSON.parse(route.value));
+						}
+					}
+
+
+
+
+					for (let i = 0; i < state.tripRoutes.length; i++) {
+						let route: TripRoute = state.tripRoutes[i];
+
+						// console.log(i);
+						if (compareEntries.length <= i + 1) {
+							route.tripLegs = [];
+
+							break;
+						}
+
+						if (
+							route._startLocation._latLng.lat !== compareEntries[i].latLng.lat ||
+							route._startLocation._latLng.lng !== compareEntries[i].latLng.lng ||
+							route._endLocation._latLng.lat !== compareEntries[i + 1].latLng.lat ||
+							route._endLocation._latLng.lng !== compareEntries[i + 1].latLng.lng
+						) {
+							// let routeCrate = TripRoute.create(compareEntries[i], compareEntries[i + 1]);
+							state.tripRoutes[i] = TripRoute.create(compareEntries[i], compareEntries[i + 1]);
+						} else {
+						}
+					}
+
+					// purge extra routes
+					if (compareEntries.length <= state.tripRoutes.length) {
+						state.tripRoutes = state.tripRoutes.slice(0, compareEntries.length - 1);
+					}
+
+					if (compareEntries.length > state.tripRoutes.length + 1) {
+						// create routes
+						for (let i = state.tripRoutes.length; i < compareEntries.length - 1; i++) {
+							state.tripRoutes[i] = TripRoute.create(compareEntries[i], compareEntries[i + 1]);
+						}
+					}
+
+					this.basicState = {
+						startLocation: startLocation,
+						_startLocation: startLocation,
+						_endLocation: endLocation,
+						_tripLocations: intermediateLocations,
+						tripLocations: intermediateLocations,
+						endLocation: endLocation,
+						activeRouteIndex: 0,
+						tripRoutes: state.tripRoutes,
+						_tripRoutes: state.tripRoutes
+					};
+
+					this.shouldInit = false;
+					// this.basicState = state;
+					// this.tripsScope.tc.value = state;
+					// console.lo
+					// this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
+					// this.updateState(<any>this.basicState);
+					this._tripDiaryService.setRouteEditActive(this.basicState['activeRouteIndex']);
+
+					this.updateValidationV2();
+					// this.updateTripRouteModes();
 				}
 
 				this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
-				this.updateTripRouteModes();
+
+				// this.updateTripRouteModes();
 			});
 		});
 
@@ -850,12 +987,12 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		});
 
 		/* Update the state of the question */
-		this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
+		// this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
 
 		// let titleElement = $('#div_id_' + this.questionId).closest('.question-item');
 		// titleElement = titleElement.find('.question-container').first();
 
-		this.updateTripRouteModes();
+		// this.updateTripRouteModes();
 
 		/* _.delay(() => {
             this._$translate('DID_MAKE_TRIPS', this.translateData)
@@ -891,37 +1028,37 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		return;
 
 		/*
-        let selfRefTc: TripDiaryController = selfRef as TripDiaryController;
-
-        if (page == -1) {
-            if (selfRefTc.state.timelineView) {
-                selfRefTc.tripsScope.tc.defaultView();
-            }
-
-            if (selfRefTc.state.routeModeView) {
-                selfRefTc.tripsScope.tc.tripsTaken();
-            }
-        } else if (page == 1) {
-            if (selfRefTc.state.initialView) {
-                if (selfRefTc.state.madeTrips.value) {
-                    selfRefTc.tripsScope.tc.tripsTaken();
-                } else {
-                    selfRefTc.tripsScope.tc.noTripsTaken();
-                }
-
-                return false;
-            } else if (selfRefTc.state.timelineView) {
-                selfRefTc.tripsScope.tc.tripRouteModeView();
-                return false;
-            }
-
-            if (selfRefTc.state.noTripsSelectView) {
-                if (selfRefTc.activePageValid) {
-                    return true;
-                }
-            }
-        }
-  */
+		let selfRefTc: TripDiaryController = selfRef as TripDiaryController;
+		
+		if (page == -1) {
+			if (selfRefTc.state.timelineView) {
+				selfRefTc.tripsScope.tc.defaultView();
+			}
+		
+			if (selfRefTc.state.routeModeView) {
+				selfRefTc.tripsScope.tc.tripsTaken();
+			}
+		} else if (page == 1) {
+			if (selfRefTc.state.initialView) {
+				if (selfRefTc.state.madeTrips.value) {
+					selfRefTc.tripsScope.tc.tripsTaken();
+				} else {
+					selfRefTc.tripsScope.tc.noTripsTaken();
+				}
+		
+				return false;
+			} else if (selfRefTc.state.timelineView) {
+				selfRefTc.tripsScope.tc.tripRouteModeView();
+				return false;
+			}
+		
+			if (selfRefTc.state.noTripsSelectView) {
+				if (selfRefTc.activePageValid) {
+					return true;
+				}
+			}
+		}
+	*/
 		return false;
 	}
 
@@ -1006,22 +1143,22 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	/** Setup watcher for tripLocations ( start and end too ) */
 	private initializeLocationWatcher() {
 		let tcRef = this;
-		/*this.$scope.$watchCollection('tc.value.tripLocations', function(oldValue, newValue) {
-			 update trip route 
+		this.$scope.$watchCollection('tc.value.tripLocations', function (oldValue, newValue) {
+			// update trip route
 			tcRef.updateTripRouteModes();
 
-			/* re order locations
-		});*/
-		/*
-		this.$scope.$watch('tc.value.startLocation', function(oldValue: TripLocation, newValue: TripLocation) {
-			 update trip route 
+			//	 re order locations
+		});
+
+		this.$scope.$watch('tc.value.startLocation', function (oldValue: TripLocation, newValue: TripLocation) {
+			// update trip route
 			tcRef.updateTripRouteModes();
 		});
 
-		this.$scope.$watch('tc.value.endLocation', function(oldValue: TripLocation, newValue: TripLocation) {
-			/* update trip route
+		this.$scope.$watch('tc.value.endLocation', function (oldValue: TripLocation, newValue: TripLocation) {
+			// update trip route
 			tcRef.updateTripRouteModes();
-		}); */
+		});
 	}
 
 	/**
@@ -1251,24 +1388,24 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		}
 
 		/*if (this.state.startLocation != null) {
-
-            if (!isNullOrUndefined(startTimeAdjust)) {
-                if (startTimeAdjust <= this.state.startLocation.endTime && active.id != this.state.startLocation.id) {
-
-                    //console.log(startTimeAdjust);
-                    //console.log(this.state.startLocation.endTime);
-                    // console.log("overlapping times");
-                    console.log("ov2");
-                    this._$scope['tripsLocationForm'].$error['overlappingTimes'] = true;
-
-                    error = true;
-                    //return false;
-                }
-            }
-            else {
-
-            }
-        }  */
+			
+			if (!isNullOrUndefined(startTimeAdjust)) {
+				if (startTimeAdjust <= this.state.startLocation.endTime && active.id != this.state.startLocation.id) {
+			
+					//console.log(startTimeAdjust);
+					//console.log(this.state.startLocation.endTime);
+					// console.log("overlapping times");
+					console.log("ov2");
+					this._$scope['tripsLocationForm'].$error['overlappingTimes'] = true;
+			
+					error = true;
+					//return false;
+				}
+			}
+			else {
+			
+			}
+		}  */
 
 		let countEmbedded = this.countEmbedded(active, compareList);
 
@@ -1437,10 +1574,9 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			state.previousAction === SET_TRIP_LEG_DATA ||
 			state.previousAction === SET_MODE_SWITCH_DATA ||
 			state.previousAction === SET_TRIP_LEG_EDIT_COMPLETE ||
-			state.previousAction === SET_ROUTE_EDIT_COMPLETE ||
 			state.previousAction === SET_ROUTE_EDIT_COMPLETE
 		) {
-			this._routesService.saveRoutes(tripsState);
+			this._routesService.saveRoutes(state.tripRoutes);
 		}
 
 		if (
@@ -1562,28 +1698,28 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	 */
 	private initLocationSearchBox() {
 		/* this._locationSearchBoxInput = $('#trip-diary-' + this.questionId)
-            .find('.location-input-map')[0] as HTMLInputElement;
-
-
-        //console.log(this._locationSearchBoxInput);
-        var searchOptions = {
-            bounds: this.torontoBounds
-        };
-
-        let searchBox = new SearchBox(this._locationSearchBoxInput, searchOptions);
-
-
-        let updateActiveLocation = this.updateActiveLocationPlaceResult;
-        let tcRef: TripDiaryController = this;
-
-
-        searchBox.addListener('places_changed', () => {
-            let places: PlaceResult[] = searchBox.getPlaces();
-
-            updateActiveLocation(tcRef, places[0]);
-
-
-        }); */
+			.find('.location-input-map')[0] as HTMLInputElement;
+		
+		
+		//console.log(this._locationSearchBoxInput);
+		var searchOptions = {
+			bounds: this.torontoBounds
+		};
+		
+		let searchBox = new SearchBox(this._locationSearchBoxInput, searchOptions);
+		
+		
+		let updateActiveLocation = this.updateActiveLocationPlaceResult;
+		let tcRef: TripDiaryController = this;
+		
+		
+		searchBox.addListener('places_changed', () => {
+			let places: PlaceResult[] = searchBox.getPlaces();
+		
+			updateActiveLocation(tcRef, places[0]);
+		
+		
+		}); */
 	}
 
 	/**
@@ -1594,4 +1730,4 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	}
 }
 
-function resetTripQuestion() {}
+function resetTripQuestion() { }

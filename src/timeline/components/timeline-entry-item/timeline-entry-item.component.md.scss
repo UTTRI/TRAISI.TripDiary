@@ -1,0 +1,9 @@
+@media #{$md-down} {
+	.timeline-entry-model-address {
+		text-align: center;
+		word-break: break-word;
+		width: auto;
+		max-height: 22px;
+		overflow: hidden;
+	}
+}

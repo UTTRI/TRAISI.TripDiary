@@ -2,7 +2,10 @@
 	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
-				<div *ngIf="stepOne"><h4 class="modal-title pull-left">Q1: Where is this new location?</h4></div>
+				<div *ngIf="stepOne">
+					<h4 *ngIf="!isEdit" class="modal-title pull-left">Q1: Where is this new location?</h4>
+					<h4 *ngIf="isEdit" class="modal-title pull-left">Q1: Where is this location?</h4>
+				</div>
 				<div *ngIf="stepTwo"><h4 class="modal-title pull-left">Q2: Give this location a name</h4></div>
 				<div *ngIf="stepThree"><h4 class="modal-title pull-left">Q3: What is the purpose for travelling to this location?</h4></div>
 				<button type="button" class="close pull-right" aria-label="Close" (click)="newEntryModal.hide()">

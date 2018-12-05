@@ -1,5 +1,16 @@
-timeline-entry-item {
+.timeline-btn-inner {
 
+	button {
+		border-color: #b9d0d8;
+		border-width: 3px;
+	}
+}
+
+
+.timeline-btn-outer
+{
+	display: flex;
+    justify-content: center;
 }
 
 timeline-entry-item.summary-item
@@ -18,7 +29,7 @@ timeline-entry-item.summary-item
 .timeline-entry-model-address {
 	text-align: center;
 	word-break: break-word;
-    width: 150px;
+    width: auto;
     max-height: 22px;
     overflow: hidden;
 }
@@ -50,3 +61,4 @@ timeline-entry-item.summary-item
 	position: relative;
 }
 
+@import 'timeline-entry-item.component.md.scss'; 

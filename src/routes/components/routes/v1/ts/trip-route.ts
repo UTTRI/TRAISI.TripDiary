@@ -30,7 +30,7 @@ export class TripRoute {
 	}
 
 	@Type(() => TripLocation)
-	private _startLocation: TripLocation;
+	public _startLocation: TripLocation;
 
 	get startLocation(): TripLocation {
 		return this._startLocation;
@@ -41,7 +41,7 @@ export class TripRoute {
 	}
 
 	@Type(() => TripLocation)
-	private _endLocation: TripLocation;
+	public _endLocation: TripLocation;
 
 	get endLocation(): TripLocation {
 		return this._endLocation;
@@ -100,8 +100,10 @@ export class TripRoute {
 		tripRoute.tripLegs[0]._isComplete = false;
 
 		tripRoute.tripLegs[0].waypoints = [];
-		tripRoute.tripLegs[0].waypoints[0] = startLocation.latLng;
-		tripRoute.tripLegs[0].waypoints[1] = endLocation.latLng;
+		// console.log(startLocation);
+		// console.log(endLocation);
+		tripRoute.tripLegs[0].waypoints[0] = new L.LatLng(startLocation.latLng.lat, startLocation.latLng.lng);
+		tripRoute.tripLegs[0].waypoints[1] = new L.LatLng(endLocation.latLng.lat, endLocation.latLng.lng);
 
 		tripRoute.tripLegs[0]._mode = config.modes['transit'];
 

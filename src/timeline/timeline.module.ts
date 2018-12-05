@@ -19,6 +19,7 @@ import { TimelineNewEntryComponent } from './components/timeline-new-entry/timel
 import { TimelineSummaryComponent } from './components/timeline-summary/timeline-summary.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 @NgModule({
 	entryComponents: [
@@ -30,7 +31,7 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 		TimelineEntryItemComponent,
 		TimelineNewEntryComponent,
 		TimelineSummaryComponent,
-		ModalBackdropComponent
+		ModalBackdropComponent,
 	],
 	declarations: [
 		TimelineWedgeComponent,
@@ -40,6 +41,7 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 		TimelineSlotComponent,
 		TimelineNewEntryComponent,
 		TimelineSummaryComponent,
+		SafeHtmlPipe,
 		TimelineEntryItemComponent
 	],
 	exports: [],

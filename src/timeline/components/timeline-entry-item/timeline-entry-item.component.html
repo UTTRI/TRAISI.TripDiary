@@ -1,41 +1,39 @@
 <div class="timeline-entry-item-inner-container">
-	<div class="timeline-entry-model-info">
+	<div class="timeline-entry-model-info" *ngIf="!inShelf">
 		<div class="timeline-entry-model-name">{{ model.name }}</div>
 		<div class="timeline-entry-model-address">{{ model.address }}</div>
 	</div>
 	<div class="btn-group" dropdown [class]="'timeline-draggable'">
-		<div class="timeline-btn-inner">
-			<button
-				type="button"
-				dropdownToggle
-				class="btn btn-primary btn-circle btn-xl"
-				tooltip="{{model.purpose}}"
-				placement="bottom"
-				*ngIf="!inShelf"
-			>
-				<i [ngClass]="icon"></i>
-				<!-- <fa-icon [icon]="icon"></fa-icon> -->
-			</button>
-			<button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl" placement="bottom" *ngIf="inShelf">
-				<i [ngClass]="icon"></i>
-				<!-- <fa-icon [icon]="icon"></fa-icon> -->
-			</button>
-			<div *ngIf="!inShelf">
-				<ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-					<li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="edit()">Edit</a></li>
-					<li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="delete()">Delete</a></li>
-				</ul>
-			</div>
-			<div *ngIf="inShelf">
-				<ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-					<li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="edit()">Edit</a></li>
-					<li *ngIf="!model.pipedLocation" role="menuitem">
-						<a class="dropdown-item" href="javascript:undefined" (click)="delete()">Delete</a>
-					</li>
-				</ul>
+		<div class="timeline-btn-outer">
+			<div class="timeline-btn-inner">
+				<button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl" tooltip="{{model.purpose}}"
+				 placement="bottom" *ngIf="!inShelf">
+					<i [ngClass]="icon"></i>
+					<!-- <fa-icon [icon]="icon"></fa-icon> -->
+				</button>
+				<button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl" placement="bottom" *ngIf="inShelf">
+					<i [ngClass]="icon"></i>
+					<!-- <fa-icon [icon]="icon"></fa-icon> -->
+				</button>
+				<div *ngIf="!inShelf && !inSummaryDisplay">
+					<ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+						<li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="edit()">Edit</a></li>
+						<li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="delete()">Delete</a></li>
+					</ul>
+				</div>
+				<div *ngIf="inShelf">
+
+					<ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+						<li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="edit()">Edit</a></li>
+						<li *ngIf="!model.pipedLocation" role="menuitem">
+							<a class="dropdown-item" href="javascript:undefined" (click)="delete()">Delete</a>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
+
 </div>
 <ng-template #editTimelineEntryTemplate>
 	<div class="modal-header">
@@ -49,39 +47,21 @@
 			<div class="row">
 				<div class="col-4"><label for="edit-timeline-address-input">Address</label></div>
 				<div class="col-4">
-					<input
-						type="text"
-						id="edit-timeline-address-input"
-						class="form-control"
-						placeholder="Enter value"
-						[(ngModel)]="editModel.address"
-					/>
+					<input type="text" id="edit-timeline-address-input" class="form-control" placeholder="Enter value" [(ngModel)]="editModel.address" />
 				</div>
 				<div class="col-4"><button type="button" class="btn btn-primary btn-sm" (click)="editLocation()">Edit</button></div>
 			</div>
 			<div class="row">
 				<div class="col-4"><label for="edit-timeline-name-input">Name</label></div>
 				<div class="col-8">
-					<input
-						type="text"
-						id="edit-timeline-name-input"
-						class="form-control"
-						placeholder="Enter value"
-						[(ngModel)]="editModel.name"
-					/>
+					<input type="text" id="edit-timeline-name-input" class="form-control" placeholder="Enter value" [(ngModel)]="editModel.name" />
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-4"><label for="edit-timeline-purpose-input">Purpose</label></div>
 				<div class="col-8">
-					<input
-						type="text"
-						id="edit-timeline-purpose-input"
-						class="form-control"
-						placeholder="Enter value"
-						[(ngModel)]="editModel.purpose"
-					/>
+					<input type="text" id="edit-timeline-purpose-input" class="form-control" placeholder="Enter value" [(ngModel)]="editModel.purpose" />
 				</div>
 			</div>
 		</div>
@@ -94,5 +74,25 @@
 
 <ng-template #editMapModal>
 	<div class="modal-header">header</div>
-	<ng-template #editMapContainer> <ng-container #container></ng-container> </ng-template>
+	<ng-template #editMapContainer>
+		<ng-container #container></ng-container>
+	</ng-template>
+</ng-template>
+
+<ng-template #confirmPurposeTemplate>
+	<div class="modal-header">
+		<h4 class="modal-title pull-left">Confirm Purpose</h4>
+		<button type="button" class="close pull-right" aria-label="Close" (click)="confirmPurpose()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<div class="form-group custom-control custom-radio">
+			<div *ngFor="let purpose of configuration.purposes">
+				<input type="radio" name="purpose" [id]="purpose.key" [value]="purpose.key" [(ngModel)]="editPurpose" class="custom-control-input" />
+				<label class="custom-control-label" [for]="purpose.key">{{ purpose.label }}</label>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer"><button type="button" class="btn btn-default" (click)="confirmPurpose()">Confirm</button></div>
 </ng-template>

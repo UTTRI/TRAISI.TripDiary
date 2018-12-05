@@ -22,6 +22,7 @@ import {
 import { isNullOrUndefined } from 'util';
 import { TripDiaryController } from './trip-diary-controller';
 import * as _ from 'lodash';
+import SurveyManagerController from '../ts/survey-manager-controller';
 
 declare var displaySnackBar: (string, any, number) => any;
 
@@ -96,8 +97,12 @@ export class TripDiaryRouteModeController {
 			this._tripDiaryService.routesHidden();
 		}
 
+		// console.log("in state subscription");
+
 		if (state.previousAction === SET_TRIP_LEG_DATA && state.switchRouteModeActive === false) {
-			this.toggleMapState(MAP_OVERLAY_STATE.FULL);
+			if (this.$scope['mapOverlayState'] === MAP_OVERLAY_STATE.COLLAPSED) {
+				this.toggleMapState(MAP_OVERLAY_STATE.FULL);
+			}
 
 			this.refreshMap();
 		}
@@ -112,24 +117,67 @@ export class TripDiaryRouteModeController {
 				this.$scope['showSelectModeTourTripText'] = true;
 				this.$scope['tourPassedInitial'] = true;
 				this.$scope['expandPanelText'] = true;
-				// this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+				if ('_tdc' in this.$scope) {
+					this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+				}
 			} else if (state.previousAction === SET_TRIP_MODE && this.$scope['tourPassedInitial']) {
 				this.$scope['showSelectModeTourTripText'] = false;
-				// this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+				if ('_tdc' in this.$scope) {
+					this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+				}
 				this.$scope['showSelectRouteTourTripText'] = true;
 			} else if (state.previousAction === SET_TRIP_LEG_EDIT_COMPLETE) {
 				this.$scope['showSelectModeTourTripText'] = false;
 				this.$scope['showSelectRouteTourTripText'] = false;
 				this.$scope['showMultipleTourTripText'] = false;
-				// this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+				if ('_tdc' in this.$scope) {
+					this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+				}
 			} else if (state.previousAction === SET_TRIP_LEG_DATA) {
 				if (!isNullOrUndefined(this.$scope['selectOnce'])) {
-					this.$scope['showMultipleTourTripText'] = true;
+					// this.$scope['showMultipleTourTripText'] = true;
 					this.$scope['showSelectModeTourTripText'] = false;
 					this.$scope['showSelectRouteTourTripText'] = false;
-					// this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+					if ('_tdc' in this.$scope) {
+						this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+					}
 				} else {
 					this.$scope['selectOnce'] = true;
+				}
+			}
+		}
+
+		if (state.previousAction === SET_TRIP_LEG_EDIT_COMPLETE) {
+			this.$scope['foundRoutes'] = [];
+
+			this._$timeout(() => {
+				if (this._tripDiaryService.getActiveTripLeg()._isComplete) {
+					if (
+						this._tripDiaryService.getActiveTripRoute().tripLegs.length - 1 >
+						this._tripDiaryService.getActiveTripRoute().activeTripLegIndex
+					) {
+						// if (!this.shouldCollectRouteByModeName(this._tripDiaryService.getActiveTripLeg().mode.modeName)) {
+
+						if (
+							isNullOrUndefined(
+								this._tripDiaryService.getActiveTripRoute().tripLegs[
+									this._tripDiaryService.getActiveTripRoute().activeTripLegIndex + 1
+								]._mode
+							)
+						) {
+							this._tripDiaryService.setTripLegIncomplete(this._tripDiaryService.getActiveTripRoute().activeTripLegIndex + 1);
+						}
+						//  }
+					}
+				}
+			});
+		}
+
+		// remove any found routes if the mode does not support it
+		if (!isNullOrUndefined(this._tripDiaryService.getActiveTripLeg())) {
+			if (!isNullOrUndefined(this._tripDiaryService.getActiveTripLeg()._mode)) {
+				if (!this.shouldCollectRouteByModeName(this._tripDiaryService.getActiveTripLeg()._mode.modeName)) {
+					this.$scope['foundRoutes'] = [];
 				}
 			}
 		}
@@ -204,34 +252,6 @@ export class TripDiaryRouteModeController {
 
 	/**
 	 *
-	 */
-	private refreshMap() {
-		let mapElementHeight = this._element.find('survey-map-router')[0].offsetHeight;
-		_.delay(() => {
-			this.$scope['_tdc']['_routeMap'].invalidateSize();
-
-			if (this.$scope['routeToggle']) {
-				if (window.matchMedia('(max-width: 480px)').matches) {
-					this.$scope['_tdc']['_routeMap'].fitTripRouteBounds(this._tripDiaryService.getActiveTripRoute(), {
-						paddingTopLeft: [15, 15],
-						paddingBottomRight: [15, mapElementHeight / 2]
-					});
-				}
-			} else {
-				if (window.matchMedia('(max-width: 480px)').matches) {
-					if (this.$scope['mapOverlayState'] !== MAP_OVERLAY_STATE.FULL) {
-						this.$scope['_tdc']['_routeMap'].fitTripRouteBounds(this._tripDiaryService.getActiveTripRoute(), {
-							paddingTopLeft: [10, 10],
-							paddingBottomRight: [0, 100]
-						});
-					}
-				}
-			}
-		}, 300);
-	}
-
-	/**
-	 *
 	 * @param index
 	 */
 	public setTripLegIncomplete(index) {
@@ -292,7 +312,7 @@ export class TripDiaryRouteModeController {
 			})
 
 			.then(
-				(result) => {
+				result => {
 					// console.log("callin back");
 					callback(result);
 				},
@@ -306,7 +326,7 @@ export class TripDiaryRouteModeController {
 	 *
 	 * @param {boolean} value
 	 */
-	private setSwitchRouteModeStateClick = (v) => {
+	private setSwitchRouteModeStateClick = v => {
 		if (v) {
 			$('path.leaflet-interactive').css('pointer-events', 'none');
 		} else {
@@ -318,10 +338,16 @@ export class TripDiaryRouteModeController {
 		this.$scope['showMultipleTourTripTextPerm'] = false;
 		this.$scope['showSelectModeTourTripText'] = false;
 		this.$scope['showSelectRouteTourTripText'] = false;
+
 		this._tripDiaryService.setSwitchRouteModeState(v);
+
+		if (this.$scope.$root.$$phase !== '$apply' && this.$scope.$root.$$phase !== '$digest') {
+			this.$scope.$apply();
+		}
 
 		// this.toggleRouteMap(true);
 		this.toggleMapState(MAP_OVERLAY_STATE.COLLAPSED);
+		this.$scope['routeToggle'] = false;
 		this.refreshMap();
 	};
 
@@ -358,7 +384,7 @@ export class TripDiaryRouteModeController {
 						modeConfig.customRoute.dataInputs,
 						modeConfig.customRoute.dialogTitle,
 						tripLeg.data,
-						(result) => {
+						result => {
 							this._tripDiaryService.addTripLegExtraData(
 								this._tripDiaryService.state.activeRouteIndex,
 								this._tripDiaryService.getActiveTripRoute()._activeTripLegIndex,
@@ -398,9 +424,9 @@ export class TripDiaryRouteModeController {
 	}
 
 	/**
-	 *
-	 * @param {TripLeg} tripLeg
-	 * @returns {boolean}
+	 * Should show alternative summary
+	 * @param tripLeg
+	 * @returns true if show alternative summary
 	 */
 	public shouldShowAlternativeSummary(tripLeg: TripLeg): boolean {
 		if (isNullOrUndefined(tripLeg.mode)) {
@@ -434,7 +460,10 @@ export class TripDiaryRouteModeController {
 	 */
 	public $onInit() {
 		// this._tripDiaryService.tripLegShown();
+		let smc: SurveyManagerController = window['smc'];
 
+		// mc.addOnNext(this.onNext);
+		// smc.addOnPrevious(this.onPrevious);
 		this.$scope['tourPassedInitial'] = false;
 		this.$scope['showMultipleTourTripText'] = false;
 		this.$scope['showSelectModeTourTripText'] = false;
@@ -447,7 +476,7 @@ export class TripDiaryRouteModeController {
 	 * Hook into the SMC's onNext callback;
 	 * @returns {boolean}
 	 */
-	private onNext: (activePage) => boolean = (activePage) => {
+	private onNext: (activePage) => boolean = activePage => {
 		if (!isNullOrUndefined(activePage.parentQuestion)) {
 			if (activePage.parentQuestion.id !== this.questionId) {
 				return true;
@@ -509,7 +538,7 @@ export class TripDiaryRouteModeController {
 	 * @param activePage
 	 * @returns {boolean}
 	 */
-	private onPrevious: (activePage) => boolean = (activePage) => {
+	private onPrevious: (activePage) => boolean = activePage => {
 		if (!isNullOrUndefined(activePage.parentQuestion)) {
 			if (activePage.parentQuestion.id !== this.questionId) {
 				return true;
@@ -547,5 +576,162 @@ export class TripDiaryRouteModeController {
 		this.$scope['showSelectModeTourTripText'] = false;
 		this.$scope['showSelectRouteTourTripText'] = false;
 		this.$scope['_tdc']['$scope']['routeMobileTourActive'] = false;
+	}
+
+	/**
+	 *
+	 * @param evt
+	 * @param {IModeConfig} mode
+	 * @param $mdMenu
+	 */
+	private selectMode(evt, mode: IModeConfig, $mdMenu) {
+		let modePanel = this._element.find('.mode-button-panel');
+
+		if (modePanel.length > 0) {
+			let event = new CustomEvent('selectmode');
+			if (evt != null) {
+				let showedDialog: boolean = false;
+				if (mode.dataInputs !== undefined) {
+					if (mode.dataInputs.length > 0) {
+						// _.delay(() => {
+						showedDialog = true;
+
+						this.showDialog(
+							evt,
+							mode,
+							mode.dataInputs,
+							mode.dialogTitle,
+							this._tripDiaryService.getActiveTripLeg().data,
+							result => {
+								/* ask for passengers */
+								modePanel[0].dispatchEvent(event);
+								this._tripDiaryService.setTripMode(
+									mode['name'],
+									mode['category'],
+									mode.allowAddWaypoints,
+									this.shouldCollectRoute(mode) === true ? false : true
+								);
+								this._tripDiaryService.addTripLegExtraData(
+									this._tripDiaryService.state.activeRouteIndex,
+									this._tripDiaryService.getActiveTripRoute()._activeTripLegIndex,
+									result
+								);
+								this.toggleRouteMap(false);
+
+								if (!this.shouldCollectRoute(mode)) {
+									this._tripDiaryService.tripLegHidden();
+									this._tripDiaryService.setTripLegEditComplete(
+										this._tripDiaryService.state.activeRouteIndex,
+										this._tripDiaryService.getActiveTripRoute().activeTripLegIndex
+									);
+								} else {
+								}
+							}
+						);
+						// }, 100);
+					} else {
+						modePanel[0].dispatchEvent(event);
+					}
+				}
+
+				if (!showedDialog) {
+					this._tripDiaryService.setTripMode(
+						mode['name'],
+						mode['category'],
+						mode.allowAddWaypoints,
+						this.shouldCollectRoute(mode) === true ? false : true
+					);
+					this.toggleRouteMap(false);
+
+					// determine if should auto save
+					if (!this.shouldCollectRoute(mode)) {
+						this._tripDiaryService.tripLegHidden();
+						this._tripDiaryService.setTripLegEditComplete(
+							this._tripDiaryService.state.activeRouteIndex,
+							this._tripDiaryService.getActiveTripRoute().activeTripLegIndex
+						);
+					}
+
+					this._$timeout(() => {
+						modePanel[0].dispatchEvent(event);
+					});
+				}
+			}
+		}
+	}
+
+	/**
+	 *
+	 */
+	private refreshMap() {
+		let mapElementHeight = this._element.find('survey-map-router')[0].offsetHeight;
+		_.delay(() => {
+			this.$scope['_tdc']['_routeMap'].invalidateSize();
+
+			// if (this.$scope['routeToggle']) {
+			if (window.matchMedia('(max-width: 480px)').matches) {
+				let mapState = this.$scope;
+				if (this.$scope['mapOverlayState'] !== MAP_OVERLAY_STATE.FULL) {
+					this.$scope['_tdc']['_routeMap'].fitTripRouteBounds(this._tripDiaryService.getActiveTripRoute(), {
+						paddingTopLeft: [15, 15],
+						paddingBottomRight: [15, mapElementHeight / 3]
+					});
+				} else {
+					this.$scope['_tdc']['_routeMap'].fitTripRouteBounds(this._tripDiaryService.getActiveTripRoute(), {
+						paddingTopLeft: [10, mapElementHeight / 2],
+						paddingBottomRight: [0, 0]
+					});
+				}
+			}
+			/*}
+
+            else {
+                if (window.matchMedia('(max-width: 480px)').matches) {
+                    if (this.$scope['mapOverlayState'] != MAP_OVERLAY_STATE.FULL) {
+                        this.$scope['_tdc']['_routeMap'].fitTripRouteBounds(this._tripDiaryService.getActiveTripRoute(), {
+                            paddingTopLeft: [10, 100],
+                            paddingBottomRight: [0, 0]
+                        });
+                    }
+                }
+
+            }*/
+		}, 300);
+	}
+
+	/**
+	 *
+	 * @returns {boolean}
+	 */
+	private shouldShowAddTravelMode(): boolean {
+		if (isNullOrUndefined(_.last(this._tripDiaryService.getActiveTripRoute()))) {
+			return false;
+		}
+
+		if (isNullOrUndefined(_.last(this._tripDiaryService.getActiveTripRoute().tripLegs).mode)) {
+			return false;
+		} else if (!this.shouldCollectRouteByModeName(_.last(this._tripDiaryService.getActiveTripRoute().tripLegs).mode.modeName)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns whether or not the selected route should auto save or let the user
+	 * auto collect route
+	 * @param {IModeConfig} tripMode
+	 * @returns {boolean}
+	 */
+	private shouldCollectRoute(tripMode: IModeConfig): boolean {
+		if (isNullOrUndefined(tripMode)) {
+			return false;
+		} else {
+			return !tripMode.autoSaveRoute;
+		}
+	}
+
+	private shouldCollectRouteByModeName(tripModeName: string): boolean {
+		return this.shouldCollectRoute(this._tripDiaryService.getModeConfig(tripModeName));
 	}
 }

@@ -59,6 +59,12 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	@ViewChild('timelineDock')
 	public timelineDock: TimelineDockComponent;
 
+	@ViewChild('popover')
+	public popover: PopoverDirective;
+
+	@ViewChild('duplicateLocationPopTemplate')
+	public confirmPurposeTemplate: TemplateRef<any>;
+
 	public isStep1: boolean = false;
 
 	public isStep2: boolean = false;
@@ -134,7 +140,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		this.savedResponse.subscribe(this.onSavedResponseData);
 	}
 
-	public saveNewLocation(): void {}
+	public saveNewLocation(): void { }
 
 	/**
 	 *
@@ -156,7 +162,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * @param type
 	 * @param $event
 	 */
-	public handler(type: string, $event: ModalDirective) {}
+	public handler(type: string, $event: ModalDirective) { }
 
 	/**
 	 *
@@ -170,7 +176,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	/**
 	 *
 	 */
-	public ngAfterViewChecked(): void {}
+	public ngAfterViewChecked(): void { }
 
 	/**
 	 * Navigates internal next
@@ -183,7 +189,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this.isStep1 = false;
 			this.isStep2 = true;
 			this.saveCurrentResponseState();
-			this.validationState.emit(ResponseValidationState.TOUCHED); 
+			this.validationState.emit(ResponseValidationState.TOUCHED);
 
 			return false;
 		}
@@ -214,8 +220,18 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 */
 	public navigateInternalPrevious(): boolean {
 		if (this.isStep2) {
+			this._timelineService.updateLocationsValidation();
 			this.isStep2 = false;
 			this.isStep1 = true;
+			if (this._timelineService.isTimelineStatevalid && !this._timelineService.hasAdjacentIdenticalLocations) {
+				this.validationState.emit(ResponseValidationState.VALID);
+			} else {
+				// console.log('invalid');
+				this.validationState.emit(ResponseValidationState.INVALID);
+			}
+
+			// console.log('here');
+
 			return false;
 		} else {
 			return true;
@@ -239,7 +255,11 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			// this.isStep2 = true;
 		}
 	}
-	public onQuestionHidden(): void {}
+	public onQuestionHidden(): void { }
+
+	public closePopover(): void {
+		this.popover.hide();
+	}
 
 	private onSavedResponseData: (response: 'none' | ResponseData<ResponseTypes.Timeline>[]) => void = (
 		response: 'none' | ResponseData<ResponseTypes.Timeline>[]
@@ -313,7 +333,12 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this._timelineService.updateLocationsTimeValidation();
 
 			if (this.isStep1) {
-				if (this._timelineService.isTimelineStatevalid) {
+				if (this._timelineService.hasAdjacentIdenticalLocations) {
+					this.popover.show();
+				} else {
+					this.popover.hide();
+				}
+				if (this._timelineService.isTimelineStatevalid && !this._timelineService.hasAdjacentIdenticalLocations) {
 					this.validationState.emit(ResponseValidationState.VALID);
 				} else {
 					this.validationState.emit(ResponseValidationState.INVALID);
@@ -323,6 +348,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 					this.validationState.emit(ResponseValidationState.VALID);
 				}
 			} else if (!this._timelineService.isTimelineTimeStatevalid) {
+				console.log('sending invalid here ');
 				this.validationState.emit(ResponseValidationState.INVALID);
 			}
 		});

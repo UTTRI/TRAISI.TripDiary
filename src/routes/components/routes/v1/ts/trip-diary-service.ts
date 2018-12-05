@@ -1,4 +1,3 @@
-// import {INgRedux} from "ng-redux";
 import * as TripsActions from './trips-actions';
 import { TripsQuestionState } from './trips-question-state';
 import { TripRoute } from './trip-route';
@@ -8,6 +7,7 @@ import { TripDiary } from './trips-diary';
 import { TimelineIcon, TripLocation, TripLocationType } from './trip-location';
 import { config } from './config';
 
+import { Dictionary } from 'lodash';
 import { isNullOrUndefined } from 'util';
 import { IModeConfig } from '../shared/survey-map-config';
 import { ISurveyMapRoute } from '../shared/survey-map-route';
@@ -20,7 +20,6 @@ import { ISurveyLocation } from '../shared/services/survey-location';
 export class TripDiaryService {
 	static instanceList = {};
 	public readonly state: TripsQuestionState;
-
 	defaultView: () => any;
 	tripsTaken: () => any;
 	noTripsTaken: () => any;
@@ -31,21 +30,26 @@ export class TripDiaryService {
 	setRouteEditIncomplete: (index: number) => void;
 	updateState: (state: TripsQuestionState) => any;
 	updateTripRoutes: (routes: TripRoute[]) => any;
-	setTripMode: (mode: string, category: string, waypoints: boolean) => any;
+	setTripMode: (mode: string, category: string, waypoints: boolean, clearPrevious?: boolean) => any;
 	setTripLegData: (coordinates: L.LatLng[], indices: number[], routeName: string, routeIndex: number, instructions: any) => any;
 	setSwitchRouteModeState: (active: boolean) => any;
 	/* The following are inluced for auto-completion only, ngRedux connect binds action methods */
-	setModeSwitchData: () => any;
+	setModeSwitchData: (autosave: boolean, appendAfterIndex: number) => any;
 	setTripLegActive: (index: number) => any;
 	removeTripLeg: (index: number) => any;
 	addTripLocationData: () => any;
 	setUnknownRoute: (description: string, setComplete: boolean) => any;
 	setTripLegIncomplete: (index: number) => any;
-	removeModeSwitch: (routeIndex: number, legIndex: number) => any;
+	removeModeSwitch: (routeIndex: number, legIndex: number, changeActiveTripLeg?: boolean) => any;
 	setTriplegWaypoints: (tripRouteIndex: number, tripLegIndex: number, waypoints: L.LatLng[]) => any;
 	setTripLegEditComplete: (tripRouteIndex: number, tripLegIndex: number) => any;
 	addTripLegExtraData: (tripRouteIndex: number, tripLegIndex: number, data: { [v: string]: string }) => any;
 	addTripLocation: (locationType: TripLocationType, location?: ISurveyLocation) => any;
+	moveTripLocationIndex: (fromIndex: number, toIndex: number) => any;
+	private _renderCallbacks = [];
+
+	private _autoRoute: boolean = true;
+	private _isAutoFitBounds = true;
 	private _scrollVisibleComponents: { [name: string]: boolean } = {};
 
 	/**
@@ -60,13 +64,12 @@ export class TripDiaryService {
 	}
 
 	static Factory() {
-		let service = ($ngRedux) => {
+		let service = $ngRedux => {
 			return new TripDiaryService($ngRedux);
 		};
 
 		return service;
 	}
-
 	/**
 	 *
 	 * @param {string} modeName
@@ -75,7 +78,7 @@ export class TripDiaryService {
 	private getModeColour = (modeName: string) => {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
-				if (subMode.name == modeName) {
+				if (subMode.name === modeName) {
 					return Color(subMode.colour).hex();
 				}
 			}
@@ -89,7 +92,7 @@ export class TripDiaryService {
 	private getDarkModeColourString = (modeName: string) => {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
-				if (subMode.name == modeName) {
+				if (subMode.name === modeName) {
 					return Color(subMode.colour)
 						.darken(0.3)
 						.hex();
@@ -97,7 +100,6 @@ export class TripDiaryService {
 			}
 		}
 	};
-	private _renderCallbacks = [];
 
 	/**
 	 * Creates an instance of trip diary service.
@@ -116,8 +118,6 @@ export class TripDiaryService {
 		this._activeRouteChangedCallbackList = [];
 	}
 
-	private _isAutoFitBounds = true;
-
 	get isAutoFitBounds(): boolean {
 		return this._isAutoFitBounds;
 	}
@@ -125,8 +125,6 @@ export class TripDiaryService {
 	set isAutoFitBounds(value: boolean) {
 		this._isAutoFitBounds = value;
 	}
-
-	private _autoRoute: boolean = true;
 
 	get autoRoute(): boolean {
 		return this._autoRoute;
@@ -137,32 +135,32 @@ export class TripDiaryService {
 	}
 
 	public getTimelineIcon(value: string) {
-		if (value.toUpperCase() == 'SHOPPING') {
+		if (value.toUpperCase() === 'SHOPPING') {
 			// this.markerType = MarkerType.Shopping;
 			return TimelineIcon.Shopping;
-		} else if (value.toUpperCase() == 'DAYCARE') {
+		} else if (value.toUpperCase() === 'DAYCARE') {
 			// this.markerType = MarkerType.Daycare;
 			return TimelineIcon.Daycare;
-		} else if (value.toUpperCase() == 'FACILITATE PASSENGER') {
+		} else if (value.toUpperCase() === 'FACILITATE PASSENGER') {
 			// this.markerType = MarkerType.Passenger;
 			return TimelineIcon.Passenger;
-		} else if (value.toUpperCase() == 'OTHER') {
+		} else if (value.toUpperCase() === 'OTHER') {
 			// this.markerType = MarkerType.Other;
 			return TimelineIcon.Other;
-		} else if (value.toUpperCase() == 'HOME') {
+		} else if (value.toUpperCase() === 'HOME') {
 			// this.markerType = MarkerType.Home;
 			return TimelineIcon.Home;
-		} else if (value.toUpperCase() == 'WORK') {
-			//this.markerType = MarkerType.Work;
+		} else if (value.toUpperCase() === 'WORK') {
+			// this.markerType = MarkerType.Work;
 			return TimelineIcon.Work;
-		} else if (value.toUpperCase() == 'SCHOOL') {
-			//this.markerType = MarkerType.School;
+		} else if (value.toUpperCase() === 'SCHOOL') {
+			// this.markerType = MarkerType.School;
 			return TimelineIcon.School;
-		} else if (value.toUpperCase() == 'OTHER') {
-			//this.markerType = MarkerType.Other;
+		} else if (value.toUpperCase() === 'OTHER') {
+			// this.markerType = MarkerType.Other;
 			return TimelineIcon.Other;
 		} else {
-			//this.markerType = MarkerType.Default;
+			// this.markerType = MarkerType.Default;
 			return TimelineIcon.Default;
 		}
 	}
@@ -186,16 +184,30 @@ export class TripDiaryService {
 		// this._tripDiaryTourService.routesHidden();
 	}
 
-	/**
-	 * Should ask no route description
-	 * @param modeName
-	 * @returns true if ask no route description
-	 */
+	public timelineShown() {
+		// this._tripDiaryTourService.timelineShown();
+	}
+
+	public timelineShownByOption() {
+		// this._tripDiaryTourService.initializeTimelineButtonVisibility();
+		// this._tripDiaryTourService.timelineShownByOption();
+
+		document.dispatchEvent(new CustomEvent('visibilityScrollCheck'));
+	}
+
+	public timelineHidden() {
+		// this._tripDiaryTourService.timelineHidden();
+	}
+
+	public timelineHiddenByOption() {
+		// this._tripDiaryTourService.timelineHiddenByOption();
+	}
+
 	public shouldAskNoRouteDescription(modeName: string): boolean {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
-				if (subMode.name == modeName) {
-					return subMode.shouldAskNoRouteDescription == undefined ? false : subMode.shouldAskNoRouteDescription;
+				if (subMode.name === modeName) {
+					return subMode.shouldAskNoRouteDescription === undefined ? false : subMode.shouldAskNoRouteDescription;
 				}
 			}
 		}
@@ -208,7 +220,7 @@ export class TripDiaryService {
 	public getModeConfig(modeName: string): IModeConfig {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
-				if (subMode.name == modeName) {
+				if (subMode.name === modeName) {
 					return subMode;
 				}
 			}
@@ -276,8 +288,8 @@ export class TripDiaryService {
 	 */
 	public unregisterOnRoutesFound(callback: (routes: ISurveyMapRoute[]) => void) {
 		for (let i = 0; i < this._routesFoundCallbackList.length; i++) {
-			if (this._routesFoundCallbackList[i] == callback) {
-				//remove from array
+			if (this._routesFoundCallbackList[i] === callback) {
+				// remove from array
 				this._routesFoundCallbackList.splice(i, 1);
 			}
 		}
@@ -289,8 +301,8 @@ export class TripDiaryService {
 	 */
 	public unregisterActiveRouteChangedCallback(callback: (route: TripRoute) => void) {
 		for (let i = 0; i < this._activeRouteChangedCallbackList.length; i++) {
-			if (this._activeRouteChangedCallbackList[i] == callback) {
-				//remove from array
+			if (this._activeRouteChangedCallbackList[i] === callback) {
+				// remove from array
 				this._activeRouteChangedCallbackList.splice(i, 1);
 			}
 		}
@@ -302,7 +314,13 @@ export class TripDiaryService {
 	 */
 	public notifyRoutesFound(routes: ISurveyMapRoute[]) {
 		this._routes = routes.filter((route: ISurveyMapRoute) => {
-			return route.name != 'duplicate' && route.instructions.length > 1;
+			if (this.state.activeMode === 'transit') {
+				if (route.instructions.length <= 1) {
+					return false;
+				}
+			}
+
+			return route.name !== 'duplicate';
 		});
 
 		for (let i = 0; i < this._routesFoundCallbackList.length; i++) {
@@ -325,7 +343,7 @@ export class TripDiaryService {
 	public shouldShowCustomRouteInput(modeName: string) {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
-				if (subMode.name == modeName) {
+				if (subMode.name === modeName) {
 					if (!isNullOrUndefined(subMode.customRoute)) {
 						return true;
 					} else {
@@ -346,8 +364,8 @@ export class TripDiaryService {
 	public getRouterMode(modeName: string): string {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
-				if (subMode.name == modeName) {
-					//console.log(subMode);
+				if (subMode.name === modeName) {
+					// console.log(subMode);
 					return subMode.routerMode;
 				}
 			}
@@ -372,6 +390,11 @@ export class TripDiaryService {
 	 * @returns {TripRoute}
 	 */
 	public getActiveTripRoute(): TripRoute {
+		if (this.state.activeRouteIndex < 0) {
+			console.log('null');
+			return null;
+		}
+
 		return this.state.tripRoutes[this.state.activeRouteIndex];
 	}
 
@@ -384,7 +407,11 @@ export class TripDiaryService {
 	 * @returns {TripLeg}
 	 */
 	public getActiveTripLeg(): TripLeg {
-		return this.state.tripRoutes[this.state.activeRouteIndex].tripLegs[this.getActiveTripRoute().activeTripLegIndex];
+		if (this.state.tripRoutes != null && this.state.activeRouteIndex in this.state.tripRoutes) {
+			return this.state.tripRoutes[this.state.activeRouteIndex].tripLegs[this.getActiveTripRoute().activeTripLegIndex];
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -403,7 +430,7 @@ export class TripDiaryService {
 	private shouldShowPrompt(modeName: string) {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
-				if (subMode.name == modeName) {
+				if (subMode.name === modeName) {
 					return subMode.showPrompt;
 				}
 			}
@@ -418,7 +445,7 @@ export class TripDiaryService {
 	private getNoRouteMessage(modeName: string) {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
-				if (subMode.name == modeName) {
+				if (subMode.name === modeName) {
 					return subMode.noRouteMessage;
 				}
 			}
@@ -451,12 +478,15 @@ export class TripDiaryService {
 	}
 
 	private stateSubscription = () => {
-		if (this._$ngRedux.getState().tripsState.previousAction == SET_ROUTE_EDIT_ACTIVE) {
+		// console.log(this.state);
+
+		if (this._$ngRedux.getState().tripsState.previousAction === SET_ROUTE_EDIT_ACTIVE) {
 			this.isAutoFitBounds = true;
 			if (!isNullOrUndefined(this.getActiveTripRoute())) {
-				//     this.notifyActiveRouteChanged(this.getActiveTripRoute());
+				this.notifyActiveRouteChanged(this.getActiveTripRoute());
 			}
 		}
+		// console.log(this.state);
 	};
 
 	private isRouteComplete() {}

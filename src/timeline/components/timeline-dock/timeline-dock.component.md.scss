@@ -1,0 +1,29 @@
+@media #{$md-down} {
+
+    .btn-circle.btn-xl {
+        width: $timeline-entry-size-md;
+        height: $timeline-entry-size-md;
+      
+        font-size: 20px;
+        line-height: 1.33;
+        border-radius: 35px !important;
+      }
+    traisi-timeline-question{
+        height: 400px;
+    }
+
+    timeline-dock .timeline-dock-inner-container .smooth-dnd-container.horizontal {
+        height: $timeline-entry-size-md;
+        display: inline-flex;
+        align-content: space-between;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 80%;
+        vertical-align: top;
+      }
+
+      .timeline-dock-top .drag-container-with-item
+      {
+        height: $timeline-entry-size-md;
+      }
+} 

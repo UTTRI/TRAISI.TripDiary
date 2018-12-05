@@ -33,12 +33,14 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 
 	public configuration: TimelineConfiguration;
 
-	stepOne: boolean = true;
-	stepTwo: boolean = false;
-	stepThree: boolean = false;
-	saveCallback: (value: any) => void;
+	public stepOne: boolean = true;
+	public stepTwo: boolean = false;
+	public stepThree: boolean = false;
+	public saveCallback: (value: any) => void;
 
-	model: TimelineEntry;
+	public model: TimelineEntry;
+
+	public isEdit: boolean = false;
 
 	private _mapComponent: any;
 
@@ -79,16 +81,23 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 	 *
 	 * @param callback
 	 */
-	show(callback: (value: any) => void, entry?: TimelineEntry): void {
+	show(callback: (value: any) => void, entry?: TimelineEntry, isEdit: boolean = false): void {
 		// this.timelineService.openEditMapLocationModal(this.mapTemplate, this.callback);
 
 		this.saveCallback = callback;
+		this.isEdit = isEdit;
 
 		this.newTimelineEntryTemplateRef.onHidden.subscribe(this.onHidden);
 
 		this.newTimelineEntryTemplateRef.onShown.subscribe(val => {
 			let sub = (<any>this._mapComponent).mapInstance.subscribe(mapInstance => {
 				mapInstance.resize();
+
+				if (entry !== undefined) {
+					(<any>this._mapComponent).setQuestionState(entry.latitude, entry.longitude, entry.address);
+				}
+				this._mapComponent.resetInput();
+				// (latitude: number, longitude: number, address: string): void {
 			});
 			sub.unsubscribe();
 		});
@@ -123,7 +132,6 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 	public stepOneNext(): void {
 		this.stepOne = false;
 		this.stepTwo = true;
-
 	}
 
 	/**
@@ -156,7 +164,7 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		let componentRef = null;
 
 		let sub = this._questionLoaderService.componentFactories$.subscribe(factory => {
-			if (factory.selector == 'traisi-map-question') {
+			if (factory.selector === 'traisi-map-question') {
 				componentRef = this.mapTemplate.createComponent(factory, undefined, this.injector);
 
 				let instance: SurveyQuestion<any> = <SurveyQuestion<any>>componentRef.instance;
@@ -172,7 +180,7 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		this.timelineService.configuration.subscribe(config => {
 			this.configuration = config;
 		});
-	}
+	} 
 
 	public ngAfterViewInit(): void {}
 

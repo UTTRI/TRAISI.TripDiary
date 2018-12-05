@@ -3,11 +3,27 @@
 @import 'trips-mobile';
 
 @media screen and (min-width: 480px) {
+
+  .router-outer-container .question-container-inner {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .switch-mode.add-travel-mode {
+    margin-left: 30px !important;
+    margin-right: 30px !important;
+
+  }
+
   .map-question {
     .map-trips-input {
       display: none;
       visibility: hidden;
     }
+  }
+
+  .input-clear-icon {
+    
   }
 
   .trips-map-container {
@@ -70,14 +86,14 @@
     width: 100%;
     height: 100%;
     background-color: black;
-    z-index:99;
-    -moz-opacity: 0.8;
-    opacity:.80;
-    filter: alpha(opacity=80);
-    
+    z-index: 90;
+    -moz-opacity: 0.6;
+    opacity: .60;
+    filter: alpha(opacity=60);
+
   }
 
-  .infront_overlay { 
+  .infront_overlay {
     z-index: 100;
   }
 
@@ -114,7 +130,7 @@
     cursor: pointer;
   }
 
-  .question-containe .tour-button:hover {
+  .question-container .tour-button:hover {
     opacity: 1.0;
   }
 
@@ -128,8 +144,6 @@
     overflow: hidden;
     border: solid 1px #DDD;
   }
-
-
 
   .route-toggle-overlay {
     display: none;
@@ -193,6 +207,25 @@
       font-size: 12px;
       text-align: center;
       line-height: 14px;
+    }
+    .mode-switch-canel {
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      background-color: #9d77ff;
+      border-top: solid 1px #d5c7ff;
+      border-bottom: solid 2px #8069d6;
+      padding: 2px;
+      width: 90%;
+      margin: auto;
+      position: relative;
+      border-radius: 100px;
+      margin-top: 5px;
+    
+
+      i {
+        margin-right: 10px;
+      }
     }
 
     .switched-modes-divider {
@@ -331,6 +364,22 @@
       padding: 3px;
       cursor: pointer;
       opacity: 0.6;
+      margin: 5px 0px 5px 0px;
+      animation-name: colorPulse;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes colorPulse {
+      0% {
+        background-color: #222;
+      }
+      50% {
+        background-color: #4285f4;
+      }
+      100% {
+        background-color: #222;
+      }
     }
 
     .confirm-route:hover {
@@ -399,7 +448,7 @@
       md-icon {
         position: absolute;
         top: calc(50% - 13px);
-        right: 5px;
+        right: 15px;
       }
 
     }
@@ -487,8 +536,7 @@
 
       .location-group {
         md-select {
-          //margin-top: 2px;
-          //margin-bottom: 5px;
+          margin-bottom: 5px;
         }
       }
 
@@ -505,7 +553,7 @@
         font-weight: bold;
         text-align: center;
         span > .trips-location-name {
-          font-size:18px;
+          font-size: 18px;
         }
       }
       overflow-y: auto;
@@ -525,6 +573,7 @@
       }
       .location-group {
         margin-left: 0px;
+        margin-top: 20px;
       }
       #trips-location-input {
         margin-bottom: 15px;
@@ -553,6 +602,7 @@
           height: 60px;
           md-input-container {
             width: 100% !important;
+            margin-top: 35px !important;
           }
         }
       }
@@ -633,7 +683,6 @@
 
       }
     }
-
 
     .trips-timeline-panel, timeline-line, .trips-timeline-panel, timeline-line-map {
       position: absolute;
@@ -772,22 +821,21 @@
 
   .trip-route-mode-header-item:hover {
     display: inline-block;
-    background-color: #0F54D6;
+    
   }
 
   .trip-route-mode-header-item {
+    vertical-align: bottom;
     display: inline-block;
     min-height: 30px;
   }
 
   .trip-route-mode-header .active-route {
-    background-color: #768eb3;
-    box-shadow: 8px -3px 8px 0px rgba(0, 0, 0, 0.75);
-    position: relative;
+    background-color: rgb(29, 84, 167) !important;
   }
 
   .trip-route-mode-header .active-route:hover {
-    background-color: #dcdee1;
+    background-color: #160f63;
   }
 
   timeline-line-map {
@@ -809,25 +857,47 @@
     left: calc(50% - 150px);
     bottom: 0px;
   }
-
+  .trip-route-mode-header-item:first-of-type {
+    margin-left:-10px;
+  }
   .trip-route-mode-header-item:first-of-type span.route-mode-header-inner {
     display: inline-block;
     min-height: 30px;
     cursor: pointer;
-    padding-right: 20px;
-    padding-top: 3px;
+    padding-right: 5px;
+    padding-top: 5px;
     min-width: 210px;
-    padding-left: 30px;
+    padding-left: 5px;
+    background-color: #d25241 !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
 
   .trip-route-mode-header-item span.route-mode-header-inner {
     display: inline-block;
     min-height: 30px;
     cursor: pointer;
-    padding-right: 20px;
-    padding-top: 3px;
+    padding-right: 5px;
+    padding-top: 5px;
     min-width: 210px;
-    padding-left: 50px;
+    padding-left: 5px;
+    background-color: #d25241 !important;
+    margin-left:5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .trip-route-mode-header-item span.route-mode-header-inner:hover {
+    padding-bottom:4px;
+  }
+
+  .trip-route-mode-header-item span.route-mode-header-inner.active-route {
+    background-color: #2195f4 !important;
+    padding-bottom:10px;
+  }
+
+  .trip-route-mode-header-item span.route-mode-header-inner.complete-route {
+    background-color: #6ebe75 !important;
   }
 
   .arrow-right {
@@ -859,12 +929,20 @@
 
   .trip-route-mode-header {
     color: white;
-    background-color: #0D47A1 !important;
+    background-color: rgb(255, 255, 255) !important;
     text-align: left;
-    overflow-x: auto;
-    overflow-y: hidden;
+    border-bottom: 2px solid black;
+    overflow-x:auto;
     white-space: nowrap;
-    max-height: 50px;
+    top: 3px;
+    /* left: 0px; */
+    left: 10px;
+    position: relative;
+    /* right: 0px; */
+    padding: 5px 5px 0px 5px;
+    background-color: white;
+    z-index: 900;
+    height: 43px;
 
   }
   .trip-route-mode-header::-webkit-scrollbar {
@@ -1069,13 +1147,16 @@
 
   .trip-route-mode-header {
     //position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    //height: 30px;
-    max-height: 50px;
+    top: 3px;
+    /* left: 0px; */
+    left: 10px;
+    position: relative;
+    /* right: 0px; */
+    padding: 5px 5px 0px 5px;
     background-color: white;
     z-index: 900;
+    height: 43px;
+
   }
 
   .timeline-info-name {
@@ -1167,7 +1248,17 @@
     z-index: 90000 !important;
 
   }
+
   md-dialog, .md-dialog-container {
     z-index: 90001 !important;
+  }
+
+  @media (hover:none) {
+    md-dialog, .md-dialog-container {
+      top: 20%;
+      left: 20%;
+      position: fixed;
+      overflow:visible;
+    }
   }
 }

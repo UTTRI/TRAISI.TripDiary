@@ -1,13 +1,6 @@
 <div class="timeline-dock-top">
-	<timeline-slot
-		[timelineDock]="this"
-		[startLocation]="true"
-		triggers=""
-		popoverTitle="Confirm Location"
-		placement="right"
-		[popover]="confirmLocationPopTemplate"
-		#popover="bs-popover"
-	></timeline-slot>
+	<timeline-slot [timelineDock]="this" [startLocation]="true" triggers="" popoverTitle="Confirm Location" placement="right"
+	 [popover]="confirmLocationPopTemplate" #popover="bs-popover"></timeline-slot>
 
 	<div class="timeline-dock-inner-container">
 		<div class="timeline-bar" [ngClass]="{ 'timeline-drag-over': dragActive }"></div>
@@ -15,33 +8,34 @@
 		<div class="timeline-placeholder">
 			<div class="slot-container btn-circle btn-xl" [ngClass]="{ 'slot-drag-over': showPlaceholder && dragActive }"></div>
 		</div>
-		<smooth-dnd-container
-			(drop)="onDrop($event)"
-			[behaviour]="'move'"
-			[orientation]="'horizontal'"
-			[groupName]="'timeline'"
-			[getChildPayload]="getChildPayload"
-			(dragEnter)="onDragEnter()"
-			(dragLeave)="onDragLeave()"
-			class="timeline-dnd-dock"
-			[shouldAnimateDrop]="false"
-			(dragStart)="onDragStart($event)"
-			(dragEnd)="onDragEnd($event)"
-			#dockContainer
-		>
-			<smooth-dnd-draggable *ngFor="let item of dockItems">
-				<div class="draggable-item">
-					<timeline-entry-item [model]="item" [timelineNewEntry]="timelineNewEntry" [inShelf]="false"> </timeline-entry-item>
-				</div>
-			</smooth-dnd-draggable>
-		</smooth-dnd-container>
+		<div [ngClass]="{'drag-container-empty': dockItems.length === 0, 'drag-container-with-item': dockItems.length > 0}">
+			<smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'move'" [orientation]="'horizontal'" [groupName]="'timeline'"
+			 [getChildPayload]="getChildPayload" (dragEnter)="onDragEnter()" (dragLeave)="onDragLeave()" class="timeline-dnd-dock" [dragClass]="'drag-active'"
+			 [shouldAnimateDrop]="false" (dragStart)="onDragStart($event)" (dragEnd)="onDragEnd($event)" #dockContainer
+			 [dragHandleSelector]="'.draggable-item'" [nonDragAreaSelector]="'.non-drag'">
+				<smooth-dnd-draggable *ngFor="let item of dockItems">
+					<div class="draggable-item">
+						<timeline-entry-item [model]="item" [timelineNewEntry]="timelineNewEntry" [inShelf]="false">
+						</timeline-entry-item>
+					</div>
+					<div class="non-drag">
+						<div class="timeline-entry-model-name">{{ item.name }}</div>
+						<div class="timeline-entry-model-address">{{ item.address }}</div>
+					</div>
+				</smooth-dnd-draggable>
+			</smooth-dnd-container>
+		</div>
 	</div>
-	<timeline-slot [timelineDock]="this" [endLocation]="true"></timeline-slot>
+	<timeline-slot [timelineDock]="this" [endLocation]="true" triggers="" popoverTitle="Confirm Location" placement="left"
+	 [popover]="confirmEndLocationPopTemplate" #endPopover="bs-popover"></timeline-slot>
 </div>
 <div class="timeline-dock-info">
 	<div class="timeline-dock-info-start">START OF THE DAY</div>
-	<div class="timeline-dock-info-centre">
-		<span *ngFor="let item of dockItems" class="dock-info-item"> {{ item.name }} </span>
+	<div class="timeline-dock-info-centre-container">
+		<div class="timeline-dock-info-centre">
+
+			<!-- <span *ngFor="let item of dockItems" class="dock-info-item"> {{ item.name }} </span> -->
+		</div>
 	</div>
 	<div class="timeline-dock-info-end">END OF THE DAY</div>
 </div>
@@ -56,14 +50,7 @@
 	<div class="modal-body">
 		<div class="form-group custom-control custom-radio">
 			<div *ngFor="let purpose of configuration.purposes">
-				<input
-					type="radio"
-					name="purpose"
-					[id]="purpose.key"
-					[value]="purpose.key"
-					[(ngModel)]="pipedPurpose"
-					class="custom-control-input"
-				/>
+				<input type="radio" name="purpose" [id]="purpose.key" [value]="purpose.key" [(ngModel)]="pipedPurpose" class="custom-control-input" />
 				<label class="custom-control-label" [for]="purpose.key">{{ purpose.label }}</label>
 			</div>
 		</div>
@@ -75,5 +62,12 @@
 	<div>You have entered a start location that is not home.</div>
 	<div class="confirm-start-location-button">
 		<button type="button" class="btn btn-primary" (click)="confirmStartLocation()">Confirm</button>
+	</div>
+</ng-template>
+
+<ng-template #confirmEndLocationPopTemplate>
+	<div>Your start and end locations are not the same.</div>
+	<div class="confirm-start-location-button">
+		<button type="button" class="btn btn-primary" (click)="confirmEndLocation()">Confirm</button>
 	</div>
 </ng-template>

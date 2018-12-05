@@ -113,6 +113,7 @@ export class TripRouteModeDirective {
 		if (this._$scope['tds']['state']['activeRouteIndex'] >= 0) {
 			return this._$scope['tds']['state']['tripRoutes'][this._$scope['tds']['state']['activeRouteIndex']];
 		} else {
+			
 			return null;
 		}
 	};
@@ -120,7 +121,7 @@ export class TripRouteModeDirective {
 	 *
 	 * @param e
 	 */
-	private onRouteMajorSelected = (e) => {};
+	private onRouteMajorSelected = e => {};
 	/**
 	 * Shows the sub select route
 	 */
@@ -144,7 +145,7 @@ export class TripRouteModeDirective {
 	 *
 	 * @param {number} index
 	 */
-	private setTripLegIncompleteR = (index) => {
+	private setTripLegIncompleteR = index => {
 		this._tc.setTripLegIncomplete(index);
 	};
 
@@ -159,7 +160,7 @@ export class TripRouteModeDirective {
 	 *
 	 * @param route
 	 */
-	private showRoute = (route) => {
+	private showRoute = route => {
 		this._tc['routingControl'].fire('routeselected', { route: route });
 		this._$scope['selectedRoute'] = route;
 	};
@@ -286,7 +287,7 @@ export class TripRouteModeDirective {
 							mode.dataInputs,
 							mode.dialogTitle,
 							this.tripDiaryService.getActiveTripLeg().data,
-							(result) => {
+							result => {
 								/* ask for passengers */
 								this.tripDiaryService.setTripMode(mode['name'], mode['category'], mode.allowAddWaypoints);
 								this.tripDiaryService.addTripLegExtraData(
