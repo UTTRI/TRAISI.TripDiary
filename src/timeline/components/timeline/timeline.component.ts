@@ -96,9 +96,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 *
 	 * @memberof TimelineComponent
 	 */
-	public ngAfterContentInit(): void {
-		console.log(this.interalViewChildren);
-	}
+	public ngAfterContentInit(): void {}
 
 	/**
 	 *
@@ -200,6 +198,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		if (this.timelineDock !== undefined) {
 			this.timelineDock.timelineNewEntry = this.newEntryDialog;
 		}
+
+		console.log(this.interalViewChildren);
 	}
 
 	/**
@@ -382,7 +382,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 					this.validationState.emit(ResponseValidationState.VALID);
 				}
 			} else if (!this._timelineService.isTimelineTimeStatevalid) {
-
 				this.validationState.emit(ResponseValidationState.INVALID);
 			}
 		});

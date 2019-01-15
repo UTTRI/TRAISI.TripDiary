@@ -1,5 +1,5 @@
-<div class="timeline-container" traisiSurveyQuestionInternalView>
-	<div *ngIf="isStep1" class="timeline-container-step-1" traisiSurveyQuestionInternalView>
+<div class="timeline-container">
+	<div *ngIf="isStep1" class="timeline-container-step-1" traisiQuestionInternalView>
 		<div class="timeline-instructions-top">
 			<alert type="light" #instructionsAlert>
 				Where did you go yesterday? Please populate the timeline below by dragging and dropping locations from the shelf to the
@@ -26,7 +26,7 @@
 			</timeline-dock>
 		</div>
 	</div>
-	<div *ngIf="isStep2" traisiSurveyQuestionInternalView><timeline-summary [timeline]="this"></timeline-summary></div>
+	<div *ngIf="isStep2" traisiQuestionInternalView><timeline-summary [timeline]="this"></timeline-summary></div>
 </div>
 <timeline-new-entry #newEntry></timeline-new-entry>
 
