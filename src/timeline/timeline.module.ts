@@ -20,6 +20,7 @@ import { TimelineSummaryComponent } from './components/timeline-summary/timeline
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { SurveyQuestionInternalViewDirective } from 'traisi-question-sdk';
 
 @NgModule({
 	entryComponents: [
@@ -42,7 +43,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 		TimelineNewEntryComponent,
 		TimelineSummaryComponent,
 		SafeHtmlPipe,
-		TimelineEntryItemComponent
+		TimelineEntryItemComponent,
+		SurveyQuestionInternalViewDirective
 	],
 	exports: [],
 	providers: [

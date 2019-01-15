@@ -35,6 +35,8 @@ import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-en
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
 import { isRegExp } from 'util';
 import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component';
+import { SurveyQuestionInternalViewDirective } from 'traisi-question-sdk';
+import { AfterContentInit } from '@angular/core';
 
 @Component({
 	entryComponents: [TimelineWedgeComponent],
@@ -44,7 +46,7 @@ import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component'
 	providers: [TimelineService]
 })
 export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
-	implements OnInit, AfterViewInit, AfterViewChecked, OnVisibilityChanged {
+	implements OnInit, AfterViewInit, AfterViewChecked, OnVisibilityChanged, AfterContentInit {
 	public editModel: TimelineEntry;
 
 	@ViewChild(PopoverDirective)
@@ -65,14 +67,19 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	@ViewChild('duplicateLocationPopTemplate')
 	public confirmPurposeTemplate: TemplateRef<any>;
 
+	@ViewChildren(SurveyQuestionInternalViewDirective)
+	public interalViewChildren!: QueryList<SurveyQuestionInternalViewDirective>;
+
 	public isStep1: boolean = false;
 
 	public isStep2: boolean = false;
 
 	/**
-	 *
-	 * @param surveyViewerService
-	 * @param _timelineService
+	 *Creates an instance of TimelineComponent.
+	 * @param {SurveyViewer} surveyViewerService
+	 * @param {SurveyResponder} surveyResponderService
+	 * @param {TimelineService} _timelineService
+	 * @memberof TimelineComponent
 	 */
 	constructor(
 		@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer,
@@ -85,7 +92,19 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	}
 
 	/**
-	 * TRAISI life cycle called for when the question is prepared
+	 *
+	 *
+	 * @memberof TimelineComponent
+	 */
+	public ngAfterContentInit(): void {
+		console.log(this.interalViewChildren);
+	}
+
+	/**
+	 *
+	 *
+	 * @param {boolean} isPrevActionNext
+	 * @memberof TimelineComponent
 	 */
 	public traisiOnInit(isPrevActionNext: boolean): void {
 		// console.log('in on init ');
@@ -101,14 +120,14 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this.isStep2 = false;
 		}
 
-		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
-			result.forEach(responses => {
+		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe((result) => {
+			result.forEach((responses) => {
 				let purpose = JSON.parse(responses.configuration.purpose).id;
 
 				let respondentName = responses.respondent.name;
 
 				let locationName: string = respondentName === undefined ? purpose : respondentName + ' - ' + purpose;
-				responses.responseValues.forEach(responseValue => {
+				responses.responseValues.forEach((responseValue) => {
 					const element = responseValue;
 
 					let location: TimelineEntry = {
@@ -140,10 +159,20 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		this.savedResponse.subscribe(this.onSavedResponseData);
 	}
 
-	public saveNewLocation(): void { }
+	/**
+	 *
+	 *
+	 * @memberof TimelineComponent
+	 */
+	public saveNewLocation(): void {}
 
 	/**
 	 *
+	 */
+	/**
+	 *
+	 *
+	 * @memberof TimelineComponent
 	 */
 	public addNewLocation(): void {
 		this.newEntryDialog.show(this.newEntryCallback);
@@ -162,7 +191,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * @param type
 	 * @param $event
 	 */
-	public handler(type: string, $event: ModalDirective) { }
+	public handler(type: string, $event: ModalDirective) {}
 
 	/**
 	 *
@@ -176,7 +205,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	/**
 	 *
 	 */
-	public ngAfterViewChecked(): void { }
+	public ngAfterViewChecked(): void {}
 
 	/**
 	 * Navigates internal next
@@ -255,12 +284,17 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			// this.isStep2 = true;
 		}
 	}
-	public onQuestionHidden(): void { }
+	public onQuestionHidden(): void {}
 
 	public closePopover(): void {
 		this.popover.hide();
 	}
 
+	/**
+	 *
+	 *
+	 * @param {('none' | ResponseData<ResponseTypes.Timeline>[])} response
+	 */
 	private onSavedResponseData: (response: 'none' | ResponseData<ResponseTypes.Timeline>[]) => void = (
 		response: 'none' | ResponseData<ResponseTypes.Timeline>[]
 	) => {
@@ -348,7 +382,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 					this.validationState.emit(ResponseValidationState.VALID);
 				}
 			} else if (!this._timelineService.isTimelineTimeStatevalid) {
-				console.log('sending invalid here ');
+
 				this.validationState.emit(ResponseValidationState.INVALID);
 			}
 		});
