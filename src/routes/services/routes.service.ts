@@ -9,11 +9,25 @@ import { TripRoute } from '../components/routes/v1/ts/trip-route';
 export class RoutesService {
 	public routesComponent: RoutesComponent;
 
+	/**
+	 *Creates an instance of RoutesService.
+	 * @param {SurveyViewer} _surveyViewerService
+	 * @param {SurveyResponder} _surveyResponderService
+	 * @memberof RoutesService
+	 */
 	constructor(
 		@Inject('SurveyViewerService') private _surveyViewerService: SurveyViewer,
 		@Inject('SurveyResponderService') private _surveyResponderService: SurveyResponder
 	) { }
 
+	/**
+	 *
+	 *
+	 * @param {number} surveyId
+	 * @param {GroupMember} respondent
+	 * @returns {*}
+	 * @memberof RoutesService
+	 */
 	public listTimelineEntries(surveyId: number, respondent: GroupMember): any {
 		let responses = this._surveyResponderService.listSurveyResponsesOfType(surveyId, ResponseTypes.Timeline);
 		if (respondent === undefined) {
@@ -23,6 +37,12 @@ export class RoutesService {
 		}
 	}
 
+	/**
+	 *
+	 *
+	 * @returns {*}
+	 * @memberof RoutesService
+	 */
 	public savedResponse(): any {
 		return this.routesComponent.savedResponse;
 	}
