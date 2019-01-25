@@ -7,9 +7,8 @@ import { TimelineService } from '../../services/timeline.service';
 	styles: [require('./timeline-wedge.component.scss').toString()]
 })
 export class TimelineWedgeComponent implements OnInit {
-
-    typeName: string;
-    icon: string;
+	typeName: string;
+	icon: string;
 	/**
 	 *Creates an instance of TimelineWedgeComponent.
 	 * @param {ElementRef} _element
@@ -17,16 +16,13 @@ export class TimelineWedgeComponent implements OnInit {
 	 * @memberof TimelineWedgeComponent
 	 */
 	constructor(private _element: ElementRef, private timelineService: TimelineService) {
-        this.typeName = "Trip Diary Timeline";
-        this.icon = "business-time"
-		
-		
+		this.typeName = 'Trip Diary Timeline';
+		this.icon = 'business-time';
 	}
 	/**
 	 * Angular's ngOnInit
 	 */
 	ngOnInit(): void {
-		console.log("inside of wedge component - test 2");
+		console.log('inside of wedge component - test 2');
 	}
 }
- 

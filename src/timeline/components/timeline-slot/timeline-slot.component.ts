@@ -56,9 +56,9 @@ export class TimelineSlotComponent implements OnInit {
 	public ngOnInit(): void {
 		this._timelineService.timelineLocations.subscribe(locations => {
 			locations.forEach(loc => {
-				if (loc.locationType == TimelineLocationType.StartLocation && this.startLocation) {
+				if (loc.locationType === TimelineLocationType.StartLocation && this.startLocation) {
 					this.addLocationToSlot(loc);
-				} else if (loc.locationType == TimelineLocationType.EndLocation && this.endLocation) {
+				} else if (loc.locationType === TimelineLocationType.EndLocation && this.endLocation) {
 					this.addLocationToSlot(loc);
 				}
 			});
