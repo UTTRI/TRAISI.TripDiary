@@ -249,7 +249,7 @@ export class TimelineService {
 		});
 		if (index < 0) {
 			this._availableLocations.push(location);
-			this.availableLocations.next(this._availableLocations);
+			// this.availableLocations.next(this._availableLocations);
 		}
 	}
 
@@ -265,6 +265,15 @@ export class TimelineService {
 			this._timelineLocations.splice(index, 0, location);
 		}
 
+		// this.timelineLocations.next(this._timelineLocations);
+	}
+
+	/**
+	 *
+	 *
+	 * @memberof TimelineService
+	 */
+	public updateTimelineLocationsList(): void {
 		this.timelineLocations.next(this._timelineLocations);
 	}
 

@@ -21,7 +21,7 @@
 	 #shelfContainer [dragClass]="'timeline-entry-drag'" [nonDragAreaSelector]="'timeline-entry-model-info'">
 		<smooth-dnd-draggable *ngFor="let item of shelfItems">
 			<div class="draggable-item" [ngClass]="{ 'draggable-item-shelf': item.id !== draggedItem.id,'dragged': item.id === draggedItem.id }" 
-			[tooltip]="item.name">
+			>
 				<timeline-entry-item [model]="item" [timelineNewEntry]="timelineNewEntry" [inShelf]="true"></timeline-entry-item>
 			</div>
 		</smooth-dnd-draggable>

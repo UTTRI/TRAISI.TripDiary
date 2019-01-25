@@ -721,8 +721,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		}
 	}
 
-
-
 	/**
 	 *
 	 * @param questionID
@@ -739,16 +737,13 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			console.log(typeof response);
 			console.log(response instanceof Array);
 			if (response !== 'none' && !(response instanceof Array)) {
-
-
 				let t = JSON.parse(response[0].value);
 				if (t.tripsState !== undefined) {
 					state = t.tripsState;
 				}
 
-				// console.log(state); 
-			}
-			else {
+				// console.log(state);
+			} else {
 				// its an array
 				// console.log(response);
 				(<any>state) = {
@@ -757,9 +752,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					tripRoutes: []
 					// _tripRoutes: []
 				};
-			};
-
-
+			}
 
 			this._routesService.listTimelineEntries(this._surveyV2Id, this._respondent).subscribe((entries: Array<any>) => {
 				// find index
@@ -856,8 +849,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 						(<any>this.basicState).tripRoutes.push(JSON.parse(route.value));
 					}
 
-
-
 					// this.state = this.basicState;
 					this.shouldInit = true;
 					this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
@@ -875,16 +866,11 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				} else {
 					// compare the routes
 
-
 					if (response !== 'none') {
 						for (let route of response) {
-
 							(<any>state).tripRoutes.push(JSON.parse(route.value));
 						}
 					}
-
-
-
 
 					for (let i = 0; i < state.tripRoutes.length; i++) {
 						let route: TripRoute = state.tripRoutes[i];
@@ -920,6 +906,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 						}
 					}
 
+					console.log(state.tripRoutes);
 					this.basicState = {
 						startLocation: startLocation,
 						_startLocation: startLocation,
@@ -1143,19 +1130,19 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	/** Setup watcher for tripLocations ( start and end too ) */
 	private initializeLocationWatcher() {
 		let tcRef = this;
-		this.$scope.$watchCollection('tc.value.tripLocations', function (oldValue, newValue) {
+		this.$scope.$watchCollection('tc.value.tripLocations', function(oldValue, newValue) {
 			// update trip route
 			tcRef.updateTripRouteModes();
 
 			//	 re order locations
 		});
 
-		this.$scope.$watch('tc.value.startLocation', function (oldValue: TripLocation, newValue: TripLocation) {
+		this.$scope.$watch('tc.value.startLocation', function(oldValue: TripLocation, newValue: TripLocation) {
 			// update trip route
 			tcRef.updateTripRouteModes();
 		});
 
-		this.$scope.$watch('tc.value.endLocation', function (oldValue: TripLocation, newValue: TripLocation) {
+		this.$scope.$watch('tc.value.endLocation', function(oldValue: TripLocation, newValue: TripLocation) {
 			// update trip route
 			tcRef.updateTripRouteModes();
 		});
@@ -1730,4 +1717,4 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	}
 }
 
-function resetTripQuestion() { }
+function resetTripQuestion() {}

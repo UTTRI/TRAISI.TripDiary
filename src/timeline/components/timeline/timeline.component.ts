@@ -298,6 +298,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	private onSavedResponseData: (response: 'none' | ResponseData<ResponseTypes.Timeline>[]) => void = (
 		response: 'none' | ResponseData<ResponseTypes.Timeline>[]
 	) => {
+
+
 		let location: TimelineEntry = {
 			address: undefined,
 			latitude: undefined,
@@ -359,6 +361,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 					this._timelineService.addShelfLocation(location);
 				});
 			}
+			this._timelineService.updateTimelineLocationsList();
 		}
 
 		this._timelineService.timelineLocations.subscribe((entries: TimelineEntry[]) => {

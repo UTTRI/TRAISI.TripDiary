@@ -69,6 +69,9 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 			this.timeEntries = [];
 			this.times = [];
 
+			console.log('timeline summary');
+			console.log(locations);
+
 			for (let i = 0; i < locations.length; i++) {
 				this.times.push(new Date());
 				this.timeEntries.push({
