@@ -18,6 +18,15 @@ import { BsModalRef, ModalDirective, ModalBackdropComponent, BsModalService } fr
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
 import { TimelineConfiguration } from '../../models/timeline-configuration.model';
 
+/**
+ * A component that represents a timeline entry. An entry can appear on the shelf, dock or 
+ * other places.
+ * 
+ * @export
+ * @class TimelineEntryItemComponent
+ * @implements {OnInit}
+ * @implements {AfterViewInit}
+ */
 @Component({
 	selector: 'timeline-entry-item',
 	template: require('./timeline-entry-item.component.html').toString(),
@@ -83,7 +92,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 		} else {
 			return 'fas fa-edit';
 		}
-	} 
+	}
 
 	public modalRef: BsModalRef;
 
@@ -106,10 +115,17 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 		});
 	}
 
+	/**
+	 *
+	 *
+	 * @memberof TimelineEntryItemComponent
+	 */
 	public ngAfterViewInit(): void {}
 
 	/**
 	 *
+	 *
+	 * @memberof TimelineEntryItemComponent
 	 */
 	public edit(): void {
 		// console.log(this.timelineNewEntry);
@@ -123,21 +139,40 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 				Object.assign({}, this.model),
 				true
 			);
+
 		} else {
 			this.editPurpose = this.model.purpose;
 			this._modelRef = this._modalService.show(this.confirmPurposeTemplate);
+
 		}
 	}
 
+	/**
+	 *
+	 *
+	 * @param {*} value
+	 * @memberof TimelineEntryItemComponent
+	 */
 	public callback(value): void {}
 
 	/**
 	 *
 	 */
+	/**
+	 *
+	 *
+	 * @memberof TimelineEntryItemComponent
+	 */
 	public editLocation(): void {}
 
 	/**
 	 *
+	 */
+	/**
+	 *
+	 *
+	 * @param {*} entry
+	 * @memberof TimelineEntryItemComponent
 	 */
 	public save(entry): void {
 		this.model = Object.assign({}, this.editModel);
@@ -148,6 +183,11 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	/**
 	 *
 	 */
+	/**
+	 *
+	 *
+	 * @memberof TimelineEntryItemComponent
+	 */
 	public delete(): void {
 		if (!this.inShelf) {
 			this._timelineService.removeTimelineLocation(this.model);
@@ -156,6 +196,11 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 		}
 	}
 
+	/**
+	 *
+	 *
+	 * @memberof TimelineEntryItemComponent
+	 */
 	public confirmPurpose(): void {
 		this.model.purpose = this.editPurpose;
 

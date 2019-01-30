@@ -92,11 +92,11 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		this.newTimelineEntryTemplateRef.onShown.subscribe(val => {
 			let sub = (<any>this._mapComponent).mapInstance.subscribe(mapInstance => {
 				mapInstance.resize();
-
+				this._mapComponent.resetInput();
 				if (entry !== undefined) {
 					(<any>this._mapComponent).setQuestionState(entry.latitude, entry.longitude, entry.address);
 				}
-				this._mapComponent.resetInput();
+
 				// (latitude: number, longitude: number, address: string): void {
 			});
 			sub.unsubscribe();
@@ -180,7 +180,7 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		this.timelineService.configuration.subscribe(config => {
 			this.configuration = config;
 		});
-	} 
+	}
 
 	public ngAfterViewInit(): void {}
 

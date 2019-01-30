@@ -243,13 +243,15 @@ export class TimelineService {
 	 *
 	 * @param location
 	 */
-	public addShelfLocation(location: TimelineEntry): void {
+	public addShelfLocation(location: TimelineEntry, update: boolean = true): void {
 		const index = this._availableLocations.findIndex(l => {
 			return l.address === location.address;
 		});
 		if (index < 0) {
 			this._availableLocations.push(location);
-			// this.availableLocations.next(this._availableLocations);
+			if (update) {
+				this.availableLocations.next(this._availableLocations);
+			}
 		}
 	}
 
@@ -257,7 +259,7 @@ export class TimelineService {
 	 * Adds a new location to the list of dock items
 	 * @param location
 	 */
-	public addTimelineLocation(location: TimelineEntry, index?: number): void {
+	public addTimelineLocation(location: TimelineEntry, index?: number, update: boolean = true): void {
 		if (index === undefined) {
 			this._timelineLocations.push(location);
 			this.updateLocationsValidation();
@@ -265,7 +267,9 @@ export class TimelineService {
 			this._timelineLocations.splice(index, 0, location);
 		}
 
-		// this.timelineLocations.next(this._timelineLocations);
+		if (update) {
+			this.timelineLocations.next(this._timelineLocations);
+		}
 	}
 
 	/**

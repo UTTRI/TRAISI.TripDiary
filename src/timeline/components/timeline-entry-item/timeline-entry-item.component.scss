@@ -7,6 +7,12 @@
 }
 
 
+.timeline-entry-inner-container{
+	.dropdown-menu {
+		z-index: 900;
+	}
+}
+
 .timeline-btn-outer
 {
 	display: flex;
@@ -19,6 +25,11 @@ timeline-entry-item.summary-item
 	{
 		display: none;
 	}
+}
+
+.summary-tooltip-name {
+	clear:both;
+	display:block;
 }
 
 .timeline-entry-model-name {

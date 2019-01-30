@@ -3,6 +3,13 @@ import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { ContainerComponent, DraggableComponent, IDropResult } from 'ngx-smooth-dnd';
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
+/**
+ * Component for the timeline shelf. 
+ *
+ * @export
+ * @class TimelineShelfComponent
+ * @implements {OnInit}
+ */
 @Component({
 	selector: 'timeline-shelf',
 	template: require('./timeline-shelf.component.html').toString(),
@@ -50,6 +57,11 @@ export class TimelineShelfComponent implements OnInit {
 		return val;
 	}
 
+	/**
+	 *
+	 *
+	 * @memberof TimelineShelfComponent
+	 */
 	public getChildPayload = (index: number): any => {
 		return this.shelfItems[index];
 	};

@@ -1,43 +1,48 @@
 import {
-	Component,
-	OnInit,
-	ElementRef,
-	ComponentFactoryResolver,
-	ViewChild,
-	Inject,
-	TemplateRef,
-	ViewContainerRef,
-	Injector,
-	ContentChild,
+	AfterContentInit,
+	AfterViewChecked,
 	AfterViewInit,
-	ContentChildren,
+	Component,
+	Inject,
+	OnInit,
 	QueryList,
+	TemplateRef,
+	ViewChild,
 	ViewChildren,
-	AfterViewChecked
+	ViewContainerRef
 } from '@angular/core';
-
-import { TimelineService } from '../../services/timeline.service';
-import {
-	SurveyQuestion,
-	ResponseTypes,
-	SurveyViewer,
-	OnVisibilityChanged,
-	SurveyResponder,
-	ResponseData,
-	TimelineResponseData,
-	ResponseValidationState
-} from 'traisi-question-sdk';
-import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
-import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
-import { QuestionLoaderService } from 'traisi-question-sdk';
 import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
-import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
-import { isRegExp } from 'util';
+import {
+	OnVisibilityChanged,
+	ResponseData,
+	ResponseTypes,
+	ResponseValidationState,
+	SurveyQuestion,
+	SurveyQuestionInternalViewDirective,
+	SurveyResponder,
+	SurveyViewer,
+	TimelineResponseData
+} from 'traisi-question-sdk';
+import { TimelineService } from '../../services/timeline.service';
 import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component';
-import { SurveyQuestionInternalViewDirective } from 'traisi-question-sdk';
-import { AfterContentInit } from '@angular/core';
+import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
+import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
 
+/**
+ * Main entry component for the Timeline TRAISI question. This component is the root component that is loaded
+ * from the survey viewer. All further timeline content appears as child nodes of this component.
+ *
+ * @export
+ * @class TimelineComponent
+ * @extends {SurveyQuestion<ResponseTypes.Timeline[]>}
+ * @implements {OnInit}
+ * @implements {AfterViewInit}
+ * @implements {AfterViewChecked}
+ * @implements {OnVisibilityChanged}
+ * @implements {AfterContentInit}
+ */
 @Component({
 	entryComponents: [TimelineWedgeComponent],
 	selector: 'traisi-timeline-question',
@@ -118,14 +123,14 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this.isStep2 = false;
 		}
 
-		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe((result) => {
-			result.forEach((responses) => {
+		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
+			result.forEach(responses => {
 				let purpose = JSON.parse(responses.configuration.purpose).id;
 
 				let respondentName = responses.respondent.name;
 
 				let locationName: string = respondentName === undefined ? purpose : respondentName + ' - ' + purpose;
-				responses.responseValues.forEach((responseValue) => {
+				responses.responseValues.forEach(responseValue => {
 					const element = responseValue;
 
 					let location: TimelineEntry = {
@@ -193,17 +198,19 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 
 	/**
 	 *
+	 *
+	 * @memberof TimelineComponent
 	 */
 	public ngAfterViewInit(): void {
 		if (this.timelineDock !== undefined) {
 			this.timelineDock.timelineNewEntry = this.newEntryDialog;
 		}
-
-		console.log(this.interalViewChildren);
 	}
 
 	/**
 	 *
+	 *
+	 * @memberof TimelineComponent
 	 */
 	public ngAfterViewChecked(): void {}
 
@@ -284,8 +291,18 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			// this.isStep2 = true;
 		}
 	}
+	/**
+	 *
+	 *
+	 * @memberof TimelineComponent
+	 */
 	public onQuestionHidden(): void {}
 
+	/**
+	 *
+	 *
+	 * @memberof TimelineComponent
+	 */
 	public closePopover(): void {
 		this.popover.hide();
 	}
@@ -298,8 +315,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	private onSavedResponseData: (response: 'none' | ResponseData<ResponseTypes.Timeline>[]) => void = (
 		response: 'none' | ResponseData<ResponseTypes.Timeline>[]
 	) => {
-
-
 		let location: TimelineEntry = {
 			address: undefined,
 			latitude: undefined,
@@ -323,7 +338,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 				location.name = timelineResponse.name;
 				location.timeA = new Date(timelineResponse.timeA);
 				location.timeB = new Date(timelineResponse.timeB);
-				this._timelineService.addTimelineLocation(location);
+				this._timelineService.addTimelineLocation(location, undefined, false);
 				this._timelineService.addShelfLocation(location);
 			}
 			if (response.length >= 2) {
@@ -338,8 +353,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 				location.name = timelineResponse.name;
 				location.timeA = new Date(timelineResponse.timeA);
 				location.timeB = new Date(timelineResponse.timeB);
-				this._timelineService.addTimelineLocation(location);
-				this._timelineService.addShelfLocation(location);
+				this._timelineService.addTimelineLocation(location, undefined, false);
+				this._timelineService.addShelfLocation(location, false);
 			}
 
 			if (response.length >= 3) {
@@ -357,8 +372,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 					location.timeA = new Date(timelineResponse.timeA);
 					location.timeB = new Date(timelineResponse.timeB);
 					location.name = timelineResponse.name;
-					this._timelineService.addTimelineLocation(location, index + 1);
-					this._timelineService.addShelfLocation(location);
+					this._timelineService.addTimelineLocation(location, index + 1, false);
+					this._timelineService.addShelfLocation(location, false);
 				});
 			}
 			this._timelineService.updateTimelineLocationsList();
