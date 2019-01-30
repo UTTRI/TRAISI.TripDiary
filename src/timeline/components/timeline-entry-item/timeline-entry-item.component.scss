@@ -50,10 +50,15 @@ timeline-entry-item.summary-item
 	align-content: center;
 	display: flex;
 	flex-direction: column;
+	
 }
+
 
 .timeline-entry-item-inner-container {
 	text-align: center;
+	width: auto;
+	margin-left:20px;
+	margin-right:20px;
 }
 
 

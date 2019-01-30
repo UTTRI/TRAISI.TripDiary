@@ -57,12 +57,13 @@
             }
         }
 }
-
-.timeline-entry-item-inner-container
+.timeline-summary-container
 {
-    width: 150px;
+	.timeline-entry-item-inner-container
+	{
+	width: 150px;
+	}
 }
-
 .timeline-summary-bar
 {
     height: 4px;
