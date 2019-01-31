@@ -12,7 +12,7 @@ namespace TRAISI.SDK.Questions
 	/// </summary>
 	[SurveyQuestion(QuestionResponseType.Json,
 	CodeBundleName = "traisi-trip-diary-routes.module.js")]
-	public class TripDiaryRoutes : ISurveyQuestion
+	public class TripDiaryRoutes : ISurveyQuestion, INestedQuestionHost
 	{
 
 		/// <summary>
@@ -59,5 +59,16 @@ namespace TRAISI.SDK.Questions
 			Description = "Locations and their colour keys.",
 			SurveyBuilderValueType = QuestionBuilderType.MultiSelect)]
 		public Dictionary<string, string> LocationColourMap = new Dictionary<string, string>();
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public List<NestedQuestionDefinition> ConfigureNestedQuestions()
+		{
+			return new List<NesteNestedQuestionDefinition>();
+		}
+
 	}
 }
