@@ -67,7 +67,7 @@ namespace TRAISI.SDK.Questions
 		/// <returns></returns>
 		public List<NestedQuestionDefinition> ConfigureNestedQuestions()
 		{
-			return new List<NesteNestedQuestionDefinition>();
+			return new List<NestedQuestionDefinition>();
 		}
 
 	}

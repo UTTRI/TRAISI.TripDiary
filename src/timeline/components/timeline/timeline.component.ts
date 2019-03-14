@@ -101,7 +101,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 *
 	 * @memberof TimelineComponent
 	 */
-	public ngAfterContentInit(): void {}
+	public ngAfterContentInit(): void { }
 
 	/**
 	 *
@@ -167,7 +167,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 *
 	 * @memberof TimelineComponent
 	 */
-	public saveNewLocation(): void {}
+	public saveNewLocation(): void { }
 
 	/**
 	 *
@@ -194,7 +194,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * @param type
 	 * @param $event
 	 */
-	public handler(type: string, $event: ModalDirective) {}
+	public handler(type: string, $event: ModalDirective) { }
 
 	/**
 	 *
@@ -212,7 +212,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 *
 	 * @memberof TimelineComponent
 	 */
-	public ngAfterViewChecked(): void {}
+	public ngAfterViewChecked(): void { }
 
 	/**
 	 * Navigates internal next
@@ -296,7 +296,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 *
 	 * @memberof TimelineComponent
 	 */
-	public onQuestionHidden(): void {}
+	public onQuestionHidden(): void { }
 
 	/**
 	 *

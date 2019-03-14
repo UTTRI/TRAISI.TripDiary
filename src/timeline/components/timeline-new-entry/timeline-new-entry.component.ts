@@ -13,7 +13,7 @@ import {
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry, TimelineLocationType } from '../../models/timeline-entry.model';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { QuestionLoaderService, SurveyQuestion } from 'traisi-question-sdk';
+import { SurveyQuestion } from 'traisi-question-sdk';
 import { TimelineConfiguration } from '../../models/timeline-configuration.model';
 import { AfterViewInit } from '@angular/core';
 
@@ -51,8 +51,11 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 	constructor(
 		private timelineService: TimelineService,
 		private injector: Injector,
-		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService
-	) {}
+		@Inject('QuestionLoaderService') private _questionLoaderService
+	) {
+
+
+	}
 
 	/**
 	 * Callback for when the new entry dialog is hidden
@@ -77,11 +80,15 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		this.stepThree = false;
 	};
 
+
 	/**
 	 *
-	 * @param callback
+	 * @param {(value: any) => void} callback
+	 * @param {TimelineEntry} [entry]
+	 * @param {boolean} [isEdit=false]
+	 * @memberof TimelineNewEntryComponent
 	 */
-	show(callback: (value: any) => void, entry?: TimelineEntry, isEdit: boolean = false): void {
+	public show(callback: (value: any) => void, entry?: TimelineEntry, isEdit: boolean = false): void {
 		// this.timelineService.openEditMapLocationModal(this.mapTemplate, this.callback);
 
 		this.saveCallback = callback;
@@ -163,7 +170,11 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 	public ngOnInit(): void {
 		let componentRef = null;
 
-		let sub = this._questionLoaderService.componentFactories$.subscribe(factory => {
+		let factories = this._questionLoaderService.componentFactories;
+		// console.log(factories);
+		let sub = Object.keys(this._questionLoaderService.componentFactories).forEach(key => {
+			let factory = this._questionLoaderService.componentFactories[key];
+			console.log(key); 
 			if (factory.selector === 'traisi-map-question') {
 				componentRef = this.mapTemplate.createComponent(factory, undefined, this.injector);
 
@@ -182,7 +193,7 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		});
 	}
 
-	public ngAfterViewInit(): void {}
+	public ngAfterViewInit(): void { }
 
-	public ngAfterContentInit(): void {}
+	public ngAfterContentInit(): void { }
 }

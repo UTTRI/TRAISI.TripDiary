@@ -4,7 +4,7 @@ import { TimelineConfiguration } from '../models/timeline-configuration.model';
 import { ReplaySubject, BehaviorSubject, Subject, Observable } from '../shared/rxjs';
 import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { QuestionLoaderService, SurveyQuestion, SurveyViewer } from 'traisi-question-sdk';
+import { SurveyQuestion, SurveyViewer } from 'traisi-question-sdk';
 
 @Injectable()
 export class TimelineService {
@@ -83,8 +83,7 @@ export class TimelineService {
 	constructor(
 		private modalService: BsModalService,
 		private injector: Injector,
-		@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer,
-		@Inject('QuestionLoaderService') private _questionLoaderService: QuestionLoaderService
+		@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer
 	) {
 		this.initializeConfiguration();
 		this._availableLocations = [];
