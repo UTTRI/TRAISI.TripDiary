@@ -1,11 +1,11 @@
-# traisi-trip-diary
+# TRAISI-TripDiary
 
 Trip Diary question extension for TRAISI
 
 ## Requirements
 
 1. Node.js > 8.1
-2. TRAISI.SDK source or package reference
+2. TRAISI.SDK source or package reference from the main TRAISI repository.
 
 ## Build Instructions
 
@@ -25,7 +25,7 @@ Example:
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <packageSources>
-    <add key="local-packages" value="../TRAISI.SDK/bin/cli/" />
+    <add key="local-packages" value="{YOUR_TRAISI_PATH}/src/TRAISI.SDK/bin/cli/" />
   </packageSources>
 </configuration>
 ```
