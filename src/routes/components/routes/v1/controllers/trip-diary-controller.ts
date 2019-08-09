@@ -3,17 +3,14 @@ import { SurveyMapDirective } from '../shared/directives/survey-map-directive';
 import { TripRoute } from '../ts/trip-route';
 
 import { TripTimeline } from '../ts/trip-timeline';
-
+import 'google';
 import { TripsQuestionState } from '../ts/trips-question-state';
 import * as angular from 'angular';
 import * as moment from 'moment';
 import * as icons from '../shared/survey-map-marker-type';
 import * as L from 'leaflet';
-
 import { TripDiary } from '../ts/trips-diary';
-
 import * as _ from 'lodash';
-
 import * as TripsActions from '../ts/trips-actions';
 import LatLngBounds = google.maps.LatLngBounds;
 import LatLng = google.maps.LatLng;
