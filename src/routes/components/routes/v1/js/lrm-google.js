@@ -1,5 +1,6 @@
 var polyline = require('@mapbox/polyline');
 var directionsService = new google.maps.DirectionsService();
+
 L.Routing = L.Routing || {};
 L.Routing.Google = L.Class.extend({
     options: {

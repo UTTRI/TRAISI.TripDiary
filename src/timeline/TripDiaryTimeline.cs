@@ -25,14 +25,14 @@ namespace TRAISI.SDK.Questions
             get => QuestionIconType.FONT;
         }
 
-        [QuestionConfiguration(QuestionConfigurationValueType.Time,
+        [QuestionConfiguration(ConfigurationValueType.Time,
             Name = "Start Time",
             Description = "Start time of the day",
             SurveyBuilderValueType = QuestionBuilderType.Time,
             DefaultValue = "3:00")]
         public string StartTime = "StartTime";
 
-        [QuestionConfiguration(QuestionConfigurationValueType.Custom,
+        [QuestionConfiguration(ConfigurationValueType.Custom,
             Name = "Purpose",
             Description = "Purpose of being at location.",
             SurveyBuilderValueType = QuestionBuilderType.MultiSelect,
@@ -41,7 +41,7 @@ namespace TRAISI.SDK.Questions
         public string[] Purposes = new string[] { };
 
 
-        [QuestionConfiguration(QuestionConfigurationValueType.Boolean,
+        [QuestionConfiguration(ConfigurationValueType.Boolean,
         Name = "Departure Time Collection",
         Description = "A flag that will turn off the collecting of departure times from users",
             SurveyBuilderValueType = QuestionBuilderType.Switch,
@@ -50,7 +50,7 @@ namespace TRAISI.SDK.Questions
         public bool CollectDepartureTime = true;
 
 
-        [QuestionConfiguration(QuestionConfigurationValueType.Boolean,
+        [QuestionConfiguration(ConfigurationValueType.Boolean,
         Name = "Arrival Time Collection",
         Description = "A flag that will turn off the collecting of arrival times from users",
             SurveyBuilderValueType = QuestionBuilderType.Switch,

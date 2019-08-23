@@ -118,12 +118,12 @@ export class TripDiaryRouteModeController {
 				this.$scope['tourPassedInitial'] = true;
 				this.$scope['expandPanelText'] = true;
 				if ('_tdc' in this.$scope) {
-					this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+					(<any>this.$scope['_tdc']['$scope']['routeMobileTourActive']) = true;
 				}
 			} else if (state.previousAction === SET_TRIP_MODE && this.$scope['tourPassedInitial']) {
 				this.$scope['showSelectModeTourTripText'] = false;
 				if ('_tdc' in this.$scope) {
-					this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+					(<any>this.$scope['_tdc']['$scope']['routeMobileTourActive']) = true;
 				}
 				this.$scope['showSelectRouteTourTripText'] = true;
 			} else if (state.previousAction === SET_TRIP_LEG_EDIT_COMPLETE) {
@@ -131,7 +131,7 @@ export class TripDiaryRouteModeController {
 				this.$scope['showSelectRouteTourTripText'] = false;
 				this.$scope['showMultipleTourTripText'] = false;
 				if ('_tdc' in this.$scope) {
-					this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+					(<any>this.$scope['_tdc']['$scope']['routeMobileTourActive']) = true;
 				}
 			} else if (state.previousAction === SET_TRIP_LEG_DATA) {
 				if (!isNullOrUndefined(this.$scope['selectOnce'])) {
@@ -139,7 +139,7 @@ export class TripDiaryRouteModeController {
 					this.$scope['showSelectModeTourTripText'] = false;
 					this.$scope['showSelectRouteTourTripText'] = false;
 					if ('_tdc' in this.$scope) {
-						this.$scope['_tdc']['$scope']['routeMobileTourActive'] = true;
+						(<any>this.$scope['_tdc']['$scope']['routeMobileTourActive']) = true;
 					}
 				} else {
 					this.$scope['selectOnce'] = true;

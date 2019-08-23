@@ -280,7 +280,7 @@ export let config: ISurveyMapConfig = {
 					noRouteMessage: 'I don\'t know the route.'
 				}
 			]
-		},
+		}, /*
 		{
 			name: 'bicycle',
 			icon: 'fas fa-bicycle',
@@ -323,7 +323,7 @@ export let config: ISurveyMapConfig = {
 					noRouteMessage: 'I don\'t know the route.'
 				}
 			]
-		},
+		}, */
 
 		{
 			name: 'wheelchair',
@@ -358,6 +358,7 @@ export let config: ISurveyMapConfig = {
 				}
 			]
 		},
+		/*
 		{
 			name: 'flight',
 			icon: 'fas fa-plane-departure',
@@ -378,6 +379,6 @@ export let config: ISurveyMapConfig = {
 					autoSaveRoute: true
 				}
 			]
-		}
+		} */
 	]
 };

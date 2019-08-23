@@ -3,7 +3,8 @@ import { SurveyMapDirective } from '../shared/directives/survey-map-directive';
 import { TripRoute } from '../ts/trip-route';
 
 import { TripTimeline } from '../ts/trip-timeline';
-import 'google';
+//import 'google';
+// import {LatLngBounds, LatLng, PlaceResult } from 'google';
 import { TripsQuestionState } from '../ts/trips-question-state';
 import * as angular from 'angular';
 import * as moment from 'moment';
@@ -12,9 +13,23 @@ import * as L from 'leaflet';
 import { TripDiary } from '../ts/trips-diary';
 import * as _ from 'lodash';
 import * as TripsActions from '../ts/trips-actions';
-import LatLngBounds = google.maps.LatLngBounds;
-import LatLng = google.maps.LatLng;
-import SearchBox = google.maps.places.SearchBox;
+//import LatLngBounds = google.maps.LatLngBounds;
+//import LatLng = google.maps.LatLng;
+// import SearchBox = google.maps.places.SearchBox;
+
+class LatLng {
+	lat: number;
+	lng: number;
+
+	public constructor(lat, lng) {
+		this.lat = lat;
+		this.lng = lng;
+	}
+}
+
+interface PlaceResult {
+	[key: string]: any;
+}
 
 import {
 	ADD_TRIP_LOCATION_DATA,
@@ -41,7 +56,7 @@ import {
 	updateState
 } from '../ts/trips-actions';
 
-import PlaceResult = google.maps.places.PlaceResult;
+// import PlaceResult = google.maps.places.PlaceResult;
 import { TripLocation, TripLocationType } from '../ts/trip-location';
 
 import { INITIAL_STATE } from '../ts/trips-reducers';
@@ -192,7 +207,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
 	private _pageValid: boolean;
 
-	private torontoBounds = new LatLngBounds(new LatLng(42.7066595635, -81.9635009766), new LatLng(45.3444241045, -77.0086669922));
 	/**
 	 *
 	 * @param {TripLocation} obj
@@ -324,10 +338,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			respondent
 		);
 
-		let unsubscribe = $ngRedux.connect(
-			this.mapStateToThis,
-			TripsActions
-		)(this);
+		let unsubscribe = $ngRedux.connect(this.mapStateToThis, TripsActions)(this);
 
 		this._$rootScope = $rootScope;
 
@@ -1013,12 +1024,12 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
 		/*
 		let selfRefTc: TripDiaryController = selfRef as TripDiaryController;
-		
+
 		if (page == -1) {
 			if (selfRefTc.state.timelineView) {
 				selfRefTc.tripsScope.tc.defaultView();
 			}
-		
+
 			if (selfRefTc.state.routeModeView) {
 				selfRefTc.tripsScope.tc.tripsTaken();
 			}
@@ -1029,13 +1040,13 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				} else {
 					selfRefTc.tripsScope.tc.noTripsTaken();
 				}
-		
+
 				return false;
 			} else if (selfRefTc.state.timelineView) {
 				selfRefTc.tripsScope.tc.tripRouteModeView();
 				return false;
 			}
-		
+
 			if (selfRefTc.state.noTripsSelectView) {
 				if (selfRefTc.activePageValid) {
 					return true;
@@ -1372,22 +1383,22 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		}
 
 		/*if (this.state.startLocation != null) {
-			
+
 			if (!isNullOrUndefined(startTimeAdjust)) {
 				if (startTimeAdjust <= this.state.startLocation.endTime && active.id != this.state.startLocation.id) {
-			
+
 					//console.log(startTimeAdjust);
 					//console.log(this.state.startLocation.endTime);
 					// console.log("overlapping times");
 					console.log("ov2");
 					this._$scope['tripsLocationForm'].$error['overlappingTimes'] = true;
-			
+
 					error = true;
 					//return false;
 				}
 			}
 			else {
-			
+
 			}
 		}  */
 
@@ -1683,26 +1694,26 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	private initLocationSearchBox() {
 		/* this._locationSearchBoxInput = $('#trip-diary-' + this.questionId)
 			.find('.location-input-map')[0] as HTMLInputElement;
-		
-		
+
+
 		//console.log(this._locationSearchBoxInput);
 		var searchOptions = {
 			bounds: this.torontoBounds
 		};
-		
+
 		let searchBox = new SearchBox(this._locationSearchBoxInput, searchOptions);
-		
-		
+
+
 		let updateActiveLocation = this.updateActiveLocationPlaceResult;
 		let tcRef: TripDiaryController = this;
-		
-		
+
+
 		searchBox.addListener('places_changed', () => {
 			let places: PlaceResult[] = searchBox.getPlaces();
-		
+
 			updateActiveLocation(tcRef, places[0]);
-		
-		
+
+
 		}); */
 	}
 

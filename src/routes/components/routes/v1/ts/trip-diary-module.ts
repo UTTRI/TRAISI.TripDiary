@@ -29,7 +29,7 @@ window['moment'] = moment;
 let surveyId = window['SURVEY_ID'];
 let userId = window['USER_ID'];
 
-require('../js/lrm-google.js');
+// require('../js/lrm-google.js');
 
 import 'leaflet-control-geocoder';
 // var polyline = require('@mapbox/polyline');

@@ -8,6 +8,11 @@ module.exports = {
 		routes: path.join(process.cwd(), './routes/routes.module.ts'),
 	},
 
+	node: {
+		fs: 'empty',
+		net: 'empty',
+		tls: 'empty',
+	},
 	output: {
 		path: path.join(process.cwd(), 'dist'),
 		filename: 'traisi-trip-diary-[name].module.js',
@@ -88,8 +93,8 @@ module.exports = {
     ],*/
 	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/],
 	plugins: [
-		
-		
+
+
 		/* new WebpackSystemRegister({
              systemjsDeps: [
                  /^ngx-bootstrap/, // any import that starts with react

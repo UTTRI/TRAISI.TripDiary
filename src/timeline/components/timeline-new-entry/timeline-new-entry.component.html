@@ -13,7 +13,7 @@
 				</button>
 			</div>
 			<div class="modal-body model-body-map">
-				<div [hidden]="!stepOne">
+				<div [hidden]="!stepOne" class="map-outer">
 					<ng-template #mapTemplate> <ng-container #container></ng-container> </ng-template>
 				</div>
 				<div *ngIf="stepTwo" class="input-part">

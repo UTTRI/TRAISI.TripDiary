@@ -13,8 +13,6 @@ import { TripDiaryService } from '../ts/trip-diary-service';
 
 import { indexOf as _indexOf } from 'lodash';
 import { SET_SWITCH_ROUTE_MODE_STATE } from '../ts/trips-actions';
-import SearchBox = google.maps.places.SearchBox;
-import PlaceResult = google.maps.places.PlaceResult;
 import { TripDiaryRouteModeController } from '../controllers/trip-diary-route-mode-controller';
 import { IModeConfig } from '../shared/survey-map-config';
 import { PassengerCountDialogController } from '../controllers/passenger-count-dialog-controller';

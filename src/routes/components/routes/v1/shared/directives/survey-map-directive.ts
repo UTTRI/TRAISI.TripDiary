@@ -6,9 +6,11 @@ const GOOGLE_API_KEY = 'AIzaSyBATO0zp9waSGcW13pWmzOl9PSaV0fdMVE';
 
 import 'leaflet-routing-machine';
 
+
+
 import { IAugmentedJQueryStatic } from 'angular';
-import { TripDiaryController } from '../../controllers/trip-diary-controller';
 import * as icons from './../survey-map-marker-type';
+
 
 import { TripLeg } from '../../ts/trip-leg';
 
@@ -18,7 +20,10 @@ import { isNullOrUndefined } from 'util';
 import { SurveyMapController } from '../controllers/survey-map-controller';
 import { TripRoute } from '../../ts/trip-route';
 
+
+
 import { last as _last, first as _first, delay as _delay, findIndex as _findIndex } from 'lodash';
+import { TripLinxRouter } from 'routes/extensions/triplinx.router';
 
 declare var L: any;
 
@@ -621,13 +626,18 @@ export class SurveyMapDirective {
 		if (routerMode !== 'transit') {
 			// console.log(this._tripDiaryService.getRouterMode(tripLeg._mode.modeName));
 			let googleRouter = {
+				service: 'triplinx',
+				options: new TripLinxRouter(this._$http)
+			};
+			/*let googleRouter = {
 				service: 'google',
+				options: new TripLinxRouter()
 				options: L.Routing.google({
 					travelMode: googleTravelMode[routerMode],
 					unitSystem: google.maps.UnitSystem.METRIC,
 					provideRouteAlternatives: true
 				})
-			};
+			};*/
 			return googleRouter;
 		} else {
 			let modes = [];
@@ -637,8 +647,9 @@ export class SurveyMapDirective {
 				modes.push('TRAIN');
 			}
 			let googleRouter = {
-				service: 'google',
-				options: L.Routing.google({
+				service: 'triplinx',
+				options: new TripLinxRouter(this._$http)
+				/*options: L.Routing.google({
 					travelMode: googleTravelMode[routerMode],
 					unitSystem: google.maps.UnitSystem.METRIC,
 					provideRouteAlternatives: true,
@@ -646,11 +657,13 @@ export class SurveyMapDirective {
 						departureTime: adjustedStartTime,
 						modes: modes
 					}
-				})
+				})*/
 			};
 			return googleRouter;
 		}
+
 	}
+
 
 	public addRouting(tripRoute: TripRoute, waypointChangedTrigger = false, forceRender = false) {
 		let lastTime = this._$scope['routeTime'];
@@ -808,6 +821,7 @@ export class SurveyMapDirective {
 
 										return marker;
 									},
+
 									geocoder: L.Control.Geocoder.nominatim(),
 									addWaypoints: allowWaypoints
 								}),
@@ -1183,10 +1197,10 @@ export class SurveyMapDirective {
 				direction: 'bottom'
 			});
 
-			$(marker._icon)
+			$(marker['_icon'])
 				.find('mark')
 				.css({ display: 'block' });
-			$(marker._icon)
+			$(marker['_icon'])
 				.find('mark')
 				.html('' + markerIndex);
 
@@ -1200,13 +1214,13 @@ export class SurveyMapDirective {
 			});
 
 			markerIndex++;
-			$(marker._icon)
+			$(marker['_icon'])
 				.find('mark')
 				.css({ display: 'block' });
-			$(marker._icon)
+			$(marker['_icon'])
 				.find('mark')
 				.html('' + markerIndex);
-			// console.log($(marker._icon));
+			// console.log($(marker['_icon']));
 			// console.log(marker);
 		} else if (tripRoute.tripLegs.length > 1) {
 			if (tripLeg2.id === _first(tripRoute.tripLegs).id) {
@@ -1220,10 +1234,10 @@ export class SurveyMapDirective {
 					direction: 'bottom'
 				});
 
-				$(marker._icon)
+				$(marker['_icon'])
 					.find('mark')
 					.css({ display: 'block' });
-				$(marker._icon)
+				$(marker['_icon'])
 					.find('mark')
 					.html('' + markerIndex);
 
@@ -1232,10 +1246,10 @@ export class SurveyMapDirective {
 
 				markerIndex++;
 
-				$(marker._icon)
+				$(marker['_icon'])
 					.find('mark')
 					.css({ display: 'block' });
-				$(marker._icon)
+				$(marker['_icon'])
 					.find('mark')
 					.html('' + markerIndex);
 
@@ -1248,10 +1262,10 @@ export class SurveyMapDirective {
 				marker.addTo(this._map);
 				this.addDeleteModeSwitchPopup(marker, tripLegIndex);
 				this._layersByRoute[tripRoute.id].push(marker);
-				$(marker._icon)
+				$(marker['_icon'])
 					.find('mark')
 					.css({ display: 'block' });
-				$(marker._icon)
+				$(marker['_icon'])
 					.find('mark')
 					.html('' + markerIndex);
 
@@ -1265,10 +1279,10 @@ export class SurveyMapDirective {
 					permanent: true,
 					direction: 'bottom'
 				});
-				$(marker._icon)
+				$(marker['_icon'])
 					.find('mark')
 					.css({ display: 'block' });
-				$(marker._icon)
+				$(marker['_icon'])
 					.find('mark')
 					.html('' + markerIndex);
 			} else {
@@ -1277,10 +1291,10 @@ export class SurveyMapDirective {
 				this.addDeleteModeSwitchPopup(marker, markerIndex);
 				marker.addTo(this._map);
 				this._layersByRoute[tripRoute.id].push(marker);
-				$(marker._icon)
+				$(marker['_icon'])
 					.find('mark')
 					.css({ display: 'block' });
-				$(marker._icon)
+				$(marker['_icon'])
 					.find('mark')
 					.html('' + markerIndex);
 
@@ -1290,10 +1304,10 @@ export class SurveyMapDirective {
 				this.addDeleteModeSwitchPopup(marker, tripLegIndex);
 				marker.addTo(this._map);
 				this._layersByRoute[tripRoute.id].push(marker);
-				$(marker._icon)
+				$(marker['_icon'])
 					.find('mark')
 					.css({ display: 'block' });
-				$(marker._icon)
+				$(marker['_icon'])
 					.find('mark')
 					.html('' + markerIndex);
 			}
@@ -1309,16 +1323,16 @@ export class SurveyMapDirective {
 					marker.setIcon(icons.default.switchIconSummary);
 					marker.addTo(this._map);
 					this._layersByRoute[tripRoute.id].push(marker);
-					$(marker._icon)
+					$(marker['_icon'])
 						.find('mark')
 						.css({ display: 'block' });
-					$(marker._icon)
+					$(marker['_icon'])
 						.find('svg,i,img')
 						.remove();
-					$(marker._icon)
+					$(marker['_icon'])
 						.find('mark')
 						.html('' + String.fromCharCode(97 + waypointIndex).toUpperCase());
-					$(marker._icon).css({ 'pointer-events': 'none' });
+					$(marker['_icon']).css({ 'pointer-events': 'none' });
 					waypointIndex++;
 				}
 			}
