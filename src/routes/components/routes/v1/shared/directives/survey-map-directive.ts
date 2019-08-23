@@ -28,11 +28,11 @@ let MAPBOX_TILE_URL =
 
 let googleTravelMode = {};
 
-googleTravelMode['driver'] = 'DRIVING';
-googleTravelMode['bicycle'] = 'BICYCLING';
-googleTravelMode['transit'] = 'TRANSIT';
-googleTravelMode['walk'] = 'WALKING';
-googleTravelMode['wheelchair'] = 'WALKING';
+googleTravelMode['driver'] = 'Car';
+googleTravelMode['bicycle'] = 'Bike';
+googleTravelMode['transit'] = 'PT';
+googleTravelMode['walk'] = 'Bike';
+googleTravelMode['wheelchair'] = 'PT';
 
 let lineOptions = {};
 
@@ -254,7 +254,7 @@ export class SurveyMapDirective {
 			this._$scope.$emit('routingError');
 		}
 
-		setTimeout(function() {
+		setTimeout(() => {
 			this._$scope.$apply();
 		}, 0);
 		/* Update the scope
@@ -625,7 +625,7 @@ export class SurveyMapDirective {
 			// console.log(this._tripDiaryService.getRouterMode(tripLeg._mode.modeName));
 			let googleRouter = {
 				service: 'triplinx',
-				options: new TripLinxRouter(this._$http)
+				options: new TripLinxRouter(this._$http, googleTravelMode[routerMode])
 			};
 			/*let googleRouter = {
 				service: 'google',
@@ -646,7 +646,7 @@ export class SurveyMapDirective {
 			}
 			let googleRouter = {
 				service: 'triplinx',
-				options: new TripLinxRouter(this._$http)
+				options: new TripLinxRouter(this._$http, googleTravelMode[routerMode])
 				/*options: L.Routing.google({
 					travelMode: googleTravelMode[routerMode],
 					unitSystem: google.maps.UnitSystem.METRIC,

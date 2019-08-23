@@ -16,8 +16,6 @@ export class TripLinxRouter implements Routing.IRouter {
 		context?: {},
 		options?: Routing.RoutingOptions
 	): Routing.IRouter => {
-		console.log(waypoints);
-
 		/*
 
         [FromQuery] string origin, [FromQuery] string destination, [FromQuery] string date
@@ -33,7 +31,7 @@ export class TripLinxRouter implements Routing.IRouter {
 					departure: waypoints[0].latLng.lat + '|' + waypoints[0].latLng.lng,
 					arrival: waypoints[waypoints.length - 1].latLng.lat + '|' + waypoints[waypoints.length - 1].latLng.lng,
 					date: '2019-08-23_06-30',
-					mode: 'PT'
+					mode: this._mode
 				}
 			})
 			.then(value => {
@@ -97,7 +95,6 @@ export class TripLinxRouter implements Routing.IRouter {
 					];
 					route['inputWaypoints'] = route.waypoints || [];
 					routes.push(route);
-					console.log(route);
 				}
 				console.log(routes);
 				callback.call(context, null, routes);
@@ -106,5 +103,12 @@ export class TripLinxRouter implements Routing.IRouter {
 		return this;
 	};
 
-	public constructor(private _http: ng.IHttpService) {}
+	/**
+	 *
+	 * @param _http
+	 * @param _mode
+	 */
+	public constructor(private _http: ng.IHttpService, private _mode: string) {
+		console.log(this._mode);
+	}
 }
