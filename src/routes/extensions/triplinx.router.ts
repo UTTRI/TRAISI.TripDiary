@@ -54,6 +54,7 @@ export class TripLinxRouter implements Routing.IRouter {
 					console.log(trip);
 					for (let section of trip['sections']['Section']) {
 						let leg = section['Leg'];
+						
 						if (leg !== null && leg !== undefined) {
 							for (let pathLink of leg['pathLinks']['PathLink']) {
 								// console.log(pathLink);
@@ -69,9 +70,12 @@ export class TripLinxRouter implements Routing.IRouter {
 						} else {
 							let re = /[-]{0,1}[\d]*[\.]{0,1}[\d]+/g;
 							let coords = section['PTRide']['TripGeometry'].match(re);
+
 							if (coords !== null && coords.length >= 2) {
-								let coord = new LatLng(Number(coords[1]), Number(coords[0]));
-								route.coordinates.push(coord);
+								for (let i = 0; i < coords.length / 2; i += 2) {
+									let coord = new LatLng(Number(coords[i + 1]), Number(coords[i + 0]));
+									route.coordinates.push(coord);
+								}
 							}
 						}
 						route.instructions.push({

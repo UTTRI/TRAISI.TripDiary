@@ -6,11 +6,8 @@ const GOOGLE_API_KEY = 'AIzaSyBATO0zp9waSGcW13pWmzOl9PSaV0fdMVE';
 
 import 'leaflet-routing-machine';
 
-
-
 import { IAugmentedJQueryStatic } from 'angular';
 import * as icons from './../survey-map-marker-type';
-
 
 import { TripLeg } from '../../ts/trip-leg';
 
@@ -19,8 +16,6 @@ import { TripLocation } from '../../ts/trip-location';
 import { isNullOrUndefined } from 'util';
 import { SurveyMapController } from '../controllers/survey-map-controller';
 import { TripRoute } from '../../ts/trip-route';
-
-
 
 import { last as _last, first as _first, delay as _delay, findIndex as _findIndex } from 'lodash';
 import { TripLinxRouter } from 'routes/extensions/triplinx.router';
@@ -259,10 +254,13 @@ export class SurveyMapDirective {
 			this._$scope.$emit('routingError');
 		}
 
-		/* Update the scope */
-		if (!this._$scope.$$phase) {
+		setTimeout(function() {
 			this._$scope.$apply();
-		}
+		}, 0);
+		/* Update the scope
+		if (!this._$scope.$$phase) {
+
+		}*/
 	};
 	/**
 	 * Called when waypoints are changed on the active route.
@@ -661,9 +659,7 @@ export class SurveyMapDirective {
 			};
 			return googleRouter;
 		}
-
 	}
-
 
 	public addRouting(tripRoute: TripRoute, waypointChangedTrigger = false, forceRender = false) {
 		let lastTime = this._$scope['routeTime'];
