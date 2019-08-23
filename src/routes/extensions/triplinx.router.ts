@@ -44,17 +44,16 @@ export class TripLinxRouter implements Routing.IRouter {
 					let route: any = {};
 					route.waypoints = [];
 					route.coordinates = [];
-					route.name = '';
+					route.name = 'Route Information';
 					route.summary = {
 						totalDistance: trip['Distance'],
 						totalTime: trip['Duration']
 					};
 					route.instructions = [];
 
-					console.log(trip);
 					for (let section of trip['sections']['Section']) {
 						let leg = section['Leg'];
-						
+
 						if (leg !== null && leg !== undefined) {
 							for (let pathLink of leg['pathLinks']['PathLink']) {
 								// console.log(pathLink);
