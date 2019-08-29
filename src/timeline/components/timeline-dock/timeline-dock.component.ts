@@ -163,9 +163,7 @@ export class TimelineDockComponent implements OnInit {
 	 *
 	 * @param dropResult
 	 */
-	public onDrop(dropResult: IDropResult): void {
-		console.log('in drop');
-		console.log(dropResult); 
+	public onDrop(dropResult: IDropResult): void { 
 		if (this.dragOver) {
 			if (!(dropResult.payload in this.dockItems)) {
 				if (dropResult.removedIndex !== null) {

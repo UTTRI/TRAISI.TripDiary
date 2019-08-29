@@ -14,14 +14,15 @@ import {
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 
-import { BsModalRef, ModalDirective, ModalBackdropComponent, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, ModalDirective, BsModalService } from 'ngx-bootstrap/modal';
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
 import { TimelineConfiguration } from '../../models/timeline-configuration.model';
+import iconMap from 'shared/icon-map';
 
 /**
- * A component that represents a timeline entry. An entry can appear on the shelf, dock or 
+ * A component that represents a timeline entry. An entry can appear on the shelf, dock or
  * other places.
- * 
+ *
  * @export
  * @class TimelineEntryItemComponent
  * @implements {OnInit}
@@ -79,19 +80,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	public editPurpose: any;
 
 	public get icon() {
-		if (this.model.purpose === 'home') {
-			return 'fas fa-home';
-		} else if (this.model.purpose === 'work') {
-			return 'fas fa-building';
-		} else if (this.model.purpose === 'school') {
-			return 'fas fa-school';
-		} else if (this.model.purpose === 'daycare') {
-			return 'fas fa-child';
-		} else if (this.model.purpose === 'facilitate_passenger') {
-			return 'fas fa-car-side';
-		} else {
-			return 'fas fa-edit';
-		}
+		return iconMap[this.model.purpose];
 	}
 
 	public modalRef: BsModalRef;
@@ -104,7 +93,11 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	 * @param {TimelineService} _timelineService
 	 * @memberof TimelineEntryItemComponent
 	 */
-	constructor(private _element: ElementRef, private _timelineService: TimelineService, private _modalService: BsModalService) {}
+	constructor(
+		private _element: ElementRef,
+		private _timelineService: TimelineService,
+		private _modalService: BsModalService
+	) {}
 
 	/**
 	 * Angular's ngOnInit
@@ -139,11 +132,9 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 				Object.assign({}, this.model),
 				true
 			);
-
 		} else {
 			this.editPurpose = this.model.purpose;
 			this._modelRef = this._modalService.show(this.confirmPurposeTemplate);
-
 		}
 	}
 
@@ -156,21 +147,11 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	public callback(value): void {}
 
 	/**
-	 *
-	 */
-	/**
-	 *
-	 *
 	 * @memberof TimelineEntryItemComponent
 	 */
 	public editLocation(): void {}
 
 	/**
-	 *
-	 */
-	/**
-	 *
-	 *
 	 * @param {*} entry
 	 * @memberof TimelineEntryItemComponent
 	 */
@@ -181,11 +162,6 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	}
 
 	/**
-	 *
-	 */
-	/**
-	 *
-	 *
 	 * @memberof TimelineEntryItemComponent
 	 */
 	public delete(): void {
@@ -197,8 +173,6 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	}
 
 	/**
-	 *
-	 *
 	 * @memberof TimelineEntryItemComponent
 	 */
 	public confirmPurpose(): void {

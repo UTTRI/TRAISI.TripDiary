@@ -5,6 +5,7 @@ import { DndDropEvent } from 'ngx-drag-drop';
 import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
 import { IDropResult } from 'ngx-smooth-dnd';
 import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component';
+import iconMap from 'shared/icon-map';
 @Component({
 	selector: 'timeline-slot',
 	template: require('./timeline-slot.component.html').toString(),
@@ -27,19 +28,7 @@ export class TimelineSlotComponent implements OnInit {
 	public dragActive: boolean = false;
 
 	public get icon() {
-		if (this.model.purpose === 'home') {
-			return 'fas fa-home';
-		} else if (this.model.purpose === 'work') {
-			return 'fas fa-building';
-		} else if (this.model.purpose === 'school') {
-			return 'fas fa-school';
-		} else if (this.model.purpose === 'daycare') {
-			return 'fas fa-child';
-		} else if (this.model.purpose === 'facilitate_passenger') {
-			return 'fas fa-car-side';
-		} else {
-			return 'fas fa-edit';
-		}
+		return iconMap[this.model.purpose];
 	}
 
 	/**
