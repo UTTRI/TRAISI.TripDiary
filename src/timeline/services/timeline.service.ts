@@ -1,5 +1,12 @@
-import { Injectable, TemplateRef, Inject, Injector, ViewContainerRef, ApplicationRef, EmbeddedViewRef } from '@angular/core';
-import { TimelineState } from '../models/timeline-state.model';
+import {
+	Injectable,
+	TemplateRef,
+	Inject,
+	Injector,
+	ViewContainerRef,
+	ApplicationRef,
+	EmbeddedViewRef
+} from '@angular/core';
 import { TimelineConfiguration } from '../models/timeline-configuration.model';
 import { ReplaySubject, BehaviorSubject, Subject, Observable } from '../shared/rxjs';
 import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
@@ -85,7 +92,7 @@ export class TimelineService {
 		private injector: Injector,
 		@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer
 	) {
-		this.initializeConfiguration();
+		// this.initializeConfiguration();
 		this._availableLocations = [];
 		this._timelineLocations = [];
 
@@ -94,10 +101,14 @@ export class TimelineService {
 		this.timelineItemRemoved = new Subject<TimelineEntry>();
 	}
 
+	public init(configPurposes: []): void {
+		this.initializeConfiguration(configPurposes);
+	}
+
 	/**
 	 * Initialie the base configuration data
 	 */
-	private initializeConfiguration(): void {
+	private initializeConfiguration(configPurposes: []): void {
 		this._configuration = new ReplaySubject(1);
 
 		let startTime: Date = new Date();
@@ -109,16 +120,29 @@ export class TimelineService {
 		endTime.setHours(3);
 		endTime.setMinutes(59);
 
-		this._configuration.next({
-			startTime: startTime,
-			endTime: endTime,
-			purposes: [
+		let purposes = [];
+
+		if (configPurposes.length > 0) {
+			for (let purpose of configPurposes) {
+				purposes.push({
+					key: purpose,
+					label: purpose
+				});
+			}
+		} else {
+			purposes = [
 				{ key: 'home', label: 'Home' },
 				{ key: 'work', label: 'Work' },
 				{ key: 'school', label: 'School' },
 				{ key: 'daycare', label: 'Daycare' },
 				{ key: 'facilitate_passenger', label: 'Facilitate Passenger' }
-			]
+			];
+		}
+
+		this._configuration.next({
+			startTime: startTime,
+			endTime: endTime,
+			purposes: purposes
 		});
 	}
 
@@ -127,8 +151,10 @@ export class TimelineService {
 			this._isStartEndLocationsDifferent = false;
 		} else {
 			if (
-				this._timelineLocations[0].latitude !== this._timelineLocations[this._timelineLocations.length - 1].latitude &&
-				this._timelineLocations[0].longitude !== this._timelineLocations[this._timelineLocations.length - 1].longitude
+				this._timelineLocations[0].latitude !==
+					this._timelineLocations[this._timelineLocations.length - 1].latitude &&
+				this._timelineLocations[0].longitude !==
+					this._timelineLocations[this._timelineLocations.length - 1].longitude
 			) {
 				this._isStartEndLocationsDifferent = true;
 			} else {

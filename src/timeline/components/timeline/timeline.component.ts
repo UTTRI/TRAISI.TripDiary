@@ -101,7 +101,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 *
 	 * @memberof TimelineComponent
 	 */
-	public ngAfterContentInit(): void { }
+	public ngAfterContentInit(): void {}
 
 	/**
 	 *
@@ -123,34 +123,40 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this.isStep2 = false;
 		}
 
-		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
-			result.forEach(responses => {
-				let purpose = JSON.parse(responses.configuration.purpose).id;
+		this.surveyResponderService
+			.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location)
+			.subscribe(result => {
+				result.forEach(responses => {
+					let purpose = JSON.parse(responses.configuration.purpose).id;
 
-				let respondentName = responses.respondent.name;
+					let respondentName = responses.respondent.name;
 
-				let locationName: string = respondentName === undefined ? purpose : respondentName + ' - ' + purpose;
-				responses.responseValues.forEach(responseValue => {
-					const element = responseValue;
+					let locationName: string =
+						respondentName === undefined ? purpose : respondentName + ' - ' + purpose;
+					responses.responseValues.forEach(responseValue => {
+						const element = responseValue;
 
-					let location: TimelineEntry = {
-						address: element.address,
-						latitude: element.latitude,
-						purpose: purpose !== undefined ? purpose : 'Prior Location',
-						longitude: element.longitude,
-						timeA: new Date(1900, 0, 0, 0, 0, 0, 0),
-						timeB: new Date(1900, 0, 0, 0, 0, 0, 0),
-						pipedLocation: true,
-						id: Symbol(),
-						locationType: TimelineLocationType.Undefined,
-						name: locationName
-					};
-					location.timeA.setHours(0);
-					location.timeA.setMinutes(0);
-					this._timelineService.addShelfLocation(location);
+						let location: TimelineEntry = {
+							address: element.address,
+							latitude: element.latitude,
+							purpose: purpose !== undefined ? purpose : 'Prior Location',
+							longitude: element.longitude,
+							timeA: new Date(1900, 0, 0, 0, 0, 0, 0),
+							timeB: new Date(1900, 0, 0, 0, 0, 0, 0),
+							pipedLocation: true,
+							id: Symbol(),
+							locationType: TimelineLocationType.Undefined,
+							name: locationName
+						};
+						location.timeA.setHours(0);
+						location.timeA.setMinutes(0);
+						this._timelineService.addShelfLocation(location);
+					});
 				});
 			});
-		});
+
+		this._timelineService.init(this.configuration['purpose'].replace(/"/g, '').split(' | '));
+		console.log(this.configuration);
 	}
 
 	/**
@@ -167,7 +173,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 *
 	 * @memberof TimelineComponent
 	 */
-	public saveNewLocation(): void { }
+	public saveNewLocation(): void {}
 
 	/**
 	 *
@@ -194,7 +200,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * @param type
 	 * @param $event
 	 */
-	public handler(type: string, $event: ModalDirective) { }
+	public handler(type: string, $event: ModalDirective) {}
 
 	/**
 	 *
@@ -212,7 +218,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 *
 	 * @memberof TimelineComponent
 	 */
-	public ngAfterViewChecked(): void { }
+	public ngAfterViewChecked(): void {}
 
 	/**
 	 * Navigates internal next
@@ -296,7 +302,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 *
 	 * @memberof TimelineComponent
 	 */
-	public onQuestionHidden(): void { }
+	public onQuestionHidden(): void {}
 
 	/**
 	 *
@@ -390,7 +396,10 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 				} else {
 					this.popover.hide();
 				}
-				if (this._timelineService.isTimelineStatevalid && !this._timelineService.hasAdjacentIdenticalLocations) {
+				if (
+					this._timelineService.isTimelineStatevalid &&
+					!this._timelineService.hasAdjacentIdenticalLocations
+				) {
 					this.validationState.emit(ResponseValidationState.VALID);
 				} else {
 					this.validationState.emit(ResponseValidationState.INVALID);

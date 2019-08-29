@@ -174,7 +174,6 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		// console.log(factories);
 		let sub = Object.keys(this._questionLoaderService.componentFactories).forEach(key => {
 			let factory = this._questionLoaderService.componentFactories[key];
-			console.log(key); 
 			if (factory.selector === 'traisi-map-question') {
 				componentRef = this.mapTemplate.createComponent(factory, undefined, this.injector);
 
