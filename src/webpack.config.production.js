@@ -51,18 +51,22 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				use: [
+					'to-string-loader',
 					{
-						loader: 'style-loader'
-					},
-					{
-						loader: 'css-loader'
+						loader: 'css-loader',
+						options: {
+							sourceMap: false
+						}
 					},
 					{
 						loader: 'sass-loader',
 						options: {
-							sourceMap: true,
-							data: '@import "_styles";',
-							includePaths: [path.join(__dirname, 'assets')]
+							sourceMap: false,
+
+							sassOptions: {
+								data: '@import "_styles";',
+								includePaths: [path.join(__dirname, 'assets')]
+							}
 						}
 					}
 				]

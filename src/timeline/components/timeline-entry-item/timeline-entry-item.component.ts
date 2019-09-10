@@ -54,25 +54,25 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	@Input()
 	public timelineNewEntry: TimelineNewEntryComponent;
 
-	@ViewChild('editTimelineEntryTemplate')
+	@ViewChild('editTimelineEntryTemplate', { static: true })
 	editTimelineEntryTemplateRef: TemplateRef<any>;
 
-	@ViewChild('editMapModal')
+	@ViewChild('editMapModal', { static: true })
 	editMapModalTemplateRef: TemplateRef<any>;
 
-	@ViewChild('mapModalTemplate', { read: ViewContainerRef })
+	@ViewChild('mapModalTemplate', { read: ViewContainerRef, static: true })
 	mapModalTemplateRef: ViewContainerRef;
 
-	@ViewChild('mapContainer', { read: ViewContainerRef })
+	@ViewChild('mapContainer', { read: ViewContainerRef, static: true })
 	mapControlViewContainerRef: ViewContainerRef;
 
-	@ViewChild('mapModalTemplate')
+	@ViewChild('mapModalTemplate', { static: true })
 	mapModal: ModalDirective;
 
-	@ViewChildren(ViewContainerRef, { read: ViewContainerRef })
+	@ViewChildren(ViewContainerRef, { read: ViewContainerRef})
 	viewChildren!: QueryList<ViewContainerRef>;
 
-	@ViewChild('confirmPurposeTemplate')
+	@ViewChild('confirmPurposeTemplate', { static: true })
 	public confirmPurposeTemplate: TemplateRef<any>;
 
 	private _modelRef: BsModalRef;

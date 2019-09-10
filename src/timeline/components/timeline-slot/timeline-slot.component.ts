@@ -1,9 +1,11 @@
+
+
 import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { DndDropEvent } from 'ngx-drag-drop';
 
 import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
-import { IDropResult } from 'ngx-smooth-dnd';
+import { DropResult } from 'ngx-smooth-dnd';
 import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component';
 import iconMap from 'shared/icon-map';
 @Component({
@@ -85,7 +87,7 @@ export class TimelineSlotComponent implements OnInit {
 	 *
 	 * @param dropResult
 	 */
-	public onDrop(dropResult: IDropResult): void {
+	public onDrop(dropResult: DropResult): void {
 		if (this.dragOver) {
 			let model: TimelineEntry = Object.assign({}, dropResult.payload);
 

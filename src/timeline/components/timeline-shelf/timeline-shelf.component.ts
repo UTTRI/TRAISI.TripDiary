@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
-import { ContainerComponent, DraggableComponent, IDropResult } from 'ngx-smooth-dnd';
+import { ContainerComponent, DraggableComponent, DropResult } from 'ngx-smooth-dnd';
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
 /**
  * Component for the timeline shelf. 
@@ -18,7 +18,7 @@ import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-en
 export class TimelineShelfComponent implements OnInit {
 	public shelfItems: Array<TimelineEntry>;
 
-	@ViewChild('shelfContainer)')
+	@ViewChild('shelfContainer)', { static: true })
 	shelfContainer: ContainerComponent;
 
 	@Input()
@@ -45,7 +45,7 @@ export class TimelineShelfComponent implements OnInit {
 	 *
 	 * @param dropResult
 	 */
-	public onDrop(dropResult: IDropResult): void { }
+	public onDrop(dropResult: DropResult): void { }
 
 	/**
 	 * Gets tooltip

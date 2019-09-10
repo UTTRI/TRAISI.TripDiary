@@ -25,10 +25,10 @@ import { AfterViewInit } from '@angular/core';
 export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterContentInit {
 	modalRef: ModalDirective;
 
-	@ViewChild('newEntryModal')
+	@ViewChild('newEntryModal', { static: true })
 	newTimelineEntryTemplateRef: ModalDirective;
 
-	@ViewChild('mapTemplate', { read: ViewContainerRef })
+	@ViewChild('mapTemplate', { read: ViewContainerRef, static:true})
 	mapTemplate: ViewContainerRef;
 
 	public configuration: TimelineConfiguration;

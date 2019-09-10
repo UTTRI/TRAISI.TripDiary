@@ -17,7 +17,7 @@ export class RoutesComponent extends SurveyQuestion<ResponseTypes.Json> implemen
 	/**
 	 * View child of routes component
 	 */
-	@ViewChild('routesV1')
+	@ViewChild('routesV1', { static: true })
 	private _routesV1: ElementRef;
 
 	public timelineLocations: Array<TimelineEntry>;

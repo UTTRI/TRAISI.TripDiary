@@ -3,7 +3,6 @@ import { UpgradeModule } from '@angular/upgrade/static';
 
 import { ResponseTypes, SurveyQuestion, OnSurveyQuestionInit, GroupMember } from 'traisi-question-sdk';
 import { TripDiaryModule } from '../routes/v1/ts';
-import { element } from '../../../node_modules/@angular/core/src/render3/instructions';
 
 @Component({
 	selector: 'traisi-routes-v1',
@@ -14,7 +13,7 @@ export class RoutesV1Component implements OnInit {
 	public typeName: string;
 	public icon: string;
 
-	@ViewChild('div')
+	@ViewChild('div', { static: true })
 	divRef: ElementRef;
 
 	@Input('surveyId')

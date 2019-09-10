@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation, ViewChild, ViewChildren, TemplateRef } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
-import { IDropResult } from 'ngx-smooth-dnd';
+import { DropResult } from 'ngx-smooth-dnd';
 import { TimelineEntry, TimelineLocationType } from '../../models/timeline-entry.model';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
@@ -32,12 +32,12 @@ export class TimelineDockComponent implements OnInit {
 	/* @ViewChild('startSlotPopover')
 	public startSlotPopover: PopoverDirective; */
 
-	@ViewChild('confirmPurposeTemplate')
+	@ViewChild('confirmPurposeTemplate', { static: true })
 	public confirmPurposeTemplate: TemplateRef<any>;
 
 	private _tempEntry: TimelineEntry;
 
-	private _tempDropResult: IDropResult;
+	private _tempDropResult: DropResult;
 
 	private _modelRef: BsModalRef;
 
@@ -49,10 +49,10 @@ export class TimelineDockComponent implements OnInit {
 
 	public showPlaceholder = false;
 
-	@ViewChild('popover')
+	@ViewChild('popover', { static: true })
 	public popover: PopoverDirective;
 
-	@ViewChild('endPopover')
+	@ViewChild('endPopover', { static: true })
 	public endPopover: PopoverDirective;
 
 	public shouldShowPlaceholder(): void {
@@ -163,7 +163,7 @@ export class TimelineDockComponent implements OnInit {
 	 *
 	 * @param dropResult
 	 */
-	public onDrop(dropResult: IDropResult): void { 
+	public onDrop(dropResult: DropResult): void { 
 		if (this.dragOver) {
 			if (!(dropResult.payload in this.dockItems)) {
 				if (dropResult.removedIndex !== null) {

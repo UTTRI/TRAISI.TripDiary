@@ -54,22 +54,22 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	implements OnInit, AfterViewInit, AfterViewChecked, OnVisibilityChanged, AfterContentInit {
 	public editModel: TimelineEntry;
 
-	@ViewChild(PopoverDirective)
+	@ViewChild(PopoverDirective, { static: true })
 	public popovers;
 
-	@ViewChild(TemplateRef, { read: ViewContainerRef })
+	@ViewChild(TemplateRef, { read: ViewContainerRef, static: true })
 	public inputTemplate: ViewContainerRef;
 
-	@ViewChild('newEntry')
+	@ViewChild('newEntry', { static: true })
 	public newEntryDialog: TimelineNewEntryComponent;
 
-	@ViewChild('timelineDock')
+	@ViewChild('timelineDock', { static: true })
 	public timelineDock: TimelineDockComponent;
 
-	@ViewChild('popover')
+	@ViewChild('popover', { static: true })
 	public popover: PopoverDirective;
 
-	@ViewChild('duplicateLocationPopTemplate')
+	@ViewChild('duplicateLocationPopTemplate', { static: true })
 	public confirmPurposeTemplate: TemplateRef<any>;
 
 	@ViewChildren(SurveyQuestionInternalViewDirective)

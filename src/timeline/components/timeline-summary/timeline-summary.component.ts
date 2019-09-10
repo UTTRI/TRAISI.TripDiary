@@ -45,7 +45,7 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 	@Input()
 	public timeline: TimelineComponent;
 
-	@ViewChild('f')
+	@ViewChild('f', { static: true })
 	public inputForm: NgForm;
 
 	/**
@@ -69,8 +69,6 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 			this.timeEntries = [];
 			this.times = [];
 
-			console.log('timeline summary');
-			console.log(locations);
 
 			for (let i = 0; i < locations.length; i++) {
 				this.times.push(new Date());

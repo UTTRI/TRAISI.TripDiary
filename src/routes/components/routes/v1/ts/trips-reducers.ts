@@ -556,7 +556,7 @@ export function tripsState(state = INITIAL_STATE, action) {
 			newState.endLocation = endLocation;
 
 			// deserialize tripRoutes
-			let tripRoutes = plainToClass(TripRoute, newState.tripRoutes);
+			let tripRoutes = <TripRoute[]><any>plainToClass(TripRoute, newState.tripRoutes);
 			if (isNullOrUndefined(tripRoutes)) {
 				tripRoutes = [];
 			}
