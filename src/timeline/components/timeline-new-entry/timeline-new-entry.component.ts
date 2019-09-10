@@ -17,9 +17,10 @@ import { SurveyQuestion } from 'traisi-question-sdk';
 import { TimelineConfiguration } from '../../models/timeline-configuration.model';
 import { AfterViewInit } from '@angular/core';
 
+import templateString from './timeline-new-entry.component.html';
 @Component({
 	selector: 'timeline-new-entry',
-	template: require('./timeline-new-entry.component.html').toString(),
+	template: templateString,
 	styles: [require('./timeline-new-entry.component.scss').toString()]
 })
 export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterContentInit {
@@ -28,7 +29,7 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 	@ViewChild('newEntryModal', { static: true })
 	newTimelineEntryTemplateRef: ModalDirective;
 
-	@ViewChild('mapTemplate', { read: ViewContainerRef, static:true})
+	@ViewChild('mapTemplate', { read: ViewContainerRef, static: true })
 	mapTemplate: ViewContainerRef;
 
 	public configuration: TimelineConfiguration;
@@ -52,10 +53,7 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		private timelineService: TimelineService,
 		private injector: Injector,
 		@Inject('QuestionLoaderService') private _questionLoaderService
-	) {
-
-
-	}
+	) {}
 
 	/**
 	 * Callback for when the new entry dialog is hidden
@@ -79,7 +77,6 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		this.stepTwo = false;
 		this.stepThree = false;
 	};
-
 
 	/**
 	 *
@@ -192,7 +189,7 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		});
 	}
 
-	public ngAfterViewInit(): void { }
+	public ngAfterViewInit(): void {}
 
-	public ngAfterContentInit(): void { }
+	public ngAfterContentInit(): void {}
 }

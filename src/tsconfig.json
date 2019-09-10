@@ -10,14 +10,16 @@
 		"module": "amd",
 		"outDir": "dist",
 		"lib": ["es2016", "dom"],
-		"types": ["googlemaps","webpack-env","node"],
+		"types": ["googlemaps", "webpack-env", "node"],
 		"baseUrl": ".",
-		
+
 		"paths": {
 			"traisi-sdk/*": ["../../traisi-v2/src/TRAISI.SDK/Client/src/*"],
-			"traisi-question-sdk": ["../../traisi-v2/src/TRAISI.SDK/Client/src"],
-			
+			"traisi-question-sdk": ["../../traisi-v2/src/TRAISI.SDK/Client/src"]
 		}
+	},
+	"angularCompilerOptions": {
+		"enableResourceInlining": true
 	},
 
 	"exclude": ["dist/**/*", "node_modules/**/*"]

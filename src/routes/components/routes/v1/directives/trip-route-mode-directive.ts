@@ -19,10 +19,12 @@ import * as L from 'leaflet';
 import { ITripDiaryRouteModeScope } from '../interfaces/trip-route-mode-diary-scope';
 import { ISurveyMapRoute } from '../shared/survey-map-route';
 
+import template from '../templates/trip-route-mode.html';
+
 export class TripRouteModeDirective {
 	// public templateUrl = '/static/dist/directives/trips/templates/trip-route-mode.html';
 
-	public template = require('../templates/trip-route-mode.html');
+	public template = template;
 	scope = {};
 	private _$scope: ng.IScope;
 	private _element: ng.IAugmentedJQuery;
@@ -110,7 +112,6 @@ export class TripRouteModeDirective {
 		if (this._$scope['tds']['state']['activeRouteIndex'] >= 0) {
 			return this._$scope['tds']['state']['tripRoutes'][this._$scope['tds']['state']['activeRouteIndex']];
 		} else {
-			
 			return null;
 		}
 	};
@@ -330,10 +331,7 @@ export class TripRouteModeDirective {
 		private _$timeout: ng.ITimeoutService,
 		private _$mdDialog
 	) {
-		let unsubscribe = $ngRedux.connect(
-			this.mapStateToThis,
-			TripsActions
-		)(this);
+		let unsubscribe = $ngRedux.connect(this.mapStateToThis, TripsActions)(this);
 
 		$ngRedux.subscribe(() => {
 			let state = $ngRedux.getState().tripsState as TripsQuestionState;

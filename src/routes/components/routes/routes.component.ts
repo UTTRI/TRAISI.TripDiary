@@ -5,9 +5,10 @@ import { ResponseTypes, SurveyQuestion, OnSurveyQuestionInit, SurveyResponder } 
 import { RoutesService } from '../../services/routes.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 
+import templateString from './routes.component.html';
 @Component({
 	selector: 'traisi-routes-question',
-	template: require('./routes.component.html').toString(),
+	template: templateString,
 	styles: [require('./routes.component.scss').toString()]
 })
 export class RoutesComponent extends SurveyQuestion<ResponseTypes.Json> implements OnInit, AfterViewInit {

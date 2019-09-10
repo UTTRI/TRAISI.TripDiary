@@ -8,9 +8,11 @@ import { Subscription } from 'rxjs';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TimelineConfiguration } from '../../models/timeline-configuration.model';
 
+import templateString from './timeline-dock.component.html';
+
 @Component({
 	selector: 'timeline-dock',
-	template: require('./timeline-dock.component.html').toString(),
+	template: templateString,
 	styles: [require('./timeline-dock.component.scss').toString()]
 })
 export class TimelineDockComponent implements OnInit {

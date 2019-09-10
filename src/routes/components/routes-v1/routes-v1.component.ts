@@ -3,10 +3,10 @@ import { UpgradeModule } from '@angular/upgrade/static';
 
 import { ResponseTypes, SurveyQuestion, OnSurveyQuestionInit, GroupMember } from 'traisi-question-sdk';
 import { TripDiaryModule } from '../routes/v1/ts';
-
+import templateString from './routes-v1.component.html';
 @Component({
 	selector: 'traisi-routes-v1',
-	template: require('./routes-v1.component.html').toString(),
+	template: templateString,
 	styles: [require('./routes-v1.component.scss').toString()]
 })
 export class RoutesV1Component implements OnInit {

@@ -37,6 +37,7 @@ export interface IModeConfig {
 	customRoute?: ICustomRouteInput;
 	routerMode: string;
 	autoSaveRoute?: boolean;
+	accessibility?: string;
 }
 
 export interface ILocationConfig {

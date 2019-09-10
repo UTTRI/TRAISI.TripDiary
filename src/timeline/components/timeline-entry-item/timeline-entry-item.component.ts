@@ -28,9 +28,12 @@ import iconMap from 'shared/icon-map';
  * @implements {OnInit}
  * @implements {AfterViewInit}
  */
+import templateString from './timeline-entry-item.component.html';
+
+
 @Component({
 	selector: 'timeline-entry-item',
-	template: require('./timeline-entry-item.component.html').toString(),
+	template: templateString,
 	styles: [require('./timeline-entry-item.component.scss').toString()]
 })
 export class TimelineEntryItemComponent implements OnInit, AfterViewInit {

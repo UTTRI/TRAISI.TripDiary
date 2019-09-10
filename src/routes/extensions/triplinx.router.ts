@@ -37,7 +37,6 @@ export class TripLinxRouter implements Routing.IRouter {
 			.then(value => {
 				let trips = value.data['Data'][0]['response']['trips']['Trip'];
 
-				console.log(trips);
 				for (let trip of trips) {
 					let route: any = {};
 					route.waypoints = [];

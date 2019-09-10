@@ -43,10 +43,14 @@ import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.compone
  * @implements {OnVisibilityChanged}
  * @implements {AfterContentInit}
  */
+
+
+
+
 @Component({
 	entryComponents: [TimelineWedgeComponent],
 	selector: 'traisi-timeline-question',
-	template: require('./timeline.component.html').toString(),
+	templateUrl: './timeline.component.html',
 	styles: [require('./timeline.component.scss').toString()],
 	providers: [TimelineService]
 })
@@ -394,7 +398,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 				if (this._timelineService.hasAdjacentIdenticalLocations) {
 					this.popover.show();
 				} else {
-					this.popover.hide();
+					// this.popover.hide();
 				}
 				if (
 					this._timelineService.isTimelineStatevalid &&

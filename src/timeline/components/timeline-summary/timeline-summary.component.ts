@@ -21,9 +21,13 @@ import { TimelineComponent } from '../timeline/timeline.component';
 import { ResponseValidationState } from 'traisi-question-sdk';
 import { NgForm } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
+
+
+import templateString from './timeline-summary.component.html';
+
 @Component({
 	selector: 'timeline-summary',
-	template: require('./timeline-summary.component.html').toString(),
+	template: templateString,
 	styles: [require('./timeline-summary.component.scss').toString()]
 })
 export class TimelineSummaryComponent implements OnInit, AfterViewInit {

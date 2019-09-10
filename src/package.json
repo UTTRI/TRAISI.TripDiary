@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config=webpack.config.js",
     "prod": "webpack --config=webpack.config.production.js -p --optimize-minimize --display-modules",
-    "watch": "webpack --config=webpack.config.dev.js --watch --progress"
+    "watch": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack --config=webpack.config.dev.js --watch --progress"
   },
   "author": "University of Toronto",
   "license": "ISC",
@@ -77,9 +77,12 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.3",
+    "@angular/compiler": "^8.2.5",
+    "@angular/compiler-cli": "^8.2.5",
     "@angular/language-service": "^8.2.5",
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
+    "@ngtools/webpack": "^8.3.3",
     "@types/angular-animate": "^1.5.10",
     "@types/angular-cookies": "^1.4.5",
     "@types/angular-material": "^1.1.68",
@@ -97,6 +100,7 @@
     "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
     "file-loader": "^4.2.0",
+    "html-loader": "^0.5.5",
     "image-webpack-loader": "^6.0.0",
     "json-loader": "^0.5.7",
     "ngx-bootstrap": "^5.1.1",

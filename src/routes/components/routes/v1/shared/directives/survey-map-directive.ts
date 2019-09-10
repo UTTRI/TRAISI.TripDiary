@@ -28,6 +28,11 @@ let MAPBOX_TILE_URL =
 
 let googleTravelMode = {};
 
+import template from '../templates/survey-map.html';
+import deletePopupTemplateUrl from '../../templates/trip-diary-route-delete-popup.html';
+import switchModePopupTemplateUrl from '../../templates/trip-diary-switch-mode-popup.html';
+import deleteModeSwitchTemplateUrl from '../../templates/trip-diary-delete-mode-switch-popup.html';
+
 googleTravelMode['driver'] = 'Car';
 googleTravelMode['bicycle'] = 'Bike';
 googleTravelMode['transit'] = 'PT';
@@ -132,10 +137,10 @@ export class SurveyMapDirective {
 	private _attrs: ng.IAttributes;
 	private _routers: { [id: string]: any };
 	private _layersByRoute: { [id: string]: any[] };
-	public template = require('../templates/survey-map.html');
-	deletePopupTemplateUrl = require('../../templates/trip-diary-route-delete-popup.html');
-	switchModePopupTemplateUrl = require('../../templates/trip-diary-switch-mode-popup.html');
-	deleteModeSwitchTemplateUrl = require('../../templates/trip-diary-delete-mode-switch-popup.html');
+	// public template = require('../templates/survey-map.html');
+	// deletePopupTemplateUrl = require('../../templates/trip-diary-route-delete-popup.html');
+	// switchModePopupTemplateUrl = require('../../templates/trip-diary-switch-mode-popup.html');
+	// deleteModeSwitchTemplateUrl = require('../../templates/trip-diary-delete-mode-switch-popup.html');
 	link: ($scope: ISurveyMapScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => void;
 	private _reverseGeocodeResult: string;
 
@@ -797,7 +802,7 @@ export class SurveyMapDirective {
 											};
 											// this._$templateRequest(this.deletePopupTemplateUrl).then(template => {
 
-											let template = this.deletePopupTemplateUrl;
+											let template = deletePopupTemplateUrl;
 											let toolTip = this._$compile(
 												$('<span></span>')
 													.html(template)
@@ -954,7 +959,7 @@ export class SurveyMapDirective {
 		};
 
 		// this._$templateRequest(this.deleteModeSwitchTemplateUrl).then(template => {
-		let template = this.deleteModeSwitchTemplateUrl;
+		let template = deleteModeSwitchTemplateUrl;
 		let toolTip = this._$compile(
 			$('<span></span>')
 				.html(template)

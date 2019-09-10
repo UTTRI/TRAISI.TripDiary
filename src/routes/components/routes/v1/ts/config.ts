@@ -81,6 +81,87 @@ export let config: ISurveyMapConfig = {
 		}
 	},
 	modes: [
+
+		{
+			name: 'Accessibile',
+			icon: 'fas fa-wheelchair',
+			category: 'accessible',
+			subModes: [
+				{
+					name: 'accessible-car',
+					icon: 'fas fa-car',
+					category: 'accessible',
+					routerMode: 'driver',
+					allowAddWaypoints: false,
+					colour: '#03A9F4',
+					displayName: 'Driver',
+					showPrompt: false,
+					autoSaveRoute: true,
+					noRouteMessage: 'No Route Message'
+				},
+				{
+					name: 'accessible-passenger',
+					icon: 'fas fa-car',
+					category: 'accessible',
+					routerMode: 'driver',
+					allowAddWaypoints: false,
+					colour: '#03A9F4',
+					displayName: 'Accessibility adapted vehicle as passenger',
+					showPrompt: false,
+					autoSaveRoute: true,
+					noRouteMessage: 'No Route Message'
+				},
+				{
+					name: 'accessible-paratransit',
+					icon: 'fas fa-car',
+					category: 'accessible',
+					routerMode: 'driver',
+					allowAddWaypoints: false,
+					colour: '#03A9F4',
+					displayName: 'Paratransit service (e.g., bus transport for disabled persons)',
+					showPrompt: false,
+					autoSaveRoute: false,
+					accessibility: 'wheelchair',
+					noRouteMessage: 'No Route Message'
+				},
+				{
+					name: 'Walk',
+					icon: 'fas fa-walk',
+					category: 'accessible',
+					routerMode: 'driver',
+					allowAddWaypoints: false,
+					colour: '#03A9F4',
+					displayName: 'Driver',
+					showPrompt: false,
+					autoSaveRoute: true,
+					noRouteMessage: 'No Route Message'
+				}
+				/*{
+					name: 'driver',
+					icon: 'fas fa-car',
+					category: 'accessible',
+					routerMode: 'driver',
+					allowAddWaypoints: false,
+					colour: '#03A9F4',
+					displayName: 'Driver',
+					showPrompt: false,
+					autoSaveRoute: true,
+					noRouteMessage: 'No Route Message'
+				}
+				{
+					name: 'driver',
+					icon: 'fas fa-car',
+					category: 'accessible',
+					routerMode: 'driver',
+					allowAddWaypoints: false,
+					colour: '#03A9F4',
+					displayName: 'Driver',
+					showPrompt: false,
+					autoSaveRoute: true,
+					noRouteMessage: 'No Route Message'
+				} */
+			]
+		},
 		{
 			name: 'driver',
 			icon: 'fas fa-car',
@@ -93,10 +174,10 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'driver',
 					allowAddWaypoints: true,
 					colour: '#03A9F4',
-					displayName: 'Driver',
-					showPrompt: true,
-					dialogTitle: 'Driver Details',
-					customRoute: routeNotKnown,
+					displayName: 'Drive with passengers',
+					autoSaveRoute: true,
+					showPrompt: false,
+
 					dataInputs: [
 						{
 							key: 'passengerCount',
@@ -120,7 +201,6 @@ export let config: ISurveyMapConfig = {
 						}
 					],
 					noRouteMessage: "I don't know the route.",
-					autoSaveRoute: false
 				},
 				{
 					name: 'passenger',
@@ -130,7 +210,7 @@ export let config: ISurveyMapConfig = {
 					colour: '#037bb8',
 					routerMode: 'driver',
 					customRoute: routeNotKnown,
-					displayName: 'Passenger',
+					displayName: 'Drive with passenger',
 					showPrompt: false,
 					noRouteMessage: "I don't know the route.",
 					dialogTitle: 'What was the type of vehicle?',
@@ -150,19 +230,63 @@ export let config: ISurveyMapConfig = {
 							]
 						}
 					],
-					autoSaveRoute: false
+					autoSaveRoute: true
+				}
+			]
+		},
+		{
+			name: 'passenger',
+			icon: 'fas fa-car',
+			category: 'passenger',
+			subModes: [
+				{
+					name: 'passenger1',
+					icon: 'fas fa-car',
+					category: 'passenger',
+					routerMode: 'driver',
+					allowAddWaypoints: true,
+					colour: '#03A9F4',
+					displayName: 'DAuto passenger (driver is a household member)',
+					autoSaveRoute: true,
+					showPrompt: false,
+
+					/*dataInputs: [
+						{
+							key: 'passengerCount',
+							label: 'Passenger Count',
+							type: DataInputType.INTEGER,
+							min: 0,
+							max: 10,
+							placeholder: 'How many passengers were in the vehicle?'
+						},
+						{
+							key: 'vehicleType',
+							label: 'Type of Vehicle',
+							type: DataInputType.OPTIONS,
+
+							placeholder: 'What is the type of vehicle?',
+							optionList: [
+								{ value: 'household_owned', label: 'Household owned vehicle' },
+								{ value: 'leased_vehicle', label: 'Leased vehicle' },
+								{ value: 'commercial_carshare', label: 'Commercial carshare' }
+							]
+						}
+					], */
+					noRouteMessage: "I don't know the route.",
 				},
 				{
-					name: 'motorcycle',
-					icon: 'fas fa-motorcycle',
+					name: 'passenger',
+					icon: 'fas fa-car',
 					category: 'driver',
-					displayName: 'Motorcycle',
 					allowAddWaypoints: true,
-					colour: '#014664',
+					colour: '#037bb8',
 					routerMode: 'driver',
+					customRoute: routeNotKnown,
+					displayName: 'Auto passenger (driver is a household member)',
 					showPrompt: false,
 					noRouteMessage: "I don't know the route.",
-					autoSaveRoute: false
+					dialogTitle: 'What was the type of vehicle?',
+					autoSaveRoute: true
 				}
 			]
 		},
@@ -186,7 +310,7 @@ export let config: ISurveyMapConfig = {
 					autoSaveRoute: false
 				},
 				{
-					name: 'Intercity Bus',
+					name: 'Streetcat',
 					icon: 'fas fa-bus-alt',
 					category: 'transit',
 					allowAddWaypoints: false,
@@ -201,7 +325,7 @@ export let config: ISurveyMapConfig = {
 					autoSaveRoute: false
 				},
 				{
-					name: 'intercity_rail',
+					name: 'Subway R/T',
 					icon: 'fas fa-bus-alt',
 					category: 'transit',
 					allowAddWaypoints: false,
@@ -215,7 +339,7 @@ export let config: ISurveyMapConfig = {
 					shouldAskNoRouteDescription: true
 				},
 				{
-					name: 'paratransit',
+					name: 'Go Bus',
 					icon: 'fas fa-bus-alt',
 					category: 'transit',
 					allowAddWaypoints: true,
@@ -230,7 +354,7 @@ export let config: ISurveyMapConfig = {
 					shouldAskNoRouteDescription: false
 				},
 				{
-					name: 'schoolbus',
+					name: 'GO Train',
 					icon: 'fas fa-bus-alt',
 					category: 'transit',
 					customRoute: routeNotKnown,
@@ -245,7 +369,7 @@ export let config: ISurveyMapConfig = {
 				},
 
 				{
-					name: 'private_shuttle',
+					name: 'Inter-campus shuttle',
 					icon: 'fas fa-bus-alt',
 					category: 'transit',
 					customRoute: routeNotKnown,
@@ -261,22 +385,96 @@ export let config: ISurveyMapConfig = {
 			]
 		},
 		{
-			name: 'walk',
-			icon: 'fas fa-walking',
-			category: 'walk',
+			name: 'ridehialing',
+			icon: 'fas fa-taxi',
+			category: 'ridehailing',
 
 			subModes: [
 				{
-					name: 'walk',
-					icon: 'fas fa-walking',
-					category: 'walk',
+					name: 'ridehailing-moped',
+					icon: 'fas fa-taxi',
+					category: 'ridehailing',
 					customRoute: routeNotKnown,
 					allowAddWaypoints: true,
 					colour: '#4CAF50',
-					displayName: 'Walking',
+					displayName: 'Motorcycle, moped or scooter',
 					showPrompt: false,
 					routerMode: 'walk',
-					autoSaveRoute: false,
+					autoSaveRoute: true,
+					noRouteMessage: 'I don\'t know the route.'
+				},
+				{
+					name: 'ridehailing-taxu',
+					icon: 'fas fa-taxi',
+					category: 'ridehailing',
+					customRoute: routeNotKnown,
+					allowAddWaypoints: true,
+					colour: '#4CAF50',
+					displayName: 'Taxi',
+					showPrompt: false,
+					routerMode: 'walk',
+					autoSaveRoute: true,
+					noRouteMessage: 'I don\'t know the route.'
+				},
+				{
+					name: 'ridehailing-appshare',
+					icon: 'fas fa-taxi',
+					category: 'ridehailing',
+					customRoute: routeNotKnown,
+					allowAddWaypoints: true,
+					colour: '#4CAF50',
+					displayName: 'Ride-hailing alone (UberX, Lyft etc.)',
+					showPrompt: false,
+					routerMode: 'walk',
+					autoSaveRoute: true,
+					noRouteMessage: 'I don\'t know the route.'
+				},{
+					name: 'ridehailing-appshare-pool',
+					icon: 'fas fa-taxi',
+					category: 'ridehailing',
+					customRoute: routeNotKnown,
+					allowAddWaypoints: true,
+					colour: '#4CAF50',
+					displayName: 'Ride-hailing with other passengers (Uberpool, Lyftpool etc.)',
+					showPrompt: false,
+					routerMode: 'walk',
+					autoSaveRoute: true,
+					noRouteMessage: 'I don\'t know the route.'
+				},{
+					name: 'ridehailing-parkandride',
+					icon: 'fas fa-taxi',
+					category: 'ridehailing',
+					customRoute: routeNotKnown,
+					allowAddWaypoints: true,
+					colour: '#4CAF50',
+					displayName: 'Ride-hailing with other passengers (Uberpool, Lyftpool etc.)',
+					showPrompt: false,
+					routerMode: 'walk',
+					autoSaveRoute: true,
+					noRouteMessage: 'I don\'t know the route.'
+				},{
+					name: 'ridehailing-kissandride',
+					icon: 'fas fa-taxi',
+					category: 'ridehailing',
+					customRoute: routeNotKnown,
+					allowAddWaypoints: true,
+					colour: '#4CAF50',
+					displayName: 'Kiss and Ride',
+					showPrompt: false,
+					routerMode: 'walk',
+					autoSaveRoute: true,
+					noRouteMessage: 'I don\'t know the route.'
+				},{
+					name: 'ridehailing-bikeandride',
+					icon: 'fas fa-taxi',
+					category: 'ridehailing',
+					customRoute: routeNotKnown,
+					allowAddWaypoints: true,
+					colour: '#4CAF50',
+					displayName: 'Bike and Ride',
+					showPrompt: false,
+					routerMode: 'walk',
+					autoSaveRoute: true,
 					noRouteMessage: 'I don\'t know the route.'
 				}
 			]
@@ -341,7 +539,8 @@ export let config: ISurveyMapConfig = {
 					customRoute: routeNotKnown,
 					routerMode: 'walk',
 					noRouteMessage: 'I don\'t know the route.',
-					autoSaveRoute: false
+					autoSaveRoute: false,
+					accessibility: 'WheelChair'
 				},
 				{
 					name: 'paratransit',

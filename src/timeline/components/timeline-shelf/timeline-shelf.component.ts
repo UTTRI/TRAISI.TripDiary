@@ -4,15 +4,18 @@ import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { ContainerComponent, DraggableComponent, DropResult } from 'ngx-smooth-dnd';
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
 /**
- * Component for the timeline shelf. 
+ * Component for the timeline shelf.
  *
  * @export
  * @class TimelineShelfComponent
  * @implements {OnInit}
  */
+
+import templateString from './timeline-shelf.component.html';
+
 @Component({
 	selector: 'timeline-shelf',
-	template: require('./timeline-shelf.component.html').toString(),
+	template: templateString,
 	styles: [require('./timeline-shelf.component.scss').toString()]
 })
 export class TimelineShelfComponent implements OnInit {
@@ -45,15 +48,15 @@ export class TimelineShelfComponent implements OnInit {
 	 *
 	 * @param dropResult
 	 */
-	public onDrop(dropResult: DropResult): void { }
+	public onDrop(dropResult: DropResult): void {}
 
 	/**
 	 * Gets tooltip
-	 * @param index 
-	 * @returns  
+	 * @param index
+	 * @returns
 	 */
 	public getTooltip(index: number): string {
-		let val =  `${this.shelfItems[index].name}<br/>${this.shelfItems[index].address}`;
+		let val = `${this.shelfItems[index].name}<br/>${this.shelfItems[index].address}`;
 		return val;
 	}
 

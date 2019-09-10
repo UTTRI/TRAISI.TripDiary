@@ -26,6 +26,7 @@ import SurveyManagerController from '../ts/survey-manager-controller';
 
 declare var displaySnackBar: (string, any, number) => any;
 
+import dynamicDialogcTemplate from '../templates/dynamic-dialog.html';
 /**
  *
  */
@@ -304,7 +305,7 @@ export class TripDiaryRouteModeController {
 					data: data
 				},
 
-				template: require('../templates/dynamic-dialog.html'),
+				template: dynamicDialogcTemplate,
 				parent: ng.element(document.body),
 				targetEvent: evt,
 				clickOutsideToClose: false,
