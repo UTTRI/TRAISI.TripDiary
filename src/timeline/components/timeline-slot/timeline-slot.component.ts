@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ElementRef, Input, ViewEncapsulation } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { DndDropEvent } from 'ngx-drag-drop';
 
@@ -12,6 +12,8 @@ import templateString from './timeline-slot.component.html';
 @Component({
 	selector: 'timeline-slot',
 	template: templateString,
+	
+	encapsulation: ViewEncapsulation.None,
 	styles: [require('./timeline-slot.component.scss').toString()]
 })
 export class TimelineSlotComponent implements OnInit {

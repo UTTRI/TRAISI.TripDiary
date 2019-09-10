@@ -1,10 +1,12 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 
 import templateString from './timeline-wedge.component.html';
 @Component({
 	selector: 'timeline-wedge',
 	template: templateString,
+
+	encapsulation: ViewEncapsulation.None,
 	styles: [require('./timeline-wedge.component.scss').toString()]
 })
 export class TimelineWedgeComponent implements OnInit {

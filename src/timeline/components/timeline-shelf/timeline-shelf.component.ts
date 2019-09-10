@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Input, ViewEncapsulation } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { ContainerComponent, DraggableComponent, DropResult } from 'ngx-smooth-dnd';
@@ -16,6 +16,7 @@ import templateString from './timeline-shelf.component.html';
 @Component({
 	selector: 'timeline-shelf',
 	template: templateString,
+	encapsulation: ViewEncapsulation.None,
 	styles: [require('./timeline-shelf.component.scss').toString()]
 })
 export class TimelineShelfComponent implements OnInit {

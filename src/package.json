@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config=webpack.config.js",
     "prod": "webpack --config=webpack.config.production.js -p --optimize-minimize --display-modules",
-    "watch": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack --config=webpack.config.dev.js --watch --progress"
+    "watch": "webpack --config=webpack.config.dev.js --watch --progress"
   },
   "author": "University of Toronto",
   "license": "ISC",
@@ -91,7 +91,9 @@
     "@types/node": "^12.7.4",
     "@types/webpack-env": "^1.14.0",
     "angular-animate": "^1.7.8",
+    "angular-router-loader": "^0.8.5",
     "angular-translate": "^2.18.1",
+    "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",

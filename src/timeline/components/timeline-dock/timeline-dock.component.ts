@@ -13,7 +13,8 @@ import templateString from './timeline-dock.component.html';
 @Component({
 	selector: 'timeline-dock',
 	template: templateString,
-	styles: [require('./timeline-dock.component.scss').toString()]
+	encapsulation: ViewEncapsulation.None,
+	styles: [require('./timeline-dock.component.scss')]
 })
 export class TimelineDockComponent implements OnInit {
 	typeName: string;
@@ -61,8 +62,6 @@ export class TimelineDockComponent implements OnInit {
 		let hasStart = false;
 		let hasEnd = false;
 
-
-
 		this._locations.forEach(v => {
 			if (v.locationType === TimelineLocationType.EndLocation) {
 				hasEnd = true;
@@ -83,7 +82,11 @@ export class TimelineDockComponent implements OnInit {
 	 * @param _element
 	 * @param timelineService
 	 */
-	constructor(private _element: ElementRef, private timelineService: TimelineService, private _modalService: BsModalService) {
+	constructor(
+		private _element: ElementRef,
+		private timelineService: TimelineService,
+		private _modalService: BsModalService
+	) {
 		this.typeName = 'Trip Diary Timeline';
 		this.icon = 'business-time';
 		this.dockItems = [];
@@ -165,14 +168,17 @@ export class TimelineDockComponent implements OnInit {
 	 *
 	 * @param dropResult
 	 */
-	public onDrop(dropResult: DropResult): void { 
+	public onDrop(dropResult: DropResult): void {
 		if (this.dragOver) {
 			if (!(dropResult.payload in this.dockItems)) {
 				if (dropResult.removedIndex !== null) {
 					this.dockItems.splice(dropResult.removedIndex, 1);
 					if (dropResult.addedIndex !== null) {
 						this.dockItems.splice(dropResult.addedIndex, 0, dropResult.payload);
-						this.timelineService.reorderTimelineLocation(dropResult.removedIndex + 1, dropResult.addedIndex + 1);
+						this.timelineService.reorderTimelineLocation(
+							dropResult.removedIndex + 1,
+							dropResult.addedIndex + 1
+						);
 					}
 				} else {
 					let model: TimelineEntry = Object.assign({}, dropResult.payload);
@@ -234,5 +240,5 @@ export class TimelineDockComponent implements OnInit {
 	 * @private
 	 * @memberof TimelineShelfComponent
 	 */
-	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => { };
+	private onShelfItemsChanged: (items: Array<TimelineEntry>) => void = (items: Array<TimelineEntry>) => {};
 }

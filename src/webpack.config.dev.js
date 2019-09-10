@@ -3,7 +3,6 @@ const WebpackSystemRegister = require('webpack-system-register');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
-import {AngularCompilerPlugin } from '@ngtools/webpack';
 module.exports = {
 	entry: {
 		timeline: path.join(process.cwd(), './timeline/timeline.module.ts'),
@@ -26,13 +25,13 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
-				loaders: [
-					{
-						loader: '@ngtools/webpack',
-					},
-				],
-
+				test: /\.ts$/,
+				loaders: ['angular2-template-loader?keepUrl=true', 'angular-router-loader'],
+				exclude: [/node_modules/]
+			},
+			{
+				test: /\.tsx?$/,
+				use: 'ts-loader'
 			},
 			{
 				test: /\.html?$/,
@@ -100,10 +99,7 @@ module.exports = {
 	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/],
 	plugins: [
 		new CopyWebpackPlugin([{ from: 'dist/', to: '../../../traisi-v2/src/TRAISI/development', toType: 'dir' }], { debug: 'warning' }),
-		new AngularCompilerPlugin({
-			tsConfigPath: './tsconfig.json',
-			// entryModule: './web/modern/main.ts#AppModule'
-		  }),
+
 		/* new WebpackSystemRegister({
              systemjsDeps: [
                  /^ngx-bootstrap/, // any import that starts with react

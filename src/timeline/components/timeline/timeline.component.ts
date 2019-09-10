@@ -9,7 +9,8 @@ import {
 	TemplateRef,
 	ViewChild,
 	ViewChildren,
-	ViewContainerRef
+	ViewContainerRef,
+	ViewEncapsulation
 } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
@@ -46,11 +47,13 @@ import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.compone
 
 
 
-
+import templateString from './timeline.component.html';
 @Component({
 	entryComponents: [TimelineWedgeComponent],
 	selector: 'traisi-timeline-question',
-	templateUrl: './timeline.component.html',
+	template: templateString,
+	
+	encapsulation: ViewEncapsulation.None,
 	styles: [require('./timeline.component.scss').toString()],
 	providers: [TimelineService]
 })

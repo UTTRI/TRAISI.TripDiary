@@ -21,6 +21,7 @@ import templateString from './timeline-new-entry.component.html';
 @Component({
 	selector: 'timeline-new-entry',
 	template: templateString,
+	encapsulation: ViewEncapsulation.None,
 	styles: [require('./timeline-new-entry.component.scss').toString()]
 })
 export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterContentInit {

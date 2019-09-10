@@ -9,7 +9,8 @@ import {
 	QueryList,
 	ViewChildren,
 	AfterViewInit,
-	ContentChildren
+	ContentChildren,
+	ViewEncapsulation
 } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
@@ -30,10 +31,10 @@ import iconMap from 'shared/icon-map';
  */
 import templateString from './timeline-entry-item.component.html';
 
-
 @Component({
 	selector: 'timeline-entry-item',
 	template: templateString,
+	encapsulation: ViewEncapsulation.None,
 	styles: [require('./timeline-entry-item.component.scss').toString()]
 })
 export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
@@ -72,7 +73,7 @@ export class TimelineEntryItemComponent implements OnInit, AfterViewInit {
 	@ViewChild('mapModalTemplate', { static: true })
 	mapModal: ModalDirective;
 
-	@ViewChildren(ViewContainerRef, { read: ViewContainerRef})
+	@ViewChildren(ViewContainerRef, { read: ViewContainerRef })
 	viewChildren!: QueryList<ViewContainerRef>;
 
 	@ViewChild('confirmPurposeTemplate', { static: true })

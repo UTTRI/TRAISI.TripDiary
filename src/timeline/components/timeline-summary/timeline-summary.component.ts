@@ -9,7 +9,8 @@ import {
 	QueryList,
 	ViewChildren,
 	AfterViewInit,
-	ContentChildren
+	ContentChildren,
+	ViewEncapsulation
 } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
@@ -28,6 +29,8 @@ import templateString from './timeline-summary.component.html';
 @Component({
 	selector: 'timeline-summary',
 	template: templateString,
+	
+	encapsulation: ViewEncapsulation.None,
 	styles: [require('./timeline-summary.component.scss').toString()]
 })
 export class TimelineSummaryComponent implements OnInit, AfterViewInit {
