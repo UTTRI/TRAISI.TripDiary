@@ -24,17 +24,29 @@ export class TripLinxRouter implements Routing.IRouter {
         (yyyy-MM-dd_HH-mm
         */
 
+		let today = new Date();
+		let dd = String(today.getDate()).padStart(2, '0');
+		let mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+		let yyyy = today.getFullYear();
+
 		let routes: any[] = [];
 		this._http
 			.get(this._geoServiceUrl + '/routeplanner', {
 				params: {
 					departure: waypoints[0].latLng.lat + '|' + waypoints[0].latLng.lng,
 					arrival: waypoints[waypoints.length - 1].latLng.lat + '|' + waypoints[waypoints.length - 1].latLng.lng,
-					date: '2019-08-23_06-30',
+					date: `${yyyy}-${mm}-${dd}_${today
+						.getHours()
+						.toString()
+						.padStart(2, '0')}-${today
+						.getSeconds()
+						.toString()
+						.padStart(2, '0')}`,
 					mode: this._mode
 				}
 			})
 			.then(value => {
+				console.log(value);
 				let trips = value.data['Data'][0]['response']['trips']['Trip'];
 
 				for (let trip of trips) {
@@ -81,10 +93,10 @@ export class TripLinxRouter implements Routing.IRouter {
 						// break;
 					}
 
-					//route.coordinates = [
-					//	new LatLng(waypoints[0].latLng.lat, waypoints[0].latLng.lng),
-					//	new LatLng(waypoints[waypoints.length - 1].latLng.lat, waypoints[waypoints.length - 1].latLng.lng)
-					//];
+					// route.coordinates = [
+					// 	new LatLng(waypoints[0].latLng.lat, waypoints[0].latLng.lng),
+					// 	new LatLng(waypoints[waypoints.length - 1].latLng.lat, waypoints[waypoints.length - 1].latLng.lng)
+					// ];
 					route.waypoints = [
 						Routing.waypoint(new LatLng(waypoints[0].latLng.lat, waypoints[0].latLng.lng), 'Name'),
 						Routing.waypoint(
@@ -107,7 +119,7 @@ export class TripLinxRouter implements Routing.IRouter {
 	 * @param _http
 	 * @param _mode
 	 */
-	public constructor(private _http: ng.IHttpService, private _mode: string) {
-		console.log(this._mode);
+	public constructor(private _http: ng.IHttpService, private _mode: string, private _triplinxModes: string) {
+		console.log('constructor: ' + this._mode + ' ' + this._triplinxModes);
 	}
 }

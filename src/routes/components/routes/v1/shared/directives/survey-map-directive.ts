@@ -626,12 +626,18 @@ export class SurveyMapDirective {
 			startTime.getMinutes()
 		);
 		let routerMode = this._tripDiaryService.getRouterMode(tripLeg._mode.modeName);
+		let modes = this._tripDiaryService.getModeProperty(tripLeg._mode.modeName, 'modes');
+
+		let googleRouter = {
+			service: 'triplinx',
+			options: new TripLinxRouter(this._$http, routerMode, modes)
+		};
+
+		return googleRouter;
+
 		if (routerMode !== 'transit') {
 			// console.log(this._tripDiaryService.getRouterMode(tripLeg._mode.modeName));
-			let googleRouter = {
-				service: 'triplinx',
-				options: new TripLinxRouter(this._$http, googleTravelMode[routerMode])
-			};
+
 			/*let googleRouter = {
 				service: 'google',
 				options: new TripLinxRouter()

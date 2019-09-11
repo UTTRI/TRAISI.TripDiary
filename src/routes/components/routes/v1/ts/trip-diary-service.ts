@@ -106,10 +106,7 @@ export class TripDiaryService {
 	 * @param _$ngRedux
 	 */
 	constructor(private _$ngRedux: any) {
-		let unsubscribe = _$ngRedux.connect(
-			this.mapStateToThis,
-			TripsActions
-		)(this);
+		let unsubscribe = _$ngRedux.connect(this.mapStateToThis, TripsActions)(this);
 
 		_$ngRedux.subscribe(this.stateSubscription);
 
@@ -366,7 +363,26 @@ export class TripDiaryService {
 			for (let subMode of mode.subModes) {
 				if (subMode.name === modeName) {
 					// console.log(subMode);
+
 					return subMode.routerMode;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param modeName 
+	 * @param property 
+	 */
+	public getModeProperty(modeName: string, property: string): string {
+		for (let mode of TripDiary.config.modes) {
+			for (let subMode of mode.subModes) {
+				if (subMode.name === modeName) {
+
+					return subMode[property];
 				}
 			}
 		}

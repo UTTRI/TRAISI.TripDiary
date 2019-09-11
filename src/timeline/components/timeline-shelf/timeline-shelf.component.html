@@ -1,6 +1,7 @@
 <div class="shelf-labels-container">
 
-	<span *ngFor="let item of shelfItems; index as i" class="shelf-item-label" [ngClass]="{'dragged': item.id === draggedItem.id}">
+	<span *ngFor="let item of shelfItems; index as i" class="shelf-item-label"
+		[ngClass]="{'dragged': item.id === draggedItem.id}">
 
 		<div class="timeline-entry-model-name">{{ item.name }}</div>
 		<div class="timeline-entry-model-address" [delay]="500" [tooltip]="item.address">{{item.address}}</div>
@@ -13,19 +14,22 @@
 
 <div class="timeline-shelf-inner-container">
 
-
-
-
-	<smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'copy'" [orientation]="'horizontal'" class="shelf-dnd-container"
-	 [groupName]="'timeline'" [getChildPayload]="getChildPayload" (dragStart)="onDragStart($event)" (dragEnd)="onDragEnd($event)"
-	 #shelfContainer [dragClass]="'timeline-entry-drag'" [nonDragAreaSelector]="'timeline-entry-model-info'">
+	<smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'copy'" [orientation]="'horizontal'"
+		class="shelf-dnd-container" [groupName]="'timeline'" [getChildPayload]="getChildPayload"
+		(dragStart)="onDragStart($event)" (dragEnd)="onDragEnd($event)" #shelfContainer
+		[dragClass]="'timeline-entry-drag'" [nonDragAreaSelector]="'timeline-entry-model-info'">
 		<smooth-dnd-draggable *ngFor="let item of shelfItems">
-			<div class="draggable-item" [ngClass]="{ 'draggable-item-shelf': item.id !== draggedItem.id,'dragged': item.id === draggedItem.id }" 
-			>
-				<timeline-entry-item [model]="item" [timelineNewEntry]="timelineNewEntry" [inShelf]="true"></timeline-entry-item>
+			<div class="draggable-item"
+				[ngClass]="{ 'draggable-item-shelf': item.id !== draggedItem.id,'dragged': item.id === draggedItem.id }">
+				<timeline-entry-item [model]="item" [timelineNewEntry]="timelineNewEntry" [inShelf]="true">
+				</timeline-entry-item>
 			</div>
 		</smooth-dnd-draggable>
 
-		<div class="col-xs-12 tshelf" *ngIf="shelfItems.length > 0"></div>
+
 	</smooth-dnd-container>
+	<div style="position:relative">
+		<div class="col-xs-12 tshelf" *ngIf="shelfItems.length > 0"></div>
+	</div>
+
 </div>

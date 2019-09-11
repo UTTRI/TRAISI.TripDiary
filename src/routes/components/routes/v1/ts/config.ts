@@ -31,7 +31,7 @@ let routeNotShown: ICustomRouteInput = {
 };
 
 let routeNotKnown: ICustomRouteInput = {
-	label: "I don't know my route",
+	label: 'I don\'t know my route',
 	routeKey: 'route_not_known'
 	// fieldAsSummary: "routeDescription",
 	// dialogTitle: "Route Description",
@@ -81,7 +81,6 @@ export let config: ISurveyMapConfig = {
 		}
 	},
 	modes: [
-
 		{
 			name: 'Accessibile',
 			icon: 'fas fa-wheelchair',
@@ -94,7 +93,7 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'driver',
 					allowAddWaypoints: false,
 					colour: '#03A9F4',
-					displayName: 'Driver',
+					displayName: 'Accessibility adapted vehicle as driver',
 					showPrompt: false,
 					autoSaveRoute: true,
 					noRouteMessage: 'No Route Message'
@@ -125,17 +124,42 @@ export let config: ISurveyMapConfig = {
 					noRouteMessage: 'No Route Message'
 				},
 				{
-					name: 'Walk',
+					name: 'accessible-walk',
 					icon: 'fas fa-walk',
 					category: 'accessible',
 					routerMode: 'driver',
 					allowAddWaypoints: false,
 					colour: '#03A9F4',
-					displayName: 'Driver',
+					displayName: 'Walk',
+					showPrompt: false,
+					autoSaveRoute: true,
+					noRouteMessage: 'No Route Message'
+				},
+				{
+					name: 'accessible-bicycle',
+					icon: 'fas fa-walk',
+					category: 'accessible',
+					routerMode: 'driver',
+					allowAddWaypoints: false,
+					colour: '#03A9F4',
+					displayName: 'Bicycle',
+					showPrompt: false,
+					autoSaveRoute: true,
+					noRouteMessage: 'No Route Message'
+				},
+				{
+					name: 'accessible-bikeshare',
+					icon: 'fas fa-walk',
+					category: 'accessible',
+					routerMode: 'driver',
+					allowAddWaypoints: false,
+					colour: '#03A9F4',
+					displayName: 'Bikeshare',
 					showPrompt: false,
 					autoSaveRoute: true,
 					noRouteMessage: 'No Route Message'
 				}
+
 				/*{
 					name: 'driver',
 					icon: 'fas fa-car',
@@ -168,13 +192,13 @@ export let config: ISurveyMapConfig = {
 			category: 'driver',
 			subModes: [
 				{
-					name: 'driver',
+					name: 'auto-drive-alone',
 					icon: 'fas fa-car',
 					category: 'driver',
 					routerMode: 'driver',
 					allowAddWaypoints: true,
 					colour: '#03A9F4',
-					displayName: 'Drive with passengers',
+					displayName: 'Drive alone',
 					autoSaveRoute: true,
 					showPrompt: false,
 
@@ -200,19 +224,19 @@ export let config: ISurveyMapConfig = {
 							]
 						}
 					],
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.'
 				},
 				{
-					name: 'passenger',
+					name: 'auto-drive-passenger-household',
 					icon: 'fas fa-car',
 					category: 'driver',
 					allowAddWaypoints: true,
 					colour: '#037bb8',
 					routerMode: 'driver',
 					customRoute: routeNotKnown,
-					displayName: 'Drive with passenger',
+					displayName: 'Drive with passenger(s) (household members only)',
 					showPrompt: false,
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					dialogTitle: 'What was the type of vehicle?',
 					dataInputs: [
 						{
@@ -246,33 +270,10 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'driver',
 					allowAddWaypoints: true,
 					colour: '#03A9F4',
-					displayName: 'DAuto passenger (driver is a household member)',
+					displayName: 'Auto passenger (driver is a household member)',
 					autoSaveRoute: true,
 					showPrompt: false,
-
-					/*dataInputs: [
-						{
-							key: 'passengerCount',
-							label: 'Passenger Count',
-							type: DataInputType.INTEGER,
-							min: 0,
-							max: 10,
-							placeholder: 'How many passengers were in the vehicle?'
-						},
-						{
-							key: 'vehicleType',
-							label: 'Type of Vehicle',
-							type: DataInputType.OPTIONS,
-
-							placeholder: 'What is the type of vehicle?',
-							optionList: [
-								{ value: 'household_owned', label: 'Household owned vehicle' },
-								{ value: 'leased_vehicle', label: 'Leased vehicle' },
-								{ value: 'commercial_carshare', label: 'Commercial carshare' }
-							]
-						}
-					], */
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.'
 				},
 				{
 					name: 'passenger',
@@ -284,7 +285,7 @@ export let config: ISurveyMapConfig = {
 					customRoute: routeNotKnown,
 					displayName: 'Auto passenger (driver is a household member)',
 					showPrompt: false,
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					dialogTitle: 'What was the type of vehicle?',
 					autoSaveRoute: true
 				}
@@ -296,88 +297,93 @@ export let config: ISurveyMapConfig = {
 			category: 'transit',
 			subModes: [
 				{
-					name: 'public_transit',
+					name: 'transit-bus',
 					icon: 'fas fa-bus-alt',
 					category: 'transit',
 					allowAddWaypoints: false,
 					colour: '#F44336',
-					displayName: 'Public Transit',
+					displayName: 'Transit bus',
 					showPrompt: false,
-					routerMode: 'transit',
+					routerMode: 'PT',
 					noRouteMessage: 'My route is not shown.',
 					shouldAskNoRouteDescription: true,
+					modes: 'BUS',
 					customRoute: routeNotShown,
 					autoSaveRoute: false
 				},
 				{
-					name: 'Streetcat',
-					icon: 'fas fa-bus-alt',
+					name: 'transit-streetcar',
+					icon: 'fas fa-subway',
 					category: 'transit',
 					allowAddWaypoints: false,
 					colour: '#cd3d34',
-					displayName: 'Intercity Bus',
+					displayName: 'Streetcar',
 					showPrompt: false,
+					modes: 'RAPID_TRANSIT|TRAMWAY',
 					noRouteMessage: 'My route is not shown.',
 					customRoute: routeNotShown,
-
-					routerMode: 'transit',
+					routerMode: 'PT',
 					shouldAskNoRouteDescription: true,
 					autoSaveRoute: false
 				},
 				{
-					name: 'Subway R/T',
-					icon: 'fas fa-bus-alt',
+					name: 'transit-subway-rt',
+					icon: 'fas fa-subway',
 					category: 'transit',
 					allowAddWaypoints: false,
 					colour: '#b23c33',
-					displayName: 'Intercity Rail',
+					displayName: 'Subway/RT',
 					showPrompt: false,
-					routerMode: 'transit',
+					routerMode: 'PT',
+					modes: 'METRO',
 					noRouteMessage: 'My route is not shown.',
 					customRoute: routeNotShown,
 					autoSaveRoute: false,
 					shouldAskNoRouteDescription: true
 				},
 				{
-					name: 'Go Bus',
+					name: 'transit-go-bus',
 					icon: 'fas fa-bus-alt',
-					category: 'transit',
+					category: 'PT',
 					allowAddWaypoints: true,
 					customRoute: routeNotKnown,
 					colour: '#9a342c',
-					displayName: 'Paratransit',
+					displayName: 'GO Bus',
 					showPrompt: false,
-					routerMode: 'driver',
-					noRouteMessage: "I don't know the route.",
+					modes: 'BUS',
+					routerMode: 'PT',
+					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: false,
 
 					shouldAskNoRouteDescription: false
 				},
 				{
-					name: 'GO Train',
-					icon: 'fas fa-bus-alt',
+					name: 'transit',
+					icon: 'fas fa-train',
 					category: 'transit',
 					customRoute: routeNotKnown,
 					allowAddWaypoints: true,
 					colour: '#9a342c',
-					routerMode: 'driver',
-					displayName: 'Schoolbus',
+					routerMode: 'PT',
+					displayName: 'GO Train',
 					showPrompt: false,
-					noRouteMessage: "I don't know the route.",
+					modes: 'TRAIN|LOCAL_TRAIN|LONG_DISTANCE_TRAIN',
+					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: false,
 					shouldAskNoRouteDescription: false
 				},
 
 				{
 					name: 'Inter-campus shuttle',
-					icon: 'fas fa-bus-alt',
+					icon: 'fas fa-bus-school',
 					category: 'transit',
 					customRoute: routeNotKnown,
 					allowAddWaypoints: true,
 					colour: '#92312a',
-					routerMode: 'driver',
-					displayName: 'Private Shuttle',
+					routerMode: 'PT',
+					displayName: 'Inter-campus shuttle',
 					showPrompt: false,
+					modes: 'SCHOOL',
 					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: false,
 					shouldAskNoRouteDescription: false
@@ -428,7 +434,8 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'walk',
 					autoSaveRoute: true,
 					noRouteMessage: 'I don\'t know the route.'
-				},{
+				},
+				{
 					name: 'ridehailing-appshare-pool',
 					icon: 'fas fa-taxi',
 					category: 'ridehailing',
@@ -440,7 +447,8 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'walk',
 					autoSaveRoute: true,
 					noRouteMessage: 'I don\'t know the route.'
-				},{
+				},
+				{
 					name: 'ridehailing-parkandride',
 					icon: 'fas fa-taxi',
 					category: 'ridehailing',
@@ -452,7 +460,8 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'walk',
 					autoSaveRoute: true,
 					noRouteMessage: 'I don\'t know the route.'
-				},{
+				},
+				{
 					name: 'ridehailing-kissandride',
 					icon: 'fas fa-taxi',
 					category: 'ridehailing',
@@ -464,7 +473,8 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'walk',
 					autoSaveRoute: true,
 					noRouteMessage: 'I don\'t know the route.'
-				},{
+				},
+				{
 					name: 'ridehailing-bikeandride',
 					icon: 'fas fa-taxi',
 					category: 'ridehailing',
@@ -478,7 +488,7 @@ export let config: ISurveyMapConfig = {
 					noRouteMessage: 'I don\'t know the route.'
 				}
 			]
-		}, /*
+		} /*
 		{
 			name: 'bicycle',
 			icon: 'fas fa-bicycle',
@@ -523,40 +533,6 @@ export let config: ISurveyMapConfig = {
 			]
 		}, */
 
-		{
-			name: 'wheelchair',
-			icon: 'fas fa-wheelchair',
-			category: 'wheelchair',
-			subModes: [
-				{
-					name: 'wheelchair',
-					icon: 'fas fa-wheelchair',
-					category: 'wheelchair',
-					allowAddWaypoints: true,
-					colour: '#bb3bff',
-					displayName: 'Wheelchair',
-					showPrompt: false,
-					customRoute: routeNotKnown,
-					routerMode: 'walk',
-					noRouteMessage: 'I don\'t know the route.',
-					autoSaveRoute: false,
-					accessibility: 'WheelChair'
-				},
-				{
-					name: 'paratransit',
-					icon: 'fas fa-bus-alt',
-					category: 'wheelchair',
-					allowAddWaypoints: true,
-					routerMode: 'driver',
-					colour: '#a036de',
-					displayName: 'Paratransit',
-					showPrompt: false,
-					customRoute: routeNotKnown,
-					noRouteMessage: 'My route is not shown.',
-					autoSaveRoute: false
-				}
-			]
-		},
 		/*
 		{
 			name: 'flight',

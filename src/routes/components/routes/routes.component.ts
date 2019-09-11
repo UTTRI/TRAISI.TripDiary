@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Inject } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Inject, ViewEncapsulation } from '@angular/core';
 import { UpgradeModule } from '@angular/upgrade/static';
 import { TripDiaryModule } from './v1/ts';
 import { ResponseTypes, SurveyQuestion, OnSurveyQuestionInit, SurveyResponder } from 'traisi-question-sdk';
@@ -9,12 +9,10 @@ import templateString from './routes.component.html';
 @Component({
 	selector: 'traisi-routes-question',
 	template: templateString,
+	encapsulation: ViewEncapsulation.None,
 	styles: [require('./routes.component.scss').toString()]
 })
 export class RoutesComponent extends SurveyQuestion<ResponseTypes.Json> implements OnInit, AfterViewInit {
-	public typeName: string;
-	public icon: string;
-
 	/**
 	 * View child of routes component
 	 */

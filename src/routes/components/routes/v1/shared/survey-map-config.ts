@@ -38,6 +38,7 @@ export interface IModeConfig {
 	routerMode: string;
 	autoSaveRoute?: boolean;
 	accessibility?: string;
+	modes?: string;
 }
 
 export interface ILocationConfig {

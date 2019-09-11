@@ -45,14 +45,13 @@ import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.compone
  * @implements {AfterContentInit}
  */
 
-
-
 import templateString from './timeline.component.html';
+import { of } from 'rxjs';
 @Component({
 	entryComponents: [TimelineWedgeComponent],
 	selector: 'traisi-timeline-question',
 	template: templateString,
-	
+
 	encapsulation: ViewEncapsulation.None,
 	styles: [require('./timeline.component.scss').toString()],
 	providers: [TimelineService]
@@ -130,40 +129,36 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this.isStep2 = false;
 		}
 
-		this.surveyResponderService
-			.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location)
-			.subscribe(result => {
-				result.forEach(responses => {
-					let purpose = JSON.parse(responses.configuration.purpose).id;
+		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
+			result.forEach(responses => {
+				let purpose = JSON.parse(responses.configuration.purpose).id;
 
-					let respondentName = responses.respondent.name;
+				let respondentName = responses.respondent.name;
+				let locationName: string =
+					respondentName === null || respondentName === undefined ? purpose : respondentName + ' - ' + purpose;
+				responses.responseValues.forEach(responseValue => {
+					const element = responseValue;
 
-					let locationName: string =
-						respondentName === undefined ? purpose : respondentName + ' - ' + purpose;
-					responses.responseValues.forEach(responseValue => {
-						const element = responseValue;
-
-						let location: TimelineEntry = {
-							address: element.address,
-							latitude: element.latitude,
-							purpose: purpose !== undefined ? purpose : 'Prior Location',
-							longitude: element.longitude,
-							timeA: new Date(1900, 0, 0, 0, 0, 0, 0),
-							timeB: new Date(1900, 0, 0, 0, 0, 0, 0),
-							pipedLocation: true,
-							id: Symbol(),
-							locationType: TimelineLocationType.Undefined,
-							name: locationName
-						};
-						location.timeA.setHours(0);
-						location.timeA.setMinutes(0);
-						this._timelineService.addShelfLocation(location);
-					});
+					let location: TimelineEntry = {
+						address: element.address,
+						latitude: element.latitude,
+						purpose: purpose !== undefined ? purpose : 'Prior Location',
+						longitude: element.longitude,
+						timeA: new Date(1900, 0, 0, 0, 0, 0, 0),
+						timeB: new Date(1900, 0, 0, 0, 0, 0, 0),
+						pipedLocation: true,
+						id: Symbol(),
+						locationType: TimelineLocationType.Undefined,
+						name: locationName
+					};
+					location.timeA.setHours(0);
+					location.timeA.setMinutes(0);
+					this._timelineService.addShelfLocation(location);
 				});
 			});
+		});
 
 		this._timelineService.init(this.configuration['purpose'].replace(/"/g, '').split(' | '));
-		console.log(this.configuration);
 	}
 
 	/**
@@ -397,16 +392,17 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this._timelineService.updateLocationsValidation();
 			this._timelineService.updateLocationsTimeValidation();
 
+			console.log('here');
+
 			if (this.isStep1) {
 				if (this._timelineService.hasAdjacentIdenticalLocations) {
 					this.popover.show();
 				} else {
-					// this.popover.hide();
+					if (this.popover !== undefined) {
+						this.popover.hide();
+					}
 				}
-				if (
-					this._timelineService.isTimelineStatevalid &&
-					!this._timelineService.hasAdjacentIdenticalLocations
-				) {
+				if (this._timelineService.isTimelineStatevalid && !this._timelineService.hasAdjacentIdenticalLocations) {
 					this.validationState.emit(ResponseValidationState.VALID);
 				} else {
 					this.validationState.emit(ResponseValidationState.INVALID);
