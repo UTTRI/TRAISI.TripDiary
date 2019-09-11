@@ -19,7 +19,7 @@ module.exports = {
 		libraryTarget: 'amd'
 	},
 	mode: 'development',
-	devtool: 'inline-source-map',
+	//devtool: 'inline-source-map',
 	optimization: { usedExports: true, sideEffects: true },
 	resolve: {
 		extensions: ['.ts', '.js'],
@@ -28,6 +28,11 @@ module.exports = {
 
 	module: {
 		rules: [
+			{
+				test: /\.ts$/,
+				loaders: ['angular2-template-loader?keepUrl=true', 'angular-router-loader'],
+				exclude: [/node_modules/]
+			},
 			{
 				test: /\.tsx?$/,
 				use: 'ts-loader'
@@ -50,13 +55,13 @@ module.exports = {
 					{
 						loader: 'css-loader',
 						options: {
-							sourceMap: true
+							sourceMap: false
 						}
 					},
 					{
 						loader: 'sass-loader',
 						options: {
-							sourceMap: true,
+							sourceMap: false,
 
 							sassOptions: {
 								data: '@import "_styles";',

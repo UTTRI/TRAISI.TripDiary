@@ -34,6 +34,11 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.ts$/,
+				loaders: ['angular2-template-loader?keepUrl=true', 'angular-router-loader'],
+				exclude: [/node_modules/]
+			},
+			{
 				test: /\.tsx?$/,
 				use: 'ts-loader'
 			},
