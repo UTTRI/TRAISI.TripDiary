@@ -634,44 +634,14 @@ export class SurveyMapDirective {
 		};
 
 		return googleRouter;
-
-		if (routerMode !== 'transit') {
-			// console.log(this._tripDiaryService.getRouterMode(tripLeg._mode.modeName));
-
-			/*let googleRouter = {
-				service: 'google',
-				options: new TripLinxRouter()
-				options: L.Routing.google({
-					travelMode: googleTravelMode[routerMode],
-					unitSystem: google.maps.UnitSystem.METRIC,
-					provideRouteAlternatives: true
-				})
-			};*/
-			return googleRouter;
-		} else {
-			let modes = [];
-			if (tripLeg._mode.modeName === 'Intercity Bus') {
-				modes.push('BUS');
-			} else if (tripLeg._mode.modeName === 'Intercity Rail') {
-				modes.push('TRAIN');
-			}
-			let googleRouter = {
-				service: 'triplinx',
-				options: new TripLinxRouter(this._$http, googleTravelMode[routerMode])
-				/*options: L.Routing.google({
-					travelMode: googleTravelMode[routerMode],
-					unitSystem: google.maps.UnitSystem.METRIC,
-					provideRouteAlternatives: true,
-					transitOptions: {
-						departureTime: adjustedStartTime,
-						modes: modes
-					}
-				})*/
-			};
-			return googleRouter;
-		}
 	}
 
+	/**
+	 *
+	 * @param tripRoute
+	 * @param waypointChangedTrigger
+	 * @param forceRender
+	 */
 	public addRouting(tripRoute: TripRoute, waypointChangedTrigger = false, forceRender = false) {
 		let lastTime = this._$scope['routeTime'];
 

@@ -367,7 +367,7 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'PT',
 					displayName: 'GO Train',
 					showPrompt: false,
-					modes: 'TRAIN|LOCAL_TRAIN|LONG_DISTANCE_TRAIN',
+					modes: 'LONG_DISTANCE_TRAIN',
 					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: false,
 					shouldAskNoRouteDescription: false
