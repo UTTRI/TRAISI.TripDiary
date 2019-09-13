@@ -12,7 +12,6 @@ import templateString from './timeline-slot.component.html';
 @Component({
 	selector: 'timeline-slot',
 	template: templateString,
-	
 	encapsulation: ViewEncapsulation.None,
 	styles: [require('./timeline-slot.component.scss').toString()]
 })
