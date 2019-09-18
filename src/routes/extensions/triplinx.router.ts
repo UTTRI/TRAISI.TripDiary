@@ -1,5 +1,6 @@
 import 'leaflet-routing-machine';
 import { Routing, LatLng } from 'leaflet';
+import * as moment from 'moment';
 
 /**
  * TripLinx router for Leaflet and Leaflet routing machine. This will utilize the journey / route planner
@@ -30,7 +31,8 @@ export class TripLinxRouter implements Routing.IRouter {
 	private modeTemplatePre = '<span class="instruction-info"><i class="';
 	private modeTemplateMid = '"></i><div class="instruction-route-name">';
 	private modeTemplateSuf = '</div></span>';
-	private;
+
+	private readonly _timeRegex = /PT(\d*)H(\d*)M(\d*)/g;
 	public route = (
 		waypoints: Routing.Waypoint[],
 		callback: (error?: Routing.IError, routes?: Routing.IRoute[]) => void,
@@ -70,17 +72,19 @@ export class TripLinxRouter implements Routing.IRouter {
 			.then(value => {
 				let trips = value.data['Data'][0]['response']['trips']['Trip'];
 
-				console.log(trips);
 				for (let trip of trips) {
+					let duration = this.parseDuration(trip['Duration']);
 					let route: any = {};
 					route.waypoints = [];
 					route.coordinates = [];
 					route.name = 'Route Information';
 					route.summary = {
 						totalDistance: trip['Distance'],
-						totalTime: trip['Duration']
+						totalTime: duration
 					};
 					route.instructions = [];
+
+					// moment(trip['Duration'])
 
 					// add icons for each route instruction
 					let routeInstructions: Array<string> = [];
@@ -88,7 +92,7 @@ export class TripLinxRouter implements Routing.IRouter {
 					for (let section of trip['sections']['Section']) {
 						let leg = section['Leg'];
 						if (leg !== null && leg !== undefined) {
-							routeInstructions.push(this.getInsturctionForTransitMode(leg['TransportMode'],'WALK'));
+							routeInstructions.push(this.getInsturctionForTransitMode(leg['TransportMode'], 'WALK'));
 							for (let pathLink of leg['pathLinks']['PathLink']) {
 								// let ins = `<i class="${}"></i>`;
 
@@ -108,7 +112,9 @@ export class TripLinxRouter implements Routing.IRouter {
 							// console.log(section['PTRide']['TransportMode']);
 
 							// let ins = `<i class="${}"></i>`;
-							routeInstructions.push(this.getInsturctionForTransitMode(section['PTRide']['TransportMode'],section['PTRide']['Line']['Number']));
+							routeInstructions.push(
+								this.getInsturctionForTransitMode(section['PTRide']['TransportMode'], section['PTRide']['Line']['Number'])
+							);
 							if (coords !== null && coords.length >= 2) {
 								for (let i = 0; i < coords.length / 2; i += 2) {
 									let coord = new LatLng(Number(coords[i + 1]), Number(coords[i + 0]));
@@ -145,6 +151,25 @@ export class TripLinxRouter implements Routing.IRouter {
 
 		return this;
 	};
+
+	/**
+	 *
+	 * @param duration
+	 */
+	private parseDuration(duration: string): number {
+		let timeRegex = /PT(\d*)H(\d*)M(\d*)/g;
+		let parts = timeRegex.exec(duration);
+
+		let durationVal = 60 * 60 * parseInt(parts[1], 10) + 60 * parseInt(parts[2], 10) + parseInt(parts[3], 10);
+
+		return durationVal;
+	}
+
+	/**
+	 *
+	 * @param transitMode
+	 * @param lineName
+	 */
 	private getInsturctionForTransitMode(transitMode: string, lineName: string): string {
 		switch (transitMode) {
 			case 'WALK':
