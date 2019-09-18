@@ -32,7 +32,9 @@ import template from '../templates/survey-map.html';
 import deletePopupTemplateUrl from '../../templates/trip-diary-route-delete-popup.html';
 import switchModePopupTemplateUrl from '../../templates/trip-diary-switch-mode-popup.html';
 import deleteModeSwitchTemplateUrl from '../../templates/trip-diary-delete-mode-switch-popup.html';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import * as markerIcon from '../../../../../../assets/marker-icon.png';
+
+console.log(markerIcon);
 
 googleTravelMode['driver'] = 'Car';
 googleTravelMode['bicycle'] = 'Bike';
@@ -1155,6 +1157,8 @@ export class SurveyMapDirective {
 
 			// console.log(tripRoute.startLocation.getMarkerIcon());
 			// let marker = L.marker(tripLeg2._waypoints[0]);
+
+			console.log(markerIcon);
 
 			let icon = L.icon({
 				iconUrl: markerIcon,
