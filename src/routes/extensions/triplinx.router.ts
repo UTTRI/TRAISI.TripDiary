@@ -157,12 +157,15 @@ export class TripLinxRouter implements Routing.IRouter {
 	 * @param duration
 	 */
 	private parseDuration(duration: string): number {
-		let timeRegex = /PT(\d*)H(\d*)M(\d*)/g;
-		let parts = timeRegex.exec(duration);
+		try {
+			let timeRegex = /PT(\d*)H(\d*)M(\d*)/g;
+			let parts = timeRegex.exec(duration);
 
-		let durationVal = 60 * 60 * parseInt(parts[1], 10) + 60 * parseInt(parts[2], 10) + parseInt(parts[3], 10);
+			let durationVal = 60 * 60 * parseInt(parts[1], 10) + 60 * parseInt(parts[2], 10) + parseInt(parts[3], 10);
+			return durationVal;
+		} catch {}
 
-		return durationVal;
+		return 0;
 	}
 
 	/**
