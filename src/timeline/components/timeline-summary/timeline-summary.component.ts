@@ -80,7 +80,6 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 		});
 		console.log(this.timelineLocations);
 		if (Array.isArray(timeInputs)) {
-			console.log('is array');
 
 			for (let i = 0; i < timeInputs.length; i++) {
 				timeInputs[i].setDate(this.timelineLocations[i].timeA);
@@ -109,6 +108,8 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 				console.log('sending invalid');
 				this.timeline.validationState.emit(ResponseValidationState.INVALID);
 			}
+
+			this.timeline.validationState.emit(ResponseValidationState.VALID);
 		}
 	}
 
