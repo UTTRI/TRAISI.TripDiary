@@ -22,14 +22,15 @@ import { TimelineComponent } from '../timeline/timeline.component';
 import { ResponseValidationState } from 'traisi-question-sdk';
 import { NgForm } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
-
-
+import * as Flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.css';
 import templateString from './timeline-summary.component.html';
+import { isArray } from 'util';
 
 @Component({
 	selector: 'timeline-summary',
 	template: templateString,
-	
+
 	encapsulation: ViewEncapsulation.None,
 	styles: [require('./timeline-summary.component.scss').toString()]
 })
@@ -65,7 +66,51 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 		this.hours = [];
 	}
 
-	public ngAfterViewInit(): void {}
+	public ngAfterViewInit(): void {
+		let timeInputs = (<any>Flatpickr)('.time-input', {
+			enableTime: true,
+			noCalendar: true,
+			dateFormat: 'h:i K',
+			// defaultDate: '00:00',
+			onChange: (time, timeStr, instance) => {
+				let index = parseInt(instance.element.dataset['index'], 10);
+				this.timelineLocations[index].timeA = time[0];
+				this.update();
+			}
+		});
+		console.log(this.timelineLocations);
+		if (Array.isArray(timeInputs)) {
+			console.log('is array');
+
+			for (let i = 0; i < timeInputs.length; i++) {
+				timeInputs[i].setDate(this.timelineLocations[i].timeA);
+			}
+		} else {
+			timeInputs.setDate(this.timelineLocations[0].timeA);
+		}
+		setTimeout(() => {
+			this.updateValidation();
+		});
+	}
+
+	public update = (): void => {
+		this.timeline.response.emit(this.timelineLocations);
+		this.updateValidation();
+	};
+
+	private updateValidation(): void {
+		if (this.timeline.isStep2) {
+			this._timelineService.updateLocationsTimeValidation();
+
+			if (this._timelineService.isTimelineTimeStatevalid === true) {
+				console.log('sending valid');
+				this.timeline.validationState.emit(ResponseValidationState.VALID);
+			} else {
+				console.log('sending invalid');
+				this.timeline.validationState.emit(ResponseValidationState.INVALID);
+			}
+		}
+	}
 
 	/**
 	 * ngOnInit method
@@ -75,7 +120,6 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 			this.timelineLocations = locations;
 			this.timeEntries = [];
 			this.times = [];
-
 
 			for (let i = 0; i < locations.length; i++) {
 				this.times.push(new Date());
@@ -113,9 +157,6 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 	}
 
 	public validChange(event): void {}
-
-	/**  */
-	public updateTime2(index: number): void {}
 
 	/**
 	 * Updates time

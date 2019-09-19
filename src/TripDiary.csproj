@@ -36,6 +36,9 @@
       <Reference Include="TRAISI.SDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
         <HintPath>..\..\traisi-v2\src\TRAISI.SDK\bin\Debug\netstandard2.0\TRAISI.SDK.dll</HintPath>
       </Reference>
+      <Reference Include="TRAISI.SDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\TRAISI\src\TRAISI.SDK\bin\Debug\netstandard2.0\TRAISI.SDK.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
     <Target Name="PreBuild" BeforeTargets="Compile" Condition="'$(Configuration)' != 'Release'">

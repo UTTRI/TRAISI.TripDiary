@@ -14,8 +14,8 @@
 		"baseUrl": ".",
 
 		"paths": {
-			"traisi-sdk/*": ["../../traisi-v2/src/TRAISI.SDK/Client/src/*"],
-			"traisi-question-sdk": ["../../traisi-v2/src/TRAISI.SDK/Client/src"]
+			"traisi-question-sdk": ["../../traisi-v2/src/TRAISI.SDK/Client/src",
+				"../../TRAISI/src/TRAISI.SDK/Client/src"]
 		}
 	},
 	"angularCompilerOptions": {

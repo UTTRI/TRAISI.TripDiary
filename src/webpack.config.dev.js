@@ -99,7 +99,7 @@ module.exports = {
 	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/],
 	plugins: [
 		new CopyWebpackPlugin([{ from: 'dist/', to: '../../../traisi-v2/src/TRAISI/development', toType: 'dir' }], { debug: 'warning' }),
-
+		new CopyWebpackPlugin([{ from: 'dist/', to: '../../../TRAISI/src/TRAISI/development', toType: 'dir' }], { debug: 'warning' }),
 		/* new WebpackSystemRegister({
              systemjsDeps: [
                  /^ngx-bootstrap/, // any import that starts with react

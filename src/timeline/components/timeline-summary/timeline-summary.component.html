@@ -1,21 +1,19 @@
 <div class="timeline-summary-container">
 	<div class="timeline-summary-bar"></div>
 	<span *ngFor="let location of timelineLocations">
-		<timeline-entry-item [model]="location" class="summary-item" [inShelf]="false" [inSummaryDisplay]="true"></timeline-entry-item>
+		<timeline-entry-item [model]="location" class="summary-item" [inShelf]="false" [inSummaryDisplay]="true">
+		</timeline-entry-item>
 	</span>
 </div>
 <form #f="ngForm" name="form">
 	<div class="timeline-summary-time-input-container">
 		<span *ngFor="let location of timeEntries; index as i">
 			<div class="time-input-container">
-				<div class="input-group input-group-sm">
+				<div class="">
 					<div *ngIf="i < timeEntries.length - 1">
-						<timepicker
-							(isValid)="validChange($event)"
-							name="{{i}}"
-							[(ngModel)]="timelineLocations[i].timeA"
-							(ngModelChange)="updateTime2(i)"
-						></timepicker>
+						<!--<timepicker (isValid)="validChange($event)" name="{{i}}" style="display:none"
+							[(ngModel)]="timelineLocations[i].timeA" (ngModelChange)="updateTime2(i)"></timepicker> -->
+						<input class="time-input form-control form-control-lg" type="text" [attr.data-index]="i">
 					</div>
 					<!--
 						<div class="input-group-prepend">
