@@ -1,64 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <LangVersion>7.1</LangVersion>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <LangVersion>7.1</LangVersion>
-    </PropertyGroup>
-    <ItemGroup>
-    <OutputFile Include="$(OutDir)/TripDiary.dll" />
-        <DevOutputFile Include="$(MSBuildProjectDirectory)\dist\*" Watch="false" />
-        <EmbeddedResource Include="dist/**" Watch="false" />
-        <EmbeddedResource Include="locales.json">
-            <LogicalName>locales</LogicalName>
-        </EmbeddedResource>
-     </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<LangVersion>7.1</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<LangVersion>7.1</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<OutputFile Include="$(OutDir)/TripDiary.dll" />
+		<DevOutputFile Include="$(MSBuildProjectDirectory)\dist\*" Watch="false" />
+		<EmbeddedResource Include="dist/**" Watch="false" />
+		<EmbeddedResource Include="locales.json">
+			<LogicalName>locales</LogicalName>
+		</EmbeddedResource>
+	</ItemGroup>
 
-    <ItemGroup>
-        <!-- extends watching group to include *.js files -->
-        <Watch Include="**\*.ts" Exclude="node_modules\**\*;**\*.js.map;obj\**\*;bin\**\*;dist\**\*" />
-    </ItemGroup>
+	<ItemGroup>
+		<!-- extends watching group to include *.js files -->
+		<Watch Include="**\*.ts" Exclude="node_modules\**\*;**\*.js.map;obj\**\*;bin\**\*;dist\**\*" />
+	</ItemGroup>
 
-    <ItemGroup>
-        <Compile Remove="node_modules\**" />
-        <EmbeddedResource Remove="node_modules\**" />
-        <None Remove="node_modules\**" /> 
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-    </ItemGroup>
-    <ItemGroup>
-      <Reference Include="TRAISI.SDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\..\traisi-v2\src\TRAISI.SDK\bin\Debug\netstandard2.0\TRAISI.SDK.dll</HintPath>
-      </Reference>
-      <Reference Include="TRAISI.SDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\..\TRAISI\src\TRAISI.SDK\bin\Debug\netstandard2.0\TRAISI.SDK.dll</HintPath>
-      </Reference>
-    </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="node_modules\**" />
+		<EmbeddedResource Remove="node_modules\**" />
+		<None Remove="node_modules\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="TRAISI.SDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath Condition="Exists('..\..\traisi-v2\src\TRAISI.SDK')">..\..\traisi-v2\src\TRAISI.SDK\bin\Debug\netstandard2.0\TRAISI.SDK.dll</HintPath>
+			<HintPath Condition="Exists('..\..\TRAISI\src\TRAISI.SDK')">..\..\TRAISI\src\TRAISI.SDK\bin\Debug\netstandard2.0\TRAISI.SDK.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
-    <Target Name="PreBuild" BeforeTargets="Compile" Condition="'$(Configuration)' != 'Release'">
-        <Exec Command="npm run build" />
-        <Message Text="Compiled and bundled JS library" Importance="High" />
-    </Target>
-
-    
-  <Target Name="PreBuild" BeforeTargets="Compile" Condition="'$(Configuration)' == 'Release'">
-    <Exec Command="npm install" />
-    <Exec Command="npm run prod" />
-    <Message Text="Compiled and bundled JS library" Importance="High" />
-  </Target>
+	<Target Name="PreBuild" BeforeTargets="Compile" Condition="'$(Configuration)' != 'Release'">
+		<Exec Command="npm run build" />
+		<Message Text="Compiled and bundled JS library" Importance="High" />
+	</Target>
 
 
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="@(OutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/TRAISI/extensions" />
-        <Copy SourceFiles="@(DevOutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/TRAISI/development" />
+	<Target Name="PreBuild" BeforeTargets="Compile" Condition="'$(Configuration)' == 'Release'">
+		<Exec Command="npm install" />
+		<Exec Command="npm run prod" />
+		<Message Text="Compiled and bundled JS library" Importance="High" />
+	</Target>
 
-    </Target>
-  
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Copy SourceFiles="@(OutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/TRAISI/extensions" />
+		<Copy SourceFiles="@(DevOutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/TRAISI/development" />
+
+	</Target>
+
 
 </Project>

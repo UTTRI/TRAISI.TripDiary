@@ -31,7 +31,7 @@ let routeNotShown: ICustomRouteInput = {
 };
 
 let routeNotKnown: ICustomRouteInput = {
-	label: 'I don\'t know my route',
+	label: "I don't know my route",
 	routeKey: 'route_not_known'
 	// fieldAsSummary: "routeDescription",
 	// dialogTitle: "Route Description",
@@ -114,49 +114,14 @@ export let config: ISurveyMapConfig = {
 					name: 'accessible-paratransit',
 					icon: 'fas fa-car',
 					category: 'accessible',
-					routerMode: 'driver',
+					routerMode: 'PT',
+					// modes: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
 					allowAddWaypoints: false,
 					colour: '#03A9F4',
 					displayName: 'Paratransit service (e.g., bus transport for disabled persons)',
 					showPrompt: false,
 					autoSaveRoute: false,
-					accessibility: 'wheelchair',
-					noRouteMessage: 'No Route Message'
-				},
-				{
-					name: 'accessible-walk',
-					icon: 'fas fa-walk',
-					category: 'accessible',
-					routerMode: 'driver',
-					allowAddWaypoints: false,
-					colour: '#03A9F4',
-					displayName: 'Walk',
-					showPrompt: false,
-					autoSaveRoute: true,
-					noRouteMessage: 'No Route Message'
-				},
-				{
-					name: 'accessible-bicycle',
-					icon: 'fas fa-walk',
-					category: 'accessible',
-					routerMode: 'driver',
-					allowAddWaypoints: false,
-					colour: '#03A9F4',
-					displayName: 'Bicycle',
-					showPrompt: false,
-					autoSaveRoute: true,
-					noRouteMessage: 'No Route Message'
-				},
-				{
-					name: 'accessible-bikeshare',
-					icon: 'fas fa-walk',
-					category: 'accessible',
-					routerMode: 'driver',
-					allowAddWaypoints: false,
-					colour: '#03A9F4',
-					displayName: 'Bikeshare',
-					showPrompt: false,
-					autoSaveRoute: true,
+					accessibility: 'WheelChair',
 					noRouteMessage: 'No Route Message'
 				}
 
@@ -187,7 +152,63 @@ export let config: ISurveyMapConfig = {
 			]
 		},
 		{
-			name: 'driver',
+			name: 'walk',
+			icon: 'fas fa-walking',
+			category: 'walk',
+			subModes: [
+				{
+					name: 'walk',
+					icon: 'fas fa-walking',
+					category: 'walk',
+					customRoute: routeNotKnown,
+					allowAddWaypoints: false,
+					colour: '#4CAF50',
+					displayName: 'Walk',
+					showPrompt: false,
+					routerMode: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
+					modes: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
+					noRouteMessage: "I don't know the route.",
+					autoSaveRoute: true
+				}
+			]
+		},
+		{
+			name: 'bicycle',
+			icon: 'fas fa-biking',
+			category: 'bicycle',
+			subModes: [
+				{
+					name: 'personal',
+					icon: 'fas fa-biking',
+					category: 'walk',
+					customRoute: routeNotKnown,
+					allowAddWaypoints: false,
+					colour: '#4CAF50',
+					displayName: 'Personal',
+					showPrompt: false,
+					routerMode: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
+					modes: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
+					noRouteMessage: "I don't know the route.",
+					autoSaveRoute: true
+				},
+				{
+					name: 'bikeshare',
+					icon: 'fas fa-bicycle',
+					category: 'walk',
+					customRoute: routeNotKnown,
+					allowAddWaypoints: false,
+					colour: '#4CAF50',
+					displayName: 'Bikeshare',
+					showPrompt: false,
+					routerMode: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
+					modes: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
+					noRouteMessage: "I don't know the route.",
+					autoSaveRoute: true
+				}
+			]
+		},
+		{
+			name: 'auto',
 			icon: 'fas fa-car',
 			category: 'driver',
 			subModes: [
@@ -201,30 +222,7 @@ export let config: ISurveyMapConfig = {
 					displayName: 'Drive alone',
 					autoSaveRoute: true,
 					showPrompt: false,
-
-					dataInputs: [
-						{
-							key: 'passengerCount',
-							label: 'Passenger Count',
-							type: DataInputType.INTEGER,
-							min: 0,
-							max: 10,
-							placeholder: 'How many passengers were in the vehicle?'
-						},
-						{
-							key: 'vehicleType',
-							label: 'Type of Vehicle',
-							type: DataInputType.OPTIONS,
-
-							placeholder: 'What is the type of vehicle?',
-							optionList: [
-								{ value: 'household_owned', label: 'Household owned vehicle' },
-								{ value: 'leased_vehicle', label: 'Leased vehicle' },
-								{ value: 'commercial_carshare', label: 'Commercial carshare' }
-							]
-						}
-					],
-					noRouteMessage: 'I don\'t know the route.'
+					noRouteMessage: "I don't know the route."
 				},
 				{
 					name: 'auto-drive-passenger-household',
@@ -236,47 +234,24 @@ export let config: ISurveyMapConfig = {
 					customRoute: routeNotKnown,
 					displayName: 'Drive with passenger(s) (household members only)',
 					showPrompt: false,
-					noRouteMessage: 'I don\'t know the route.',
-					dialogTitle: 'What was the type of vehicle?',
-					dataInputs: [
-						{
-							key: 'driver',
-							label: 'Driver',
-							type: DataInputType.OPTIONS,
-
-							placeholder: 'Choose an option',
-							optionList: [
-								{ value: 'household_member', label: 'Household owned vehicle' },
-								{ value: 'carpool', label: 'Carpool' },
-								{ value: 'taxi', label: 'Taxi' },
-								{ value: 'uber', label: 'Uber' },
-								{ value: 'other', label: 'Other' }
-							]
-						}
-					],
+					noRouteMessage: "I don't know the route.",
 					autoSaveRoute: true
-				}
-			]
-		},
-		{
-			name: 'passenger',
-			icon: 'fas fa-car',
-			category: 'passenger',
-			subModes: [
-				{
-					name: 'passenger1',
-					icon: 'fas fa-car',
-					category: 'passenger',
-					routerMode: 'driver',
-					allowAddWaypoints: true,
-					colour: '#03A9F4',
-					displayName: 'Auto passenger (driver is a household member)',
-					autoSaveRoute: true,
-					showPrompt: false,
-					noRouteMessage: 'I don\'t know the route.'
 				},
 				{
-					name: 'passenger',
+					name: 'auto-drive-passenger-non-household',
+					icon: 'fas fa-car',
+					category: 'driver',
+					allowAddWaypoints: true,
+					colour: '#037bb8',
+					routerMode: 'driver',
+					customRoute: routeNotKnown,
+					displayName: 'Drive with passenger(s) (including non-household members)',
+					showPrompt: false,
+					noRouteMessage: "I don't know the route.",
+					autoSaveRoute: true
+				},
+				{
+					name: 'auto-passenger-household',
 					icon: 'fas fa-car',
 					category: 'driver',
 					allowAddWaypoints: true,
@@ -285,24 +260,51 @@ export let config: ISurveyMapConfig = {
 					customRoute: routeNotKnown,
 					displayName: 'Auto passenger (driver is a household member)',
 					showPrompt: false,
-					noRouteMessage: 'I don\'t know the route.',
-					dialogTitle: 'What was the type of vehicle?',
+					noRouteMessage: "I don't know the route.",
+					autoSaveRoute: true
+				},
+				{
+					name: 'auto-non-household',
+					icon: 'fas fa-car',
+					category: 'driver',
+					allowAddWaypoints: true,
+					colour: '#037bb8',
+					routerMode: 'driver',
+					customRoute: routeNotKnown,
+					displayName: 'Auto passenger (driver is a non-household member)',
+					showPrompt: false,
+					noRouteMessage: "I don't know the route.",
 					autoSaveRoute: true
 				}
 			]
 		},
 		{
 			name: 'transit',
-			icon: 'fas fa-bus-alt',
+			icon: 'fas fa-subway',
 			category: 'transit',
 			subModes: [
 				{
-					name: 'transit-bus',
+					name: 'transit-all-way',
+					icon: 'fas fa-subway',
+					category: 'transit',
+					allowAddWaypoints: false,
+					colour: '#F44336',
+					displayName: 'Transit all way',
+					showPrompt: false,
+					routerMode: 'PT',
+					noRouteMessage: 'My route is not shown.',
+					shouldAskNoRouteDescription: true,
+					modes: 'BUS',
+					customRoute: routeNotShown,
+					autoSaveRoute: false
+				},
+				{
+					name: 'transit-auto-bike',
 					icon: 'fas fa-bus-alt',
 					category: 'transit',
 					allowAddWaypoints: false,
 					colour: '#F44336',
-					displayName: 'Transit bus',
+					displayName: 'Transit with auto or bike access',
 					showPrompt: false,
 					routerMode: 'PT',
 					noRouteMessage: 'My route is not shown.',
@@ -312,81 +314,19 @@ export let config: ISurveyMapConfig = {
 					autoSaveRoute: false
 				},
 				{
-					name: 'transit-streetcar',
-					icon: 'fas fa-subway',
+					name: 'transit-campus-shuttle',
+					icon: 'fas fa-bus',
 					category: 'transit',
 					allowAddWaypoints: false,
-					colour: '#cd3d34',
-					displayName: 'Streetcar',
+					colour: '#F44336',
+					displayName: 'Transit with auto or bike access',
 					showPrompt: false,
-					modes: 'RAPID_TRANSIT|TRAMWAY',
-					noRouteMessage: 'My route is not shown.',
-					customRoute: routeNotShown,
 					routerMode: 'PT',
+					noRouteMessage: 'My route is not shown.',
 					shouldAskNoRouteDescription: true,
-					autoSaveRoute: false
-				},
-				{
-					name: 'transit-subway-rt',
-					icon: 'fas fa-subway',
-					category: 'transit',
-					allowAddWaypoints: false,
-					colour: '#b23c33',
-					displayName: 'Subway/RT',
-					showPrompt: false,
-					routerMode: 'PT',
-					modes: 'METRO',
-					noRouteMessage: 'My route is not shown.',
-					customRoute: routeNotShown,
-					autoSaveRoute: false,
-					shouldAskNoRouteDescription: true
-				},
-				{
-					name: 'transit-go-bus',
-					icon: 'fas fa-bus-alt',
-					category: 'PT',
-					allowAddWaypoints: true,
-					customRoute: routeNotKnown,
-					colour: '#9a342c',
-					displayName: 'GO Bus',
-					showPrompt: false,
 					modes: 'BUS',
-					routerMode: 'PT',
-					noRouteMessage: 'I don\'t know the route.',
-					autoSaveRoute: false,
-
-					shouldAskNoRouteDescription: false
-				},
-				{
-					name: 'transit',
-					icon: 'fas fa-train',
-					category: 'transit',
-					customRoute: routeNotKnown,
-					allowAddWaypoints: true,
-					colour: '#9a342c',
-					routerMode: 'PT',
-					displayName: 'GO Train',
-					showPrompt: false,
-					modes: 'LONG_DISTANCE_TRAIN',
-					noRouteMessage: 'I don\'t know the route.',
-					autoSaveRoute: false,
-					shouldAskNoRouteDescription: false
-				},
-
-				{
-					name: 'Inter-campus shuttle',
-					icon: 'fas fa-bus-school',
-					category: 'transit',
-					customRoute: routeNotKnown,
-					allowAddWaypoints: true,
-					colour: '#92312a',
-					routerMode: 'PT',
-					displayName: 'Inter-campus shuttle',
-					showPrompt: false,
-					modes: 'SCHOOL',
-					noRouteMessage: 'I don\'t know the route.',
-					autoSaveRoute: false,
-					shouldAskNoRouteDescription: false
+					customRoute: routeNotShown,
+					autoSaveRoute: false
 				}
 			]
 		},
@@ -394,166 +334,68 @@ export let config: ISurveyMapConfig = {
 			name: 'ridehialing',
 			icon: 'fas fa-taxi',
 			category: 'ridehailing',
-
 			subModes: [
 				{
-					name: 'ridehailing-moped',
+					name: 'ridehailing-taxi',
 					icon: 'fas fa-taxi',
 					category: 'ridehailing',
 					customRoute: routeNotKnown,
 					allowAddWaypoints: true,
-					colour: '#4CAF50',
-					displayName: 'Motorcycle, moped or scooter',
-					showPrompt: false,
-					routerMode: 'walk',
-					autoSaveRoute: true,
-					noRouteMessage: 'I don\'t know the route.'
-				},
-				{
-					name: 'ridehailing-taxu',
-					icon: 'fas fa-taxi',
-					category: 'ridehailing',
-					customRoute: routeNotKnown,
-					allowAddWaypoints: true,
-					colour: '#4CAF50',
+					colour: '#1f28ab',
 					displayName: 'Taxi',
 					showPrompt: false,
 					routerMode: 'walk',
 					autoSaveRoute: true,
-					noRouteMessage: 'I don\'t know the route.'
+					noRouteMessage: "I don't know the route."
 				},
 				{
-					name: 'ridehailing-appshare',
+					name: 'ridehailing-alone',
 					icon: 'fas fa-taxi',
 					category: 'ridehailing',
 					customRoute: routeNotKnown,
 					allowAddWaypoints: true,
-					colour: '#4CAF50',
+					colour: '#1f28ab',
 					displayName: 'Ride-hailing alone (UberX, Lyft etc.)',
 					showPrompt: false,
 					routerMode: 'walk',
 					autoSaveRoute: true,
-					noRouteMessage: 'I don\'t know the route.'
+					noRouteMessage: "I don't know the route."
 				},
 				{
-					name: 'ridehailing-appshare-pool',
+					name: 'ridehailing-share',
 					icon: 'fas fa-taxi',
 					category: 'ridehailing',
 					customRoute: routeNotKnown,
 					allowAddWaypoints: true,
-					colour: '#4CAF50',
+					colour: '#1f28ab',
 					displayName: 'Ride-hailing with other passengers (Uberpool, Lyftpool etc.)',
 					showPrompt: false,
 					routerMode: 'walk',
 					autoSaveRoute: true,
-					noRouteMessage: 'I don\'t know the route.'
-				},
-				{
-					name: 'ridehailing-parkandride',
-					icon: 'fas fa-taxi',
-					category: 'ridehailing',
-					customRoute: routeNotKnown,
-					allowAddWaypoints: true,
-					colour: '#4CAF50',
-					displayName: 'Ride-hailing with other passengers (Uberpool, Lyftpool etc.)',
-					showPrompt: false,
-					routerMode: 'walk',
-					autoSaveRoute: true,
-					noRouteMessage: 'I don\'t know the route.'
-				},
-				{
-					name: 'ridehailing-kissandride',
-					icon: 'fas fa-taxi',
-					category: 'ridehailing',
-					customRoute: routeNotKnown,
-					allowAddWaypoints: true,
-					colour: '#4CAF50',
-					displayName: 'Kiss and Ride',
-					showPrompt: false,
-					routerMode: 'walk',
-					autoSaveRoute: true,
-					noRouteMessage: 'I don\'t know the route.'
-				},
-				{
-					name: 'ridehailing-bikeandride',
-					icon: 'fas fa-taxi',
-					category: 'ridehailing',
-					customRoute: routeNotKnown,
-					allowAddWaypoints: true,
-					colour: '#4CAF50',
-					displayName: 'Bike and Ride',
-					showPrompt: false,
-					routerMode: 'walk',
-					autoSaveRoute: true,
-					noRouteMessage: 'I don\'t know the route.'
+					noRouteMessage: "I don't know the route."
 				}
 			]
-		} /*
+		},
 		{
-			name: 'bicycle',
-			icon: 'fas fa-bicycle',
-			category: 'bicycle',
+			name: 'motorcycle',
+			icon: 'fas fa-motorcycle',
+			category: 'motorcycle',
 			subModes: [
-				{
-					name: 'bicycle',
-					icon: 'fas fa-bicycle',
-					category: 'bicycle',
-					customRoute: routeNotKnown,
-
-					allowAddWaypoints: true,
-					colour: '#FF9800',
-					displayName: 'Bicycle',
-					showPrompt: false,
-					noRouteMessage: 'I don\'t know the route.',
-					dialogTitle: 'Did you use bike share?',
-					routerMode: 'bicycle',
-					dataInputs: [
-						{
-							key: 'useBikeShare',
-							label: '',
-							type: DataInputType.OPTIONS,
-							placeholder: 'Select an option',
-							optionList: [{ value: 'yes', label: 'Yes' }, { value: 'no', label: 'No' }]
-						}
-					]
-				},
 				{
 					name: 'motorcycle',
 					icon: 'fas fa-motorcycle',
-					category: 'bicycle',
-					customRoute: routeNotKnown,
-					displayName: 'Motorcycle',
-					allowAddWaypoints: true,
-					colour: '#ed8c00',
-					showPrompt: false,
-					routerMode: 'driver',
-					autoSaveRoute: false,
-					noRouteMessage: 'I don\'t know the route.'
-				}
-			]
-		}, */
-
-		/*
-		{
-			name: 'flight',
-			icon: 'fas fa-plane-departure',
-			category: 'flight',
-
-			subModes: [
-				{
-					name: 'flight',
-					icon: 'fas fa-plane-departure',
-					category: 'flight',
+					category: 'motorcycle',
 					customRoute: routeNotKnown,
 					allowAddWaypoints: false,
-					colour: '#4CAF50',
-					displayName: 'Flight',
+					colour: '#ab831f',
+					displayName: 'Motorcycle, moped or scooter',
 					showPrompt: false,
-					routerMode: 'walk',
-					noRouteMessage: 'I don\'t know the route.',
+					routerMode: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
+					modes: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
+					noRouteMessage: "I don't know the route.",
 					autoSaveRoute: true
 				}
 			]
-		} */
+		}
 	]
 };

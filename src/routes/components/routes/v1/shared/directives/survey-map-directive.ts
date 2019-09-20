@@ -52,6 +52,14 @@ lineOptions['transit'] = {
 	]
 };
 
+lineOptions['accessible'] = {
+	styles: [
+		{ color: 'black', opacity: 0.3, weight: 11 },
+		{ color: 'white', opacity: 0.9, weight: 9 },
+		{ color: '#f436e4', opacity: 1, weight: 3 }
+	]
+};
+
 lineOptions['walk'] = {
 	styles: [
 		{ color: 'black', opacity: 0.3, weight: 11 },
@@ -88,6 +96,22 @@ lineOptions['flight'] = {
 		{ color: 'black', opacity: 0.3, weight: 11 },
 		{ color: 'white', opacity: 0.9, weight: 9 },
 		{ color: '#3bffbb', opacity: 1, weight: 3 }
+	]
+};
+
+lineOptions['ridehailing'] = {
+	styles: [
+		{ color: 'black', opacity: 0.3, weight: 11 },
+		{ color: 'white', opacity: 0.9, weight: 9 },
+		{ color: '#1f28ab', opacity: 1, weight: 3 }
+	]
+};
+
+lineOptions['motorcycle'] = {
+	styles: [
+		{ color: 'black', opacity: 0.3, weight: 11 },
+		{ color: 'white', opacity: 0.9, weight: 9 },
+		{ color: '#ab831f', opacity: 1, weight: 3 }
 	]
 };
 
@@ -212,6 +236,7 @@ export class SurveyMapDirective {
 	 * @param {TripLeg} tripLeg
 	 */
 	private generateLineOptions(tripLeg: TripLeg) {
+		console.log(tripLeg);
 		let lineOption = lineOptions[tripLeg.mode.modeCategory];
 
 		lineOption.styles[2].color = this._tripDiaryService.getModeColour(tripLeg.mode.modeName);
@@ -630,10 +655,11 @@ export class SurveyMapDirective {
 		);
 		let routerMode = this._tripDiaryService.getRouterMode(tripLeg._mode.modeName);
 		let modes = this._tripDiaryService.getModeProperty(tripLeg._mode.modeName, 'modes');
+		let modeConfig = this._tripDiaryService.getModeConfig(tripLeg._mode.modeName);
 
 		let googleRouter = {
 			service: 'triplinx',
-			options: new TripLinxRouter(this._$http, routerMode, modes)
+			options: new TripLinxRouter(this._$http, routerMode, modes, modeConfig)
 		};
 
 		return googleRouter;

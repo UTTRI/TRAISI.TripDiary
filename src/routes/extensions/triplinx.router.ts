@@ -1,6 +1,7 @@
 import 'leaflet-routing-machine';
 import { Routing, LatLng } from 'leaflet';
 import * as moment from 'moment';
+import { IModeConfig } from 'routes/components/routes/v1/shared/survey-map-config';
 
 /**
  * TripLinx router for Leaflet and Leaflet routing machine. This will utilize the journey / route planner
@@ -16,8 +17,13 @@ export class TripLinxRouter implements Routing.IRouter {
 	 * @param _http
 	 * @param _mode
 	 */
-	public constructor(private _http: ng.IHttpService, private _mode: string, private _triplinxModes: string) {
-		console.log('constructor: ' + this._mode + ' ' + this._triplinxModes);
+	public constructor(
+		private _http: ng.IHttpService,
+		private _mode: string,
+		private _triplinxModes: string,
+		private _modeConfig: IModeConfig
+	) {
+		console.log(this);
 	}
 	private readonly _geoServiceUrl: string = '/api/GeoService';
 
@@ -66,10 +72,12 @@ export class TripLinxRouter implements Routing.IRouter {
 						.toString()
 						.padStart(2, '0')}`,
 					mode: this._mode,
+					accessibility: this._modeConfig.accessibility,
 					transitModes: this._triplinxModes
 				}
 			})
 			.then(value => {
+				console.log(value);
 				let trips = value.data['Data'][0]['response']['trips']['Trip'];
 
 				for (let trip of trips) {
