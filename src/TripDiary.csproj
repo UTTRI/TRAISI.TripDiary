@@ -53,8 +53,10 @@
 
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Copy SourceFiles="@(OutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/TRAISI/extensions" />
-		<Copy SourceFiles="@(DevOutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/TRAISI/development" />
+		<Copy Condition="Exists('..\..\traisi-v2\src')" SourceFiles="@(OutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/TRAISI/extensions" />
+		<Copy Condition="Exists('..\..\traisi-v2\src')" SourceFiles="@(DevOutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/TRAISI/development" />
+		<Copy Condition="Exists('..\..\TRAISI\src')" SourceFiles="@(OutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../TRAISI/src/TRAISI/extensions" />
+		<Copy Condition="Exists('..\..\TRAISI\src')" SourceFiles="@(DevOutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../TRAISI/src/TRAISI/development" />
 
 	</Target>
 
