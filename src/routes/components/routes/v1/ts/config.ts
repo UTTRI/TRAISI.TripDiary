@@ -294,7 +294,7 @@ export let config: ISurveyMapConfig = {
 					routerMode: 'PT',
 					noRouteMessage: 'My route is not shown.',
 					shouldAskNoRouteDescription: true,
-					modes: 'BUS',
+					modes: 'TRAIN|LOCAL_TRAIN|HST|RAPID_TRANSIT|LONG_DISTANCE_TRAIN|METRO|TRAMWAY|COACH|BUS|FERRY|TROLLEY_BUS|SHUTTLE',
 					customRoute: routeNotShown,
 					autoSaveRoute: false
 				},
