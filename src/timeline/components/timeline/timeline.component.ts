@@ -72,7 +72,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	@ViewChild('timelineDock', { static: true })
 	public timelineDock: TimelineDockComponent;
 
-	@ViewChild('popover', { static: true })
+	@ViewChild('popover', { static: false })
 	public popover: PopoverDirective;
 
 	@ViewChild('duplicateLocationPopTemplate', { static: true })
@@ -392,14 +392,14 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this._timelineService.updateLocationsValidation();
 			this._timelineService.updateLocationsTimeValidation();
 
-			console.log('here');
-
 			if (this.isStep1) {
-				if (this._timelineService.hasAdjacentIdenticalLocations) {
-					this.popover.show();
-				} else {
-					if (this.popover !== undefined) {
-						this.popover.hide();
+				if (this.popover !== null && this.popover !== undefined) {
+					if (this._timelineService.hasAdjacentIdenticalLocations) {
+						this.popover.show();
+					} else {
+						if (this.popover !== undefined) {
+							this.popover.hide();
+						}
 					}
 				}
 				if (this._timelineService.isTimelineStatevalid && !this._timelineService.hasAdjacentIdenticalLocations) {
