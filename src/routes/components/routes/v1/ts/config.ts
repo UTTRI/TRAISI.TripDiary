@@ -319,7 +319,7 @@ export let config: ISurveyMapConfig = {
 					category: 'transit',
 					allowAddWaypoints: false,
 					colour: '#F44336',
-					displayName: 'Transit with auto or bike access',
+					displayName: 'Transit with auto or auto access',
 					showPrompt: false,
 					routerMode: 'PT',
 					noRouteMessage: 'My route is not shown.',
