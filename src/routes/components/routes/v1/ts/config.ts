@@ -299,19 +299,33 @@ export let config: ISurveyMapConfig = {
 					autoSaveRoute: false
 				},
 				{
-					name: 'transit-auto-bike',
+					name: 'transit-other-access',
 					icon: 'fas fa-bus-alt',
 					category: 'transit',
 					allowAddWaypoints: false,
 					colour: '#F44336',
-					displayName: 'Transit with auto or bike access',
-					showPrompt: false,
+					displayName: 'Transit with other access/egress mode',
 					routerMode: 'PT',
 					noRouteMessage: 'My route is not shown.',
 					shouldAskNoRouteDescription: true,
-					modes: 'BUS',
+					modes: 'TRAIN|LOCAL_TRAIN|HST|RAPID_TRANSIT|LONG_DISTANCE_TRAIN|METRO|TRAMWAY|COACH|BUS|FERRY|TROLLEY_BUS|SHUTTLE',
 					customRoute: routeNotShown,
-					autoSaveRoute: false
+					autoSaveRoute: false,
+					showPrompt: true,
+					dialogTitle: 'Transit Access/Egress Details',
+					dataInputs: [
+						{
+							key: 'accessEgressMode',
+							label: 'Transit access mode',
+							type: DataInputType.OPTIONS,
+							placeholder: 'What mode did you take to access public transit?',
+							optionList: [
+								{ value: 'auto', label: 'Auto' },
+								{ value: 'bicycle', label: 'Bicycle' },
+								{ value: 'walk', label: 'Walk' }
+							]
+						}
+					]
 				},
 				{
 					name: 'transit-campus-shuttle',
@@ -331,7 +345,7 @@ export let config: ISurveyMapConfig = {
 			]
 		},
 		{
-			name: 'ridehialing',
+			name: 'ridehailing',
 			icon: 'fas fa-taxi',
 			category: 'ridehailing',
 			subModes: [
