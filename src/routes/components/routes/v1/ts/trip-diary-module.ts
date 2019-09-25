@@ -121,6 +121,7 @@ export class TripDiaryModule {
 					// $compileProvider.preAssignBindingsEnabled(true);
 					$compileProvider.commentDirectivesEnabled(false);
 					$compileProvider.cssClassDirectivesEnabled(false);
+					$compileProvider.debugInfoEnabled(false);
 					// $compileProvider.debugInfoEnabled(false);
 				}
 			])
