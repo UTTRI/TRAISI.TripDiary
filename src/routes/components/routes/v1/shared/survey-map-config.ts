@@ -2,7 +2,8 @@ export enum DataInputType {
 	INTEGER = 'INTEGER',
 	STRING = 'STRING',
 	TEXT = 'TEXT',
-	OPTIONS = 'OPTIONS'
+	OPTIONS = 'OPTIONS',
+	MESSAGE = 'MESSAGE'
 }
 
 export interface ISurveyMapConfig {
@@ -66,6 +67,7 @@ export interface IDataInput {
 	key: string;
 	placeholder?: string;
 	default?: string;
+	description?: string;
 	optionList?: Array<IDataInputOption>;
 }
 

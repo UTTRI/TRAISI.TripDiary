@@ -313,17 +313,14 @@ export let config: ISurveyMapConfig = {
 					autoSaveRoute: false,
 					showPrompt: true,
 					dialogTitle: 'Transit Access/Egress Details',
-					dataInputs: [ 
+					dataInputs: [
 						{
 							key: 'accessEgressMode',
 							label: 'Transit access mode',
-							type: DataInputType.OPTIONS,
+							type: DataInputType.MESSAGE,
 							placeholder: 'What mode did you take to access public transit?',
-							optionList: [
-								{ value: 'auto', label: 'Auto' },
-								{ value: 'bicycle', label: 'Bicycle' },
-								{ value: 'walk', label: 'Walk' }
-							]
+							description:
+								'<p>Please identify the location you switch modes by clicking "switch travel mode".</p><p>Please use "transit all way" as mode for your trip if you walk to the transit stop.</p>'
 						}
 					]
 				}
