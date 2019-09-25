@@ -313,7 +313,7 @@ export let config: ISurveyMapConfig = {
 					autoSaveRoute: false,
 					showPrompt: true,
 					dialogTitle: 'Transit Access/Egress Details',
-					dataInputs: [
+					dataInputs: [ 
 						{
 							key: 'accessEgressMode',
 							label: 'Transit access mode',
