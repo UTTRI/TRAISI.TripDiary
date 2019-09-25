@@ -1,4 +1,4 @@
-import { IDataInput, IModeConfig } from '../shared/survey-map-config';
+import { IDataInput, IModeConfig, DataInputType } from '../shared/survey-map-config';
 
 export class DynamicDialogController {
 	$inject = ['$scope', '$mdDialog'];
@@ -24,12 +24,18 @@ export class DynamicDialogController {
 		$scope['cancel'] = this.cancel;
 		$scope['onChange'] = this.onChange;
 		$scope['data'] = {};
+		$scope['messageOnly'] = true;
 
 		/* load passed data into scope data object*/
 
-		Object.keys(data).forEach((key) => {
+		Object.keys(data).forEach(key => {
 			$scope['data'][key] = data[key];
 		});
+		for (let input of dataInputs) {
+			if (input.type !== DataInputType.MESSAGE) {
+				$scope['messageOnly'] = false;
+			}
+		}
 
 		$scope['valid'] = this.validate();
 	}
@@ -62,7 +68,7 @@ export class DynamicDialogController {
 	 *
 	 * @param $event
 	 */
-	private onChange = ($event) => {
+	private onChange = $event => {
 		this.$scope['valid'] = this.validate();
 	};
 
@@ -71,6 +77,9 @@ export class DynamicDialogController {
 	 * @returns {boolean}
 	 */
 	private validate = (): boolean => {
+		if (this.$scope['messageOnly']) {
+			return true;
+		}
 		if (Object.keys(this.$scope['data']).length >= this.$scope['dataInputs'].length) {
 			return true;
 		} else {
