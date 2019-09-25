@@ -19,6 +19,8 @@ export class RoutesComponent extends SurveyQuestion<ResponseTypes.Json> implemen
 	@ViewChild('routesV1', { static: true })
 	private _routesV1: ElementRef;
 
+	public displayClass = 'display-full';
+
 	public timelineLocations: Array<TimelineEntry>;
 
 	/**
