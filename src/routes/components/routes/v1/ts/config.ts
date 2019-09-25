@@ -326,7 +326,8 @@ export let config: ISurveyMapConfig = {
 							]
 						}
 					]
-				},
+				}
+				/*,
 				{
 					name: 'transit-campus-shuttle',
 					icon: 'fas fa-bus',
@@ -341,7 +342,7 @@ export let config: ISurveyMapConfig = {
 					modes: 'BUS',
 					customRoute: routeNotShown,
 					autoSaveRoute: false
-				}
+				} */
 			]
 		},
 		{
