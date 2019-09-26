@@ -1,12 +1,4 @@
-import {
-	Injectable,
-	TemplateRef,
-	Inject,
-	Injector,
-	ViewContainerRef,
-	ApplicationRef,
-	EmbeddedViewRef
-} from '@angular/core';
+import { Injectable, TemplateRef, Inject, Injector, ViewContainerRef, ApplicationRef, EmbeddedViewRef } from '@angular/core';
 import { TimelineConfiguration } from '../models/timeline-configuration.model';
 import { ReplaySubject, BehaviorSubject, Subject, Observable } from '../shared/rxjs';
 import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
@@ -113,10 +105,11 @@ export class TimelineService {
 
 		let startTime: Date = new Date();
 		let endTime: Date = new Date();
+		startTime.setDate(startTime.getDate() - 1);
 		startTime.setHours(4);
 		startTime.setMinutes(0);
 
-		endTime.setDate(endTime.getDate() + 1);
+		endTime.setDate(endTime.getDate());
 		endTime.setHours(3);
 		endTime.setMinutes(59);
 
@@ -151,10 +144,8 @@ export class TimelineService {
 			this._isStartEndLocationsDifferent = false;
 		} else {
 			if (
-				this._timelineLocations[0].latitude !==
-					this._timelineLocations[this._timelineLocations.length - 1].latitude &&
-				this._timelineLocations[0].longitude !==
-					this._timelineLocations[this._timelineLocations.length - 1].longitude
+				this._timelineLocations[0].latitude !== this._timelineLocations[this._timelineLocations.length - 1].latitude &&
+				this._timelineLocations[0].longitude !== this._timelineLocations[this._timelineLocations.length - 1].longitude
 			) {
 				this._isStartEndLocationsDifferent = true;
 			} else {

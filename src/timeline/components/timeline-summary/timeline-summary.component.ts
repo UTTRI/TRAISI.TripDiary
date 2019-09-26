@@ -67,10 +67,14 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 	}
 
 	public ngAfterViewInit(): void {
+		console.log(this._timelineConfiguration);
 		let timeInputs = (<any>Flatpickr)('.time-input', {
 			enableTime: true,
 			noCalendar: true,
+			defaultHour: 4,
 			dateFormat: 'h:i K',
+			minDate: new Date(this._timelineConfiguration.startTime),
+
 			// defaultDate: '00:00',
 			onChange: (time, timeStr, instance) => {
 				let index = parseInt(instance.element.dataset['index'], 10);
@@ -78,9 +82,8 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 				this.update();
 			}
 		});
-		console.log(this.timelineLocations);
-		if (Array.isArray(timeInputs)) {
 
+		if (Array.isArray(timeInputs)) {
 			for (let i = 0; i < timeInputs.length; i++) {
 				timeInputs[i].setDate(this.timelineLocations[i].timeA);
 			}
@@ -100,7 +103,7 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 	private updateValidation(): void {
 		if (this.timeline.isStep2) {
 			this._timelineService.updateLocationsTimeValidation();
-
+			console.log(this.timelineLocations);
 			if (this._timelineService.isTimelineTimeStatevalid === true) {
 				console.log('sending valid');
 				this.timeline.validationState.emit(ResponseValidationState.VALID);
@@ -143,7 +146,7 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 			this.config = config;
 		});
 
-		this.inputForm.valueChanges.debounceTime(1000).subscribe(value => {
+		this.inputForm.valueChanges.debounceTime(400).subscribe(value => {
 			this.timeline.response.emit(this.timelineLocations);
 
 			if (this.timeline.isStep2) {

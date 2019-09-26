@@ -27,6 +27,13 @@
   background-color: #3498db;
 }
 
+.timeline-dock-top {
+	.timeline-entry-model-address { 
+		max-height: 60px;
+		max-width: 100px; 
+	}
+}
+
 .timeline-placeholder {
   position: absolute;
   left: 0;

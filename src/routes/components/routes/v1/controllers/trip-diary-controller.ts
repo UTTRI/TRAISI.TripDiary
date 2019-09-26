@@ -869,6 +869,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 						}
 					}
 
+					console.log(state);
 					for (let i = 0; i < state.tripRoutes.length; i++) {
 						let route: TripRoute = state.tripRoutes[i];
 

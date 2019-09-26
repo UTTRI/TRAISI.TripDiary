@@ -304,8 +304,15 @@
 		<input ng-show="tds.state.switchRouteModeActive" class="route-map-location-input"
 			placeholder="{$ 'SEARCH_FOR_LOCATION' | translate $}" autocomplete="off" />
 
-		<div class="switch-mode-overlay" ng-show="tds.state.switchRouteModeActive" translate="SWITCH_MODE_OVERLAY">
+		<div class="switch-mode-overlay" ng-show="tds.state.switchRouteModeActive">
+
+			<div translate="SWITCH_MODE_OVERLAY"></div>
+			<div style="text-align: center">
+				<i class="fas fa-question-circle" style="margin-right: 5px"></i><a href="https://youtu.be/ixweuXjJYvw" target="_blank">Switch Mode
+					Tutorial</a></div>
+
 		</div>
+
 
 		<div class="switch-mode-cancel-overlay " ng-click="_rmc.cancelSwitchModeState()"
 			ng-show="tds.state.switchRouteModeActive">
