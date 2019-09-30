@@ -9,6 +9,7 @@ export interface TimelineEntry {
 	id: symbol;
 	pipedLocation: boolean;
 	locationType: TimelineLocationType;
+	order: number;
 }
 
 export enum TimelineLocationType {

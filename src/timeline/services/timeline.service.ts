@@ -282,9 +282,18 @@ export class TimelineService {
 		} else {
 			this._timelineLocations.splice(index, 0, location);
 		}
-
+		this.updateTimelineOrder();
 		if (update) {
 			this.timelineLocations.next(this._timelineLocations);
+		}
+	}
+
+	/**
+	 *
+	 */
+	private updateTimelineOrder(): void {
+		for (let i = 0; i < this._timelineLocations.length; i++) {
+			this._timelineLocations[i].order = i;
 		}
 	}
 

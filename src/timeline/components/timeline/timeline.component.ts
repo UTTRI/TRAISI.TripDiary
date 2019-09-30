@@ -141,6 +141,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 
 					let location: TimelineEntry = {
 						address: element.address,
+						order: element.order,
 						latitude: element.latitude,
 						purpose: purpose !== undefined ? purpose : 'Prior Location',
 						longitude: element.longitude,
@@ -328,6 +329,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			latitude: undefined,
 			purpose: undefined,
 			longitude: undefined,
+			order: -1,
 			timeA: new Date(),
 			timeB: new Date(),
 			id: Symbol(),
@@ -343,6 +345,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 				location.latitude = timelineResponse.latitude;
 				location.longitude = timelineResponse.longitude;
 				location.purpose = timelineResponse.purpose;
+				location.order = timelineResponse.order;
 				location.name = timelineResponse.name;
 				location.timeA = new Date(timelineResponse.timeA);
 				location.timeB = new Date(timelineResponse.timeB);
@@ -359,6 +362,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 				location.longitude = timelineResponse.longitude;
 				location.purpose = timelineResponse.purpose;
 				location.name = timelineResponse.name;
+				location.order = timelineResponse.order;
 				location.timeA = new Date(timelineResponse.timeA);
 				location.timeB = new Date(timelineResponse.timeB);
 				this._timelineService.addTimelineLocation(location, undefined, false);
@@ -376,6 +380,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 					location.address = timelineResponse.address;
 					location.latitude = timelineResponse.latitude;
 					location.longitude = timelineResponse.longitude;
+					location.order = timelineResponse.order;
 					location.purpose = timelineResponse.purpose;
 					location.timeA = new Date(timelineResponse.timeA);
 					location.timeB = new Date(timelineResponse.timeB);
