@@ -194,7 +194,7 @@
 								<span class="route-name" ng-bind-html="route.name"></span>
 
 								<span class="route-distance">{$ route.summary.totalDistance / 1000 $} km</span>
-								<span class="route-time">{$ route.summary.totalTime | secondsToHourMinute $}</span>
+								<span class="route-time"><!-- {$ route.summary.totalTime | secondsToHourMinute $} --></span>
 							</div>
 
 							<div ng-click="_rmc.showRouteDescriptionDialog(tripLeg,$event,tripLeg._mode.modeName,false)"
@@ -288,8 +288,8 @@
 				<span class="route-terminal-code">{$ tds.state.tripRoutes[ tds.state.activeRouteIndex].tripLegs.length+1
 					$}</span>
 				<span>{$ tds.state.tripRoutes[ tds.state.activeRouteIndex].endLocation.locationName $}</span>
-				<span class="route-time"> {$ tds.state.tripRoutes[ tds.state.activeRouteIndex].getAdjustedEndTime() |
-					customDate $} </span>
+				<span class="route-time"> <!-- {$ tds.state.tripRoutes[ tds.state.activeRouteIndex].getAdjustedEndTime() |
+					customDate $} --> </span>
 			</div>
 		</div>
 	</div>

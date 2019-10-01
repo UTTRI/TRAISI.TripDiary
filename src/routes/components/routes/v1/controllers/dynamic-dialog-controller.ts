@@ -28,6 +28,8 @@ export class DynamicDialogController {
 
 		/* load passed data into scope data object*/
 
+		console.log(data);
+		console.log(this);
 		Object.keys(data).forEach(key => {
 			$scope['data'][key] = data[key];
 		});

@@ -126,7 +126,7 @@ export class TripDiaryModule {
 					// $compileProvider.debugInfoEnabled(false);
 				}
 			])
-			.controller('DynamicDialogController', DynamicDialogController)
+
 			// .directive('scrollViewWatcher', ['$window', ScrollViewWatcher.Factory()])
 			.directive('tripRouteModeContainer', [tripRouteModeContainer])
 			// .directive('preventScroll', ['$window', PreventScrollDirective.Factory()])
@@ -170,6 +170,15 @@ export class TripDiaryModule {
 			.constant('respondent', respondent)
 			.directive('traisiRoutesV1', downgradeComponent({ component: RoutesV1Component }) as angular.IDirectiveFactory);
 
+		app.controller('DynamicDialogController', [
+			'$scope',
+			'$mdDialog',
+			'mode',
+			'dataInputs',
+			'dialogTitle',
+			'data',
+			DynamicDialogController
+		]);
 		app.config([
 			'$compileProvider',
 			$compileProvider => {
