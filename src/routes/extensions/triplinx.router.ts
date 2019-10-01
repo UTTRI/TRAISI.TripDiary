@@ -96,7 +96,7 @@ export class TripLinxRouter implements Routing.IRouter {
 
 					// add icons for each route instruction
 					let routeInstructions: Array<string> = [];
-
+					let providers = new Set<string>();
 					for (let section of trip['sections']['Section']) {
 						let leg = section['Leg'];
 						if (leg !== null && leg !== undefined) {
@@ -123,6 +123,7 @@ export class TripLinxRouter implements Routing.IRouter {
 							routeInstructions.push(
 								this.getInsturctionForTransitMode(section['PTRide']['TransportMode'], section['PTRide']['Line']['Number'])
 							);
+							providers.add(section['PTRide']['Operator']['Name']);
 							if (coords !== null && coords.length >= 2) {
 								for (let i = 0; i < coords.length / 2; i += 2) {
 									let coord = new LatLng(Number(coords[i + 1]), Number(coords[i + 0]));
@@ -151,6 +152,7 @@ export class TripLinxRouter implements Routing.IRouter {
 					route['inputWaypoints'] = route.waypoints || [];
 
 					route.name = routeInstructions.join('');
+					route.name = route.name + '<div>' + Array.from(providers).join(', ') + '</div>';
 					routes.push(route);
 				}
 
