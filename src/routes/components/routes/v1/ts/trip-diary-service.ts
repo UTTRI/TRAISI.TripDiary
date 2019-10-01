@@ -31,7 +31,14 @@ export class TripDiaryService {
 	updateState: (state: TripsQuestionState) => any;
 	updateTripRoutes: (routes: TripRoute[]) => any;
 	setTripMode: (mode: string, category: string, waypoints: boolean, clearPrevious?: boolean) => any;
-	setTripLegData: (coordinates: L.LatLng[], indices: number[], routeName: string, routeIndex: number, instructions: any, allRoutes?: any) => any;
+	setTripLegData: (
+		coordinates: L.LatLng[],
+		indices: number[],
+		routeName: string,
+		routeIndex: number,
+		instructions: any,
+		allRoutes?: any
+	) => any;
 	setSwitchRouteModeState: (active: boolean) => any;
 	/* The following are inluced for auto-completion only, ngRedux connect binds action methods */
 	setModeSwitchData: (autosave: boolean, appendAfterIndex: number) => any;
@@ -373,15 +380,14 @@ export class TripDiaryService {
 	}
 
 	/**
-	 * 
-	 * @param modeName 
-	 * @param property 
+	 *
+	 * @param modeName
+	 * @param property
 	 */
 	public getModeProperty(modeName: string, property: string): string {
 		for (let mode of TripDiary.config.modes) {
 			for (let subMode of mode.subModes) {
 				if (subMode.name === modeName) {
-
 					return subMode[property];
 				}
 			}

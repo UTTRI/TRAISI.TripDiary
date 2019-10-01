@@ -11,11 +11,13 @@ import * as moment from 'moment';
 import * as icons from '../shared/survey-map-marker-type';
 import * as L from 'leaflet';
 import { TripDiary } from '../ts/trips-diary';
-import * as _ from 'lodash';
+// import * as _ from 'lodash';
 import * as TripsActions from '../ts/trips-actions';
 // import LatLngBounds = google.maps.LatLngBounds;
 // import LatLng = google.maps.LatLng;
 // import SearchBox = google.maps.places.SearchBox;
+
+import { defer, delay } from 'lodash';
 
 class LatLng {
 	lat: number;
@@ -268,7 +270,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	 * Callback for when route map is ready
 	 */
 	private routeMapReady = (surveyMap: SurveyMapDirective) => {
-		_.defer(() => {
+		defer(() => {
 			if (this.state.tripRoutes[this.state.activeRouteIndex] != null) {
 				this._routeMap.addRouting(this.state.tripRoutes[this.state.activeRouteIndex]);
 			}
@@ -369,7 +371,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 
 			// manage the location map state
 			// this.manageLocationMapState($ngRedux.getState());
-			_.delay(() => {
+			delay(() => {
 				// window.dispatchEvent(new Event('resize'));
 			}, 300);
 		});
@@ -497,7 +499,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		); */
 
 		$scope.$on('$mdMenuClose', () => {
-			_.delay(() => {
+			delay(() => {
 				window.dispatchEvent(new Event('visibilityScrollCheck'));
 			}, 1000);
 		});
@@ -676,7 +678,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		if (this.state.activeRouteIndex >= routes.length) {
 			// settings route edit active
 
-			_.delay(() => {
+			delay(() => {
 				this._tripDiaryService.setRouteEditActive(0);
 			}, 0);
 		}
@@ -856,7 +858,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					if (this.state.activeRouteIndex >= 0) {
 						// settings route edit active
 
-						_.delay(() => {
+						delay(() => {
 							this._tripDiaryService.setRouteEditActive(0);
 						}, 0);
 					}
@@ -903,7 +905,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 						}
 					}
 
-					console.log(state.tripRoutes);
+					// console.log(state.tripRoutes);
 					this.basicState = {
 						startLocation: startLocation,
 						_startLocation: startLocation,

@@ -1,6 +1,6 @@
 import { TripLocation } from './trip-location';
 import { TripRoute } from './trip-route';
-import * as _ from 'lodash';
+import { clone } from 'lodash';
 
 /**
  *
@@ -16,8 +16,8 @@ export class TripsReducersHelper {
 				/* compare start time */
 
 				// comprae time
-				let startTimeCompare1 = _.clone(tripLocations[j].startTime);
-				let startTimeCompare2 = _.clone(tripLocations[j + 1].startTime);
+				let startTimeCompare1 = clone(tripLocations[j].startTime);
+				let startTimeCompare2 = clone(tripLocations[j + 1].startTime);
 
 				/*  if (startTimeCompare1.getHours() < 4) {
                       startTimeCompare1.setDate(startTimeCompare1.getDate() + 1);

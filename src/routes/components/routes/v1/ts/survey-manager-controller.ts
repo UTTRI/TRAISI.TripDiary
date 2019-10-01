@@ -2,7 +2,8 @@ import { ISurveyQuestion } from './survey-question-interface';
 
 import { SurveyManagerEvents } from './survey-manager-events';
 import { ISurveyPage } from './survey-page';
-import * as _ from 'lodash';
+//import * as _ from 'lodash';
+import { defer, delay, sortBy } from 'lodash';
 import { isNullOrUndefined } from 'util';
 import { SurveyConfigService } from '../shared/services/survey-config-service';
 
@@ -70,7 +71,7 @@ export default class SurveyManagerController {
 		this.showQuestion(this.questions[this.activePageNumber].id);
 
 		$window.addEventListener(SurveyManagerEvents.UPDATE_QUESTION_SUB_SECTIONS, (evt: CustomEvent) => {
-			_.defer(() => {
+			defer(() => {
 				this.updateSubsection(evt.detail);
 			});
 		});
@@ -115,7 +116,7 @@ export default class SurveyManagerController {
 	 *
 	 * @param event
 	 */
-	private onInputElementSuccess = (event) => {
+	private onInputElementSuccess = event => {
 		for (let i = 0; i < event.detail.length; i++) {
 			let inputElement: HTMLInputElement = event.detail[i];
 
@@ -123,7 +124,7 @@ export default class SurveyManagerController {
 			let questionValue = inputElement.value;
 
 			if (!isNullOrUndefined(questionId) || !isNullOrUndefined(questionValue)) {
-				_.defer(() => {
+				defer(() => {
 					this._configService.savePartialResponse(questionValue, questionId);
 				});
 			}
@@ -213,7 +214,7 @@ export default class SurveyManagerController {
 					toAdd.toHide.push(hide$);
 				}
 				if (toAdd.length > 0) {
-					if (this.questions.some((r) => r[0].id === toAdd[0].id) === false) {
+					if (this.questions.some(r => r[0].id === toAdd[0].id) === false) {
 						this.questions.splice(questionIndex + i + 1, 0, toAdd);
 						if (adjustedQuestionIndex < startingActiveIndex) {
 							this.activePageNumber++;
@@ -256,7 +257,7 @@ export default class SurveyManagerController {
 	 * Submits the "page" -> ie clicking next
 	 */
 	private submitForm() {
-		$('form#survey_form').submit((e) => {
+		$('form#survey_form').submit(e => {
 			$(this)
 				.find('.next-container')
 				.addClass('hidden');
@@ -329,7 +330,7 @@ export default class SurveyManagerController {
 	 *
 	 */
 	private previousPage() {
-		this.pagesQuestions = _.sortBy(this.pagesQuestions, ['pageNumber']);
+		this.pagesQuestions = sortBy(this.pagesQuestions, ['pageNumber']);
 
 		// get the active location
 

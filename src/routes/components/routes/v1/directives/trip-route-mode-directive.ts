@@ -6,7 +6,7 @@ import { TripLeg } from '../ts/trip-leg';
 import { TripDiaryController } from '../controllers/trip-diary-controller';
 
 import { TripDiary } from '../ts/trips-diary';
-import 'jquery';
+// import 'jquery';
 import * as angular from 'angular';
 import * as Color from 'color';
 import { TripDiaryService } from '../ts/trip-diary-service';
@@ -189,7 +189,7 @@ export class TripRouteModeDirective {
 			waypoints.push(route.waypoints[i].latLng);
 		}
 
-		this._tripDiaryService.setTripLegData(route.coordinates, waypoints, route.name, route.routesIndex, route.instructions,  routes);
+		this._tripDiaryService.setTripLegData(route.coordinates, waypoints, route.name, route.routesIndex, route.instructions, routes);
 
 		this._$timeout(() => {
 			this._tripDiaryService.notifyActiveRouteChanged(this._tripDiaryService.getActiveTripRoute());
