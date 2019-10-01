@@ -72,7 +72,9 @@ export class SurveyManager {
 	 */
 	public surveyBootstrap() {
 		angular.element(document).ready(() => {
-			angular.bootstrap('#smc-app-container', SurveyManager.modules);
+			angular.bootstrap('#smc-app-container', SurveyManager.modules, {
+				strictDi: true
+			});
 			window['angular'] = angular;
 			window['modules'] = SurveyManager.modules;
 		});

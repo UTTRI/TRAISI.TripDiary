@@ -34,8 +34,6 @@ import switchModePopupTemplateUrl from '../../templates/trip-diary-switch-mode-p
 import deleteModeSwitchTemplateUrl from '../../templates/trip-diary-delete-mode-switch-popup.html';
 import * as markerIcon from '../../../../../../assets/marker-icon.png';
 
-console.log(markerIcon);
-
 googleTravelMode['driver'] = 'Car';
 googleTravelMode['bicycle'] = 'Bike';
 googleTravelMode['transit'] = 'PT';

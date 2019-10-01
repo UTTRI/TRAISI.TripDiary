@@ -367,8 +367,6 @@ export function tripsState(state = INITIAL_STATE, action) {
 
 			activeTripLeg._allRoutes = action.payload.allRoutes;
 
-			console.log(activeTripLeg);
-
 			break;
 
 		case SET_SWITCH_ROUTE_MODE_STATE:

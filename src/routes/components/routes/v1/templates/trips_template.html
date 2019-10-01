@@ -7,279 +7,282 @@
 
 <script>
 
-    window.surveyData_{{ question_id }} = {{ survey_data | safe }};
+	window.surveyData_{ { question_id } } = { { survey_data | safe } };
 
 </script>
 
 <!-- controller defined by trips.ts -->
-<div id="trip-diary-{{ question_id }}" class="app-container trips-app-container" ng-cloak ng-app="tripDiaryApp">
+<div id="trip-diary-{{ question_id }}" class="app-container trips-app-container" ng-cloak ng-app="tripDiaryApp"
+	ng-strict-di="true">
 
-    {% csrf_token %}
+	{% csrf_token %}
 
-    <div class="trips-question app-controller" ng-controller="TripsController as tc"
-         ng-init="mapToggle=true;tc.questionId='{{ question_id }}';tc.initQuestion('{{ question_id }}')" ng-cloak>
-
-
-        <div id="trips-default" class="trips-default-panel slide-panel">
-            {% include "questions/trips/trips_default.html" %}
-        </div>
-
-        <!-- no trips reason select -->
-        <div id="trips-reason-select-{$ tc.questionId $}" ng-if="tc.value.noTripsSelectView"
-             class="trips-reason-select">
-
-            {% include "questions/trips/trips_notrips.html" %}
-
-        </div>
+	<div class="trips-question app-controller" ng-controller="TripsController as tc"
+		ng-init="mapToggle=true;tc.questionId='{{ question_id }}';tc.initQuestion('{{ question_id }}')" ng-cloak>
 
 
-        <div ng-cloak class="timeline-outer-container" id="trip-diary-timeline-{$tc.questionId$}"
-             data-segment-name="TIMELINE"
-             ng-show="tc.value.madeTrips.value" ng-class="{'trips-location-overlay-active': tc.value.mapView}">
-            <!--<div class="question-container desktop" ng-class="{'map-view-open': tc.value.mapView}">
+		<div id="trips-default" class="trips-default-panel slide-panel">
+			{% include "questions/trips/trips_default.html" %}
+		</div>
+
+		<!-- no trips reason select -->
+		<div id="trips-reason-select-{$ tc.questionId $}" ng-if="tc.value.noTripsSelectView"
+			class="trips-reason-select">
+
+			{% include "questions/trips/trips_notrips.html" %}
+
+		</div>
+
+
+		<div ng-cloak class="timeline-outer-container" id="trip-diary-timeline-{$tc.questionId$}"
+			data-segment-name="TIMELINE" ng-show="tc.value.madeTrips.value"
+			ng-class="{'trips-location-overlay-active': tc.value.mapView}">
+			<!--<div class="question-container desktop" ng-class="{'map-view-open': tc.value.mapView}">
                 <p translate="TIMELINE_HEADER" translate-values="tc.translateData"></p>
             </div> -->
-            <div class="question-container" ng-class="{'map-view-open': tc.value.mapView}">
+			<div class="question-container" ng-class="{'map-view-open': tc.value.mapView}">
 
-                <p ng-show="!tc.value.startLocation || !tc.value.endLocation"
-                   translate="TIMELINE_HEADER_BEFORE_COLLECT_TRIPS" translate-values="tc.translateData"></p>
-                <p ng-show="tc.value.startLocation && tc.value.endLocation" translate="TIMELINE_HEADER_CONTINUE_ADDING"
-                   translate-values="tc.translateData"></p>
+				<p ng-show="!tc.value.startLocation || !tc.value.endLocation"
+					translate="TIMELINE_HEADER_BEFORE_COLLECT_TRIPS" translate-values="tc.translateData"></p>
+				<p ng-show="tc.value.startLocation && tc.value.endLocation" translate="TIMELINE_HEADER_CONTINUE_ADDING"
+					translate-values="tc.translateData"></p>
 
-            </div>
-            <div class="trips-view" ng-class="{'timeline-view-hidden': !tc.value.timelineView}">
-                <!-- add / edit location div -->
-                <span ng-click="_tdtl.showTimlineToggleTourDialog()" class="tour-button"><md-icon>help</md-icon></span>
+			</div>
+			<div class="trips-view" ng-class="{'timeline-view-hidden': !tc.value.timelineView}">
+				<!-- add / edit location div -->
+				<span ng-click="_tdtl.showTimlineToggleTourDialog()" class="tour-button">
+					<md-icon>help</md-icon>
+				</span>
 
-                <div class="timeline-container">
-
-
-                    <div id="trips-location" class="trips-location-overlay slide-panel-left"
-                         ng-class="{'trips-location-overlay-hidden': mapToggle}"
-                         ng-show="tc.value.locationView">
+				<div class="timeline-container">
 
 
-                        <div class="trips-location-container">
+					<div id="trips-location" class="trips-location-overlay slide-panel-left"
+						ng-class="{'trips-location-overlay-hidden': mapToggle}" ng-show="tc.value.locationView">
 
 
-                            <div ng-show="mapToggle" class="location-mobile-toggle" ng-click="mapToggle = !mapToggle">
-
-                                <md-icon>keyboard_arrow_up</md-icon>
-
-                            </div>
-
-                            <div ng-show="!mapToggle" class="location-mobile-toggle" ng-click="mapToggle = !mapToggle">
-
-                                <md-icon>keyboard_arrow_down</md-icon>
-
-                            </div>
-
-                            <span class="map-location-input"
-                                  ng-class="{'trips-location-overlay-active': tc.value.mapView}"
-
-                                  ng-show="mapToggle"
-                                  ng-bind="tc.value.activeTripLocation.locationInput  == null ? 'No Location Chosen' : tc.value.activeTripLocation.locationInput "></span>
-
-                            <div class="location-scroll-container">
-                                <ng-form name="tripsLocationForm">
-
-                                    <div class="trips-location-header">
-
-                                        <span ng-if="tc.value.activeTripLocation.locationType == 'START_LOCATION'">
-                                            {$ 'LOCATION_DESCRIPTION' | translate:tc.translateData  $}
-                                        </span>
-
-                                        <span ng-if="tc.value.activeTripLocation.locationType == 'END_LOCATION'">
-                                                {$ 'LAST_DESTINATION' | translate:tc.translateData  $}
-                                        </span>
-
-                                        <span ng-if="tc.value.activeTripLocation.locationType == 'INTERMEDIATE_LOCATION' && tc.value.activeTripLocation._lockedLocation">
-                                            <div class="trips-location-name">{$ tc.value.activeTripLocation.locationName $}</div>
-                                            <div>{$ tc.value.activeTripLocation.locationInput $}</div>
-                                        </span>
-                                        <span ng-if="tc.value.activeTripLocation.locationType == 'INTERMEDIATE_LOCATION' && !tc.value.activeTripLocation._lockedLocation">
-                                            {$ 'NEW_LOCATION'  | translate:tc.translateData $}
-                                        </span>
+						<div class="trips-location-container">
 
 
-                                    </div>
+							<div ng-show="mapToggle" class="location-mobile-toggle" ng-click="mapToggle = !mapToggle">
+
+								<md-icon>keyboard_arrow_up</md-icon>
+
+							</div>
+
+							<div ng-show="!mapToggle" class="location-mobile-toggle" ng-click="mapToggle = !mapToggle">
+
+								<md-icon>keyboard_arrow_down</md-icon>
+
+							</div>
+
+							<span class="map-location-input"
+								ng-class="{'trips-location-overlay-active': tc.value.mapView}" ng-show="mapToggle"
+								ng-bind="tc.value.activeTripLocation.locationInput  == null ? 'No Location Chosen' : tc.value.activeTripLocation.locationInput "></span>
+
+							<div class="location-scroll-container">
+								<ng-form name="tripsLocationForm">
+
+									<div class="trips-location-header">
+
+										<span ng-if="tc.value.activeTripLocation.locationType == 'START_LOCATION'">
+											{$ 'LOCATION_DESCRIPTION' | translate:tc.translateData $}
+										</span>
+
+										<span ng-if="tc.value.activeTripLocation.locationType == 'END_LOCATION'">
+											{$ 'LAST_DESTINATION' | translate:tc.translateData $}
+										</span>
+
+										<span
+											ng-if="tc.value.activeTripLocation.locationType == 'INTERMEDIATE_LOCATION' && tc.value.activeTripLocation._lockedLocation">
+											<div class="trips-location-name">{$ tc.value.activeTripLocation.locationName
+												$}</div>
+											<div>{$ tc.value.activeTripLocation.locationInput $}</div>
+										</span>
+										<span
+											ng-if="tc.value.activeTripLocation.locationType == 'INTERMEDIATE_LOCATION' && !tc.value.activeTripLocation._lockedLocation">
+											{$ 'NEW_LOCATION' | translate:tc.translateData $}
+										</span>
 
 
-                                    <div class="location-input"
-                                         ng-hide="tc.value.activeTripLocation._lockedLocation">
-                                        <md-input-container class="md-icon-right">
-                                            <input ng-disabled="tc.value.activeTripLocation._lockedLocation"
-                                                   ng-change="tc.inputChanged()" ng-required="tc.value.locationView"
-                                                   id="trips-location-input-{$ questionId $}"
-                                                   type="text" placeholder="{$ 'SEARCH_QUERY' | translate $}"
-                                                   class="location-input-map"
-                                                   ng-model="tc.value.activeTripLocation.locationInput"/>
-                                            <md-icon>place</md-icon>
-                                        </md-input-container>
-                                    </div>
-
-                                    <!--<div class="location-name">Name of location:</div> -->
-                                    <div class="location-group">
-                                        <md-subheader class="md-primary" translate="CONFIRM_PURPOSE"></md-subheader>
-                                        <md-select
-                                                placeholder="Location Purpose" md-container-class="purpose-select"
-                                                ng-model="tc.value.activeTripLocation.locationPurpose">
+									</div>
 
 
-                                            <md-option value="{$ purpose.value $}"
-                                                       ng-repeat="purpose in tripsConfig.purposes">
-                                                {$ purpose.label $}
-                                            </md-option>
-                                        </md-select>
+									<div class="location-input" ng-hide="tc.value.activeTripLocation._lockedLocation">
+										<md-input-container class="md-icon-right">
+											<input ng-disabled="tc.value.activeTripLocation._lockedLocation"
+												ng-change="tc.inputChanged()" ng-required="tc.value.locationView"
+												id="trips-location-input-{$ questionId $}" type="text"
+												placeholder="{$ 'SEARCH_QUERY' | translate $}"
+												class="location-input-map"
+												ng-model="tc.value.activeTripLocation.locationInput" />
+											<md-icon>place</md-icon>
+										</md-input-container>
+									</div>
+
+									<!--<div class="location-name">Name of location:</div> -->
+									<div class="location-group">
+										<md-subheader class="md-primary" translate="CONFIRM_PURPOSE"></md-subheader>
+										<md-select placeholder="Location Purpose" md-container-class="purpose-select"
+											ng-model="tc.value.activeTripLocation.locationPurpose">
 
 
-                                        <md-input-container class="other-name-input" ng-hide="tc.value.activeTripLocation._lockedLocation">
-                                            <input ng-disabled="tc.value.activeTripLocation._lockedLocation"
-                                                   placeholder="{$ 'NAME_OF_LOCATION' | translate $}"
-                                                   ng-required="tc.value.locationView"
-                                                   class="other-name-input" ng-model-options="{
+											<md-option value="{$ purpose.value $}"
+												ng-repeat="purpose in tripsConfig.purposes">
+												{$ purpose.label $}
+											</md-option>
+										</md-select>
+
+
+										<md-input-container class="other-name-input"
+											ng-hide="tc.value.activeTripLocation._lockedLocation">
+											<input ng-disabled="tc.value.activeTripLocation._lockedLocation"
+												placeholder="{$ 'NAME_OF_LOCATION' | translate $}"
+												ng-required="tc.value.locationView" class="other-name-input"
+												ng-model-options="{
     debounce: 200
-  }"
-                                                   ng-model="tc.value.activeTripLocation._locationName"
-
-                                                   type="text">
-                                        </md-input-container>
+  }" ng-model="tc.value.activeTripLocation._locationName" type="text">
+										</md-input-container>
 
 
-                                    </div>
+									</div>
 
 
-                                    <div class="time-choice">
-                                        <div class="trips-location-departure-time-choice" ng-cloak
-                                             ng-show="tc.value.activeTripLocation.locationType != 'START_LOCATION'">
-                                            <md-subheader class="md-primary" translate="ARRIVAL_TIME"></md-subheader>
+									<div class="time-choice">
+										<div class="trips-location-departure-time-choice" ng-cloak
+											ng-show="tc.value.activeTripLocation.locationType != 'START_LOCATION'">
+											<md-subheader class="md-primary" translate="ARRIVAL_TIME"></md-subheader>
 
-                                            <md-time-picker
-                                                    ng-required="tc.value.activeTripLocation.locationType != 'START_LOCATION'"
-                                                    ng-model="tc.value.activeTripLocation.startTime"
-                                                    no-auto-switch></md-time-picker>
-
-
-                                        </div>
-
-                                        <div class="trips-location-departure-time-choice"
-                                             ng-class="{'picker-shift': tc.value.activeTripLocation.locationType == 'INTERMEDIATE_LOCATION'}"
-                                             ng-show="tc.value.activeTripLocation.locationType != 'END_LOCATION'">
-                                            <md-subheader class="md-primary" translate="DEPARTURE_TIME"></md-subheader>
-
-                                            <md-time-picker id="time-picker-{$ tc.questionId $}"
-
-                                                            ng-change="tc.timeInputChanged()"
-                                                            ng-required="tc.value.activeTripLocation.locationType != 'END_LOCATION'"
-                                                            ng-model="tc.value.activeTripLocation.endTime"
-                                                            no-auto-switch></md-time-picker>
-
-                                            <ng-messages
-                                            ="!tc.value.activeTripLocation._valid">
-
-                                            </ng-messages>
+											<md-time-picker
+												ng-required="tc.value.activeTripLocation.locationType != 'START_LOCATION'"
+												ng-model="tc.value.activeTripLocation.startTime" no-auto-switch>
+											</md-time-picker>
 
 
-                                        </div>
-                                    </div>
+										</div>
 
-                                    <div class="location-confirm">
-                                        <div class="error-section">
-                                            <ng-messages for="tripsLocationForm.$error" role="alert">
-                                                <ng-message when="tooEarly" translate="TOO_EARLY"></ng-message>
-                                                <ng-message when="overlappingTimes"
-                                                            translate="OVERLAPPING_TIMES"></ng-message>
-                                                <ng-message when="invalidTime" translate="INVALID_TIME"></ng-message>
-                                                <ng-message when="conflictingName"
-                                                            translate="CONFLICTING_NAME"></ng-message>
-                                                <ng-message when="multipleEmbedded"
-                                                            translate="MULTIPLE_EMBEDDED"></ng-message>
+										<div class="trips-location-departure-time-choice"
+											ng-class="{'picker-shift': tc.value.activeTripLocation.locationType == 'INTERMEDIATE_LOCATION'}"
+											ng-show="tc.value.activeTripLocation.locationType != 'END_LOCATION'">
+											<md-subheader class="md-primary" translate="DEPARTURE_TIME"></md-subheader>
 
-                                            </ng-messages>
-                                        </div>
-                                        <md-button class="md-raised" ng-click="tc.cancelAddTripLocation()">{$ ::'CANCEL'
-                                            | translate $}
-                                        </md-button>
+											<md-time-picker id="time-picker-{$ tc.questionId $}"
+												ng-change="tc.timeInputChanged()"
+												ng-required="tc.value.activeTripLocation.locationType != 'END_LOCATION'"
+												ng-model="tc.value.activeTripLocation.endTime" no-auto-switch>
+											</md-time-picker>
 
-                                        <md-button class="md-raised md-primary" ng-click="tc.addTripLocationData()"
-                                                   ng-disabled="tripsLocationForm.$tcInvalid">
-                                            OK
-                                        </md-button>
+											<ng-messages="!tc.value.activeTripLocation._valid">
 
-                                    </div>
+											</ng-messages>
 
 
-                                </ng-form>
-                            </div>
-                        </div>
+										</div>
+									</div>
+
+									<div class="location-confirm">
+										<div class="error-section">
+											<ng-messages for="tripsLocationForm.$error" role="alert">
+												<ng-message when="tooEarly" translate="TOO_EARLY"></ng-message>
+												<ng-message when="overlappingTimes" translate="OVERLAPPING_TIMES">
+												</ng-message>
+												<ng-message when="invalidTime" translate="INVALID_TIME"></ng-message>
+												<ng-message when="conflictingName" translate="CONFLICTING_NAME">
+												</ng-message>
+												<ng-message when="multipleEmbedded" translate="MULTIPLE_EMBEDDED">
+												</ng-message>
+
+											</ng-messages>
+										</div>
+										<md-button class="md-raised" ng-click="tc.cancelAddTripLocation()">{$ ::'CANCEL'
+											| translate $}
+										</md-button>
+
+										<md-button class="md-raised md-primary" ng-click="tc.addTripLocationData()"
+											ng-disabled="tripsLocationForm.$tcInvalid">
+											OK
+										</md-button>
+
+									</div>
 
 
-                    </div>
-
-                    <timeline-line-map should-disable="true" id="timeline-map"
-                                       ng-show="tc.value.mapView"></timeline-line-map>
-
-
-                    <survey-map controller="tc" callback="tc.markerCallback" map="tc._map"
-                                md-swipe-up="mapToggle = false"
-                                marker-click="tc.markerClickCallback"
-                                class="trips-map-container slide-panel" ready="tc.locationsReady"
-                                ng-show="tc.value.mapView"></survey-map>
+								</ng-form>
+							</div>
+						</div>
 
 
-                    <!-- timeline view -->
-                    <div class="trips-timeline-panel slide-panel" id="trips-timeline-{$ tc.questionId $}"
-                         ng-show="tc.value.timelineView">
+					</div>
+
+					<timeline-line-map should-disable="true" id="timeline-map" ng-show="tc.value.mapView">
+					</timeline-line-map>
 
 
-                        <timeline></timeline>
-
-                    </div>
-
-                </div>
-
-
-                <!-- end timeline view -->
+					<survey-map controller="tc" callback="tc.markerCallback" map="tc._map"
+						md-swipe-up="mapToggle = false" marker-click="tc.markerClickCallback"
+						class="trips-map-container slide-panel" ready="tc.locationsReady" ng-show="tc.value.mapView">
+					</survey-map>
 
 
-            </div>
-
-            <div class="timeline-complete-submit" ng-if="tc.value.madeTrips.value">
-
-            </div>
-        </div>
+					<!-- timeline view -->
+					<div class="trips-timeline-panel slide-panel" id="trips-timeline-{$ tc.questionId $}"
+						ng-show="tc.value.timelineView">
 
 
-        <div ng-if="tc.value.tripRoutes.length > 0 && tc.value.startLocation != undefined && tc.value.endLocation != undefined">
-            <div class="router-outer-container" id="trip-diary-router-{$tc.questionId$}"
-                 ng-class="{'container-switch-active':tc.state.switchRouteModeActive, 'tour-active': tc.$scope.routeMobileTourActive}"
-                 ng-if="tc.value.madeTrips.value" data-segment-name="ROUTE_MAP">
-                <div class="question-container">
+						<timeline></timeline>
 
-                    <span ng-click="tc.toggleRouteMapTour()" class="tour-button"><md-icon>help</md-icon></span>
-                    <span class="route-mobile-header">
-                      {$ 'TRIP_MOBILE_HEADER_PREFIX' | translate:tc.translateData $} {$ tc._tripDiaryService.getActiveTripRoute().startLocation.displayName() $}
-                        {$ tc._tripDiaryService.getActiveTripRoute().getAdjustedStartTime() | customDateBrackets $} to
-                        {$ tc._tripDiaryService.getActiveTripRoute().endLocation.displayName() $} {$ tc._tripDiaryService.getActiveTripRoute().getAdjustedEndTime() | customDateBrackets $}
-                    </span>
-                    <p class="router-header" translate="ROUTER_HEADER" translate-values="tc.translateData"></p>
+					</div>
 
-                </div>
-                <!-- route mode view  -->
-                <div class="trips-routes-modes-view">
-                    <trip-route-mode></trip-route-mode>
-                </div>
-                <!-- end route mode view -->
-            </div>
-        </div>
-    </div>
+				</div>
+
+
+				<!-- end timeline view -->
+
+
+			</div>
+
+			<div class="timeline-complete-submit" ng-if="tc.value.madeTrips.value">
+
+			</div>
+		</div>
+
+
+		<div
+			ng-if="tc.value.tripRoutes.length > 0 && tc.value.startLocation != undefined && tc.value.endLocation != undefined">
+			<div class="router-outer-container" id="trip-diary-router-{$tc.questionId$}"
+				ng-class="{'container-switch-active':tc.state.switchRouteModeActive, 'tour-active': tc.$scope.routeMobileTourActive}"
+				ng-if="tc.value.madeTrips.value" data-segment-name="ROUTE_MAP">
+				<div class="question-container">
+
+					<span ng-click="tc.toggleRouteMapTour()" class="tour-button">
+						<md-icon>help</md-icon>
+					</span>
+					<span class="route-mobile-header">
+						{$ 'TRIP_MOBILE_HEADER_PREFIX' | translate:tc.translateData $} {$
+						tc._tripDiaryService.getActiveTripRoute().startLocation.displayName() $}
+						{$ tc._tripDiaryService.getActiveTripRoute().getAdjustedStartTime() | customDateBrackets $} to
+						{$ tc._tripDiaryService.getActiveTripRoute().endLocation.displayName() $} {$
+						tc._tripDiaryService.getActiveTripRoute().getAdjustedEndTime() | customDateBrackets $}
+					</span>
+					<p class="router-header" translate="ROUTER_HEADER" translate-values="tc.translateData"></p>
+
+				</div>
+				<!-- route mode view  -->
+				<div class="trips-routes-modes-view">
+					<trip-route-mode></trip-route-mode>
+				</div>
+				<!-- end route mode view -->
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- end app container, controller : tripsContoller -->
 
 <script>
-    $(document).ready(() => {
-        window.tripDiaryModule.bootstrap('{{ question_id }}');
-        window.angular.bootstrap('#trip-diary-{{ question_id }}', ['trips']);
-    });
+	$(document).ready(() => {
+		window.tripDiaryModule.bootstrap('{{ question_id }}');
+		window.angular.bootstrap('#trip-diary-{{ question_id }}', ['trips'], {
+			strictDi: true 
+		});
+	});
 </script>

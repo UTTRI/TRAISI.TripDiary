@@ -30,7 +30,7 @@ import { TimelineService } from '../../services/timeline.service';
 import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component';
 import { TimelineNewEntryComponent } from '../timeline-new-entry/timeline-new-entry.component';
 import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.component';
-
+import { sortBy } from 'lodash';
 /**
  * Main entry component for the Timeline TRAISI question. This component is the root component that is loaded
  * from the survey viewer. All further timeline content appears as child nodes of this component.
@@ -47,6 +47,7 @@ import { TimelineWedgeComponent } from '../timeline-wedge/timeline-wedge.compone
 
 import templateString from './timeline.component.html';
 import { of } from 'rxjs';
+import _ = require('angular-animate');
 @Component({
 	entryComponents: [TimelineWedgeComponent],
 	selector: 'traisi-timeline-question',
@@ -338,6 +339,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			name: 'Prior Location'
 		};
 		if (response instanceof Array) {
+			response = <TimelineResponseData[]>sortBy(response, o => o['order']);
+			console.log(response); 
 			if (response.length >= 1) {
 				const timelineResponse = <TimelineResponseData>response[0];
 				location.locationType = TimelineLocationType.StartLocation;
@@ -394,6 +397,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 
 		this._timelineService.timelineLocations.subscribe((entries: TimelineEntry[]) => {
 			this.response.emit(entries);
+
+			console.log(entries);
 			this._timelineService.updateLocationsValidation();
 			this._timelineService.updateLocationsTimeValidation();
 

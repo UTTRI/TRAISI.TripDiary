@@ -21,7 +21,8 @@ import {
 } from '../ts/trips-actions';
 import { isNullOrUndefined } from 'util';
 import { TripDiaryController } from './trip-diary-controller';
-import * as _ from 'lodash';
+//import * as _ from 'lodash';
+import { last, delay } from 'lodash';
 import SurveyManagerController from '../ts/survey-manager-controller';
 
 declare var displaySnackBar: (string, any, number) => any;
@@ -267,7 +268,7 @@ export class TripDiaryRouteModeController {
 	 */
 	public setRouteEditActive(index) {
 		if (window.matchMedia('(min-width: 480px)').matches) {
-			_.delay(() => {
+			delay(() => {
 				let header = this._element.find('.trip-route-mode-header')[0];
 				header.scrollTo((index - 1) * 280, 0);
 			}, 500);
@@ -517,7 +518,7 @@ export class TripDiaryRouteModeController {
 			}
 
 			if (modesFilled) {
-				_.delay(() => {
+				delay(() => {
 					this._tripDiaryService.setTripLegEditComplete(currentIndex, currentTripLeg);
 				}, 200);
 				if (this._tripDiaryService.state.activeRouteIndex < this._tripDiaryService.state.tripRoutes.length - 1) {
@@ -666,7 +667,7 @@ export class TripDiaryRouteModeController {
 	 */
 	private refreshMap() {
 		let mapElementHeight = this._element.find('survey-map-router')[0].offsetHeight;
-		_.delay(() => {
+		delay(() => {
 			this.$scope['_tdc']['_routeMap'].invalidateSize();
 
 			// if (this.$scope['routeToggle']) {
@@ -705,13 +706,13 @@ export class TripDiaryRouteModeController {
 	 * @returns {boolean}
 	 */
 	private shouldShowAddTravelMode(): boolean {
-		if (isNullOrUndefined(_.last(this._tripDiaryService.getActiveTripRoute()))) {
+		if (isNullOrUndefined(last(<any>this._tripDiaryService.getActiveTripRoute()))) {
 			return false;
 		}
 
-		if (isNullOrUndefined(_.last(this._tripDiaryService.getActiveTripRoute().tripLegs).mode)) {
+		if (isNullOrUndefined(last(this._tripDiaryService.getActiveTripRoute().tripLegs).mode)) {
 			return false;
-		} else if (!this.shouldCollectRouteByModeName(_.last(this._tripDiaryService.getActiveTripRoute().tripLegs).mode.modeName)) {
+		} else if (!this.shouldCollectRouteByModeName(last(this._tripDiaryService.getActiveTripRoute().tripLegs).mode.modeName)) {
 			return true;
 		} else {
 			return false;

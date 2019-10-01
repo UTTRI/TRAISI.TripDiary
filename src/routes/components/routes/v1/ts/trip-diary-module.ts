@@ -126,7 +126,7 @@ export class TripDiaryModule {
 					// $compileProvider.debugInfoEnabled(false);
 				}
 			])
-			.controller('DynamicDialogController',DynamicDialogController)
+			.controller('DynamicDialogController', DynamicDialogController)
 			// .directive('scrollViewWatcher', ['$window', ScrollViewWatcher.Factory()])
 			.directive('tripRouteModeContainer', [tripRouteModeContainer])
 			// .directive('preventScroll', ['$window', PreventScrollDirective.Factory()])
