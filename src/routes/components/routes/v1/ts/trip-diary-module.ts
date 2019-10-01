@@ -44,6 +44,7 @@ import { RoutesV1Component } from '../../../routes-v1/routes-v1.component';
 import { tripRouteModeContainer } from '../../../../directives/trip-route-mode.directive';
 import { RoutesService } from '../../../../services/routes.service';
 import { GroupMember } from 'traisi-question-sdk';
+import { DynamicDialogController } from '../controllers/dynamic-dialog-controller';
 
 export class TripDiaryModule {
 	questionId: string;
@@ -125,6 +126,7 @@ export class TripDiaryModule {
 					// $compileProvider.debugInfoEnabled(false);
 				}
 			])
+			.controller('DynamicDialogController',DynamicDialogController)
 			// .directive('scrollViewWatcher', ['$window', ScrollViewWatcher.Factory()])
 			.directive('tripRouteModeContainer', [tripRouteModeContainer])
 			// .directive('preventScroll', ['$window', PreventScrollDirective.Factory()])

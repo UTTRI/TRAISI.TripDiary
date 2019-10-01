@@ -365,6 +365,10 @@ export function tripsState(state = INITIAL_STATE, action) {
 			activeTripLeg.instructions = action.payload.instructions;
 			activeTripLeg._unknownRoute = false;
 
+			activeTripLeg._allRoutes = action.payload.allRoutes;
+
+			console.log(activeTripLeg);
+
 			break;
 
 		case SET_SWITCH_ROUTE_MODE_STATE:
@@ -556,7 +560,7 @@ export function tripsState(state = INITIAL_STATE, action) {
 			newState.endLocation = endLocation;
 
 			// deserialize tripRoutes
-			let tripRoutes = <TripRoute[]><any>plainToClass(TripRoute, newState.tripRoutes);
+			let tripRoutes = <TripRoute[]>(<any>plainToClass(TripRoute, newState.tripRoutes));
 			if (isNullOrUndefined(tripRoutes)) {
 				tripRoutes = [];
 			}

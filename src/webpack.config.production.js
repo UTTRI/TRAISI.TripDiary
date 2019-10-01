@@ -17,14 +17,16 @@ module.exports = {
 	},
 	mode: 'production',
 	optimization: {
-		minimizer: [
+		
+		/*minimizer: [
 			new UglifyJsPlugin({
 				parallel: 4,
 				uglifyOptions: {
-					mangle: true
-				}
+					mangle: false
+				},
+
 			})
-		]
+		]*/
 	},
 	resolve: {
 		extensions: ['.ts', '.js'],

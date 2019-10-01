@@ -189,7 +189,7 @@ export class TripRouteModeDirective {
 			waypoints.push(route.waypoints[i].latLng);
 		}
 
-		this._tripDiaryService.setTripLegData(route.coordinates, waypoints, route.name, route.routesIndex, route.instructions);
+		this._tripDiaryService.setTripLegData(route.coordinates, waypoints, route.name, route.routesIndex, route.instructions,  routes);
 
 		this._$timeout(() => {
 			this._tripDiaryService.notifyActiveRouteChanged(this._tripDiaryService.getActiveTripRoute());

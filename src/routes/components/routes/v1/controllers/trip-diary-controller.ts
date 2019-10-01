@@ -121,7 +121,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	updateState: (state: TripsQuestionState) => any;
 	updateTripRoutes: (routes: TripRoute[]) => any;
 	setTripMode: (mode: string, category: string) => any;
-	setTripLegData: (coordinates: L.LatLng[], indices: number[], routeName: string, routeIndex: number) => any;
+	setTripLegData: (coordinates: L.LatLng[], indices: number[], routeName: string, routeIndex: number, otherRoutes?) => any;
 	setSwitchRouteModeState: (active: boolean) => any;
 	setModeSwitchData: () => any;
 	setTripLegActive: (index: number) => any;
@@ -869,7 +869,6 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 						}
 					}
 
-					console.log(state);
 					for (let i = 0; i < state.tripRoutes.length; i++) {
 						let route: TripRoute = state.tripRoutes[i];
 

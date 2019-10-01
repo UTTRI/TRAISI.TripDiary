@@ -297,7 +297,7 @@ export class TripDiaryRouteModeController {
 	public showDialog(evt, mode, dataInputs, dialogTitle, data, callback) {
 		this.$mdDialog
 			.show({
-				controller: DynamicDialogController,
+				controller: 'DynamicDialogController',
 				locals: {
 					mode: mode,
 					dataInputs: dataInputs,

@@ -309,7 +309,14 @@ export function setRouteEditIncomplete(routeIndex: number) {
  * @param coordinates
  * @param waypoints
  */
-export function setTripLegData(coordinates: L.LatLng[], waypoints: L.LatLng[], legName: string, routeIndex: number, instructions: any) {
+export function setTripLegData(
+	coordinates: L.LatLng[],
+	waypoints: L.LatLng[],
+	legName: string,
+	routeIndex: number,
+	instructions: any,
+	routes?: any
+) {
 	return {
 		type: SET_TRIP_LEG_DATA,
 		payload: {
@@ -318,7 +325,8 @@ export function setTripLegData(coordinates: L.LatLng[], waypoints: L.LatLng[], l
 			legName: legName,
 			updateHistory: true,
 			routeIndex: routeIndex,
-			instructions: instructions
+			instructions: instructions,
+			allRoutes: routes
 		}
 	};
 }

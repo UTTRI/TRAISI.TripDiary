@@ -11,10 +11,13 @@ export class TripLeg {
 	id: string;
 	_isComplete: boolean;
 
+	_allRoutes: any[];
+
 	constructor() {
 		this._waypoints = [];
 		this._coordinates = [];
 		this._data = {};
+		this._allRoutes = [];
 
 		this.id = Math.random()
 			.toString(36)
