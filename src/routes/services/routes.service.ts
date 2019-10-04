@@ -1,13 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
 import { SurveyResponder, SurveyViewer, ResponseTypes, GroupMember, ResponseData, ResponseValidationState } from 'traisi-question-sdk';
-import { ReplaySubject } from 'rxjs';
-import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { RoutesComponent } from '../components/routes/routes.component';
 import { TripRoute } from '../components/routes/v1/ts/trip-route';
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class RoutesService {
 	public routesComponent: RoutesComponent;
 

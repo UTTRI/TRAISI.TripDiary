@@ -732,9 +732,9 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		this.initializeSurvey(this.$window['surveyData_' + this.questionId], this.$scope, this.$http);
 
 		this._routesService.savedResponse().subscribe(response => {
+
 			let state: TripsQuestionState;
-			console.log(typeof response);
-			console.log(response instanceof Array);
+
 			if (response !== 'none' && !(response instanceof Array)) {
 				let t = JSON.parse(response[0].value);
 				if (t.tripsState !== undefined) {
@@ -757,6 +757,8 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 				// find index
 
 				let compareEntries = [];
+
+				console.log(entries);
 
 				let index = entries.findIndex(entry => {
 					return entry.respondent.id === this._respondent.id;
@@ -870,6 +872,8 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 							(<any>state).tripRoutes.push(JSON.parse(route.value));
 						}
 					}
+
+					console.log(state.tripRoutes); 
 
 					for (let i = 0; i < state.tripRoutes.length; i++) {
 						let route: TripRoute = state.tripRoutes[i];
