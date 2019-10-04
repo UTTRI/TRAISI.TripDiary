@@ -234,7 +234,7 @@ export class SurveyMapDirective {
 	 * @param {TripLeg} tripLeg
 	 */
 	private generateLineOptions(tripLeg: TripLeg) {
-		console.log(tripLeg);
+
 		let lineOption = lineOptions[tripLeg.mode.modeCategory];
 
 		lineOption.styles[2].color = this._tripDiaryService.getModeColour(tripLeg.mode.modeName);
@@ -1181,9 +1181,6 @@ export class SurveyMapDirective {
 
 			// console.log(tripRoute.startLocation.getMarkerIcon());
 			// let marker = L.marker(tripLeg2._waypoints[0]);
-
-			console.log(markerIcon);
-
 			let icon = L.icon({
 				iconUrl: markerIcon,
 				iconSize: [25, 41],

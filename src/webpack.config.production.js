@@ -17,7 +17,6 @@ module.exports = {
 	},
 	mode: 'production',
 	optimization: {
-		
 		/*minimizer: [
 			new UglifyJsPlugin({
 				parallel: 4,
@@ -107,7 +106,7 @@ module.exports = {
             callback();
         }
     ],*/
-	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/],
+	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/, /^rxjs/],
 	plugins: [
 		/* new WebpackSystemRegister({
              systemjsDeps: [

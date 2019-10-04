@@ -15,18 +15,15 @@ import {
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 
-import { BsModalRef, ModalDirective, ModalBackdropComponent } from 'ngx-bootstrap/modal';
-import { NgTemplateOutlet } from '@angular/common';
 import { TimelineConfiguration } from '../../models/timeline-configuration.model';
 import { TimelineComponent } from '../timeline/timeline.component';
 import { ResponseValidationState } from 'traisi-question-sdk';
 import { NgForm } from '@angular/forms';
-import 'rxjs/add/operator/debounceTime';
 import * as Flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.css';
 import templateString from './timeline-summary.component.html';
-import { isArray } from 'util';
 
+import { debounceTime } from 'rxjs/operators/debounceTime';
 @Component({
 	selector: 'timeline-summary',
 	template: templateString,
@@ -146,7 +143,8 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 			this.config = config;
 		});
 
-		this.inputForm.valueChanges.debounceTime(400).subscribe(value => {
+
+		this.inputForm.valueChanges.pipe(debounceTime(200)).subscribe(value => {
 			this.timeline.response.emit(this.timelineLocations);
 
 			if (this.timeline.isStep2) {

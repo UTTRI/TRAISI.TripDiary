@@ -1,14 +1,28 @@
-@import '../routes/v1/styles/trips.scss';
-@import '~node_modules/leaflet/dist/leaflet.css';
+@import "../routes/v1/styles/trips.scss";
+@import "~node_modules/leaflet/dist/leaflet.css";
+@import "../../../assets/styles";
 
-.trips-app-container
-{
-   
-    height: auto;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    position: absolute; 
+.trips-app-container {
+  height: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  position: absolute;
+}
 
+@media #{$sm-down} {
+  .route-help-overlay-mobile {
+    bottom: 0px;
+  }
+  .trips-app-container {
+    height: 400px;
+    margin: 5px;
+  }
+  .trips-route-mode {
+    height: 120px;
+  }
+  .edit-trip-leg-block {
+    align-items: center;
+  }
 }

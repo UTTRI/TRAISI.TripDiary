@@ -1,8 +1,11 @@
 @media #{$md-down} {
+  traisi-timeline-question {
+    height: 400px;
+  }
+}
 
-
-    
-    traisi-timeline-question{
-        height: 400px;
-    }
+@media #{$md-down} {
+  .timeline-summary-wrapper {
+    overflow-x: scroll;
+  }
 }

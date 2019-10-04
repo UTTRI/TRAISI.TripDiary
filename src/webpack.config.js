@@ -100,7 +100,7 @@ module.exports = {
             callback();
         }
     ],*/
-	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/],
+	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/,/^rxjs/],
 	plugins: [
 
 

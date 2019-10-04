@@ -72,8 +72,8 @@
     "ngx-mapbox-gl": "^3.3.1",
     "ngx-smooth-dnd": "^0.3.0",
     "redux": "^4.0.4",
-    "rxjs": "^6.5.3",
-    "rxjs-compat": "6.5.3",
+    "rxjs": "^6.5.2",
+    "rxjs-compat": "^6.5.2",
     "select2": "^4.0.10",
     "serializer.ts": "0.0.12"
   },

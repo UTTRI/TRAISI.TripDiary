@@ -5,7 +5,9 @@ import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { RoutesComponent } from '../components/routes/routes.component';
 import { TripRoute } from '../components/routes/v1/ts/trip-route';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class RoutesService {
 	public routesComponent: RoutesComponent;
 
@@ -18,7 +20,7 @@ export class RoutesService {
 	constructor(
 		@Inject('SurveyViewerService') private _surveyViewerService: SurveyViewer,
 		@Inject('SurveyResponderService') private _surveyResponderService: SurveyResponder
-	) { }
+	) {}
 
 	/**
 	 *
@@ -49,16 +51,15 @@ export class RoutesService {
 
 	/**
 	 * Saves routes
-	 * @param value 
+	 * @param value
 	 */
 	public saveRoutes(value: Array<TripRoute>): void {
-
 		this.routesComponent.response.emit(value);
 	}
 
 	/**
 	 * Updates validation state
-	 * @param value 
+	 * @param value
 	 */
 	public updateValidationState(value: ResponseValidationState): void {
 		this.routesComponent.validationState.emit(value);

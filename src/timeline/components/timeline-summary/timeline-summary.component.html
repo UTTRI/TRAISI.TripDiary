@@ -5,6 +5,7 @@
 		</timeline-entry-item>
 	</span>
 </div>
+<div class="timeline-times-container">
 <form #f="ngForm" name="form">
 	<div class="timeline-summary-time-input-container">
 		<span *ngFor="let location of timeEntries; index as i">
@@ -62,6 +63,7 @@
 		</span>
 	</div>
 </form>
+</div>
 <div class="summary-wedges"></div>
 
 <div class="summary-times-dates-container" [hidden]="true">

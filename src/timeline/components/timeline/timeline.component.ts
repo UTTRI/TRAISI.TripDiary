@@ -340,7 +340,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		};
 		if (response instanceof Array) {
 			response = <TimelineResponseData[]>sortBy(response, o => o['order']);
-			console.log(response); 
+			console.log(response);
 			if (response.length >= 1) {
 				const timelineResponse = <TimelineResponseData>response[0];
 				location.locationType = TimelineLocationType.StartLocation;
@@ -398,7 +398,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		this._timelineService.timelineLocations.subscribe((entries: TimelineEntry[]) => {
 			this.response.emit(entries);
 
-			console.log(entries);
+
 			this._timelineService.updateLocationsValidation();
 			this._timelineService.updateLocationsTimeValidation();
 
