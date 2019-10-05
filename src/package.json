@@ -5,7 +5,7 @@
   "main": "app/main.js",
   "scripts": {
     "build": "webpack --config=webpack.config.js",
-    "prod": "webpack --config=webpack.config.production.js -p --optimize-minimize --display-modules",
+    "prod": "webpack --config=webpack.config.prod.js -p --optimize-minimize --display-modules",
     "watch": "webpack --config=webpack.config.dev.js --watch --progress"
   },
   "author": "University of Toronto",

@@ -23,7 +23,7 @@ import * as Flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.css';
 import templateString from './timeline-summary.component.html';
 
-import { debounceTime } from 'rxjs/operators/debounceTime';
+import { debounceTime } from 'rxjs/operators';
 @Component({
 	selector: 'timeline-summary',
 	template: templateString,

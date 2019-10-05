@@ -1,6 +1,4 @@
 const path = require('path');
-const WebpackSystemRegister = require('webpack-system-register');
-const webpack = require('webpack')
 const TerserPlugin = require('terser-webpack-plugin');
 const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 module.exports = {
@@ -100,7 +98,6 @@ module.exports = {
     ],*/
 	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/, /^rxjs/],
 	plugins: [
-		new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/)
 		/* new WebpackSystemRegister({
              systemjsDeps: [
                  /^ngx-bootstrap/, // any import that starts with react
