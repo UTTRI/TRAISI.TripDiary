@@ -8,7 +8,9 @@ import {
 	ViewContainerRef,
 	Inject,
 	Injector,
-	AfterContentInit
+	AfterContentInit,
+	ViewChildren,
+	QueryList
 } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineEntry, TimelineLocationType } from '../../models/timeline-entry.model';
@@ -33,6 +35,9 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 	@ViewChild('mapTemplate', { read: ViewContainerRef, static: true })
 	mapTemplate: ViewContainerRef;
 
+	@ViewChildren('purposeSelect')
+	public purposeSelect: QueryList<ElementRef>;
+
 	public configuration: TimelineConfiguration;
 
 	public stepOne: boolean = true;
@@ -49,6 +54,8 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 	/**
 	 *
 	 * @param timelineService
+	 * @param injector
+	 * @param _questionLoaderService
 	 */
 	constructor(
 		private timelineService: TimelineService,
@@ -192,7 +199,15 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 		});
 	}
 
-	public ngAfterViewInit(): void {}
+	public ngAfterViewInit(): void {
+		this.purposeSelect.changes.subscribe((v: QueryList<ElementRef>) => {
+			if (v.length > 0) {
+				console.log($(v.first.nativeElement));
+				$(v.first.nativeElement)['selectpicker']();
+				console.log(v);
+			}
+		});
+	}
 
 	public ngAfterContentInit(): void {}
 }

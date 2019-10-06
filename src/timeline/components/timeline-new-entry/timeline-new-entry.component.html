@@ -3,56 +3,59 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<div *ngIf="stepOne">
-					<h4 *ngIf="!isEdit" class="modal-title pull-left">Q1: Where is this new location?</h4>
-					<h4 *ngIf="isEdit" class="modal-title pull-left">Q1: Where is this location?</h4>
+					<h5 *ngIf="!isEdit" class="modal-title pull-left">Q1: Where is this new location?</h5>
+					<h5 *ngIf="isEdit" class="modal-title pull-left">Q1: Where is this location?</h5>
 				</div>
-				<div *ngIf="stepTwo"><h4 class="modal-title pull-left">Q2: Give this location a name</h4></div>
-				<div *ngIf="stepThree"><h4 class="modal-title pull-left">Q3: What is the purpose for travelling to this location?</h4></div>
+				<div *ngIf="stepTwo">
+					<h5 class="modal-title pull-left">Q2: Give this location a name</h5>
+				</div>
+				<div *ngIf="stepThree">
+					<h5 class="modal-title pull-left">Q3: What is the purpose for travelling to this location?</h5>
+				</div>
 				<button type="button" class="close pull-right" aria-label="Close" (click)="newEntryModal.hide()">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body model-body-map">
+			<div class="modal-body model-body-map new-entry-modal-body">
 				<div [hidden]="!stepOne" class="map-outer">
-					<ng-template #mapTemplate> <ng-container #container></ng-container> </ng-template>
+					<ng-template #mapTemplate>
+						<ng-container #container></ng-container>
+					</ng-template>
 				</div>
 				<div *ngIf="stepTwo" class="input-part">
-					<input
-						type="text"
-						[(ngModel)]="model.name"
-						class="form-control form-control-lg"
-						placeholder="Enter a name"
-						#inputElement
-					/>
+					<input type="text" [(ngModel)]="model.name" class="form-control form-control-lg"
+						placeholder="Enter a name" #inputElement />
 				</div>
-				<div *ngIf="stepThree">
-					<select [(ngModel)]="model.purpose" class="custom-select form-control-lg purpose-select">
-						<option selected="selected" [ngValue]="null">Choose a purpose</option>
-						<option *ngFor="let purpose of configuration.purposes" [value]="purpose.key">{{ purpose.label }}</option>
-					</select>
-				</div>
+
+				<select *ngIf="stepThree" [(ngModel)]="model.purpose" data-style="custom-select"
+					style="width:auto;overflow-x: hidden; overflow-wrap: normal; text-overflow: ellipsis"
+					class="selectpicker form-control purpose-select" data-width="100%" #purposeSelect>
+					<option selected="selected" [ngValue]="null">Choose a purpose</option>
+					<option *ngFor="let purpose of configuration.purposes" [value]="purpose.key">{{ purpose.label }}
+					</option>
+				</select>
+
 			</div>
 			<div class="modal-footer">
 				<div *ngIf="stepOne">
-					<button type="button" class="btn btn-primary pull-left" [disabled]="true">Previous</button>
-					<button
-						type="button"
-						class="btn btn-secondary"
-						[disabled]="model !== undefined && model.address.length === 0"
-						(click)="stepOneNext()"
-					>
+					<button type="button" class="btn btn-outline-primary pull-left" [disabled]="true">Previous</button>
+					<button type="button" class="btn btn-primary"
+						[disabled]="model !== undefined && model.address.length === 0" (click)="stepOneNext()">
 						Next
 					</button>
 				</div>
 				<div *ngIf="stepTwo">
-					<button type="button" class="btn btn-primary" (click)="stepTwoPrevious()">Previous</button>
-					<button type="button" class="btn btn-secondary" [disabled]="model.name.length === 0" (click)="stepTwoNext()">
+					<button type="button" class="btn btn-outline-primary" (click)="stepTwoPrevious()">Previous</button>
+					<button type="button" class="btn btn-primary" [disabled]="model.name.length === 0"
+						(click)="stepTwoNext()">
 						Next
 					</button>
 				</div>
 				<div *ngIf="stepThree">
-					<button type="button" class="btn btn-primary" (click)="stepThreePrevious()">Previous</button>
-					<button type="button" class="btn btn-secondary" [disabled]="model.purpose === null" (click)="stepThreeNext()">
+					<button type="button" class="btn btn-outline-primary"
+						(click)="stepThreePrevious()">Previous</button>
+					<button type="button" class="btn btn-primary" [disabled]="model.purpose === null"
+						(click)="stepThreeNext()">
 						Save
 					</button>
 				</div>
