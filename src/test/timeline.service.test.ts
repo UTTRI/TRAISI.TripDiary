@@ -1,6 +1,6 @@
-describe('calculate', function() {
-  it('add', function() {
-    let result = Calculator.Sum(5, 2);
-    expect(result).toBe(7);
-  });
-});
+import { async, fakeAsync, tick } from '@angular/core/testing';
+
+describe("test", () => {
+    it("equal 8", async(() => {
+        expect(3 + 5).toEqual(8);
+    }))
