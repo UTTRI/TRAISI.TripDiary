@@ -1,7 +1,5 @@
 {
-	
 	"compilerOptions": {
-		
 		"sourceMap": true,
 		"declaration": false,
 		"moduleResolution": "node",
@@ -12,12 +10,11 @@
 		"module": "amd",
 		"outDir": "dist",
 		"lib": ["es2016", "dom"],
-		"types": ["googlemaps", "webpack-env", "node","mocha"],
+		"types": ["googlemaps", "webpack-env", "node", "jasmine"],
 		"baseUrl": ".",
 
 		"paths": {
-			"traisi-question-sdk": ["../../traisi-v2/src/TRAISI.SDK/Client/src",
-				"../../TRAISI/src/TRAISI.SDK/Client/src"]
+			"traisi-question-sdk": ["../../traisi-v2/src/TRAISI.SDK/Client/src", "../../TRAISI/src/TRAISI.SDK/Client/src"]
 		}
 	},
 	"angularCompilerOptions": {
