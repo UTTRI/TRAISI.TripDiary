@@ -1,27 +1,22 @@
 <div *ngIf="!hasTimelineEntryItem" class="timeline-slot-container">
-	<smooth-dnd-container
-		(drop)="onDrop($event)"
-		[behaviour]="'move'"
-		[orientation]="'horizontal'"
-		[groupName]="'timeline'"
-		[ngClass]="{ 'slot-drag-over': dragActive }"
-		class="slot-container btn-circle btn-xl"
-		(dragEnter)="onDragEnter()"
-		(dragLeave)="onDragLeave()"
-		#dockContainer
-		(dragStart)="onDragStart($event)"
-		(dragEnd)="onDragEnd($event)"
-	>
+	<smooth-dnd-container (drop)="onDrop($event)" [behaviour]="'move'" [orientation]="'horizontal'"
+		[groupName]="'timeline'" [ngClass]="{ 'slot-drag-over': dragActive }" class="slot-container btn-circle btn-xl"
+		(dragEnter)="onDragEnter()" (dragLeave)="onDragLeave()" #dockContainer (dragStart)="onDragStart($event)"
+		(dragEnd)="onDragEnd($event)">
 	</smooth-dnd-container>
 </div>
 
 <div *ngIf="hasTimelineEntryItem" class="timeline-slot-container">
 	<div class="btn-group" dropdown>
-		<button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl" tooltip="{{model.purpose}}" placement="top">
+		<!--<button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl" tooltip="{{model.purpose}}" placement="top">
+			<i [ngClass]="icon"></i>
+		</button> -->
+		<button type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl" placement="top">
 			<i [ngClass]="icon"></i>
 		</button>
 		<ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-			<li role="menuitem" [hidden]="!inShelf"><a class="dropdown-item" href="javascript:undefined" (click)="edit()">Edit</a></li>
+			<li role="menuitem" [hidden]="!inShelf"><a class="dropdown-item" href="javascript:undefined"
+					(click)="edit()">Edit</a></li>
 			<li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="delete()">Delete</a></li>
 		</ul>
 	</div>

@@ -11,6 +11,7 @@
 						travel diary tutorial</a></div>
 
 			</alert>
+
 		</div>
 
 		<div class="timeline-shelf-container">
@@ -25,9 +26,16 @@
 		</div>
 
 		<div class="timeline-dock-container">
-			<timeline-dock #timelineDock triggers="" popoverTitle="Invalid Timeline" placement="top"
-				[popover]="duplicateLocationPopTemplate" #popover="bs-popover">
+			<timeline-dock #timelineDock triggers="">
 			</timeline-dock>
+
+			<!--<timeline-dock #timelineDock triggers="" popoverTitle="Invalid Timeline" placement="top"
+				[popover]="duplicateLocationPopTemplate" #popover="bs-popover">
+			</timeline-dock>-->
+		</div>
+
+		<div class="timeline-error-container" #errors [hidden]="!hasAdjacent">
+			<alert type="danger">Two adjacent entries cannot be the same location.</alert>
 		</div>
 	</div>
 	<div *ngIf="isStep2" traisiQuestionInternalView class="timeline-summary-wrapper">

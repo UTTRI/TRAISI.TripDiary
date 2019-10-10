@@ -10,17 +10,22 @@
 					type="button"
 					dropdownToggle
 					class="btn btn-primary btn-circle btn-xl"
-					tooltip="{{ model.purpose }}"
-					placement="bottom"
 					*ngIf="!inShelf"
 				>
 					<i [ngClass]="icon"></i>
 					<!-- <fa-icon [icon]="icon"></fa-icon> -->
 				</button>
-				<button (click)="summaryTooltip.hide()" #summaryTooltip="bs-tooltip" [tooltip]="entrySummaryTooltipTemplate" placement="bottom" type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl"  *ngIf="inShelf">
+				
+				<!--<button (click)="summaryTooltip.hide()" #summaryTooltip="bs-tooltip" [tooltip]="entrySummaryTooltipTemplate" placement="bottom" type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl"  *ngIf="inShelf">
+					<i [ngClass]="icon"></i>
+					 <fa-icon [icon]="icon"></fa-icon> -
+				</button> -->
+
+				<button (click)="summaryTooltip.hide()" 
+					type="button" dropdownToggle class="btn btn-primary btn-circle btn-xl" *ngIf="inShelf">
 					<i [ngClass]="icon"></i>
 					<!-- <fa-icon [icon]="icon"></fa-icon> -->
-				</button>
+				</button> 
 				<div *ngIf="!inShelf && !inSummaryDisplay">
 					<ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
 						<li role="menuitem"><a class="dropdown-item" href="javascript:undefined" (click)="edit()">Edit</a></li>

@@ -46,8 +46,6 @@ import { sortBy } from 'lodash';
  */
 
 import templateString from './timeline.component.html';
-import { of } from 'rxjs';
-import _ = require('angular-animate');
 @Component({
 	entryComponents: [TimelineWedgeComponent],
 	selector: 'traisi-timeline-question',
@@ -85,6 +83,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	public isStep1: boolean = false;
 
 	public isStep2: boolean = false;
+
+	public hasAdjacent: boolean = false;
 
 	/**
 	 *Creates an instance of TimelineComponent.
@@ -314,7 +314,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * @memberof TimelineComponent
 	 */
 	public closePopover(): void {
-		this.popover.hide();
+		//this.popover.hide();
 	}
 
 	/**
@@ -398,11 +398,15 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		this._timelineService.timelineLocations.subscribe((entries: TimelineEntry[]) => {
 			this.response.emit(entries);
 
-
 			this._timelineService.updateLocationsValidation();
 			this._timelineService.updateLocationsTimeValidation();
 
 			if (this.isStep1) {
+				if (this._timelineService.hasAdjacentIdenticalLocations) {
+					this.hasAdjacent = true;
+				} else {
+					this.hasAdjacent = false;
+				}
 				if (this.popover !== null && this.popover !== undefined) {
 					if (this._timelineService.hasAdjacentIdenticalLocations) {
 						this.popover.show();
