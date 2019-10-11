@@ -8,7 +8,8 @@
 		"skipLibCheck": true,
 		"module": "commonjs",
 		"outDir": "../out-tsc/spec",
-		"target": "es5",
+		"target": "esnext",
+		
 		// "rootDirs": ["."],
 		"lib": ["es2016", "dom"],
 		"types": ["webpack-env", "node", "jasmine"],

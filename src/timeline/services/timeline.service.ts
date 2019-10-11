@@ -79,9 +79,7 @@ export class TimelineService {
 	 * @param surveyViewerService
 	 * @param _questionLoaderService
 	 */
-	constructor(
-		private modalService: BsModalService,
-	) {
+	constructor(private modalService: BsModalService) {
 		// this.initializeConfiguration();
 		this._availableLocations = [];
 		this._timelineLocations = [];
@@ -91,7 +89,7 @@ export class TimelineService {
 		this.timelineItemRemoved = new Subject<TimelineEntry>();
 	}
 
-	public init(configPurposes: []): void { 
+	public init(configPurposes: []): void {
 		this.initializeConfiguration(configPurposes);
 	}
 
@@ -323,8 +321,10 @@ export class TimelineService {
 			return loc.id === location.id;
 		});
 
-		this._timelineLocations.splice(index, 1);
-		this.timelineItemRemoved.next(location);
+		if (index >= 0) {
+			this._timelineLocations.splice(index, 1);
+			this.timelineItemRemoved.next(location);
+		}
 		this.updateLocationsValidation();
 
 		this.timelineLocations.next(this._timelineLocations);
