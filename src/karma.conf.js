@@ -4,7 +4,7 @@
 module.exports = function(config) {
 	config.set({
 		// base path that will be used to resolve all patterns (eg. files, exclude)
-		basePath: '',
+		basePath: './',
 		plugins: ['karma-jasmine', 'karma-chrome-launcher', 'karma-typescript'],
 		karmaTypescriptConfig: {
 			tsconfig: './tsconfig.spec.json'
@@ -12,10 +12,15 @@ module.exports = function(config) {
 
 		// frameworks to use
 		// available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-		frameworks: ['karma-typescript', 'jasmine'],
+		frameworks: ['jasmine'],
+		mime: {
+			'text/x-typescript': ['ts', 'tsx']
+		},
 
 		// list of files / patterns to load in the browser
-		files: ['tests/**/*spec.ts'],
+		files: [
+			"tests/*.ts"
+		],
 
 		// list of files / patterns to exclude
 		exclude: ['node_modules/*'],
@@ -23,7 +28,8 @@ module.exports = function(config) {
 		// preprocess matching files before serving them to the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
 		preprocessors: {
-			'**/*.ts': 'karma-typescript' // *.tsx for React Jsx 
+			'tests/**/*.ts': [],
+			'tests/**/*.js': []
 		},
 
 		// test results reporter to use
@@ -54,7 +60,6 @@ module.exports = function(config) {
 
 		// Concurrency level
 		// how many browser should be started simultaneous
-		concurrency: Infinity,
-		
+		concurrency: Infinity
 	});
 };

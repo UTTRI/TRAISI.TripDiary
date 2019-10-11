@@ -91,7 +91,7 @@ export class TimelineService {
 		this.timelineItemRemoved = new Subject<TimelineEntry>();
 	}
 
-	public init(configPurposes: []): void {
+	public init(configPurposes: []): void { 
 		this.initializeConfiguration(configPurposes);
 	}
 
