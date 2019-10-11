@@ -117,4 +117,13 @@ describe('Timeline Service', () => {
 			done();
 		});
 	});
+
+	it('test validation 1', done => {
+		timelineService.addTimelineLocation(loc, 0);
+		timelineService.addTimelineLocation(loc2, 0);
+		timelineService.addTimelineLocation(loc3);
+		timelineService.updateLocationsValidation();
+		expect(timelineService.isTimelineStatevalid).toBe(false);
+		done();
+	});
 });
