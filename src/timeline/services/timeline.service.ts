@@ -81,8 +81,6 @@ export class TimelineService {
 	 */
 	constructor(
 		private modalService: BsModalService,
-		private injector: Injector,
-		@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer
 	) {
 		// this.initializeConfiguration();
 		this._availableLocations = [];

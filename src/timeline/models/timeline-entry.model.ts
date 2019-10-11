@@ -3,11 +3,11 @@ export interface TimelineEntry {
 	longitude: number;
 	address: string;
 	timeA: Date;
-	timeB: Date;
+	timeB?: Date;
 	purpose: string;
 	name: string;
 	id: symbol;
-	pipedLocation: boolean;
+	pipedLocation?: boolean;
 	locationType: TimelineLocationType;
 	order: number;
 }

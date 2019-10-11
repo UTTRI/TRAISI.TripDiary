@@ -1,0 +1,27 @@
+{
+	"compilerOptions": {
+		"sourceMap": true,
+		"declaration": false,
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"skipLibCheck": true,
+		"module": "commonjs",
+		"outDir": "../out-tsc/spec",
+		"target": "es5",
+		// "rootDirs": ["."],
+		"lib": ["es2016", "dom"],
+		"types": ["webpack-env", "node", "jasmine"],
+		"baseUrl": ".",
+		"traceResolution": false,
+		"paths": {
+			"traisi-question-sdk": ["../../traisi-v2/src/TRAISI.SDK/Client/src", "../../TRAISI/src/TRAISI.SDK/Client/src"]
+			//	// "*": ["../*", "generated/*"]
+		}
+	},
+	"angularCompilerOptions": {
+		// "enableResourceInlining": true
+	},
+	"include": ["tests/**/*/*.spec.ts", "**/*.d.ts", "**/*/"],
+	"exclude": ["dist/**/*", "node_modules/**/*"]
+}
