@@ -180,7 +180,7 @@ export let config: ISurveyMapConfig = {
 				{
 					name: 'personal',
 					icon: 'fas fa-biking',
-					category: 'walk',
+					category: 'bicycle',
 					customRoute: routeNotKnown,
 					allowAddWaypoints: false,
 					colour: '#4CAF50',
@@ -194,7 +194,7 @@ export let config: ISurveyMapConfig = {
 				{
 					name: 'bikeshare',
 					icon: 'fas fa-bicycle',
-					category: 'walk',
+					category: 'bicycle',
 					customRoute: routeNotKnown,
 					allowAddWaypoints: false,
 					colour: '#4CAF50',

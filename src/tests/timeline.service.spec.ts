@@ -11,6 +11,7 @@ import 'zone.js/dist/fake-async-test';
 import { async, fakeAsync, tick, TestBed } from '@angular/core/testing';
 import { TimelineService } from 'timeline/services/timeline.service';
 import { TimelineEntry, TimelineLocationType } from 'timeline/models/timeline-entry.model';
+import { getLocaleDateTimeFormat } from '@angular/common';
 // import { BsModalService } from 'ngx-bootstrap/modal/ngx-bootstrap-modal';
 
 describe('Timeline Service', () => {
@@ -122,6 +123,14 @@ describe('Timeline Service', () => {
 		timelineService.addTimelineLocation(loc, 0);
 		timelineService.addTimelineLocation(loc2, 0);
 		timelineService.addTimelineLocation(loc3);
+		timelineService.updateLocationsValidation();
+		expect(timelineService.isTimelineStatevalid).toBe(false);
+		done();
+	});
+
+	it('test validation 2', done => {
+		timelineService.addTimelineLocation(loc, 0);
+		timelineService.addTimelineLocation(loc2, 0);
 		timelineService.updateLocationsValidation();
 		expect(timelineService.isTimelineStatevalid).toBe(false);
 		done();
