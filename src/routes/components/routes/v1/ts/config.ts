@@ -31,7 +31,7 @@ let routeNotShown: ICustomRouteInput = {
 };
 
 let routeNotKnown: ICustomRouteInput = {
-	label: "I don't know my route",
+	label: 'I don\'t know my route',
 	routeKey: 'route_not_known'
 	// fieldAsSummary: "routeDescription",
 	// dialogTitle: "Route Description",
@@ -167,7 +167,7 @@ export let config: ISurveyMapConfig = {
 					showPrompt: false,
 					routerMode: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
 					modes: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: true
 				}
 			]
@@ -188,7 +188,7 @@ export let config: ISurveyMapConfig = {
 					showPrompt: false,
 					routerMode: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
 					modes: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: true
 				},
 				{
@@ -202,7 +202,7 @@ export let config: ISurveyMapConfig = {
 					showPrompt: false,
 					routerMode: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
 					modes: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: true
 				}
 			]
@@ -222,7 +222,7 @@ export let config: ISurveyMapConfig = {
 					displayName: 'Drive alone',
 					autoSaveRoute: true,
 					showPrompt: false,
-					noRouteMessage: "I don't know the route."
+					noRouteMessage: 'I don\'t know the route.'
 				},
 				{
 					name: 'auto-drive-passenger-household',
@@ -234,7 +234,7 @@ export let config: ISurveyMapConfig = {
 					customRoute: routeNotKnown,
 					displayName: 'Drive with passenger(s) (household members only)',
 					showPrompt: false,
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: true
 				},
 				{
@@ -247,7 +247,7 @@ export let config: ISurveyMapConfig = {
 					customRoute: routeNotKnown,
 					displayName: 'Drive with passenger(s) (including non-household members)',
 					showPrompt: false,
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: true
 				},
 				{
@@ -260,7 +260,7 @@ export let config: ISurveyMapConfig = {
 					customRoute: routeNotKnown,
 					displayName: 'Auto passenger (driver is a household member)',
 					showPrompt: false,
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: true
 				},
 				{
@@ -273,7 +273,7 @@ export let config: ISurveyMapConfig = {
 					customRoute: routeNotKnown,
 					displayName: 'Auto passenger (driver is a non-household member)',
 					showPrompt: false,
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: true
 				}
 			]
@@ -358,7 +358,7 @@ export let config: ISurveyMapConfig = {
 					showPrompt: false,
 					routerMode: 'walk',
 					autoSaveRoute: true,
-					noRouteMessage: "I don't know the route."
+					noRouteMessage: 'I don\'t know the route.'
 				},
 				{
 					name: 'ridehailing-alone',
@@ -371,7 +371,7 @@ export let config: ISurveyMapConfig = {
 					showPrompt: false,
 					routerMode: 'walk',
 					autoSaveRoute: true,
-					noRouteMessage: "I don't know the route."
+					noRouteMessage: 'I don\'t know the route.'
 				},
 				{
 					name: 'ridehailing-share',
@@ -384,7 +384,7 @@ export let config: ISurveyMapConfig = {
 					showPrompt: false,
 					routerMode: 'walk',
 					autoSaveRoute: true,
-					noRouteMessage: "I don't know the route."
+					noRouteMessage: 'I don\'t know the route.'
 				}
 			]
 		},
@@ -404,7 +404,7 @@ export let config: ISurveyMapConfig = {
 					showPrompt: false,
 					routerMode: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
 					modes: 'BUS|LOCAL_TRAIN|METRO|RAPID_TRANSIT',
-					noRouteMessage: "I don't know the route.",
+					noRouteMessage: 'I don\'t know the route.',
 					autoSaveRoute: true
 				}
 			]

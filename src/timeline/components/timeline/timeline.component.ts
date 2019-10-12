@@ -87,19 +87,15 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	public hasAdjacent: boolean = false;
 
 	/**
-	 *Creates an instance of TimelineComponent.
-	 * @param {SurveyViewer} surveyViewerService
-	 * @param {SurveyResponder} surveyResponderService
-	 * @param {TimelineService} _timelineService
-	 * @memberof TimelineComponent
+	 *
+	 * @param surveyResponderService
+	 * @param _timelineService
 	 */
 	constructor(
-		@Inject('SurveyViewerService') private surveyViewerService: SurveyViewer,
 		@Inject('SurveyResponderService') private surveyResponderService: SurveyResponder,
 		private _timelineService: TimelineService
 	) {
 		super();
-
 		this.isMultiPage = true;
 	}
 
@@ -398,8 +394,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		this._timelineService.timelineLocations.subscribe((entries: TimelineEntry[]) => {
 			this.response.emit(entries);
 
-			this._timelineService.updateLocationsValidation();
-			this._timelineService.updateLocationsTimeValidation();
+			// this._timelineService.updateLocationsValidation();
+			this._timelineService.updateValidation();
 
 			if (this.isStep1) {
 				if (this._timelineService.hasAdjacentIdenticalLocations) {
