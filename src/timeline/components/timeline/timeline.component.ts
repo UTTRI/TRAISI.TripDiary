@@ -262,7 +262,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 */
 	public navigateInternalPrevious(): boolean {
 		if (this.isStep2) {
-			this._timelineService.updateLocationsValidation();
+			this._timelineService.updateLocationValidation();
 			this.isStep2 = false;
 			this.isStep1 = true;
 			if (this._timelineService.isTimelineStatevalid && !this._timelineService.hasAdjacentIdenticalLocations) {
@@ -291,7 +291,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * Determines whether question shown on
 	 */
 	public onQuestionShown(): void {
-		this._timelineService.updateLocationsValidation();
+		this._timelineService.updateLocationValidation();
 		if (this.isStep1 && this._timelineService.isTimelineStatevalid) {
 			// this.isStep1 = false;
 			// this.isStep2 = true;
@@ -395,7 +395,9 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this.response.emit(entries);
 
 			// this._timelineService.updateLocationsValidation();
-			this._timelineService.updateValidation();
+			this._timelineService.updateLocationValidation();
+
+			console.log(this._timelineService.isTimelineStatevalid); 
 
 			if (this.isStep1) {
 				if (this._timelineService.hasAdjacentIdenticalLocations) {

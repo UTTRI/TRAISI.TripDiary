@@ -163,20 +163,19 @@ export class TimelineService {
 	}
 
 	/**
-	 * Updates the validation of the timeline
+	 *
 	 */
-	public updateLocationsValidation(): void {
-		let hasStartLocation: boolean = false;
-		let hasEndLocation: boolean = false;
+	public updateLocationValidation(): void {
+		this._timelineStateValid = true;
 		let hasAdjacentLocations: boolean = false;
-
-		this._timelineLocations.forEach((location, index) => {
-			if (location.locationType === TimelineLocationType.StartLocation) {
-				hasStartLocation = true;
-			} else if (location.locationType === TimelineLocationType.EndLocation) {
-				hasEndLocation = true;
-			}
-		});
+		if (this._timelineLocations.length < 2) {
+			this._timelineStateValid = false;
+		} else if (
+			this._timelineLocations[0].locationType !== TimelineLocationType.StartLocation ||
+			this._timelineLocations[this._timelineLocations.length - 1].locationType !== TimelineLocationType.EndLocation
+		) {
+			this._timelineStateValid = false;
+		}
 
 		this._timelineLocations.forEach((location, index) => {
 			if (index < this._timelineLocations.length - 1) {
@@ -190,36 +189,28 @@ export class TimelineService {
 		});
 
 		this._hasAdjacentIdenticalLocations = hasAdjacentLocations;
-
-		this._timelineStateValid = hasStartLocation && hasEndLocation;
 	}
 
 	/**
 	 * Determine validity of timeline locations by examining times.
 	 */
-	public updateValidation(): boolean {
-		if (this._timelineLocations.length < 2) {
-			this._timelineTimeStateValid = false;
-			return false;
-		} else if (
-			this._timelineLocations[0].locationType !== TimelineLocationType.StartLocation &&
-			this._timelineLocations[this._timelineLocations.length - 1].locationType !== TimelineLocationType.EndLocation
-		) {
-			this._timelineTimeStateValid = false;
-			return false;
-		} else {
-			for (let i = 0; i < this._timelineLocations.length - 1; i++) {
-				if (this._timelineLocations[i + 1].timeA < this._timelineLocations[i].timeA) {
-					this._timelineTimeStateValid = false;
-					return false;
-				}
+	public updateTimeValidation(): boolean {
+		for (let i = 0; i < this._timelineLocations.length - 2; i++) {
+			if (this._timelineLocations[i].timeA.getFullYear() < 2000) {
+				this._timelineTimeStateValid = false;
+				return false;
+			}
+
+			if (this._timelineLocations[i + 1].timeA <= this._timelineLocations[i].timeA) {
+				this._timelineTimeStateValid = false;
+				return false;
 			}
 		}
-		this._timelineTimeStateValid = false;
+
+		this._timelineTimeStateValid = true;
+
 		return true;
 	}
-
-
 
 	/**
 	 * Removes entry from shelf
@@ -268,7 +259,7 @@ export class TimelineService {
 	public addTimelineLocation(location: TimelineEntry, index?: number, update: boolean = true): void {
 		if (index === undefined) {
 			this._timelineLocations.push(location);
-			this.updateLocationsValidation();
+			this.updateLocationValidation();
 		} else {
 			this._timelineLocations.splice(index, 0, location);
 		}
@@ -276,6 +267,7 @@ export class TimelineService {
 		if (update) {
 			this.timelineLocations.next(this._timelineLocations);
 		}
+		this.updateLocationValidation();
 	}
 
 	/**
@@ -304,6 +296,7 @@ export class TimelineService {
 	public reorderTimelineLocation(from: number, to: number) {
 		this._timelineLocations.splice(to, 0, this._timelineLocations.splice(from, 1)[0]);
 		this.timelineLocations.next(this._timelineLocations);
+		this.updateLocationValidation();
 	}
 
 	/**
@@ -319,8 +312,7 @@ export class TimelineService {
 			this._timelineLocations.splice(index, 1);
 			this.timelineItemRemoved.next(location);
 		}
-		this.updateLocationsValidation();
-
+		this.updateLocationValidation();
 		this.timelineLocations.next(this._timelineLocations);
 	}
 

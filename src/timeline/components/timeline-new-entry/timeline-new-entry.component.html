@@ -26,15 +26,15 @@
 					<input type="text" [(ngModel)]="model.name" class="form-control form-control-lg"
 						placeholder="Enter a name" #inputElement />
 				</div>
-
-				<select *ngIf="stepThree" [(ngModel)]="model.purpose" data-style="custom-select"
-					style="width:auto;overflow-x: hidden; overflow-wrap: normal; text-overflow: ellipsis"
-					class="selectpicker form-control purpose-select" data-width="100%" #purposeSelect>
-					<option selected="selected" [ngValue]="null">Choose a purpose</option>
-					<option *ngFor="let purpose of configuration.purposes" [value]="purpose.key">{{ purpose.label }}
-					</option>
-				</select>
-
+				<div *ngIf="stepThree" class="purpose-select" style="width: 100%">
+					<select [(ngModel)]="model.purpose" data-style="custom-select"
+						style="width:auto;overflow-x: hidden; overflow-wrap: normal; text-overflow: ellipsis"
+						class="selectpicker form-control" data-width="100%" #purposeSelect>
+						<option selected="selected" [ngValue]="null">Choose a purpose</option>
+						<option *ngFor="let purpose of configuration.purposes" [value]="purpose.key">{{ purpose.label }}
+						</option>
+					</select>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<div *ngIf="stepOne">

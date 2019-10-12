@@ -64,18 +64,24 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 	}
 
 	public ngAfterViewInit(): void {
-		console.log(this._timelineConfiguration);
 		let timeInputs = (<any>Flatpickr)('.time-input', {
 			enableTime: true,
 			noCalendar: true,
-			defaultHour: 4,
+			// defaultHour: 4,
 			dateFormat: 'h:i K',
-			minDate: new Date(this._timelineConfiguration.startTime),
-
 			// defaultDate: '00:00',
 			onChange: (time, timeStr, instance) => {
 				let index = parseInt(instance.element.dataset['index'], 10);
-				this.timelineLocations[index].timeA = time[0];
+				let timeUpdate: Date = time[0];
+				let start = new Date(this._timelineConfiguration.startTime);
+				timeUpdate.setMonth(start.getMonth());
+				timeUpdate.setFullYear(start.getFullYear());
+				timeUpdate.setDate(start.getDate());
+
+				if (timeUpdate.getHours() < 4 && timeUpdate.getHours() >= 0) {
+					timeUpdate.setDate(timeUpdate.getDate() + 1);
+				}
+				this.timelineLocations[index].timeA = timeUpdate;
 				this.update();
 			}
 		});
@@ -99,17 +105,15 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 
 	private updateValidation(): void {
 		if (this.timeline.isStep2) {
-			this._timelineService.updateLocationsTimeValidation();
-			console.log(this.timelineLocations);
+			this._timelineService.updateTimeValidation();
+
 			if (this._timelineService.isTimelineTimeStatevalid === true) {
-				console.log('sending valid');
 				this.timeline.validationState.emit(ResponseValidationState.VALID);
 			} else {
-				console.log('sending invalid');
 				this.timeline.validationState.emit(ResponseValidationState.INVALID);
 			}
 
-			this.timeline.validationState.emit(ResponseValidationState.VALID);
+			// this.timeline.validationState.emit(ResponseValidationState.VALID);
 		}
 	}
 
@@ -143,12 +147,11 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 			this.config = config;
 		});
 
-
 		this.inputForm.valueChanges.pipe(debounceTime(200)).subscribe(value => {
 			this.timeline.response.emit(this.timelineLocations);
 
 			if (this.timeline.isStep2) {
-				this._timelineService.updateLocationsTimeValidation();
+				this._timelineService.updateTimeValidation();
 				if (this._timelineService.isTimelineTimeStatevalid) {
 					this.timeline.validationState.emit(ResponseValidationState.VALID);
 				} else {
@@ -178,7 +181,7 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 		this.timelineLocations[index].timeA = time;
 
 		// this._timelineService.updateLocationsValidation();
-		this._timelineService.updateLocationsTimeValidation();
+		this._timelineService.updateTimeValidation();
 		if (this._timelineService.isTimelineTimeStatevalid) {
 			this.timeline.validationState.emit(ResponseValidationState.VALID);
 		} else {

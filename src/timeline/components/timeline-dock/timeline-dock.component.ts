@@ -82,11 +82,7 @@ export class TimelineDockComponent implements OnInit {
 	 * @param _element
 	 * @param timelineService
 	 */
-	constructor(
-		private _element: ElementRef,
-		private timelineService: TimelineService,
-		private _modalService: BsModalService
-	) {
+	constructor(private _element: ElementRef, private timelineService: TimelineService, private _modalService: BsModalService) {
 		this.typeName = 'Trip Diary Timeline';
 		this.icon = 'business-time';
 		this.dockItems = [];
@@ -175,14 +171,10 @@ export class TimelineDockComponent implements OnInit {
 					this.dockItems.splice(dropResult.removedIndex, 1);
 					if (dropResult.addedIndex !== null) {
 						this.dockItems.splice(dropResult.addedIndex, 0, dropResult.payload);
-						this.timelineService.reorderTimelineLocation(
-							dropResult.removedIndex + 1,
-							dropResult.addedIndex + 1
-						);
+						this.timelineService.reorderTimelineLocation(dropResult.removedIndex + 1, dropResult.addedIndex + 1);
 					}
 				} else {
 					let model: TimelineEntry = Object.assign({}, dropResult.payload);
-
 					this.dockItems.splice(dropResult.addedIndex, 0, model);
 					model.id = Symbol();
 					model.locationType = TimelineLocationType.IntermediateLocation;

@@ -97,7 +97,9 @@ export class TimelineSlotComponent implements OnInit {
 			model.locationType = this.startLocation ? TimelineLocationType.StartLocation : TimelineLocationType.EndLocation;
 
 			if (this.startLocation && model.purpose !== 'home') {
-				this.timelineDock.popover.show();
+				if (this.timelineDock.popover !== undefined) {
+					this.timelineDock.popover.show();
+				}
 			}
 
 			if (model.locationType === TimelineLocationType.StartLocation) {
@@ -109,7 +111,9 @@ export class TimelineSlotComponent implements OnInit {
 			this._timelineService.updateIsStartEndLocationsDifferent();
 
 			if (this._timelineService.isStartEndLocationsDifferent) {
-				this.timelineDock.endPopover.show();
+				if (this.timelineDock.endPopover !== undefined) {
+					this.timelineDock.endPopover.show();
+				}
 			}
 		}
 		this.dragOver = false;

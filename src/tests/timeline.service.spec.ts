@@ -123,7 +123,7 @@ describe('Timeline Service', () => {
 		timelineService.addTimelineLocation(loc, 0);
 		timelineService.addTimelineLocation(loc2, 0);
 		timelineService.addTimelineLocation(loc3);
-		timelineService.updateLocationsValidation();
+		timelineService.updateLocationValidation();
 		expect(timelineService.isTimelineStatevalid).toBe(false);
 		done();
 	});
@@ -131,7 +131,7 @@ describe('Timeline Service', () => {
 	it('test validation 2', done => {
 		timelineService.addTimelineLocation(loc, 0);
 		timelineService.addTimelineLocation(loc2, 0);
-		timelineService.updateLocationsValidation();
+		timelineService.updateLocationValidation(); 
 		expect(timelineService.isTimelineStatevalid).toBe(false);
 		done();
 	});

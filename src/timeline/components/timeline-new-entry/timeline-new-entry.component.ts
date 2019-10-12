@@ -96,7 +96,9 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 	 */
 	public show(callback: (value: any) => void, entry?: TimelineEntry, isEdit: boolean = false): void {
 		// this.timelineService.openEditMapLocationModal(this.mapTemplate, this.callback);
-
+		this.stepOne = true;
+		this.stepTwo = false;
+		this.stepThree = false;
 		this.saveCallback = callback;
 		this.isEdit = isEdit;
 
