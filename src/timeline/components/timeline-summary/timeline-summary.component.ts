@@ -24,6 +24,7 @@ import 'flatpickr/dist/flatpickr.css';
 import templateString from './timeline-summary.component.html';
 
 import { debounceTime } from 'rxjs/operators';
+import { isNullOrUndefined } from 'util';
 @Component({
 	selector: 'timeline-summary',
 	template: templateString,
@@ -69,7 +70,7 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 			noCalendar: true,
 			// defaultHour: 4,
 			dateFormat: 'h:i K',
-			// defaultDate: '00:00',
+			defaultDate: null,
 			onChange: (time, timeStr, instance) => {
 				let index = parseInt(instance.element.dataset['index'], 10);
 				let timeUpdate: Date = time[0];
@@ -88,10 +89,14 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 
 		if (Array.isArray(timeInputs)) {
 			for (let i = 0; i < timeInputs.length; i++) {
-				timeInputs[i].setDate(this.timelineLocations[i].timeA);
+				if (this.timelineLocations[i].timeA.getTime() > 0) {
+					timeInputs[i].setDate(this.timelineLocations[i].timeA);
+				}
 			}
 		} else {
-			timeInputs.setDate(this.timelineLocations[0].timeA);
+			if (this.timelineLocations[0].timeA.getTime() > 0) {
+				timeInputs.setDate(this.timelineLocations[0].timeA);
+			}
 		}
 		setTimeout(() => {
 			this.updateValidation();
@@ -128,6 +133,7 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 
 			for (let i = 0; i < locations.length; i++) {
 				this.times.push(new Date());
+
 				this.timeEntries.push({
 					hours: locations[i].timeA.getHours() >= 12 ? locations[i].timeA.getHours() - 12 : locations[i].timeA.getHours(),
 					minutes: locations[i].timeA.getMinutes(),
@@ -167,26 +173,4 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 	 * Updates time
 	 * @param index
 	 */
-	public updateTime(index: number) {
-		let timeString = `${this.timeEntries[index].hours}:${this.timeEntries[index].minutes} ${this.timeEntries[index].am ? 'AM' : 'PM'}`;
-		let time = new Date(0, 0, 0, this.timeEntries[index].hours, this.timeEntries[index].minutes, 0);
-
-		time.setFullYear(this._timelineConfiguration.startTime.getFullYear());
-		time.setMonth(this._timelineConfiguration.startTime.getMonth());
-		time.setDate(this._timelineConfiguration.startTime.getDate());
-		if (!this.timeEntries[index].am) {
-			time.setHours(time.getHours() + 12);
-		}
-
-		this.timelineLocations[index].timeA = time;
-
-		// this._timelineService.updateLocationsValidation();
-		this._timelineService.updateTimeValidation();
-		if (this._timelineService.isTimelineTimeStatevalid) {
-			this.timeline.validationState.emit(ResponseValidationState.VALID);
-		} else {
-			this.timeline.validationState.emit(ResponseValidationState.INVALID);
-		}
-		this.timeline.response.emit(this.timelineLocations);
-	}
 }

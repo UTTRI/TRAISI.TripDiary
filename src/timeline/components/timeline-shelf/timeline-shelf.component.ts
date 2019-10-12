@@ -76,13 +76,11 @@ export class TimelineShelfComponent implements OnInit {
 	 */
 	public onDragStart($event): void {
 		this.isDragActive = true;
-
 		this.draggedItem = $event.payload;
 	}
 
 	public onDragEnd($event): void {
 		this.isDragActive = false;
-
 		this.draggedItem = {
 			id: Symbol()
 		};

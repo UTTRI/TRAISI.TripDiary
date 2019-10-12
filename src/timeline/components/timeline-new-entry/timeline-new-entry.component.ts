@@ -125,16 +125,16 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 				purpose: null,
 				longitude: 0,
 				order: 0,
-				timeA: new Date(new Date().getFullYear(), 0, 0, 0, 0, 0, 0),
-				timeB: new Date(new Date().getFullYear(), 0, 0, 0, 0, 0, 0),
+				timeA: new Date(0),
+				timeB: new Date(0),
 				name: '',
 				pipedLocation: false,
 				locationType: TimelineLocationType.Undefined,
 				id: Symbol()
 			};
 
-			this.model.timeA.setHours(0);
-			this.model.timeA.setMinutes(0);
+			// this.model.timeA.setHours(0);
+			// this.model.timeA.setMinutes(0);
 		} else {
 			this.model = entry;
 		}

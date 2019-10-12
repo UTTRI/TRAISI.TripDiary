@@ -195,15 +195,22 @@ export class TimelineService {
 	 * Determine validity of timeline locations by examining times.
 	 */
 	public updateTimeValidation(): boolean {
-		for (let i = 0; i < this._timelineLocations.length - 2; i++) {
-			if (this._timelineLocations[i].timeA.getFullYear() < 2000) {
-				this._timelineTimeStateValid = false;
-				return false;
-			}
+		console.log(this._timelineLocations);
 
-			if (this._timelineLocations[i + 1].timeA <= this._timelineLocations[i].timeA) {
-				this._timelineTimeStateValid = false;
-				return false;
+		if (this._timelineLocations.length === 2 && this._timelineLocations[0].timeA.getFullYear() < 2000) {
+			this._timelineTimeStateValid = false;
+			return false;
+		} else {
+			for (let i = 0; i < this._timelineLocations.length - 2; i++) {
+				if (this._timelineLocations[i].timeA.getFullYear() < 2000) {
+					this._timelineTimeStateValid = false;
+					return false;
+				}
+
+				if (this._timelineLocations[i + 1].timeA <= this._timelineLocations[i].timeA) {
+					this._timelineTimeStateValid = false;
+					return false;
+				}
 			}
 		}
 
