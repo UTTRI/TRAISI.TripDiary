@@ -96,7 +96,7 @@ module.exports = {
             callback();
         }
     ],*/
-	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/, /^rxjs/, /^@ng-bootstrap\/ng-bootstrap/],
+	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/, /^rxjs/, /^@ng-bootstrap\/ng-bootstrap/,/^angular-popper/, /^popper\.js/],
 	plugins: [
 		new CopyWebpackPlugin([{ from: 'dist/', to: '../../../traisi-v2/src/TRAISI/development', toType: 'dir' }], { debug: 'warning' }),
 		new CopyWebpackPlugin([{ from: 'dist/', to: '../../../TRAISI/src/TRAISI/development', toType: 'dir' }], { debug: 'warning' })

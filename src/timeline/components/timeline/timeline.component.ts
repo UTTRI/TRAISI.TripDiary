@@ -336,7 +336,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		};
 		if (response instanceof Array) {
 			response = <TimelineResponseData[]>sortBy(response, o => o['order']);
-			console.log(response);
 			if (response.length >= 1) {
 				const timelineResponse = <TimelineResponseData>response[0];
 				location.locationType = TimelineLocationType.StartLocation;
