@@ -2,10 +2,19 @@
   traisi-timeline-question {
     height: 400px;
   }
-}
-
-@media #{$md-down} {
   .timeline-summary-wrapper {
-    overflow-x: scroll;
+    overflow-x: auto;
+  }
+
+  traisi-timeline-question {
+    height: 400px;
+  }
+
+  .timeline-container-step-1 {
+    display: flex;
+  }
+
+  .timeline-instructions-top {
+    display: none;
   }
 }
