@@ -18,7 +18,7 @@ import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 import { TimelineConfiguration } from '../../models/timeline-configuration.model';
 import { TimelineComponent } from '../timeline/timeline.component';
 import { ResponseValidationState } from 'traisi-question-sdk';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder } from '@angular/forms';
 import * as Flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.css';
 import templateString from './timeline-summary.component.html';
@@ -51,14 +51,15 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 	@Input()
 	public timeline: TimelineComponent;
 
-	@ViewChild('f', { static: true })
+	@ViewChild('timeForm', { static: true })
 	public inputForm: NgForm;
 
 	/**
 	 *
 	 * @param _timelineService
+	 * @param _formBuilder
 	 */
-	constructor(private _timelineService: TimelineService) {
+	constructor(private _timelineService: TimelineService, private _formBuilder: FormBuilder) {
 		this.timelineLocations = [];
 		this.timeEntries = [];
 		this.hours = [];
@@ -155,7 +156,7 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 
 		this.inputForm.valueChanges.pipe(debounceTime(200)).subscribe(value => {
 			this.timeline.response.emit(this.timelineLocations);
-
+			// this.inputForm.form.setErrors({ problem: true });
 			if (this.timeline.isStep2) {
 				this._timelineService.updateTimeValidation();
 				if (this._timelineService.isTimelineTimeStatevalid) {
@@ -165,6 +166,10 @@ export class TimelineSummaryComponent implements OnInit, AfterViewInit {
 				}
 			}
 		});
+	}
+
+	public onSubmit(): void {
+		console.log('submitted');
 	}
 
 	public validChange(event): void {}

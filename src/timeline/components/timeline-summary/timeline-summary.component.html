@@ -6,26 +6,27 @@
 	</span>
 </div>
 <div class="timeline-times-container">
-<form #f="ngForm" name="form">
-	<div class="timeline-summary-time-input-container">
-		<span *ngFor="let location of timeEntries; index as i">
-			<div class="time-input-container">
-				<div class="">
-					<div *ngIf="i < timeEntries.length - 1">
-						<!--<timepicker (isValid)="validChange($event)" name="{{i}}" style="display:none"
+	<form #timeForm="ngForm" name="form" (ngSubmit)="onSubmit()">
+		<div class="timeline-summary-time-input-container">
+			<span *ngFor="let location of timeEntries; index as i">
+				<div class="time-input-container">
+					<div class="">
+						<div *ngIf="i < timeEntries.length - 1">
+							<!--<timepicker (isValid)="validChange($event)" name="{{i}}" style="display:none"
 							[(ngModel)]="timelineLocations[i].timeA" (ngModelChange)="updateTime2(i)"></timepicker> -->
-						<input placeholder="Choose..." class="time-input form-control form-control-lg" type="text" [attr.data-index]="i">
+							<input placeholder="Choose..." class="time-input form-control form-control-lg" type="text"
+								[attr.data-index]="i">
+						</div>
+
 					</div>
-					
 				</div>
-			</div>
-			<div class="departure-time-label" *ngIf="i < timeEntries.length - 1">Departure Time</div>
-			<div class="location-time-label">{{ timelineLocations[i].name }}</div>
-		</span>
-	</div>
-</form>
+				<div class="departure-time-label" *ngIf="i < timeEntries.length - 1">Departure Time</div>
+				<div class="location-time-label">{{ timelineLocations[i].name }}</div>
+			</span>
+		</div> 
+	</form>
 </div>
-<div class="summary-wedges"></div>
+<div class="summary-wedges" [hidden]="true"></div>
 
 <div class="summary-times-dates-container" [hidden]="true">
 	<div class="summary-times-dates" *ngIf="config">

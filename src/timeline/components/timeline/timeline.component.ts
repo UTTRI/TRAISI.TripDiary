@@ -50,7 +50,6 @@ import templateString from './timeline.component.html';
 	entryComponents: [TimelineWedgeComponent],
 	selector: 'traisi-timeline-question',
 	template: templateString,
-
 	encapsulation: ViewEncapsulation.None,
 	styles: [require('./timeline.component.scss').toString()],
 	providers: [TimelineService]

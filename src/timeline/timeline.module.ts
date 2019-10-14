@@ -21,7 +21,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { SurveyQuestionInternalViewDirective } from 'traisi-question-sdk';
-import { NgxPopper } from 'angular-popper';
+import { UtilModule } from 'util/util.module';
+
 @NgModule({
 	entryComponents: [
 		TimelineWedgeComponent,
@@ -46,7 +47,7 @@ import { NgxPopper } from 'angular-popper';
 		TimelineEntryItemComponent,
 		SurveyQuestionInternalViewDirective
 	],
-	exports: [],
+	exports: [UtilModule],
 	providers: [
 		{
 			provide: 'widgets',
@@ -74,6 +75,7 @@ import { NgxPopper } from 'angular-popper';
 		}
 	],
 	imports: [
+		UtilModule,
 		CommonModule,
 		AlertModule,
 		CarouselModule.forRoot(),
@@ -84,8 +86,7 @@ import { NgxPopper } from 'angular-popper';
 		FormsModule,
 		TimepickerModule.forRoot(),
 		NgxSmoothDnDModule,
-		TooltipModule.forRoot(),
-		NgxPopper
+		TooltipModule.forRoot()
 	]
 })
 export default class TimelineModule {}

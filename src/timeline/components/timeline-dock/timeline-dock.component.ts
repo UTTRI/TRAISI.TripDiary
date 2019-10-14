@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewEncapsulation, ViewChild, ViewChildren, TemplateRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewEncapsulation, ViewChild, ViewChildren, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import { TimelineService } from '../../services/timeline.service';
 import { DropResult } from 'ngx-smooth-dnd';
 import { TimelineEntry, TimelineLocationType } from '../../models/timeline-entry.model';
@@ -9,6 +9,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TimelineConfiguration } from '../../models/timeline-configuration.model';
 
 import templateString from './timeline-dock.component.html';
+import { PopperComponent } from 'angular-popper';
 
 @Component({
 	selector: 'timeline-dock',
@@ -58,6 +59,9 @@ export class TimelineDockComponent implements OnInit {
 	@ViewChild('endPopover', { static: true })
 	public endPopover: PopoverDirective;
 
+	public hasStartLocation: boolean = false;
+	public hasEndLocation: boolean = false;
+
 	public shouldShowPlaceholder(): void {
 		let hasStart = false;
 		let hasEnd = false;
@@ -80,9 +84,14 @@ export class TimelineDockComponent implements OnInit {
 	/**
 	 *
 	 * @param _element
-	 * @param timelineService
+	 * @param timelineService 
 	 */
-	constructor(private _element: ElementRef, private timelineService: TimelineService, private _modalService: BsModalService) {
+	constructor(
+		private _element: ElementRef,
+		private timelineService: TimelineService,
+		private _modalService: BsModalService,
+		private _cdr: ChangeDetectorRef
+	) {
 		this.typeName = 'Trip Diary Timeline';
 		this.icon = 'business-time';
 		this.dockItems = [];
@@ -98,12 +107,21 @@ export class TimelineDockComponent implements OnInit {
 		this.sub = this.timelineService.timelineLocations.subscribe(value => {
 			this.dockItems = [];
 			this._locations = [];
+			this.hasStartLocation = false;
 			value.forEach(entry => {
 				this._locations.push(entry);
 				if (entry.locationType === TimelineLocationType.IntermediateLocation) {
 					this.dockItems.push(entry);
+				} else if (entry.locationType === TimelineLocationType.StartLocation) {
+					this.hasStartLocation = true;
 				}
 			});
+			if (!this.hasStartLocation) {
+			} else {
+				// this.startLocationPopper.show = false;
+			}
+
+			// this.startLocationPopper['popper'].scheduleUpdate();
 		});
 
 		this.timelineService.configuration.subscribe(config => {
@@ -136,11 +154,12 @@ export class TimelineDockComponent implements OnInit {
 	 * Confirms start location
 	 */
 	public confirmStartLocation(): void {
-		this.popover.hide();
+		console.log('in here');
+		//this.popover.hide();
 	}
 
 	public confirmEndLocation(): void {
-		this.endPopover.hide();
+		// this.endPopover.hide();
 	}
 
 	/**
