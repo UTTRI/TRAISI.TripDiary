@@ -21,10 +21,10 @@ import {
 	ResponseTypes,
 	ResponseValidationState,
 	SurveyQuestion,
-	SurveyQuestionInternalViewDirective,
 	SurveyResponder,
 	SurveyViewer,
-	TimelineResponseData
+	TimelineResponseData,
+	SurveyQuestionInternalViewDirective
 } from 'traisi-question-sdk';
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component';

@@ -16,7 +16,7 @@
 		"baseUrl": ".",
 		"traceResolution": false,
 		"paths": {
-			"traisi-question-sdk": ["../../traisi-v2/src/TRAISI.SDK/Client/src", "../../TRAISI/src/TRAISI.SDK/Client/src"]
+			"traisi-question-sdk": ["../../traisi-v2/src/TRAISI.SDK/Client/dist", "../../TRAISI/src/TRAISI.SDK/Client/dist"]
 			//	// "*": ["../*", "generated/*"]
 		}
 	},
