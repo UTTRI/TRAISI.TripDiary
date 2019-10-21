@@ -8,7 +8,9 @@
 		"prod": "webpack --config=webpack.config.prod.js -p --optimize-minimize --display-modules",
 		"watch": "webpack --config=webpack.config.dev.js --watch --progress",
 		"test": "ts-node --project tsconfig.spec.json node_modules/jasmine/bin/jasmine --config=jasmine.json",
-		"coverage": "nyc -r text -e .ts -x \"tests/*.test.ts\" npm run test"
+		"coverage": "nyc -r text -e .ts -x \"tests/*.test.ts\" npm run test",
+		"postinstall": "link-module-alias",
+		"link-modules": "link-module-alias"
 	},
 	"author": "University of Toronto",
 	"license": "ISC",
@@ -124,6 +126,7 @@
 		"karma-jasmine": "^2.0.1",
 		"karma-typescript": "^4.1.1",
 		"karma-webpack": "^4.0.2",
+		"link-module-alias": "^1.2.0",
 		"ngx-bootstrap": "^5.1.2",
 		"node-sass": "^4.12.0",
 		"nyc": "^14.1.1",
@@ -145,6 +148,7 @@
 		"zone.js": "^0.10.2"
 	},
 	"_moduleAliases": {
-		"timeline": "timeline/"
+		"timeline": "timeline/",
+		"traisi-question-sdk": "../../traisi-v2/src/TRAISI.SDK/Client/dist"
 	}
 }

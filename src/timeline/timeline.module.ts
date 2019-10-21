@@ -21,8 +21,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { SurveyQuestionInternalViewDirective } from 'traisi-question-sdk';
-import { UtilModule } from 'util/util.module';
-
+ 
 @NgModule({
 	entryComponents: [
 		TimelineWedgeComponent,
@@ -47,7 +46,7 @@ import { UtilModule } from 'util/util.module';
 		TimelineEntryItemComponent,
 		SurveyQuestionInternalViewDirective
 	],
-	exports: [UtilModule],
+	exports: [],
 	providers: [
 		{
 			provide: 'widgets',
@@ -75,7 +74,6 @@ import { UtilModule } from 'util/util.module';
 		}
 	],
 	imports: [
-		UtilModule,
 		CommonModule,
 		AlertModule,
 		CarouselModule.forRoot(),

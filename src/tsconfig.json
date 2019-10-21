@@ -12,10 +12,6 @@
 		"lib": ["es2016", "dom"],
 		"types": ["googlemaps", "webpack-env", "node", "jasmine"],
 		"baseUrl": ".",
-
-		"paths": {
-			"traisi-question-sdk": ["../../traisi-v2/src/TRAISI.SDK/Client/dist", "../../TRAISI/src/TRAISI.SDK/Client/dist"]
-		}
 	},
 	"angularCompilerOptions": {
 		"enableResourceInlining": true
