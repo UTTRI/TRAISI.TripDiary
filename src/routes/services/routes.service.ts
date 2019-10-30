@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { SurveyResponder, SurveyViewer, ResponseTypes, GroupMember, ResponseData, ResponseValidationState } from 'traisi-question-sdk';
+import { SurveyResponder, SurveyViewer, ResponseTypes, GroupMember, ResponseValidationState } from 'traisi-question-sdk';
 import { RoutesComponent } from '../components/routes/routes.component';
 import { TripRoute } from '../components/routes/v1/ts/trip-route';
 

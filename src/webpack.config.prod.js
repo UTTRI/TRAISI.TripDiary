@@ -26,12 +26,31 @@ module.exports = {
 		rules: [
 			{
 				test: /\.ts$/,
-				loaders: ['angular2-template-loader?keepUrl=true', 'angular-router-loader'],
-				exclude: [/node_modules/]
+				exclude: [path.resolve(__dirname, 'node_modules/mapbox-gl'), /node_modules/],
+				use: {
+					loader: 'babel-loader',
+					options: {
+						plugins: [
+							"@babel/plugin-proposal-class-properties"
+						]
+					}
+				}
 			},
+			/*{
+				test: /\.ts$/,
+				exclude: [/node_modules/],
+				use: {
+					use: 'babel-loader',
+					options: {
+						plugins: [
+							"@babel/plugin-proposal-class-properties"
+						]
+					}
+				}
+			}, */
 			{
 				test: /\.tsx?$/,
-				use: 'ts-loader'
+				use: 'babel-loader'
 			},
 			{
 				test: /\.html?$/,
@@ -80,10 +99,13 @@ module.exports = {
 				]
 			},
 			{
-				test: /\.js$/,
-				include: [path.resolve(__dirname, 'node_modules/ngx-bootstrap')],
+				test: /\.m?js$/,
+				exclude: [path.resolve(__dirname, 'node_modules/mapbox-gl'), /node_modules/],
 				use: {
-					loader: 'babel-loader'
+					loader: 'babel-loader',
+					options: {
+						presets: ['@babel/preset-env']
+					}
 				}
 			}
 		]

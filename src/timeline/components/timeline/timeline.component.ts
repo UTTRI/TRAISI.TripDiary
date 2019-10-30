@@ -96,6 +96,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	) {
 		super();
 		this.isMultiPage = true;
+		console.log('test');
 	}
 
 	/**
@@ -309,7 +310,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * @memberof TimelineComponent
 	 */
 	public closePopover(): void {
-		//this.popover.hide();
+		// this.popover.hide();
 	}
 
 	/**
@@ -395,7 +396,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			// this._timelineService.updateLocationsValidation();
 			this._timelineService.updateLocationValidation();
 
-			console.log(this._timelineService.isTimelineStatevalid); 
+			console.log(this._timelineService.isTimelineStatevalid);
 
 			if (this.isStep1) {
 				if (this._timelineService.hasAdjacentIdenticalLocations) {
