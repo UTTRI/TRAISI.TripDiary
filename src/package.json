@@ -155,6 +155,6 @@
 	},
 	"_moduleAliases": {
 		"timeline": "timeline/",
-		"traisi-question-sdk": "../../traisi-v2/src/TRAISI.SDK/Client/dist"
+		"traisi-question-sdk": "../../TRAISI/src/TRAISI.SDK/Client/dist"
 	}
 }

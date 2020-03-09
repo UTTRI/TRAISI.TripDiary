@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
+		<TargetFramework>netstandard2.1</TargetFramework>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<LangVersion>7.1</LangVersion>
@@ -34,12 +34,12 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Reference Include="TRAISI.SDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Condition="'$(Configuration)' == 'Debug'">
-			<HintPath Condition="Exists('..\..\traisi-v2\src\TRAISI.SDK')">..\..\traisi-v2\src\TRAISI.SDK\bin\Debug\netstandard2.0\TRAISI.SDK.dll</HintPath>
-			<HintPath Condition="Exists('..\..\TRAISI\src\TRAISI.SDK')">..\..\TRAISI\src\TRAISI.SDK\bin\Debug\netstandard2.0\TRAISI.SDK.dll</HintPath>
+			<HintPath Condition="Exists('..\..\traisi-v2\src\TRAISI.SDK')">..\..\traisi-v2\src\TRAISI.SDK\bin\Debug\netstandard2.1\TRAISI.SDK.dll</HintPath>
+			<HintPath Condition="Exists('..\..\TRAISI\src\TRAISI.SDK')">..\..\TRAISI\src\TRAISI.SDK\bin\Debug\netstandard2.1\TRAISI.SDK.dll</HintPath>
 		</Reference>
 		<Reference Include="TRAISI.SDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Condition="'$(Configuration)' == 'Release'">
-			<HintPath Condition="Exists('..\..\traisi-v2\src\TRAISI.SDK')">..\..\traisi-v2\src\TRAISI.SDK\bin\Release\netstandard2.0\TRAISI.SDK.dll</HintPath>
-			<HintPath Condition="Exists('..\..\TRAISI\src\TRAISI.SDK')">..\..\TRAISI\src\TRAISI.SDK\bin\Release\netstandard2.0\TRAISI.SDK.dll</HintPath>
+			<HintPath Condition="Exists('..\..\traisi-v2\src\TRAISI.SDK')">..\..\traisi-v2\src\TRAISI.SDK\bin\Release\netstandard2.1\TRAISI.SDK.dll</HintPath>
+			<HintPath Condition="Exists('..\..\TRAISI\src\TRAISI.SDK')">..\..\TRAISI\src\TRAISI.SDK\bin\Release\netstandard2.1\TRAISI.SDK.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 
