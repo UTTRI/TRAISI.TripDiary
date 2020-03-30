@@ -195,7 +195,6 @@ export class TimelineService {
 	 * Determine validity of timeline locations by examining times.
 	 */
 	public updateTimeValidation(): boolean {
-		console.log(this._timelineLocations);
 
 		if (this._timelineLocations.length === 2 && this._timelineLocations[0].timeA.getFullYear() < 2000) {
 			this._timelineTimeStateValid = false;

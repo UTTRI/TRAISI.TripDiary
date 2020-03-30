@@ -132,7 +132,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 
 				let respondentName = responses.respondent.name;
 				let locationName: string =
-					respondentName === null || respondentName === undefined ? purpose : respondentName + ' - ' + purpose;
+					respondentName === null || respondentName === undefined ? purpose :  purpose;
 				responses.responseValues.forEach(responseValue => {
 					const element = responseValue;
 
@@ -147,7 +147,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 						pipedLocation: true,
 						id: Symbol(),
 						locationType: TimelineLocationType.Undefined,
-						name: locationName
+						name: purpose
 					};
 					location.timeA.setHours(0);
 					location.timeA.setMinutes(0);
