@@ -117,7 +117,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		// this.isStep1 = true;
 		// this.surveyViewerService.updateNavigationState(false);
 		this._timelineService.clearAvailableLocations();
-
+		this._timelineService.clearTimelineLocations();
 		if (!isPrevActionNext) {
 			this.isStep1 = false;
 			this.isStep2 = true;
