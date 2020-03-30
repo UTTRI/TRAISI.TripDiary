@@ -1,6 +1,6 @@
 import * as icons from './survey-map-marker-type';
 import { SurveyMapDirective } from './directives/survey-map-directive';
-import * as L from 'leaflet';
+declare var L;
 
 /**
  *

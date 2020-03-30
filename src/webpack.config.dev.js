@@ -2,7 +2,7 @@ const path = require('path');
 const WebpackSystemRegister = require('webpack-system-register');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-
+const webpack = require('webpack');
 module.exports = {
 	entry: {
 		timeline: path.join(process.cwd(), './timeline/timeline.module.ts'),
@@ -121,7 +121,12 @@ module.exports = {
 	externals: [/^@angular/, /^ngx-bootstrap/, /^bootstrap/, /^bootswatch/, /^rxjs/, /^@ng-bootstrap\/ng-bootstrap/, /^angular-popper/, /^popper\.js/],
 	plugins: [
 		// new CopyWebpackPlugin([{ from: 'dist/', to: '../../../traisi-v2/src/TRAISI/development', toType: 'dir' }], { debug: 'warning' }),
-		new CopyWebpackPlugin([{ from: 'dist/', to: '../../../TRAISI/development', toType: 'dir' }], { debug: 'warning' })
+		new CopyWebpackPlugin([{ from: 'dist/', to: '../../../TRAISI/development', toType: 'dir' }], { debug: 'warning' }),
+		new webpack.ProvidePlugin({
+				   L: 'leaflet',
+				 	ExtraMarkers: 'leaflet-extra-markers'
+				   
+			     }),
 		/* new WebpackSystemRegister({
              systemjsDeps: [
                  /^ngx-bootstrap/, // any import that starts with react

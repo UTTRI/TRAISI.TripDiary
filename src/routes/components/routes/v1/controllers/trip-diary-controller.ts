@@ -9,7 +9,7 @@ import { TripsQuestionState } from '../ts/trips-question-state';
 import * as angular from 'angular';
 import * as moment from 'moment';
 import * as icons from '../shared/survey-map-marker-type';
-import * as L from 'leaflet';
+// import * as L from 'leaflet';
 import { TripDiary } from '../ts/trips-diary';
 // import * as _ from 'lodash';
 import * as TripsActions from '../ts/trips-actions';
@@ -322,7 +322,8 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 		private _$timeout: ng.ITimeoutService,
 		_routesService: RoutesService,
 		_surveyV2Id: number,
-		respondent: GroupMember
+		respondent: GroupMember,
+		questionId: any,
 	) {
 		super(
 			$scope,
@@ -340,6 +341,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			_surveyV2Id,
 			respondent
 		);
+		this.questionId = questionId;
 
 		let unsubscribe = $ngRedux.connect(this.mapStateToThis, TripsActions)(this);
 
@@ -518,6 +520,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	}
 
 	public $onInit = (): void => {
+		console.log(this);
 		this.initQuestion(this.questionId);
 	};
 
@@ -726,10 +729,10 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 	 */
 	public initQuestion(questionID): void {
 		this.initLocationSearchBox();
-
+		console.log(questionID);
 		this.initStateManagement();
 		this.questionId = questionID;
-		this.initializeSurvey(this.$window['surveyData_' + this.questionId], this.$scope, this.$http);
+		this.initializeSurvey({}, this.$scope, this.$http);
 
 		this._routesService.savedResponse().subscribe(response => {
 

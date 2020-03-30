@@ -1,11 +1,11 @@
 let MARKER_URL = './';
 
-import 'leaflet-extra-markers';
-import { SurveyMapSvgIcon } from './survey-map-svg-icon';
 
+import { SurveyMapSvgIcon } from './survey-map-svg-icon';
+declare var L; 
 // console.log(cat);
 
-import * as L from 'leaflet';
+// import * as L from 'leaflet';
 
 export enum MarkerType {
 	Default = 0,

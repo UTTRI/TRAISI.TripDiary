@@ -65,6 +65,7 @@ export class TripDiaryModule {
 	 * @returns true if bootstrap
 	 */
 	bootstrap(questionId: string, v2SurveyId: number = -1, respondent?: GroupMember): boolean {
+		console.log(questionId);
 		/* Create app and controller */
 		let app: IModule = angular
 			.module('trips', [ngRedux, ngMessages, ngAria, ngMaterial, ngTimePicker, ngTranslate, ngCookies, ngSanitize])
@@ -209,6 +210,7 @@ export class TripDiaryModule {
 			'routesService',
 			'SurveyV2Id',
 			'respondent',
+			'QUESTION_ID',
 			TripDiaryController
 		]);
 

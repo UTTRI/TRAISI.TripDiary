@@ -6,7 +6,7 @@ import SurveyManagerController from './survey-manager-controller';
 import * as ngAria from 'angular-aria';
 import * as ngMaterial from 'angular-material';
 import * as ngTranslate from 'angular-translate';
-import 'leaflet';
+// import 'leaflet';
 import 'leaflet-routing-machine';
 import 'color';
 import { SurveyConfigService } from 'routes/components/routes/v1/shared/services/survey-config-service';

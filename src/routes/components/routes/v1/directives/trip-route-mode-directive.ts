@@ -15,7 +15,7 @@ import { indexOf as _indexOf } from 'lodash';
 import { SET_SWITCH_ROUTE_MODE_STATE } from '../ts/trips-actions';
 import { TripDiaryRouteModeController } from '../controllers/trip-diary-route-mode-controller';
 import { IModeConfig } from '../shared/survey-map-config';
-import * as L from 'leaflet';
+// import * as L from 'leaflet';
 import { ITripDiaryRouteModeScope } from '../interfaces/trip-route-mode-diary-scope';
 import { ISurveyMapRoute } from '../shared/survey-map-route';
 

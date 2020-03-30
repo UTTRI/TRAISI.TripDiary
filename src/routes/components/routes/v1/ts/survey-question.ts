@@ -342,9 +342,9 @@ export class SurveyQuestion {
 		this._responseInputElement = responseElement;
 
 		/*Watch the value of the resposne element, when it changes send partial response to the server */
-		let surveyIdRef = $scope['tc'].$window.SURVEY_ID;
+		//let surveyIdRef = $scope['tc'].$window.SURVEY_ID;
 
-		this.surveyId = surveyIdRef;
+		this.surveyId = ''+ this._surveyV2Id;
 
 		let httpRef: ng.IHttpService = $http;
 

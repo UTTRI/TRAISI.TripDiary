@@ -1,8 +1,8 @@
 import 'jquery';
-
+import 'leaflet';
+import 'leaflet-extra-markers';
 import * as Color from 'color';
 
-import * as L from 'leaflet';
 import { isNullOrUndefined } from 'util';
 
 declare var MARKER_URL: any;

@@ -1,5 +1,4 @@
 import { TripLeg } from './trip-leg';
-import * as L from 'leaflet';
 import { TripLocation } from './trip-location';
 import { config } from './config';
 import { Type } from 'class-transformer';
