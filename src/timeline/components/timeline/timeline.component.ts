@@ -128,7 +128,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 
 		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
 			result.forEach(responses => {
-				console.log(responses);
 				let purpose = JSON.parse(responses.configuration.purpose).id;
 
 				let respondentName = responses.respondent.name;
@@ -158,7 +157,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 		});
 
 		this._timelineService.init(this.configuration['purpose'].replace(/"/g, '').split(' | '));
-		console.log(this._timelineService);
 	}
 
 	/**
@@ -398,9 +396,6 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 
 			// this._timelineService.updateLocationsValidation();
 			this._timelineService.updateLocationValidation();
-
-			console.log(this._timelineService.isTimelineStatevalid);
-
 			if (this.isStep1) {
 				if (this._timelineService.hasAdjacentIdenticalLocations) {
 					this.hasAdjacent = true;

@@ -112,8 +112,6 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 				if (entry !== undefined) {
 					(<any>this._mapComponent).setQuestionState(entry.latitude, entry.longitude, entry.address);
 				}
-
-				// (latitude: number, longitude: number, address: string): void {
 			});
 			sub.unsubscribe();
 		});
@@ -190,10 +188,7 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 					this.callback(value);
 				});
 				this._mapComponent = instance;
-				timer(5000).subscribe(val => {
-					console.log(' after timer ');
-					this._mapComponent.onQuestionShown();
-				});
+				
 			}
 		});
 
