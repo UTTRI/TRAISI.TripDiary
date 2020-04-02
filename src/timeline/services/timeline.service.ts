@@ -183,6 +183,8 @@ export class TimelineService {
 					location.latitude === this._timelineLocations[index + 1].latitude &&
 					location.longitude === this._timelineLocations[index + 1].longitude
 				) {
+					console.log(this._timelineLocations);
+					console.log('in here adjacent');
 					hasAdjacentLocations = true;
 				}
 			}

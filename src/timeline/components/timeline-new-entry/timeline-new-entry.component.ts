@@ -178,20 +178,16 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 
 	public ngOnInit(): void {
 		let componentRef = null;
-
 		let factories = this._questionLoaderService.componentFactories;
 		// console.log(factories);
 		let sub = Object.keys(this._questionLoaderService.componentFactories).forEach(key => {
 			let factory = this._questionLoaderService.componentFactories[key];
 			if (factory.selector === 'traisi-map-question') {
 				componentRef = this.mapTemplate.createComponent(factory, undefined, this.injector);
-
 				let instance: SurveyQuestion<any> = <SurveyQuestion<any>>componentRef.instance;
-
 				instance.response.subscribe(value => {
 					this.callback(value);
 				});
-
 				this._mapComponent = instance;
 			}
 		});

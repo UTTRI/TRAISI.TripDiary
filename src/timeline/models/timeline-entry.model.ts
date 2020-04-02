@@ -1,4 +1,4 @@
-export interface TimelineEntry {
+export class TimelineEntry {
 	latitude: number;
 	longitude: number;
 	address: string;

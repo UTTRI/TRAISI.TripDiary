@@ -876,7 +876,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 						}
 					}
 
-					console.log(state.tripRoutes); 
+					console.log(state.tripRoutes);
 
 					for (let i = 0; i < state.tripRoutes.length; i++) {
 						let route: TripRoute = state.tripRoutes[i];
@@ -937,6 +937,7 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					// this.updateTripRouteModes();
 				}
 
+				console.log(this.basicState);
 				this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
 
 				// this.updateTripRouteModes();
