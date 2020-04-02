@@ -20,6 +20,7 @@ import { TimelineConfiguration } from '../../models/timeline-configuration.model
 import { AfterViewInit } from '@angular/core';
 
 import templateString from './timeline-new-entry.component.html';
+import { timer } from 'rxjs';
 @Component({
 	selector: 'timeline-new-entry',
 	template: templateString,
@@ -189,6 +190,10 @@ export class TimelineNewEntryComponent implements OnInit, AfterViewInit, AfterCo
 					this.callback(value);
 				});
 				this._mapComponent = instance;
+				timer(5000).subscribe(val => {
+					console.log(' after timer ');
+					this._mapComponent.onQuestionShown();
+				});
 			}
 		});
 

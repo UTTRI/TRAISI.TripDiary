@@ -1,7 +1,11 @@
 @media #{$lg-down} {
+	traisi-timeline-question {
+		height: 400px;
+	}
+}
 
-    
-    traisi-timeline-question{
-        height: 400px;
-    }
+@media #{$xl-only} {
+	.modal-dialog {
+		max-width: 1000px;
+	}
 }
