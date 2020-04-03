@@ -310,6 +310,17 @@ export class SurveyMapDirective {
 	 */
 	private routeSelected = evt => {};
 
+	public link = function( $scope: ISurveyMapScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) {
+		this._$scope = $scope as ISurveyMapScope;
+		this._element = element;
+		this._attrs = attrs;
+		$scope.map = this;
+		this.callback = $scope.callback;
+		this._config = $scope.config;
+		this.markerClick = $scope['markerClick'];
+		this.initMap();
+	};
+
 	/**
 	 *
 	 * @param {angular.IHttpService} $http
@@ -326,7 +337,7 @@ export class SurveyMapDirective {
 		this._summaryLines = [];
 		this._layersByRoute = {};
 
-		SurveyMapDirective.prototype.link = ($scope: ISurveyMapScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes): void => {
+		/*SurveyMapDirective.prototype.link = ($scope: ISurveyMapScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes): void => {
 			this._$scope = $scope as ISurveyMapScope;
 
 			this._element = element;
@@ -343,7 +354,7 @@ export class SurveyMapDirective {
 
 			console.log('in init map link');
 			this.initMap();
-		};
+		}; */
 	}
 
 	/**
