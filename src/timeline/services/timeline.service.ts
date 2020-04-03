@@ -18,6 +18,8 @@ export class TimelineService {
 
 	private _timelineLocations: Array<TimelineEntry>;
 
+	public isInitialized: boolean = false;
+
 	public timelineItemRemoved: Subject<TimelineEntry>;
 
 	/**
@@ -197,7 +199,6 @@ export class TimelineService {
 	 * Determine validity of timeline locations by examining times.
 	 */
 	public updateTimeValidation(): boolean {
-
 		if (this._timelineLocations.length === 2 && this._timelineLocations[0].timeA.getFullYear() < 2000) {
 			this._timelineTimeStateValid = false;
 			return false;

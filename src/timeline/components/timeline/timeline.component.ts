@@ -85,6 +85,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 
 	public hasAdjacent: boolean = false;
 
+	public isInitialized: boolean = false;
+
 	/**
 	 *
 	 * @param surveyResponderService
@@ -131,8 +133,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 				let purpose = JSON.parse(responses.configuration.purpose).id;
 
 				let respondentName = responses.respondent.name;
-				let locationName: string =
-					respondentName === null || respondentName === undefined ? purpose :  purpose;
+				let locationName: string = respondentName === null || respondentName === undefined ? purpose : purpose;
 				responses.responseValues.forEach(responseValue => {
 					const element = responseValue;
 
@@ -389,12 +390,11 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 				});
 			}
 			this._timelineService.updateTimelineLocationsList();
+			this._timelineService.isInitialized = true;
 		}
 
+		let first = true;
 		this._timelineService.timelineLocations.subscribe((entries: TimelineEntry[]) => {
-			this.response.emit(entries);
-
-			// this._timelineService.updateLocationsValidation();
 			this._timelineService.updateLocationValidation();
 			if (this.isStep1) {
 				if (this._timelineService.hasAdjacentIdenticalLocations) {

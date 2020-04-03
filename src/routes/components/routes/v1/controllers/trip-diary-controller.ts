@@ -341,11 +341,15 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 			_surveyV2Id,
 			respondent
 		);
+
+
 		this.questionId = questionId;
 
 		let unsubscribe = $ngRedux.connect(this.mapStateToThis, TripsActions)(this);
 
 		this._$rootScope = $rootScope;
+		this.$ngRedux = $ngRedux;
+		this._$ngRedux = $ngRedux;
 
 		this.$scope.$on('$destroy', unsubscribe);
 
@@ -937,8 +941,8 @@ export class TripDiaryController extends SurveyQuestion implements MultipageQues
 					// this.updateTripRouteModes();
 				}
 
-				console.log(this.basicState);
-				this.$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
+				console.log(this);
+				this._$ngRedux.dispatch(updateState(this.basicState as TripsQuestionState));
 
 				// this.updateTripRouteModes();
 			});

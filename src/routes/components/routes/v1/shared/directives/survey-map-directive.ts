@@ -24,7 +24,7 @@ declare var L: any;
 
 let MAPBOX_TILE_URL =
 	`https://api.mapbox.com/styles/v1/mapbox/streets-v8/tiles/256/{z}/{x}/{y}` +
-	`?access_token=pk.eyJ1IjoiYnJlbmRhbmJlbnRpbmciLCJhIjoiY2oyOTlwdjNjMDB5cTMzcXFsdmRyM3NnNCJ9.NXgWTnWfvGRnNgkWdd5wKg`;
+	`?access_token=pk.eyJ1IjoiYnJlbmRhbmJlbnRpbmciLCJhIjoiY2s4Y3IwN3U3MG1obzNsczJjMGhoZWc4MiJ9.OCDfSypjueUF_gKejRr6Og`;
 
 let googleTravelMode = {};
 
@@ -33,6 +33,7 @@ import deletePopupTemplateUrl from '../../templates/trip-diary-route-delete-popu
 import switchModePopupTemplateUrl from '../../templates/trip-diary-switch-mode-popup.html';
 import deleteModeSwitchTemplateUrl from '../../templates/trip-diary-delete-mode-switch-popup.html';
 import * as markerIcon from '../../../../../../assets/marker-icon.png';
+import { link } from 'fs';
 
 googleTravelMode['driver'] = 'Car';
 googleTravelMode['bicycle'] = 'Bike';
@@ -130,7 +131,7 @@ lineOptions['nonActiveMode'] = {
 declare var $: IAugmentedJQueryStatic;
 
 export class SurveyMapDirective {
-	restrict = 'E';
+	restrict = 'AEC';
 	scope = {
 		map: '=',
 		callback: '=',
@@ -166,7 +167,7 @@ export class SurveyMapDirective {
 	// deletePopupTemplateUrl = require('../../templates/trip-diary-route-delete-popup.html');
 	// switchModePopupTemplateUrl = require('../../templates/trip-diary-switch-mode-popup.html');
 	// deleteModeSwitchTemplateUrl = require('../../templates/trip-diary-delete-mode-switch-popup.html');
-	link: ($scope: ISurveyMapScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => void;
+	// link: ($scope: ISurveyMapScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => void;
 	private _reverseGeocodeResult: string;
 
 	get reverseGeocodeResult(): string {
@@ -206,7 +207,6 @@ export class SurveyMapDirective {
 
 		directive['$inject'] = ['$http'];
 		directive['restrict'] = 'AEC';
-
 		return directive;
 	}
 	/**
@@ -234,7 +234,6 @@ export class SurveyMapDirective {
 	 * @param {TripLeg} tripLeg
 	 */
 	private generateLineOptions(tripLeg: TripLeg) {
-
 		let lineOption = lineOptions[tripLeg.mode.modeCategory];
 
 		lineOption.styles[2].color = this._tripDiaryService.getModeColour(tripLeg.mode.modeName);
@@ -342,6 +341,7 @@ export class SurveyMapDirective {
 
 			this.markerClick = $scope['markerClick'];
 
+			console.log('in init map link');
 			this.initMap();
 		};
 	}
@@ -1006,6 +1006,9 @@ export class SurveyMapDirective {
 		let initialLocation1 = { lat: 43.6532, lng: -79.3832 };
 
 		let map = L.map(this._element[0], { zoomControl: false }).setView(initialLocation1, 10);
+
+		console.log('in init map');
+		console.log(map);
 
 		this._map = map;
 

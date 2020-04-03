@@ -77,6 +77,7 @@ export class TripDiaryRouteModeController {
 		this.$scope['showMultipleTourTripTextPerm'] = false;
 
 		window.addEventListener('onShowRouteTour', this.onShowTour);
+		console.log('in trip route mode ');
 	}
 
 	/**
