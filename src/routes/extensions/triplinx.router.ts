@@ -106,7 +106,9 @@ export class TripLinxRouter implements Routing.IRouter {
 
 								// console.log(pathLink);
 								let re = /[-]{0,1}[\d]*[\.]{0,1}[\d]+/g;
-
+								if(pathLink['Geometry'] == null) {
+									continue;
+								}
 								let coords = pathLink['Geometry'].match(re);
 
 								if (coords !== null && coords.length >= 2) {
@@ -156,6 +158,7 @@ export class TripLinxRouter implements Routing.IRouter {
 					routes.push(route);
 				}
 
+				console.log(routes);
 				callback.call(context, null, routes);
 			});
 
