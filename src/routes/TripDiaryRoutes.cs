@@ -1,10 +1,10 @@
 using System;
-using TRAISI.SDK.Attributes;
-using TRAISI.SDK.Enums;
-using TRAISI.SDK.Interfaces;
+using Traisi.Sdk.Attributes;
+using Traisi.Sdk.Enums;
+using Traisi.Sdk.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
-namespace TRAISI.SDK.Questions
+namespace Traisi.Sdk.Questions
 {
 
     /// <summary>
