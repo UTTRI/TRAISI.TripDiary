@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { SurveyResponder, SurveyViewer, ResponseTypes, GroupMember, ResponseValidationState } from 'traisi-question-sdk';
+import { SurveyViewer, ResponseTypes, GroupMember, ResponseValidationState, SurveyResponseService } from 'traisi-question-sdk';
 import { RoutesComponent } from '../components/routes/routes.component';
 import { TripRoute } from '../components/routes/v1/ts/trip-route';
 
@@ -14,8 +14,7 @@ export class RoutesService {
 	 * @memberof RoutesService
 	 */
 	constructor(
-		@Inject('SurveyViewerService') private _surveyViewerService: SurveyViewer,
-		@Inject('SurveyResponderService') private _surveyResponderService: SurveyResponder
+		@Inject('SurveyResponseService') private _responseService: SurveyResponseService
 	) {}
 
 	/**
@@ -27,7 +26,7 @@ export class RoutesService {
 	 * @memberof RoutesService
 	 */
 	public listTimelineEntries(surveyId: number, respondent: GroupMember): any {
-		let responses = this._surveyResponderService.listSurveyResponsesOfType(surveyId, ResponseTypes.Timeline);
+		let responses = this._responseService.listSurveyResponsesOfType(surveyId, ResponseTypes.Timeline);
 		if (respondent === undefined) {
 			return responses;
 		} else {

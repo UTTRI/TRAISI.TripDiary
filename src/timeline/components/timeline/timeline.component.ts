@@ -10,7 +10,7 @@ import {
 	ViewChild,
 	ViewChildren,
 	ViewContainerRef,
-	ViewEncapsulation
+	ViewEncapsulation,
 } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
@@ -21,10 +21,10 @@ import {
 	ResponseTypes,
 	ResponseValidationState,
 	SurveyQuestion,
-	SurveyResponder,
-	SurveyViewer,
 	TimelineResponseData,
-	SurveyQuestionInternalViewDirective
+	SurveyQuestionInternalViewDirective,
+	SurveyRespondentService,
+	SurveyResponseService,
 } from 'traisi-question-sdk';
 import { TimelineService } from '../../services/timeline.service';
 import { TimelineDockComponent } from '../timeline-dock/timeline-dock.component';
@@ -46,13 +46,14 @@ import { sortBy } from 'lodash';
  */
 
 import templateString from './timeline.component.html';
+import styleString from './timeline.component.scss';
 @Component({
 	entryComponents: [TimelineWedgeComponent],
 	selector: 'traisi-timeline-question',
-	template: templateString,
+	template: '' + templateString,
 	encapsulation: ViewEncapsulation.None,
-	styles: [require('./timeline.component.scss').toString()],
-	providers: [TimelineService]
+	styles: ['' + styleString],
+	providers: [TimelineService],
 })
 export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	implements OnInit, AfterViewInit, AfterViewChecked, OnVisibilityChanged, AfterContentInit {
@@ -93,7 +94,8 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * @param _timelineService
 	 */
 	constructor(
-		@Inject('SurveyResponderService') private surveyResponderService: SurveyResponder,
+		@Inject('SurveyRespondentService') private _respondentService: SurveyRespondentService,
+		@Inject('SurveyResponseService') private _responseService: SurveyResponseService,
 		private _timelineService: TimelineService
 	) {
 		super();
@@ -128,13 +130,12 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this.isStep2 = false;
 		}
 
-		this.surveyResponderService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe(result => {
-			result.forEach(responses => {
+		this._responseService.listSurveyResponsesOfType(this.surveyId, ResponseTypes.Location).subscribe((result) => {
+			result.forEach((responses) => {
 				let purpose = JSON.parse(responses.configuration.purpose).id;
 
 				let respondentName = responses.respondent.name;
-				let locationName: string = respondentName === null || respondentName === undefined ? purpose : purpose;
-				responses.responseValues.forEach(responseValue => {
+				responses.responseValues.forEach((responseValue) => {
 					const element = responseValue;
 
 					let location: TimelineEntry = {
@@ -148,7 +149,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 						pipedLocation: true,
 						id: Symbol(),
 						locationType: TimelineLocationType.Undefined,
-						name: purpose
+						name: purpose,
 					};
 					location.timeA.setHours(0);
 					location.timeA.setMinutes(0);
@@ -201,7 +202,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 	 * @param type
 	 * @param $event
 	 */
-	public handler(type: string, $event: ModalDirective) {}
+	public handler() {}
 
 	/**
 	 *
@@ -334,10 +335,10 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			id: Symbol(),
 			pipedLocation: true,
 			locationType: TimelineLocationType.Undefined,
-			name: 'Prior Location'
+			name: 'Prior Location',
 		};
 		if (response instanceof Array) {
-			response = <TimelineResponseData[]>sortBy(response, o => o['order']);
+			response = <TimelineResponseData[]>sortBy(response, (o) => o['order']);
 			if (response.length >= 1) {
 				const timelineResponse = <TimelineResponseData>response[0];
 				location.locationType = TimelineLocationType.StartLocation;
@@ -393,8 +394,7 @@ export class TimelineComponent extends SurveyQuestion<ResponseTypes.Timeline[]>
 			this._timelineService.isInitialized = true;
 		}
 
-		let first = true;
-		this._timelineService.timelineLocations.subscribe((entries: TimelineEntry[]) => {
+		this._timelineService.timelineLocations.subscribe(() => {
 			this._timelineService.updateLocationValidation();
 			if (this.isStep1) {
 				if (this._timelineService.hasAdjacentIdenticalLocations) {

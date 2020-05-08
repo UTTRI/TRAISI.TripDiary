@@ -1,23 +1,18 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { UpgradeModule } from '@angular/upgrade/static';
-import { TripDiaryModule } from './v1/ts';
-import { ResponseTypes, SurveyQuestion, OnSurveyQuestionInit, SurveyResponder } from 'traisi-question-sdk';
+import { ResponseTypes, SurveyQuestion } from 'traisi-question-sdk';
 import { RoutesService } from '../../services/routes.service';
 import { TimelineEntry } from 'timeline/models/timeline-entry.model';
 
 import templateString from './routes.component.html';
+import styleString from './routes.component.scss';
 @Component({
 	selector: 'traisi-routes-question',
-	template: templateString,
+	template: '' + templateString,
 	encapsulation: ViewEncapsulation.None,
-	styles: [require('./routes.component.scss').toString()]
+	styles: ['' + styleString],
 })
 export class RoutesComponent extends SurveyQuestion<ResponseTypes.Json> implements OnInit, AfterViewInit {
-	/**
-	 * View child of routes component
-	 */
-	@ViewChild('routesV1', { static: true })
-	private _routesV1: ElementRef;
 
 	public displayClass = 'display-full';
 
@@ -30,12 +25,7 @@ export class RoutesComponent extends SurveyQuestion<ResponseTypes.Json> implemen
 	 * @param _routesService
 	 * @param _surveyResponderService
 	 */
-	constructor(
-		private _elementRef: ElementRef,
-		private _upgrade: UpgradeModule,
-		private _routesService: RoutesService,
-		@Inject('SurveyResponderService') private _surveyResponderService: SurveyResponder
-	) {
+	constructor(private _routesService: RoutesService) {
 		super();
 	}
 
