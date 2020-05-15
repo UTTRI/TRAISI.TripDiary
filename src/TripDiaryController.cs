@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-namespace TRAISI.Extensions.TripDiary
+namespace Traisi.Extensions.TripDiary
 {
     public class TripDiaryController : Controller
     {

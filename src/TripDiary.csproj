@@ -33,13 +33,13 @@
 		<PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<Reference Include="TRAISI.SDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Condition="'$(Configuration)' == 'Debug'">
-			<HintPath Condition="Exists('..\..\traisi-v2\src\TRAISI.SDK')">..\..\traisi-v2\src\TRAISI.SDK\bin\Debug\netcoreapp3.1\TRAISI.SDK.dll</HintPath>
-			<HintPath Condition="Exists('..\..\TRAISI.SDK')">..\..\TRAISI.SDK\bin\Debug\netcoreapp3.1\TRAISI.SDK.dll</HintPath>
+		<Reference Include="TRAISI.Sdk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Condition="'$(Configuration)' == 'Debug'">
+			<HintPath Condition="Exists('..\..\traisi-v2\src\Traisi.Sdk')">..\..\traisi-v2\src\Traisi.Sdk\bin\Debug\netcoreapp3.1\Traisi.Sdk.dll</HintPath>
+			<HintPath Condition="Exists('..\..\Traisi.Sdk')">..\..\TRAISI.Sdk\bin\Debug\netcoreapp3.1\TRAISI.Sdk.dll</HintPath>
 		</Reference>
-		<Reference Include="TRAISI.SDK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Condition="'$(Configuration)' == 'Release'">
-			<HintPath Condition="Exists('..\..\traisi-v2\src\TRAISI.SDK')">..\..\TRAISI.SDK\bin\Release\netcoreapp3.1\TRAISI.SDK.dll</HintPath>
-			<HintPath Condition="Exists('..\..\TRAISI.SDK')">..\..\TRAISI.SDK\bin\Release\netcoreapp3.1\TRAISI.SDK.dll</HintPath>
+		<Reference Include="TRAISI.Sdk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Condition="'$(Configuration)' == 'Release'">
+			<HintPath Condition="Exists('..\..\traisi-v2\src\Traisi.Sdk')">..\..\Traisi.Sdk\bin\Release\netcoreapp3.1\TRAISI.Sdk.dll</HintPath>
+			<HintPath Condition="Exists('..\..\Traisi.Sdk')">..\..\TRAISI.Sdk\bin\Release\netcoreapp3.1\Traisi.Sdk.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 
@@ -57,10 +57,10 @@
 
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Copy Condition="Exists('..\..\traisi-v2\src')" SourceFiles="@(OutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/TRAISI/extensions" />
-		<Copy Condition="Exists('..\..\traisi-v2\src')" SourceFiles="@(DevOutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/TRAISI/development" />
-		<Copy Condition="Exists('..\..\TRAISI')" SourceFiles="@(OutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../TRAISI/extensions" />
-		<Copy Condition="Exists('..\..\TRAISI')" SourceFiles="@(DevOutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../TRAISI/development" />
+		<Copy Condition="Exists('..\..\traisi-v2\src')" SourceFiles="@(OutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/Traisi/extensions" />
+		<Copy Condition="Exists('..\..\traisi-v2\src')" SourceFiles="@(DevOutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../traisi-v2/src/Traisi/development" />
+		<Copy Condition="Exists('..\..\Traisi')" SourceFiles="@(OutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../Traisi/extensions" />
+		<Copy Condition="Exists('..\..\Traisi')" SourceFiles="@(DevOutputFile)" DestinationFolder="$(MSBuildProjectDirectory)/../../Traisi/development" />
 
 	</Target>
 

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore;
-namespace TRAISI.Extensions.TripDiary
+namespace Traisi.Extensions.TripDiary
 {
     public class TripDiaryService
     {
